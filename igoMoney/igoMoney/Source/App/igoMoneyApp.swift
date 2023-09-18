@@ -10,7 +10,7 @@ import SwiftUI
 struct igoMoneyApp: App {
     var body: some Scene {
         WindowGroup {
-            MainScene()
+            OnBoardingScene()
         }
     }
 }
