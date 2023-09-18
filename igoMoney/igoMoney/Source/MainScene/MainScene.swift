@@ -6,13 +6,10 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainScene: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("I Go Money Scene")
         }
         .padding()
     }
@@ -20,6 +17,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainScene()
     }
 }

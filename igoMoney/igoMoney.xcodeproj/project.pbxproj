@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363A92AB82DCD00082F8A /* igoMoneyApp.swift */; };
-		180363AC2AB82DCD00082F8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* ContentView.swift */; };
+		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		180363A62AB82DCD00082F8A /* igoMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = igoMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		180363A92AB82DCD00082F8A /* igoMoneyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = igoMoneyApp.swift; sourceTree = "<group>"; };
-		180363AB2AB82DCD00082F8A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,10 +51,8 @@
 		180363A82AB82DCD00082F8A /* igoMoney */ = {
 			isa = PBXGroup;
 			children = (
-				180363A92AB82DCD00082F8A /* igoMoneyApp.swift */,
-				180363AB2AB82DCD00082F8A /* ContentView.swift */,
-				180363AD2AB82DCE00082F8A /* Assets.xcassets */,
-				180363AF2AB82DCE00082F8A /* Preview Content */,
+				180363B82AB8316C00082F8A /* Source */,
+				180363B72AB8316800082F8A /* Resource */,
 			);
 			path = igoMoney;
 			sourceTree = "<group>";
@@ -65,6 +63,40 @@
 				180363B02AB82DCE00082F8A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		180363B72AB8316800082F8A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				180363AF2AB82DCE00082F8A /* Preview Content */,
+				180363AD2AB82DCE00082F8A /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		180363B82AB8316C00082F8A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				180363B92AB8317100082F8A /* App */,
+				180363BA2AB8317700082F8A /* MainScene */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		180363B92AB8317100082F8A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				180363A92AB82DCD00082F8A /* igoMoneyApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		180363BA2AB8317700082F8A /* MainScene */ = {
+			isa = PBXGroup;
+			children = (
+				180363AB2AB82DCD00082F8A /* MainScene.swift */,
+			);
+			path = MainScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180363AC2AB82DCD00082F8A /* ContentView.swift in Sources */,
+				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +298,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -295,7 +327,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
