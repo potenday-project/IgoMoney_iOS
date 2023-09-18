@@ -12,6 +12,8 @@
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
+		18D623692AB8A919006EAC39 /* OnBoardingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* OnBoardingScene.swift */; };
+		18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* AuthButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		18D623682AB8A919006EAC39 /* OnBoardingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScene.swift; sourceTree = "<group>"; };
+		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				18D6236A2AB8BAC7006EAC39 /* Utility */,
+				18D623672AB8A90A006EAC39 /* AuthScene */,
 				180363B92AB8317100082F8A /* App */,
 				180363BA2AB8317700082F8A /* MainScene */,
 			);
@@ -99,6 +105,22 @@
 				180363AB2AB82DCD00082F8A /* MainScene.swift */,
 			);
 			path = MainScene;
+			sourceTree = "<group>";
+		};
+		18D623672AB8A90A006EAC39 /* AuthScene */ = {
+			isa = PBXGroup;
+			children = (
+				18D623682AB8A919006EAC39 /* OnBoardingScene.swift */,
+			);
+			path = AuthScene;
+			sourceTree = "<group>";
+		};
+		18D6236A2AB8BAC7006EAC39 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				18D6236B2AB8BACD006EAC39 /* AuthButton.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +199,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D623692AB8A919006EAC39 /* OnBoardingScene.swift in Sources */,
+				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 			);
