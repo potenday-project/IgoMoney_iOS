@@ -11,31 +11,31 @@ import ComposableArchitecture
 struct ProfileSettingView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            Text("반가워요!\n닉네임을 설정해주세요.")
+            Text(TextConstants.nickNameTitle)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 20, weight: .bold))
-                .padding(.horizontal)
+                .padding(.horizontal, 24)
             
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
-                    Text("닉네임")
+                    Text(TextConstants.nickName)
                         .font(.system(size: 18, weight: .bold))
                     
                     Spacer()
                     
-                    Text("최소 3자 / 최대 8자")
+                    Text(TextConstants.nickNameRuleText)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(ColorConstants.gray6)
                 }
                 
                 HStack {
-                    TextField("한글, 영어, 숫자만 사용가능합니다.", text: .constant(""))
+                    TextField(TextConstants.nickNamePlaceholder, text: .constant(""))
                         .font(.system(size: 16, weight: .medium))
                     
                     Button {
                         print(123)
                     } label: {
-                        Text("중복확인")
+                        Text(TextConstants.confirmDuplicateText)
                     }
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(ColorConstants.gray7)
@@ -48,11 +48,12 @@ struct ProfileSettingView: View {
                 .background(ColorConstants.primary7)
                 .cornerRadius(8)
                 
+                // Reducer 상태에 따라서 값 변경
                 Text("최소 3자 이상의 영문, 한글, 숫자만 입력해주세요.")
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(ColorConstants.primary)
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 24)
             
             Spacer()
             
@@ -62,7 +63,7 @@ struct ProfileSettingView: View {
                 HStack {
                     Spacer()
                     
-                    Text("챌린지 시작하기")
+                    Text(TextConstants.startText)
                     
                     Spacer()
                 }
@@ -87,5 +88,16 @@ struct ProfileSettingView_Previews: PreviewProvider {
         NavigationView {
             ProfileSettingView()
         }
+    }
+}
+
+private extension ProfileSettingView {
+    enum TextConstants {
+        static let nickNameTitle = "반가워요!\n닉네임을 설정해주세요."
+        static let nickName = "닉네임"
+        static let nickNameRuleText = "최소 3자 / 최대 8자"
+        static let nickNamePlaceholder = "한글, 영어, 숫자만 사용가능합니다."
+        static let confirmDuplicateText = "중복확인"
+        static let startText = "챌린지 시작하기"
     }
 }
