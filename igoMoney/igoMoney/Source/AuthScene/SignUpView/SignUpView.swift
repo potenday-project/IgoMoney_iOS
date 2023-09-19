@@ -29,10 +29,17 @@ struct SignUpView: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Image(systemName: "checkmark.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
+                    
+                    WithViewStore(store, observe: { $0 }) { viewStore in
+                        Button {
+                            viewStore.send(.didTapAll)
+                        } label: {
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                        }
+                    }
                     
                     Text("전체 동의")
                         .font(.system(size: 18, weight: .bold))

@@ -67,7 +67,7 @@ struct AuthScene: View {
                         SignUpView(
                             store: Store(
                                 initialState: SignUpCore.State(),
-                                reducer: { SignUpCore() }
+                                reducer: { SignUpCore()._printChanges() }
                             )
                         )
                         .padding(.top, UIScreen.main.bounds.height / 2)
