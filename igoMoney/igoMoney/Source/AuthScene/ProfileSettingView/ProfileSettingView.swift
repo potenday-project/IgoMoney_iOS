@@ -79,23 +79,32 @@ struct ProfileSettingView: View {
             
             Spacer()
             
-            Button {
-                print(123)
-            } label: {
-                HStack {
-                    Spacer()
-                    
-                    Text(TextConstants.startText)
-                    
-                    Spacer()
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                Button {
+                    viewStore.send(.startChallenge)
+                } label: {
+                    HStack {
+                        Spacer()
+                        
+                        Text(TextConstants.startText)
+                        
+                        Spacer()
+                    }
                 }
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(
+                    viewStore.nickNameState == .completeConfirm ?
+                    Color.black : ColorConstants.gray7
+                )
+                .padding(.vertical)
+                .background(
+                    viewStore.nickNameState == .completeConfirm ?
+                    ColorConstants.primary3 : ColorConstants.gray8
+                )
+                .cornerRadius(8)
+                .padding([.horizontal, .bottom], 24)
+                .disabled(viewStore.nickNameState != .completeConfirm)
             }
-            .font(.system(size: 18, weight: .bold))
-            .foregroundColor(ColorConstants.gray7)
-            .padding(.vertical)
-            .background(ColorConstants.gray8)
-            .cornerRadius(8)
-            .padding([.horizontal, .bottom], 24)
         }
         .navigationBarHidden(false)
         .navigationBarTitleDisplayMode(.inline)

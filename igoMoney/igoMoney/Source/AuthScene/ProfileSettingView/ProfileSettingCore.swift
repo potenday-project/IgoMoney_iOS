@@ -15,6 +15,7 @@ struct ProfileSettingCore: Reducer {
     enum Action: Equatable {
         // User Action
         case confirmNickName
+        case startChallenge
         
         // Inner Action
         case _changeText(String)
@@ -31,6 +32,10 @@ struct ProfileSettingCore: Reducer {
                 return .none
             }
             state.nickNameState = randomElement
+            return .none
+            
+        case .startChallenge:
+            // TODO: - 로그인 후 화면 이동하기
             return .none
             
         // Inner Action
