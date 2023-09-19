@@ -11,8 +11,11 @@
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
+		18CD8F232AB96F4A006FEA6F /* HelpScrollCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */; };
+		18CD8F252AB97084006FEA6F /* HelpScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F242AB97084006FEA6F /* HelpScrollView.swift */; };
+		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
-		18D623692AB8A919006EAC39 /* OnBoardingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* OnBoardingScene.swift */; };
+		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* AuthButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,7 +25,10 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		18D623682AB8A919006EAC39 /* OnBoardingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScene.swift; sourceTree = "<group>"; };
+		18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollCore.swift; sourceTree = "<group>"; };
+		18CD8F242AB97084006FEA6F /* HelpScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollView.swift; sourceTree = "<group>"; };
+		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
+		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,10 +113,21 @@
 			path = MainScene;
 			sourceTree = "<group>";
 		};
+		18CD8F212AB96F39006FEA6F /* HelpScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */,
+				18CD8F242AB97084006FEA6F /* HelpScrollView.swift */,
+			);
+			path = HelpScrollView;
+			sourceTree = "<group>";
+		};
 		18D623672AB8A90A006EAC39 /* AuthScene */ = {
 			isa = PBXGroup;
 			children = (
-				18D623682AB8A919006EAC39 /* OnBoardingScene.swift */,
+				18CD8F212AB96F39006FEA6F /* HelpScrollView */,
+				18D623682AB8A919006EAC39 /* AuthScene.swift */,
+				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
 			);
 			path = AuthScene;
 			sourceTree = "<group>";
@@ -199,10 +216,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18D623692AB8A919006EAC39 /* OnBoardingScene.swift in Sources */,
+				18CD8F252AB97084006FEA6F /* HelpScrollView.swift in Sources */,
+				18CD8F232AB96F4A006FEA6F /* HelpScrollCore.swift in Sources */,
+				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
+				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,7 +432,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
