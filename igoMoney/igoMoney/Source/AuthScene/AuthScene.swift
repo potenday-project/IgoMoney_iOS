@@ -10,41 +10,64 @@ import ComposableArchitecture
 
 struct AuthScene: View {
     let store: StoreOf<AuthCore>
+    @State private var showSheet: Bool = false
     
     var body: some View {
-        VStack {
-            HelpScrollView(
-                store: store.scope(
-                    state: \.helpState,
-                    action: AuthCore.Action.helpAction
+        ZStack(alignment: .top) {
+            // Login Section
+            VStack {
+                HelpScrollView(
+                    store: store.scope(
+                        state: \.helpState,
+                        action: AuthCore.Action.helpAction
+                    )
                 )
-            )
-            .padding(.top, 80)
-            
-            Spacer()
-            
-            AuthButton(
-                title: "카카오로 로그인",
-                iconName: "icon_kakao",
-                color: Color("kakao_color")
-            ) {
-                print("카카오")
+                .padding(.top, 80)
+                
+                Spacer()
+                
+                AuthButton(
+                    title: "카카오로 로그인",
+                    iconName: "icon_kakao",
+                    color: Color("kakao_color")
+                ) {
+                    withAnimation {
+                        showSheet.toggle()
+                    }
+                }
+                .padding(.horizontal, 24)
+                
+                AuthButton(
+                    title: "애플로 로그인",
+                    iconName: "icon_apple",
+                    color: .white
+                ) {
+                    print("애플")
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke()
+                )
+                .padding(.horizontal, 24)
+                .padding(.bottom, 80)
             }
-            .padding(.horizontal, 24)
             
-            AuthButton(
-                title: "애플로 로그인",
-                iconName: "icon_apple",
-                color: .white
-            ) {
-                print("애플")
+            if showSheet {
+                ZStack {
+                    Color.gray.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation {
+                                showSheet.toggle()
+                            }
+                        }
+                    
+                    SignUpView()
+                        .padding(.top, UIScreen.main.bounds.height / 2)
+                        .transition(.move(edge: .bottom))
+                        .animation(.spring(), value: UUID())
+                }
             }
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke()
-            )
-            .padding(.horizontal, 24)
-            .padding(.bottom, 80)
         }
     }
 }
