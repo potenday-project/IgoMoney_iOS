@@ -43,28 +43,37 @@ struct ProfileSettingView: View {
                         .font(.system(size: 16, weight: .medium))
                         
                         Button {
-                            print(123)
+                            viewStore.send(.confirmNickName)
                         } label: {
                             Text(TextConstants.confirmDuplicateText)
                         }
                         .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(ColorConstants.gray7)
+                        .foregroundColor(
+                            viewStore.nickNameState == .disableConfirm ? ColorConstants.gray7 : .white
+                        )
                         .padding(.horizontal, 8)
                         .padding(.vertical, 5)
-                        .background(ColorConstants.gray8)
+                        .background(
+                            viewStore.nickNameState == .disableConfirm ?
+                            ColorConstants.gray7 : viewStore.nickNameState == .completeConfirm ?
+                            ColorConstants.primary3 : ColorConstants.primary
+                        )
                         .cornerRadius(.infinity)
-                        .opacity(viewStore.showNickNameConfirm ? 1 : .zero)
-                        .disabled(viewStore.showNickNameConfirm == false)
+                        .opacity(viewStore.nickNameState == .disableConfirm ? .zero : 1)
+                        .disabled(viewStore.nickNameState == .disableConfirm)
                     }
                     .padding(12)
                     .background(ColorConstants.primary7)
                     .cornerRadius(8)
                 }
                 
-                // Reducer 상태에 따라서 값 변경
-                Text("최소 3자 이상의 영문, 한글, 숫자만 입력해주세요.")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(ColorConstants.primary)
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    Text(viewStore.nickNameState.description)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(
+                            viewStore.nickNameState == .duplicateNickName ? Color.red : .black
+                        )
+                }
             }
             .padding(.horizontal, 24)
             
