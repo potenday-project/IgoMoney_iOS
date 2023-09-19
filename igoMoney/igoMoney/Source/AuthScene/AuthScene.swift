@@ -8,16 +8,20 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct OnBoardingScene: View {
+struct AuthScene: View {
+    let store: StoreOf<AuthCore>
+    
     var body: some View {
         VStack {
             Spacer()
                 .frame(height: 80)
             
-            ImageScrollBannerView(store: Store(initialState: HelpScrollCore.State(), reducer: {
-                HelpScrollCore()
-                    ._printChanges()
-            }))
+            HelpScrollView(
+                store: store.scope(
+                    state: \.helpState,
+                    action: AuthCore.Action.helpAction
+                )
+            )
             
             AuthButton(
                 title: "카카오로 로그인",
@@ -46,6 +50,11 @@ struct OnBoardingScene: View {
 
 struct OnBoarding_Preview: PreviewProvider {
     static var previews: some View {
-        OnBoardingScene()
+        AuthScene(
+            store: Store(
+                initialState: AuthCore.State(),
+                reducer: { AuthCore() }
+            )
+        )
     }
 }
