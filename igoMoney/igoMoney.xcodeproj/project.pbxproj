@@ -16,6 +16,7 @@
 		18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */; };
 		18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */; };
 		18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F312AB9A57D006FEA6F /* Constants.swift */; };
+		18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* AuthButton.swift */; };
@@ -33,6 +34,7 @@
 		18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCore.swift; sourceTree = "<group>"; };
 		18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provier.swift; sourceTree = "<group>"; };
 		18CD8F312AB9A57D006FEA6F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,9 +139,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		18CD8F332AB9BC4F006FEA6F /* ProfileSettingView */ = {
+			isa = PBXGroup;
+			children = (
+				18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */,
+			);
+			path = ProfileSettingView;
+			sourceTree = "<group>";
+		};
 		18D623672AB8A90A006EAC39 /* AuthScene */ = {
 			isa = PBXGroup;
 			children = (
+				18CD8F332AB9BC4F006FEA6F /* ProfileSettingView */,
 				18CD8F292AB9823B006FEA6F /* SignUpView */,
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
@@ -241,6 +252,7 @@
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
+				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

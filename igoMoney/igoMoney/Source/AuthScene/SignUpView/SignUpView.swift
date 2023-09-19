@@ -22,23 +22,23 @@ struct SignUpView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            informationBaseView(with: "약관에 동의해주세요.")
+            informationBaseView(with: TextConstants.title)
                 .font(.system(size: 20, weight: .bold))
             
-            informationBaseView(with: "필수항목에 대한 약관에 동의해주세요.")
+            informationBaseView(with: TextConstants.subTitle)
                 .font(.system(size: 14, weight: .regular))
             
             WithViewStore(store, observe: { $0 }) { viewStore in
                 CheckButton(isAccentColor: viewStore.isAgreeAll) {
                     viewStore.send(.didTapAll)
                 } content: {
-                    Text("전체 동의")
+                    Text(TextConstants.allAgreeText)
                         .font(.system(size: 18, weight: .bold))
                 }
             }
             
             CheckButton(isAccentColor: false, isHidden: true, action: { }) {
-                Text("서비스 이용을 위해 아래 약관에 모두 동의합니다.")
+                Text(TextConstants.allAgreeDetailText)
                     .font(.system(size: 14, weight: .medium))
             }
             
@@ -49,7 +49,7 @@ struct SignUpView: View {
             
             WithViewStore(store, observe: { $0 }) { viewStore in
                 PrivacyCheckView(
-                    title: "개인 정보 처리방침",
+                    title: TextConstants.privacyText,
                     isAccentColor: viewStore.isAgreePrivacy
                 ) {
                     viewStore.send(.didTapAgreePrivacy)
@@ -60,7 +60,7 @@ struct SignUpView: View {
 
             WithViewStore(store, observe: { $0 }) { viewStore in
                 PrivacyCheckView(
-                    title: "서비스 이용약관",
+                    title: TextConstants.termsText,
                     isAccentColor: viewStore.isAgreeTerms
                 ) {
                     viewStore.send(.didTapAgreeTerms)
@@ -78,7 +78,7 @@ struct SignUpView: View {
                     HStack {
                         Spacer()
                         
-                        Text("확인")
+                        Text(TextConstants.confirmText)
                         
                         Spacer()
                     }
@@ -90,7 +90,7 @@ struct SignUpView: View {
                 .disabled(viewStore.isAgreeAll == false)
                 .padding(.vertical)
                 .background(
-                    viewStore.isAgreeAll ? Color("AccentColor2") : .gray.opacity(0.3)
+                    viewStore.isAgreeAll ? ColorConstants.primary : .gray.opacity(0.3)
                 )
                 .cornerRadius(8)
                 .padding(.bottom, 24)
@@ -125,7 +125,7 @@ struct PrivacyCheckView: View {
         CheckButton(isAccentColor: isAccentColor) {
             action()
         } content: {
-            Text("필수")
+            Text(TextConstants.necessaryText)
                 .foregroundColor(.gray)
                 .font(.system(size: 12, weight: .regular))
                 .padding(.horizontal, 8)
@@ -138,7 +138,7 @@ struct PrivacyCheckView: View {
             
             Spacer()
             
-            Button("보기") {
+            Button(TextConstants.showText) {
                 viewAction()
             }
             .font(.system(size: 16, weight: .medium))
@@ -156,7 +156,7 @@ struct CheckButton<Content: View>: View {
     
     @ViewBuilder
     private func signUpCheckImage() -> some View {
-        Image(systemName: "checkmark.circle")
+        Image(systemName: TextConstants.iconName)
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
@@ -200,5 +200,30 @@ struct SignUpView_Previews: PreviewProvider {
                 reducer: { SignUpCore() }
             )
         )
+    }
+}
+
+private extension SignUpView {
+    enum TextConstants {
+        static let title = "약관에 동의해주세요."
+        static let subTitle = "필수항목에 대한 약관에 동의해주세요."
+        static let allAgreeText = "전체 동의"
+        static let allAgreeDetailText = "서비스 이용을 위해 아래 약관에 모두 동의합니다."
+        static let privacyText = "개인 정보 처리방침"
+        static let termsText = "서비스 이용약관"
+        static let confirmText = "확인"
+    }
+}
+
+private extension PrivacyCheckView {
+    enum TextConstants {
+        static let necessaryText = "필수"
+        static let showText = "보기"
+    }
+}
+
+private extension CheckButton {
+    enum TextConstants {
+        static let iconName = "checkmark.circle"
     }
 }
