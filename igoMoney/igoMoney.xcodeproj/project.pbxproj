@@ -28,6 +28,7 @@
 		18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollCore.swift; sourceTree = "<group>"; };
 		18CD8F242AB97084006FEA6F /* HelpScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollView.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
+		18CD8F282AB98212006FEA6F /* igoMoney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoney.entitlements; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +64,7 @@
 		180363A82AB82DCD00082F8A /* igoMoney */ = {
 			isa = PBXGroup;
 			children = (
+				18CD8F282AB98212006FEA6F /* igoMoney.entitlements */,
 				180363B82AB8316C00082F8A /* Source */,
 				180363B72AB8316800082F8A /* Resource */,
 			);
@@ -348,6 +350,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = igoMoney/igoMoney.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
@@ -378,6 +381,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = igoMoney/igoMoney.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
