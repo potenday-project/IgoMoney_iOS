@@ -17,7 +17,11 @@ struct AuthCore: Reducer {
     enum Action: Equatable {
         // User Action
         case presentSignUp(Bool)
-        case didTapKakaoLogin
+        case didTapLoginButton(Provider)
+        
+        // Inner Action
+        case _loginWithKakao
+        case _loginWithApple
         
         // Child Action
         case signUpAction(SignUpCore.Action)
@@ -26,9 +30,18 @@ struct AuthCore: Reducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .didTapKakaoLogin:
-                return .run { send in
-                   await send(.presentSignUp(true))
+            // User Action
+            case .didTapLoginButton(let provider):
+                switch provider {
+                case .kakao:
+                    return .run { send in
+                        await send(._loginWithKakao)
+                    }
+                    
+                case .apple:
+                    return .run { send in
+                        await send(._loginWithApple)
+                    }
                 }
                 
             case .presentSignUp(true):
@@ -40,11 +53,24 @@ struct AuthCore: Reducer {
                 state.showSignUp = false
                 state.signUpState = nil
                 return .none
+            
+            // Inner Action
+            case ._loginWithKakao:
+                return .run { send in
+                    await send(.presentSignUp(true))
+                }
                 
+            case ._loginWithApple:
+                return .run { send in
+                    await send(.presentSignUp(true))
+                }
+                
+            // Child Action
             case .signUpAction(.didTapConfirm):
                 return .run { send in
                     await send(.presentSignUp(false))
                 }
+                
                 
             default:
                 return .none

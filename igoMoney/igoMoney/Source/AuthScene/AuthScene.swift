@@ -19,37 +19,12 @@ struct AuthScene: View {
             
             // Login Section
             VStack {
-                Spacer()
-                    .frame(height: 48)
-                
-                Image("icon_text_main")
-                
-                Spacer()
-                    .frame(height: 100)
-                
-                Image("icon_main")
-                
-                Spacer()
-                
-                VStack(spacing: 12) {
-                    Text(TextConstants.mainHelpText)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: 26, weight: .bold))
-                        .foregroundColor(.white)
-                    
-                    Text(TextConstants.subHelpText)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.white)
-                }
-                
-                Spacer()
-                    .frame(height: 80)
+                HelpSection()
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
                     ForEach(viewStore.providers, id: \.rawValue) { provider in
                         AuthButton(provider: provider) {
-                            print("Tapped")
+                            viewStore.send(.didTapLoginButton(provider))
                         }
                         .padding(.horizontal)
                         .padding(.bottom, provider == .apple ? 80 : .zero)
@@ -82,6 +57,39 @@ struct AuthScene: View {
     }
 }
 
+struct HelpSection: View {
+    var body: some View {
+        VStack {
+            Spacer()
+                .frame(height: 48)
+            
+            Image("icon_text_main")
+            
+            Spacer()
+                .frame(height: 100)
+            
+            Image("icon_main")
+            
+            Spacer()
+            
+            VStack(spacing: 12) {
+                Text(TextConstants.mainHelpText)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundColor(.white)
+                
+                Text(TextConstants.subHelpText)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.white)
+            }
+            
+            Spacer()
+                .frame(height: 80)
+        }
+    }
+}
+
 struct OnBoarding_Preview: PreviewProvider {
     static var previews: some View {
         AuthScene(
@@ -93,7 +101,7 @@ struct OnBoarding_Preview: PreviewProvider {
     }
 }
 
-private extension AuthScene {
+private extension HelpSection {
     enum TextConstants {
         static let mainHelpText = "일주일동안\n함께하는 챌린지"
         static let subHelpText = "돈을 절약하고 싶은 사람들과 함께 일주일\n버티기 챌린지에 도전해보세요!"
