@@ -43,19 +43,19 @@ struct ProfileSettingView: View {
                     }
                     
                     WithViewStore(store, observe: { $0 }) { viewStore in
-                        if viewStore.showNickNameConfirm {
-                            Button {
-                                print(123)
-                            } label: {
-                                Text(TextConstants.confirmDuplicateText)
-                            }
-                            .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(ColorConstants.gray7)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 5)
-                            .background(ColorConstants.gray8)
-                            .cornerRadius(.infinity)
+                        Button {
+                            print(123)
+                        } label: {
+                            Text(TextConstants.confirmDuplicateText)
                         }
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(ColorConstants.gray7)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background(ColorConstants.gray8)
+                        .cornerRadius(.infinity)
+                        .opacity(viewStore.showNickNameConfirm ? 1 : .zero)
+                        .disabled(viewStore.showNickNameConfirm == false)
                     }
                 }
                 .padding(12)
