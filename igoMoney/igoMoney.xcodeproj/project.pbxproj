@@ -11,8 +11,6 @@
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
-		18CD8F232AB96F4A006FEA6F /* HelpScrollCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */; };
-		18CD8F252AB97084006FEA6F /* HelpScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F242AB97084006FEA6F /* HelpScrollView.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
 		18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */; };
@@ -27,8 +25,6 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollCore.swift; sourceTree = "<group>"; };
-		18CD8F242AB97084006FEA6F /* HelpScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScrollView.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F282AB98212006FEA6F /* igoMoney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoney.entitlements; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -119,15 +115,6 @@
 			path = MainScene;
 			sourceTree = "<group>";
 		};
-		18CD8F212AB96F39006FEA6F /* HelpScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				18CD8F222AB96F4A006FEA6F /* HelpScrollCore.swift */,
-				18CD8F242AB97084006FEA6F /* HelpScrollView.swift */,
-			);
-			path = HelpScrollView;
-			sourceTree = "<group>";
-		};
 		18CD8F292AB9823B006FEA6F /* SignUpView */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				18CD8F292AB9823B006FEA6F /* SignUpView */,
-				18CD8F212AB96F39006FEA6F /* HelpScrollView */,
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
 			);
@@ -232,8 +218,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18CD8F252AB97084006FEA6F /* HelpScrollView.swift in Sources */,
-				18CD8F232AB96F4A006FEA6F /* HelpScrollCore.swift in Sources */,
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
