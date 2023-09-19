@@ -26,16 +26,17 @@ struct AuthScene: View {
                 
                 Spacer()
                 
-                AuthButton(
-                    title: "카카오로 로그인",
-                    iconName: "icon_kakao",
-                    color: Color("kakao_color")
-                ) {
-                    withAnimation {
-                        showSheet.toggle()
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    AuthButton(
+                        title: "카카오로 로그인",
+                        iconName: "icon_kakao",
+                        color: Color("kakao_color")
+                    ) {
+                        viewStore.send(.didTapKakaoLogin)
                     }
+                    .padding(.horizontal, 24)
                 }
-                .padding(.horizontal, 24)
+                
                 
                 AuthButton(
                     title: "애플로 로그인",
@@ -52,20 +53,22 @@ struct AuthScene: View {
                 .padding(.bottom, 80)
             }
             
-            if showSheet {
-                ZStack {
-                    Color.gray.opacity(0.2)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation {
-                                showSheet.toggle()
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                if viewStore.showSignUp {
+                    ZStack {
+                        Color.gray.opacity(0.2)
+                            .edgesIgnoringSafeArea(.all)
+                            .onTapGesture {
+                                withAnimation {
+                                    showSheet.toggle()
+                                }
                             }
-                        }
-                    
-                    SignUpView()
-                        .padding(.top, UIScreen.main.bounds.height / 2)
-                        .transition(.move(edge: .bottom))
-                        .animation(.spring(), value: UUID())
+                        
+                        SignUpView()
+                            .padding(.top, UIScreen.main.bounds.height / 2)
+                            .transition(.move(edge: .bottom))
+                            .animation(.spring(), value: UUID())
+                    }
                 }
             }
         }
