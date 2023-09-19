@@ -20,12 +20,13 @@ struct SignUpView: View {
         }
     }
     
-    
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             informationBaseView(with: "약관에 동의해주세요.")
+                .font(.system(size: 20, weight: .bold))
+            
             informationBaseView(with: "필수항목에 대한 약관에 동의해주세요.")
+                .font(.system(size: 14, weight: .regular))
             
             WithViewStore(store, observe: { $0 }) { viewStore in
                 CheckButton(isAccentColor: viewStore.isAgreeAll) {
@@ -140,7 +141,7 @@ struct PrivacyCheckView: View {
             Button("보기") {
                 viewAction()
             }
-            .font(.system(size: 12, weight: .regular))
+            .font(.system(size: 16, weight: .medium))
             .foregroundColor(.gray)
         }
     }
