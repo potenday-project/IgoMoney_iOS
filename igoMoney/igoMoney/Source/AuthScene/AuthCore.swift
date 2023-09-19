@@ -42,6 +42,11 @@ struct AuthCore: Reducer {
                 state.signUpState = nil
                 return .none
                 
+            case .signUpAction(.didTapConfirm):
+                return .run { send in
+                    await send(.presentSignUp(false))
+                }
+                
             default:
                 return .none
             }
