@@ -46,10 +46,8 @@ struct SignUpCore: Reducer {
             return .none
             
         case .didTapAgreeTerms:
-            state.isAgreePrivacy.toggle()
+            state.isAgreeTerms.toggle()
             return .none
-            
-        default: return .none
         }
     }
 }

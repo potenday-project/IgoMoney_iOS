@@ -67,6 +67,9 @@ struct SignUpView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
+                            .accentColor(
+                                viewStore.isAgreePrivacy ? Color("AccentColor2") : .gray.opacity(0.3)
+                            )
                     }
                 }
 
@@ -100,6 +103,9 @@ struct SignUpView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 24, height: 24)
+                            .accentColor(
+                                viewStore.isAgreeTerms ? Color("AccentColor2") : .gray.opacity(0.3)
+                            )
                     }
                 }
                 
