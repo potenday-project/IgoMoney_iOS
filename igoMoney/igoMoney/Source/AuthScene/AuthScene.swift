@@ -10,50 +10,65 @@ import ComposableArchitecture
 
 struct AuthScene: View {
     let store: StoreOf<AuthCore>
-    @State private var showSheet: Bool = false
     
     var body: some View {
-        ZStack(alignment: .top) {
-            Color("background_color")
-                .edgesIgnoringSafeArea(.all)
-            
-            // Login Section
-            VStack {
-                HelpSection()
+        NavigationView {
+            ZStack(alignment: .top) {
+                Color("background_color")
+                    .edgesIgnoringSafeArea(.all)
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
-                    ForEach(viewStore.providers, id: \.rawValue) { provider in
-                        AuthButton(provider: provider) {
-                            viewStore.send(.didTapLoginButton(provider))
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom, provider == .apple ? 80 : .zero)
+                    NavigationLink(
+                        destination: ProfileSettingView(),
+                        isActive: viewStore.binding(
+                            get: \.showProfileSetting,
+                            send: AuthCore.Action.presentProfileSetting)
+                    ) {
+                        EmptyView()
                     }
                 }
-            }
-            
-            IfLetStore(
-                store.scope(
-                    state: \.signUpState,
-                    action: AuthCore.Action.signUpAction
-                )
-            ) { store in
-                ZStack {
-                    WithViewStore(self.store, observe: { $0 }) { viewStore in
-                        Color.gray.opacity(0.2)
-                            .onTapGesture {
-                                viewStore.send(.presentSignUp(false))
-                            }
-                            .edgesIgnoringSafeArea(.all)
-                    }
+                
+                // Login Section
+                VStack {
+                    HelpSection()
                     
-                    SignUpView(store: store)
-                        .padding(.top, UIScreen.main.bounds.height / 2)
-                        .transition(.move(edge: .bottom))
-                        .animation(.spring(), value: UUID())
+                    WithViewStore(store, observe: { $0 }) { viewStore in
+                        ForEach(viewStore.providers, id: \.rawValue) { provider in
+                            AuthButton(provider: provider) {
+                                viewStore.send(.didTapLoginButton(provider))
+                            }
+                            .padding(.horizontal)
+                            .padding(.bottom, provider == .apple ? 80 : .zero)
+                        }
+                    }
+                }
+                
+                IfLetStore(
+                    store.scope(
+                        state: \.signUpState,
+                        action: AuthCore.Action.signUpAction
+                    )
+                ) { store in
+                    ZStack {
+                        WithViewStore(self.store, observe: { $0 }) { viewStore in
+                            Color.gray.opacity(0.2)
+                                .onTapGesture {
+                                    viewStore.send(.presentSignUp(false))
+                                }
+                                .edgesIgnoringSafeArea(.all)
+                        }
+                        
+                        SignUpView(store: store)
+                            .padding(.top, UIScreen.main.bounds.height / 2)
+                            .transition(.move(edge: .bottom))
+                            .animation(.spring(), value: UUID())
+                    }
                 }
             }
+            .navigationTitle("")
+            .navigationBarHidden(true)
         }
+        .navigationViewStyle(.stack)
     }
 }
 

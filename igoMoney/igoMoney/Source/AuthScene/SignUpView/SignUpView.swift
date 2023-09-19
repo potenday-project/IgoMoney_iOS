@@ -156,7 +156,7 @@ struct CheckButton<Content: View>: View {
     
     @ViewBuilder
     private func signUpCheckImage() -> some View {
-        Image(systemName: TextConstants.iconName)
+        Image(systemName: "checkmark.circle")
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
@@ -219,11 +219,5 @@ private extension PrivacyCheckView {
     enum TextConstants {
         static let necessaryText = "필수"
         static let showText = "보기"
-    }
-}
-
-private extension CheckButton {
-    enum TextConstants {
-        static let iconName = "checkmark.circle"
     }
 }

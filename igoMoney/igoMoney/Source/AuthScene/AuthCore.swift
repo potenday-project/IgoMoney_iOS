@@ -10,13 +10,17 @@ struct AuthCore: Reducer {
     struct State: Equatable {
         let providers: [Provider] = Provider.allCases
         var showSignUp: Bool = false
+        var isNavigationBarHidden: Bool = true
+        var showProfileSetting: Bool = false
         
         var signUpState: SignUpCore.State?
+//        var profileSettingState
     }
     
     enum Action: Equatable {
         // User Action
         case presentSignUp(Bool)
+        case presentProfileSetting(Bool)
         case didTapLoginButton(Provider)
         
         // Inner Action
@@ -53,6 +57,13 @@ struct AuthCore: Reducer {
                 state.showSignUp = false
                 state.signUpState = nil
                 return .none
+                
+            case .presentProfileSetting(true):
+                return .none
+                
+            case .presentProfileSetting(false):
+                state.showProfileSetting = false
+                return .none
             
             // Inner Action
             case ._loginWithKakao:
@@ -67,10 +78,10 @@ struct AuthCore: Reducer {
                 
             // Child Action
             case .signUpAction(.didTapConfirm):
+                state.showProfileSetting = true
                 return .run { send in
                     await send(.presentSignUp(false))
                 }
-                
                 
             default:
                 return .none
