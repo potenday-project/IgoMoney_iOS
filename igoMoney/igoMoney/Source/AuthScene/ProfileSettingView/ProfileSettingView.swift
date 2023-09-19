@@ -13,58 +13,25 @@ struct ProfileSettingView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
+            // Header View
             Text(TextConstants.nickNameTitle)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 20, weight: .bold))
                 .padding(.top, 26)
                 .padding(.horizontal, 24)
             
+            // NickName Input Form
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(TextConstants.nickName)
-                        .font(.system(size: 18, weight: .bold))
-                    
-                    Spacer()
-                    
-                    Text(TextConstants.nickNameRuleText)
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(ColorConstants.gray6)
-                }
+                InputHeaderView(
+                    title: TextConstants.nickName,
+                    detail: TextConstants.nickNameRuleText
+                )
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
-                    HStack {
-                        TextField(
-                            TextConstants.nickNamePlaceholder,
-                            text: viewStore.binding(
-                                get: \.nickName,
-                                send: ProfileSettingCore.Action._changeText
-                            )
-                        )
-                        .font(.system(size: 16, weight: .medium))
-                        
-                        Button {
-                            viewStore.send(.confirmNickName)
-                        } label: {
-                            Text(TextConstants.confirmDuplicateText)
-                        }
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(
-                            viewStore.nickNameState == .disableConfirm ? ColorConstants.gray7 : .white
-                        )
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 5)
-                        .background(
-                            viewStore.nickNameState == .disableConfirm ?
-                            ColorConstants.gray7 : viewStore.nickNameState == .completeConfirm ?
-                            ColorConstants.primary3 : ColorConstants.primary
-                        )
-                        .cornerRadius(.infinity)
-                        .opacity(viewStore.nickNameState == .disableConfirm ? .zero : 1)
-                        .disabled(viewStore.nickNameState == .disableConfirm)
-                    }
-                    .padding(12)
-                    .background(ColorConstants.primary7)
-                    .cornerRadius(8)
+                    InputFormView(
+                        placeholder: TextConstants.nickNamePlaceholder,
+                        viewStore: viewStore
+                    )
                 }
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
@@ -79,6 +46,7 @@ struct ProfileSettingView: View {
             
             Spacer()
             
+            // Start Challenge Button
             WithViewStore(store, observe: { $0 }) { viewStore in
                 Button {
                     viewStore.send(.startChallenge)
@@ -114,6 +82,71 @@ struct ProfileSettingView: View {
     }
 }
 
+struct InputHeaderView: View {
+    let title: String?
+    let detail: String?
+    
+    var body: some View {
+        HStack {
+            if let title = title {
+                Text(title)
+                    .font(.system(size: 18, weight: .bold))
+            }
+            
+            Spacer()
+            
+            if let detail = detail {
+                Text(detail)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(ColorConstants.gray6)
+            }
+        }
+    }
+}
+
+struct InputFormView: View {
+    let placeholder: String
+    
+    let viewStore: ViewStoreOf<ProfileSettingCore>
+    
+    var body: some View {
+        HStack {
+            TextField(
+                placeholder,
+                text: viewStore.binding(
+                    get: \.nickName,
+                    send: ProfileSettingCore.Action._changeText
+                )
+            )
+            .font(.system(size: 16, weight: .medium))
+            
+            Button {
+                viewStore.send(.confirmNickName)
+            } label: {
+                Text(TextConstants.confirmDuplicateText)
+            }
+            .font(.system(size: 12, weight: .medium))
+            .foregroundColor(
+                viewStore.nickNameState == .disableConfirm ? ColorConstants.gray7 : .white
+            )
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(
+                viewStore.nickNameState == .disableConfirm ?
+                ColorConstants.gray7 : viewStore.nickNameState == .completeConfirm ?
+                ColorConstants.primary3 : ColorConstants.primary
+            )
+            .cornerRadius(.infinity)
+            .opacity(viewStore.nickNameState == .disableConfirm ? .zero : 1)
+            .disabled(viewStore.nickNameState == .disableConfirm)
+        }
+        .padding(12)
+        .background(ColorConstants.primary7)
+        .cornerRadius(8)
+    }
+    
+}
+
 struct ProfileSettingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
@@ -133,7 +166,13 @@ private extension ProfileSettingView {
         static let nickName = "닉네임"
         static let nickNameRuleText = "최소 3자 / 최대 8자"
         static let nickNamePlaceholder = "한글, 영어, 숫자만 사용가능합니다."
-        static let confirmDuplicateText = "중복확인"
+        
         static let startText = "챌린지 시작하기"
+    }
+}
+
+private extension InputFormView {
+    enum TextConstants {
+        static let confirmDuplicateText = "중복확인"
     }
 }
