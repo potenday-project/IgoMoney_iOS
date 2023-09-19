@@ -15,6 +15,7 @@
 		18CD8F252AB97084006FEA6F /* HelpScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F242AB97084006FEA6F /* HelpScrollView.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
+		18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* AuthButton.swift */; };
@@ -31,6 +32,7 @@
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F282AB98212006FEA6F /* igoMoney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoney.entitlements; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCore.swift; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				18CD8F2A2AB98249006FEA6F /* SignUpView.swift */,
+				18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */,
 			);
 			path = SignUpView;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				18CD8F232AB96F4A006FEA6F /* HelpScrollCore.swift in Sources */,
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
+				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,

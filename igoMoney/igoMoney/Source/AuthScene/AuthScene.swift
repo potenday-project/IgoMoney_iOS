@@ -64,10 +64,15 @@ struct AuthScene: View {
                                 }
                             }
                         
-                        SignUpView()
-                            .padding(.top, UIScreen.main.bounds.height / 2)
-                            .transition(.move(edge: .bottom))
-                            .animation(.spring(), value: UUID())
+                        SignUpView(
+                            store: Store(
+                                initialState: SignUpCore.State(),
+                                reducer: { SignUpCore() }
+                            )
+                        )
+                        .padding(.top, UIScreen.main.bounds.height / 2)
+                        .transition(.move(edge: .bottom))
+                        .animation(.spring(), value: UUID())
                     }
                 }
             }

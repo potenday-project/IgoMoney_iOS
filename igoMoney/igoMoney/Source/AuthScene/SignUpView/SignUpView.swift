@@ -6,7 +6,11 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct SignUpView: View {
+    let store: StoreOf<SignUpCore>
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -122,6 +126,11 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView(
+            store: Store(
+                initialState: SignUpCore.State(),
+                reducer: { SignUpCore() }
+            )
+        )
     }
 }
