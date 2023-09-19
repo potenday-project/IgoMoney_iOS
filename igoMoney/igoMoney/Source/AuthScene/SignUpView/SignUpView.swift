@@ -29,7 +29,6 @@ struct SignUpView: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    
                     WithViewStore(store, observe: { $0 }) { viewStore in
                         Button {
                             viewStore.send(.didTapAll)
@@ -39,7 +38,7 @@ struct SignUpView: View {
                                 .scaledToFit()
                                 .frame(width: 24, height: 24)
                                 .accentColor(
-                                    viewStore.isAgreeAll ? Color("AccentColor2") : .gray.opacity(0.3)
+                                    viewStore.isAgreeAll ? ColorConstants.primary : .gray.opacity(0.3)
                                 )
                         }
                     }
@@ -68,7 +67,7 @@ struct SignUpView: View {
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .accentColor(
-                                viewStore.isAgreePrivacy ? Color("AccentColor2") : .gray.opacity(0.3)
+                                viewStore.isAgreePrivacy ? ColorConstants.primary : .gray.opacity(0.3)
                             )
                     }
                 }
@@ -104,7 +103,7 @@ struct SignUpView: View {
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .accentColor(
-                                viewStore.isAgreeTerms ? Color("AccentColor2") : .gray.opacity(0.3)
+                                viewStore.isAgreeTerms ? ColorConstants.primary : .gray.opacity(0.3)
                             )
                     }
                 }
