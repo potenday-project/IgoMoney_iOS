@@ -19,10 +19,18 @@ struct AuthScene: View {
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
                     NavigationLink(
-                        destination: ProfileSettingView(),
+                        destination: IfLetStore(
+                            store.scope(
+                                state: \.profileSettingState,
+                                action: AuthCore.Action.profileSettingAction
+                            )
+                        ) { store in
+                            ProfileSettingView(store: store)
+                        },
                         isActive: viewStore.binding(
                             get: \.showProfileSetting,
-                            send: AuthCore.Action.presentProfileSetting)
+                            send: AuthCore.Action.presentProfileSetting
+                        )
                     ) {
                         EmptyView()
                     }

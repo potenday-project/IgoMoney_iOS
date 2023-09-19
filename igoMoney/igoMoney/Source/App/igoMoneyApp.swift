@@ -14,7 +14,7 @@ struct igoMoneyApp: App {
             AuthScene(
                 store: Store(
                     initialState: AuthCore.State(),
-                    reducer: { AuthCore() }
+                    reducer: { AuthCore()._printChanges() }
                 )
             )
         }

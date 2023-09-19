@@ -9,6 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProfileSettingView: View {
+    let store: StoreOf<ProfileSettingCore>
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text(TextConstants.nickNameTitle)
@@ -86,7 +88,12 @@ struct ProfileSettingView: View {
 struct ProfileSettingView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProfileSettingView()
+            ProfileSettingView(
+                store: Store(
+                    initialState: ProfileSettingCore.State(),
+                    reducer: { ProfileSettingCore() }
+                )
+            )
         }
     }
 }

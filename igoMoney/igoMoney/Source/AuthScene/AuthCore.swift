@@ -14,7 +14,7 @@ struct AuthCore: Reducer {
         var showProfileSetting: Bool = false
         
         var signUpState: SignUpCore.State?
-//        var profileSettingState
+        var profileSettingState: ProfileSettingCore.State?
     }
     
     enum Action: Equatable {
@@ -26,10 +26,14 @@ struct AuthCore: Reducer {
         // Inner Action
         case _loginWithKakao
         case _loginWithApple
+        case _setNavigationIsActive
         
         // Child Action
         case signUpAction(SignUpCore.Action)
+        case profileSettingAction(ProfileSettingCore.Action)
     }
+    
+    private enum CancelID { case load }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -59,11 +63,16 @@ struct AuthCore: Reducer {
                 return .none
                 
             case .presentProfileSetting(true):
-                return .none
+                state.showProfileSetting = true
+                return .run { send in
+                    await send(._setNavigationIsActive)
+                }
+                .cancellable(id: CancelID.load)
                 
             case .presentProfileSetting(false):
                 state.showProfileSetting = false
-                return .none
+                state.profileSettingState = nil
+                return .cancel(id: CancelID.load)
             
             // Inner Action
             case ._loginWithKakao:
@@ -76,11 +85,15 @@ struct AuthCore: Reducer {
                     await send(.presentSignUp(true))
                 }
                 
+            case ._setNavigationIsActive:
+                state.profileSettingState = ProfileSettingCore.State()
+                return .none
+                
             // Child Action
             case .signUpAction(.didTapConfirm):
-                state.showProfileSetting = true
                 return .run { send in
                     await send(.presentSignUp(false))
+                    await send(.presentProfileSetting(true))
                 }
                 
             default:
@@ -89,6 +102,9 @@ struct AuthCore: Reducer {
         }
         .ifLet(\.signUpState, action: /Action.signUpAction) {
             SignUpCore()
+        }
+        .ifLet(\.profileSettingState, action: /Action.profileSettingAction) {
+            ProfileSettingCore()
         }
     }
 }
