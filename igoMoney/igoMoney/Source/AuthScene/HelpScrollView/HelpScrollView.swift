@@ -12,34 +12,37 @@ struct HelpScrollView: View {
     let store: StoreOf<HelpScrollCore>
     
     var body: some View {
-        GeometryReader { proxy in
-            let width = proxy.size.width
-            
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                TabView(
-                    selection: Binding(
-                        get: { viewStore.selectedHelp },
-                        set: { viewStore.send(.selectItem($0)) }
-                    )
-                ) {
-                    ForEach(viewStore.informations, id: \.rawValue) { help in
-                        HelpView(help: help)
-                            .tag(help)
-                    }
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .scaledToFit()
+        VStack{
+            GeometryReader { proxy in
+                let width = proxy.size.width
                 
-                PageControl(
-                    totalIndex: viewStore.informations.count,
-                    selectedHelp: Binding(
-                        get: { viewStore.selectedHelp },
-                        set: { viewStore.send(.selectItem($0)) }
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    TabView(
+                        selection: Binding(
+                            get: { viewStore.selectedHelp },
+                            set: { viewStore.send(.selectItem($0)) }
+                        )
+                    ) {
+                        ForEach(viewStore.informations, id: \.rawValue) { help in
+                            HelpView(help: help)
+                                .tag(help)
+                        }
+                    }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .scaledToFit()
+                    
+                    PageControl(
+                        totalIndex: viewStore.informations.count,
+                        selectedHelp: Binding(
+                            get: { viewStore.selectedHelp },
+                            set: { viewStore.send(.selectItem($0)) }
+                        )
                     )
-                )
-                .frame(width: width, height: width * 2 + 50)
+                    .frame(width: width, height: width * 2 + 50)
+                }
             }
         }
+        .frame(maxHeight: 400)
     }
 }
 
@@ -91,5 +94,16 @@ struct HelpView: View {
                 .resizable()
                 .frame(width: 150, height: 150)
         }
+    }
+}
+
+struct HelpScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        HelpScrollView(
+            store: Store(
+                initialState: HelpScrollCore.State(),
+                reducer: { HelpScrollCore() }
+            )
+        )
     }
 }

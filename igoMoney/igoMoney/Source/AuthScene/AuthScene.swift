@@ -13,15 +13,15 @@ struct AuthScene: View {
     
     var body: some View {
         VStack {
-            Spacer()
-                .frame(height: 80)
-            
             HelpScrollView(
                 store: store.scope(
                     state: \.helpState,
                     action: AuthCore.Action.helpAction
                 )
             )
+            .padding(.top, 80)
+            
+            Spacer()
             
             AuthButton(
                 title: "카카오로 로그인",
@@ -44,6 +44,7 @@ struct AuthScene: View {
                     .stroke()
             )
             .padding(.horizontal, 24)
+            .padding(.bottom, 80)
         }
     }
 }
