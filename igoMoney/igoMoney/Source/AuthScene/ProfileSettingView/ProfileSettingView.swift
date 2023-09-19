@@ -42,18 +42,21 @@ struct ProfileSettingView: View {
                         .font(.system(size: 16, weight: .medium))
                     }
                     
-                    
-                    Button {
-                        print(123)
-                    } label: {
-                        Text(TextConstants.confirmDuplicateText)
+                    WithViewStore(store, observe: { $0 }) { viewStore in
+                        if viewStore.showNickNameConfirm {
+                            Button {
+                                print(123)
+                            } label: {
+                                Text(TextConstants.confirmDuplicateText)
+                            }
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(ColorConstants.gray7)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 5)
+                            .background(ColorConstants.gray8)
+                            .cornerRadius(.infinity)
+                        }
                     }
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(ColorConstants.gray7)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 5)
-                    .background(ColorConstants.gray8)
-                    .cornerRadius(.infinity)
                 }
                 .padding(12)
                 .background(ColorConstants.primary7)
