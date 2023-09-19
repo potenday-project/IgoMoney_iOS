@@ -38,6 +38,9 @@ struct SignUpView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 24, height: 24)
+                                .accentColor(
+                                    viewStore.isAgreeAll ? Color("AccentColor2") : .gray.opacity(0.3)
+                                )
                         }
                     }
                     
@@ -56,11 +59,17 @@ struct SignUpView: View {
                 .padding(.vertical, 10)
             
             HStack {
-                Image(systemName: "checkmark.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    Button {
+                        viewStore.send(.didTapAgreePrivacy)
+                    } label: {
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                    }
+                }
+
                 Text("필수")
                     .foregroundColor(.gray)
                     .font(.system(size: 12, weight: .regular))
@@ -83,10 +92,16 @@ struct SignUpView: View {
             .padding(.vertical, 8)
             
             HStack {
-                Image(systemName: "checkmark.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    Button {
+                        viewStore.send(.didTapAgreeTerms)
+                    } label: {
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                    }
+                }
                 
                 Text("필수")
                     .foregroundColor(.gray)

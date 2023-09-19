@@ -10,6 +10,10 @@ struct SignUpCore: Reducer {
     struct State: Equatable {
         var isAgreePrivacy: Bool = false
         var isAgreeTerms: Bool = false
+        
+        var isAgreeAll: Bool {
+            return isAgreePrivacy && isAgreeTerms
+        }
     }
     
     enum Action: Equatable {
@@ -21,8 +25,20 @@ struct SignUpCore: Reducer {
     func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .didTapAll:
-            state.isAgreePrivacy.toggle()
-            state.isAgreeTerms.toggle()
+            if state.isAgreePrivacy && state.isAgreeTerms {
+                state.isAgreePrivacy.toggle()
+                state.isAgreeTerms.toggle()
+                return .none
+            }
+            
+            if state.isAgreePrivacy == false {
+                state.isAgreePrivacy.toggle()
+            }
+            
+            if state.isAgreeTerms == false {
+                state.isAgreeTerms.toggle()
+            }
+            
             return .none
             
         case .didTapAgreePrivacy:
