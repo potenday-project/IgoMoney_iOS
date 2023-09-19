@@ -132,18 +132,30 @@ struct SignUpView: View {
             
             Spacer()
             
-            Button {
-                print("Tapped Confirm")
-            } label: {
-                Text("확인")
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                Button {
+                    viewStore.send(.didTapConfirm)
+                } label: {
+                    HStack {
+                        Spacer()
+                        
+                        Text("확인")
+                        
+                        Spacer()
+                    }
+                }
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(
+                    viewStore.isAgreeAll ? .black : .gray.opacity(0.3)
+                )
+                .disabled(viewStore.isAgreeAll == false)
+                .padding(.vertical)
+                .background(
+                    viewStore.isAgreeAll ? Color("AccentColor2") : .gray.opacity(0.3)
+                )
+                .cornerRadius(8)
+                .padding(.bottom, 24)
             }
-            .foregroundColor(.gray.opacity(0.3))
-            .frame(maxWidth: .infinity)
-            .padding(.vertical)
-            .background(Color.gray.opacity(0.3))
-            .cornerRadius(8)
-
-            
         }
         .padding()
         .background(Color.white)

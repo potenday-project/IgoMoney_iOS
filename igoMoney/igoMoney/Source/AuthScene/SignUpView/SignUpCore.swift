@@ -20,6 +20,7 @@ struct SignUpCore: Reducer {
         case didTapAll
         case didTapAgreePrivacy
         case didTapAgreeTerms
+        case didTapConfirm
     }
     
     func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -47,6 +48,9 @@ struct SignUpCore: Reducer {
             
         case .didTapAgreeTerms:
             state.isAgreeTerms.toggle()
+            return .none
+            
+        case .didTapConfirm:
             return .none
         }
     }
