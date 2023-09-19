@@ -4,7 +4,10 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import AuthenticationServices
+
 import ComposableArchitecture
+import SwiftUI
 
 struct AuthCore: Reducer {
     struct State: Equatable {
@@ -47,9 +50,7 @@ struct AuthCore: Reducer {
                     }
                     
                 case .apple:
-                    return .run { send in
-                        await send(._loginWithApple)
-                    }
+                    return .none
                 }
                 
             case .presentSignUp(true):

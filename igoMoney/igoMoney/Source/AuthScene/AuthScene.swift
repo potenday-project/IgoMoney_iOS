@@ -4,11 +4,13 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import AuthenticationServices
 import SwiftUI
 
 import ComposableArchitecture
 
 struct AuthScene: View {
+    @Environment(\.window) var window
     let store: StoreOf<AuthCore>
     
     var body: some View {
@@ -43,7 +45,14 @@ struct AuthScene: View {
                     WithViewStore(store, observe: { $0 }) { viewStore in
                         ForEach(viewStore.providers, id: \.rawValue) { provider in
                             AuthButton(provider: provider) {
-                                viewStore.send(.didTapLoginButton(provider))
+                                if provider == .apple {
+                                    showAppleLogin()
+                                    return
+                                }
+                                
+                                if provider == .kakao {
+                                    viewStore.send(.didTapLoginButton(provider))
+                                }
                             }
                             .padding(.horizontal)
                             .padding(.bottom, provider == .apple ? 80 : .zero)
@@ -77,6 +86,20 @@ struct AuthScene: View {
             .navigationBarHidden(true)
         }
         .navigationViewStyle(.stack)
+    }
+    
+    private func showAppleLogin() {
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let delegate = SignInWithAppleDelegate(window: self.window) { isSuccess in
+            print(isSuccess)
+        }
+        
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = delegate
+        controller.presentationContextProvider = delegate
+        controller.performRequests()
     }
 }
 

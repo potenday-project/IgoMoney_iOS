@@ -11,6 +11,9 @@
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
+		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
+		184BBE2F2AB9F81B00A810DB /* WindowEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */; };
+		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
@@ -29,6 +32,10 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
+		184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEnvironmentKey.swift; sourceTree = "<group>"; };
+		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F282AB98212006FEA6F /* igoMoney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoney.entitlements; sourceTree = "<group>"; };
@@ -72,6 +79,7 @@
 		180363A82AB82DCD00082F8A /* igoMoney */ = {
 			isa = PBXGroup;
 			children = (
+				184BBE302AB9FA7B00A810DB /* Info.plist */,
 				18CD8F282AB98212006FEA6F /* igoMoney.entitlements */,
 				180363B82AB8316C00082F8A /* Source */,
 				180363B72AB8316800082F8A /* Resource */,
@@ -104,6 +112,7 @@
 				18D623672AB8A90A006EAC39 /* AuthScene */,
 				180363B92AB8317100082F8A /* App */,
 				180363BA2AB8317700082F8A /* MainScene */,
+				184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -157,6 +166,7 @@
 				18CD8F292AB9823B006FEA6F /* SignUpView */,
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
+				184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */,
 			);
 			path = AuthScene;
 			sourceTree = "<group>";
@@ -166,6 +176,7 @@
 			children = (
 				18D6236B2AB8BACD006EAC39 /* AuthButton.swift */,
 				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
+				184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -234,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */,
 				180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */,
 				180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */,
 			);
@@ -247,10 +259,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
+				184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
+				184BBE2F2AB9F81B00A810DB /* WindowEnvironmentKey.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
@@ -389,7 +403,7 @@
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = igoMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -420,7 +434,7 @@
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = igoMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
