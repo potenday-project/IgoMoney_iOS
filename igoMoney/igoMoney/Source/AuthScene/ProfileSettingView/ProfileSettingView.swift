@@ -31,8 +31,17 @@ struct ProfileSettingView: View {
                 }
                 
                 HStack {
-                    TextField(TextConstants.nickNamePlaceholder, text: .constant(""))
+                    WithViewStore(store, observe: { $0 }) { viewStore in
+                        TextField(
+                            TextConstants.nickNamePlaceholder,
+                            text: viewStore.binding(
+                                get: \.nickName,
+                                send: ProfileSettingCore.Action._changeText
+                            )
+                        )
                         .font(.system(size: 16, weight: .medium))
+                    }
+                    
                     
                     Button {
                         print(123)
