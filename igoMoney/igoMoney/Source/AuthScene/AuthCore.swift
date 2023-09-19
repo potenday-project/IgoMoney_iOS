@@ -10,6 +10,8 @@ struct AuthCore: Reducer {
     struct State: Equatable {
         var helpState = HelpScrollCore.State()
         var showSignUp: Bool = false
+        
+        var signUpState: SignUpCore.State?
     }
     
     enum Action: Equatable {
@@ -19,6 +21,7 @@ struct AuthCore: Reducer {
         
         // Child Action
         case helpAction(HelpScrollCore.Action)
+        case signUpAction(SignUpCore.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -31,15 +34,20 @@ struct AuthCore: Reducer {
                 
             case .presentSignUp(true):
                 state.showSignUp = true
+                state.signUpState = SignUpCore.State()
                 return .none
                 
             case .presentSignUp(false):
                 state.showSignUp = false
+                state.signUpState = nil
                 return .none
                 
             default:
                 return .none
             }
+        }
+        .ifLet(\.signUpState, action: /Action.signUpAction) {
+            SignUpCore()
         }
         
         Scope(state: \.helpState, action: /Action.helpAction) {

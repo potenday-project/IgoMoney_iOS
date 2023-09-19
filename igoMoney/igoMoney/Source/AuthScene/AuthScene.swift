@@ -53,27 +53,25 @@ struct AuthScene: View {
                 .padding(.bottom, 80)
             }
             
-            WithViewStore(store, observe: { $0 }) { viewStore in
-                if viewStore.showSignUp {
-                    ZStack {
+            IfLetStore(
+                store.scope(
+                    state: \.signUpState,
+                    action: AuthCore.Action.signUpAction
+                )
+            ) { store in
+                ZStack {
+                    WithViewStore(self.store, observe: { $0 }) { viewStore in
                         Color.gray.opacity(0.2)
-                            .edgesIgnoringSafeArea(.all)
                             .onTapGesture {
-                                withAnimation {
-                                    showSheet.toggle()
-                                }
+                                viewStore.send(.presentSignUp(false))
                             }
-                        
-                        SignUpView(
-                            store: Store(
-                                initialState: SignUpCore.State(),
-                                reducer: { SignUpCore()._printChanges() }
-                            )
-                        )
+                            .edgesIgnoringSafeArea(.all)
+                    }
+                    
+                    SignUpView(store: store)
                         .padding(.top, UIScreen.main.bounds.height / 2)
                         .transition(.move(edge: .bottom))
                         .animation(.spring(), value: UUID())
-                    }
                 }
             }
         }
