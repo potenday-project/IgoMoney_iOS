@@ -16,6 +16,7 @@ struct ProfileSettingView: View {
             Text(TextConstants.nickNameTitle)
                 .multilineTextAlignment(.leading)
                 .font(.system(size: 20, weight: .bold))
+                .padding(.top, 26)
                 .padding(.horizontal, 24)
             
             VStack(alignment: .leading, spacing: 8) {
@@ -30,8 +31,8 @@ struct ProfileSettingView: View {
                         .foregroundColor(ColorConstants.gray6)
                 }
                 
-                HStack {
-                    WithViewStore(store, observe: { $0 }) { viewStore in
+                WithViewStore(store, observe: { $0 }) { viewStore in
+                    HStack {
                         TextField(
                             TextConstants.nickNamePlaceholder,
                             text: viewStore.binding(
@@ -40,9 +41,7 @@ struct ProfileSettingView: View {
                             )
                         )
                         .font(.system(size: 16, weight: .medium))
-                    }
-                    
-                    WithViewStore(store, observe: { $0 }) { viewStore in
+                        
                         Button {
                             print(123)
                         } label: {
@@ -57,10 +56,10 @@ struct ProfileSettingView: View {
                         .opacity(viewStore.showNickNameConfirm ? 1 : .zero)
                         .disabled(viewStore.showNickNameConfirm == false)
                     }
+                    .padding(12)
+                    .background(ColorConstants.primary7)
+                    .cornerRadius(8)
                 }
-                .padding(12)
-                .background(ColorConstants.primary7)
-                .cornerRadius(8)
                 
                 // Reducer 상태에 따라서 값 변경
                 Text("최소 3자 이상의 영문, 한글, 숫자만 입력해주세요.")
