@@ -17,13 +17,40 @@ struct ProfileSettingView: View {
                 .padding(.horizontal)
             
             VStack(alignment: .leading, spacing: 8) {
-                Text("닉네임")
-                    .font(.system(size: 18, weight: .bold))
+                HStack {
+                    Text("닉네임")
+                        .font(.system(size: 18, weight: .bold))
+                    
+                    Spacer()
+                    
+                    Text("최소 3자 / 최대 8자")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(ColorConstants.gray6)
+                }
                 
-                TextField("한글, 영어, 숫자만 사용가능합니다.", text: .constant(""))
-                    .padding(12)
-                    .background(ColorConstants.primary7)
-                    .cornerRadius(8)
+                HStack {
+                    TextField("한글, 영어, 숫자만 사용가능합니다.", text: .constant(""))
+                        .font(.system(size: 16, weight: .medium))
+                    
+                    Button {
+                        print(123)
+                    } label: {
+                        Text("중복확인")
+                    }
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(ColorConstants.gray7)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(ColorConstants.gray8)
+                    .cornerRadius(.infinity)
+                }
+                .padding(12)
+                .background(ColorConstants.primary7)
+                .cornerRadius(8)
+                
+                Text("최소 3자 이상의 영문, 한글, 숫자만 입력해주세요.")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(ColorConstants.primary)
             }
             .padding(.horizontal)
             
@@ -41,8 +68,9 @@ struct ProfileSettingView: View {
                 }
             }
             .font(.system(size: 18, weight: .bold))
+            .foregroundColor(ColorConstants.gray7)
             .padding(.vertical)
-            .background(Color.gray)
+            .background(ColorConstants.gray8)
             .cornerRadius(8)
             .padding([.horizontal, .bottom], 24)
         }

@@ -15,4 +15,8 @@ enum ColorConstants {
     static let primary6 = Color("AccentColor6")
     static let primary7 = Color("AccentColor7")
     static let primary8 = Color("AccentColor8")
+    
+    static let gray6 = Color("gray6")
+    static let gray7 = Color("gray7")
+    static let gray8 = Color("gray8")
 }
