@@ -7,34 +7,28 @@
 import SwiftUI
 
 struct AuthButton: View {
-    let title: String
-    let iconName: String
-    let color: Color
+    let provider: Provider
     let action: () -> Void
     
     init(
-        title: String,
-        iconName: String,
-        color: Color,
+        provider: Provider,
         action: @escaping () -> Void
     ) {
-        self.title = title
-        self.iconName = iconName
-        self.color = color
+        self.provider = provider
         self.action = action
     }
     
     var body: some View {
         Button(action: action) {
             HStack {
-                Image(iconName)
+                Image(provider.iconName)
                 
-                Text(title)
+                Text(provider.description)
             }
             .frame(maxWidth: .infinity)
             .foregroundColor(.black)
             .padding(.vertical, 16)
-            .background(color)
+            .background(Color(provider.colorName))
             .cornerRadius(8)
         }
     }

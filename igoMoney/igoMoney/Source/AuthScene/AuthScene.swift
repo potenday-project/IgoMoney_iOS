@@ -47,30 +47,14 @@ struct AuthScene: View {
                     .frame(height: 80)
                 
                 WithViewStore(store, observe: { $0 }) { viewStore in
-                    AuthButton(
-                        title: "카카오로 로그인",
-                        iconName: "icon_kakao",
-                        color: Color("kakao_color")
-                    ) {
-                        viewStore.send(.didTapKakaoLogin)
+                    ForEach(viewStore.providers, id: \.rawValue) { provider in
+                        AuthButton(provider: provider) {
+                            print("Tapped")
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, provider == .apple ? 80 : .zero)
                     }
-                    .padding(.horizontal, 24)
                 }
-                
-                
-                AuthButton(
-                    title: "애플로 로그인",
-                    iconName: "icon_apple",
-                    color: .white
-                ) {
-                    print("애플")
-                }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke()
-                )
-                .padding(.horizontal, 24)
-                .padding(.bottom, 80)
             }
             
             IfLetStore(

@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct AuthCore: Reducer {
     struct State: Equatable {
-        var helpState = HelpScrollCore.State()
+        let providers: [Provider] = Provider.allCases
         var showSignUp: Bool = false
         
         var signUpState: SignUpCore.State?
@@ -20,7 +20,6 @@ struct AuthCore: Reducer {
         case didTapKakaoLogin
         
         // Child Action
-        case helpAction(HelpScrollCore.Action)
         case signUpAction(SignUpCore.Action)
     }
     
@@ -53,10 +52,6 @@ struct AuthCore: Reducer {
         }
         .ifLet(\.signUpState, action: /Action.signUpAction) {
             SignUpCore()
-        }
-        
-        Scope(state: \.helpState, action: /Action.helpAction) {
-            HelpScrollCore()
         }
     }
 }
