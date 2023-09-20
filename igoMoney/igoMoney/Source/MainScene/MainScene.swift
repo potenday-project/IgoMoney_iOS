@@ -6,12 +6,123 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
+struct MainCore: Reducer {
+    struct State { }
+    
+    enum Action {
+        
+    }
+    
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
+        return .none
+    }
+}
+
 struct MainScene: View {
+    @State private var selectedIndex = 1
+    var body: some View {
+        RoundTabBar(
+            tabSetting: .default,
+            shadowSetting: ShadowConfiguration(
+                color: ColorConstants.gray6,
+                radius: 10,
+                x: .zero,
+                y: 5
+            )
+        ) {
+            ZStack {
+                switch selectedIndex {
+                case 1:
+                    Text("First")
+                default:
+                    EmptyView()
+                }
+            }
+            .background(Color.red)
+        }
+    }
+}
+
+public struct ShadowConfiguration {
+    let color: Color
+    let radius: CGFloat
+    let x: CGFloat
+    let y: CGFloat
+    
+    static let `default` = ShadowConfiguration(
+        color: .clear,
+        radius: .zero,
+        x: .zero,
+        y: .zero
+    )
+}
+
+public struct TabConfiguration {
+    let accentColor: Color
+    let defaultColor: Color
+    let cornerRadius: Int
+    
+    static let `default` = TabConfiguration(
+        accentColor: ColorConstants.primary,
+        defaultColor: ColorConstants.gray6,
+        cornerRadius: 10
+    )
+}
+
+struct RoundTabBar<Content: View>: View {
+    let tabSetting: TabConfiguration
+    let shadowSetting: ShadowConfiguration
+    var content: () -> Content
+    
+    init(
+        tabSetting: TabConfiguration = .default,
+        shadowSetting: ShadowConfiguration = .default,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.tabSetting = tabSetting
+        self.shadowSetting = shadowSetting
+        self.content = content
+    }
+    
     var body: some View {
         VStack {
-            Text("I Go Money Scene")
+            content()
+            
+            Spacer()
+            
+            HStack {
+                Spacer()
+                
+                ForEach(1..<3, id: \.self) { index in
+                    VStack {
+                        Image(systemName: "\(index).circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30)
+                            .foregroundColor(tabSetting.defaultColor)
+                        
+                        Text("챌린지")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(tabSetting.defaultColor)
+                    }
+                    .animation(.easeIn, value: UUID())
+                    
+                    Spacer()
+                }
+            }
+            .padding(.top, 8)
+            .padding(.bottom, 24)
+            .background(Color.white)
+            .cornerRadius(20)
+            .shadow(
+                color: shadowSetting.color,
+                radius: shadowSetting.radius,
+                y: shadowSetting.y
+            )
         }
-        .padding()
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
