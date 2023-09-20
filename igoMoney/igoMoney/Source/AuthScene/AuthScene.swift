@@ -10,7 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AuthScene: View {
-    @Environment(\.window) var window
     let store: StoreOf<AuthCore>
     
     var body: some View {
@@ -45,13 +44,15 @@ struct AuthScene: View {
                     WithViewStore(store, observe: { $0 }) { viewStore in
                         ForEach(viewStore.providers, id: \.rawValue) { provider in
                             AuthButton(provider: provider) {
-                                if provider == .apple {
-                                    showAppleLogin()
-                                    return
+                                Task {
+                                    if provider == .kakao {
+                                        let token = await AuthController.shared.authorizationWithKakao()
+                                        print(token)
+                                    }
                                 }
                                 
-                                if provider == .kakao {
-                                    viewStore.send(.didTapLoginButton(provider))
+                                if provider == .apple {
+                                    AuthController.shared.authorizationWithApple()
                                 }
                             }
                             .padding(.horizontal)
@@ -86,20 +87,6 @@ struct AuthScene: View {
             .navigationBarHidden(true)
         }
         .navigationViewStyle(.stack)
-    }
-    
-    private func showAppleLogin() {
-        let request = ASAuthorizationAppleIDProvider().createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let delegate = SignInWithAppleDelegate(window: self.window) { isSuccess in
-            print(isSuccess)
-        }
-        
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = delegate
-        controller.presentationContextProvider = delegate
-        controller.performRequests()
     }
 }
 
