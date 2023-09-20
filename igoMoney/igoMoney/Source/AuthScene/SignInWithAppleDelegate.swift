@@ -26,6 +26,10 @@ extension SignInWithAppleDelegate: ASAuthorizationControllerDelegate {
         case let appleIdCredential as ASAuthorizationAppleIDCredential:
             if let _ = appleIdCredential.email, let _ = appleIdCredential.fullName {
                 print("Register ID")
+                let identityTokenData = appleIdCredential.identityToken
+                let authTokenData = appleIdCredential.authorizationCode
+                
+//                print("identityToken", String(data: identityTokenData!, encoding: .utf8), "authorizationToken", String(data: authTokenData!, encoding: .utf8))
             } else {
                 print("Sign In With Existing Account")
             }
