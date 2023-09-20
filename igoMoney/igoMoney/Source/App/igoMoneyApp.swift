@@ -5,7 +5,9 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import SwiftUI
+
 import ComposableArchitecture
+import KakaoSDKCommon
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,8 +38,9 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
                 initialState: AuthCore.State(),
                 reducer: { AuthCore()._printChanges() }
             )
-        ).environment(\.window, window)
+        )
         
+        KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
         window?.rootViewController = UIHostingController(rootView: rootView)
         window?.makeKeyAndVisible()
     }

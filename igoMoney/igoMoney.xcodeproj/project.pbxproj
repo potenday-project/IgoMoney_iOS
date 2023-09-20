@@ -11,8 +11,14 @@
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
+		180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC67C2ABAF62500DD8477 /* AuthController.swift */; };
+		180FC6872ABAFAED00DD8477 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6862ABAFAED00DD8477 /* KakaoSDKAuth */; };
+		180FC6892ABAFAED00DD8477 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6882ABAFAED00DD8477 /* KakaoSDKCommon */; };
+		180FC68B2ABAFAED00DD8477 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC68A2ABAFAED00DD8477 /* KakaoSDKUser */; };
+		180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */; };
+		180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180FC68E2ABB14F900DD8477 /* KakaoService.plist */; };
+		180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */; };
 		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
-		184BBE2F2AB9F81B00A810DB /* WindowEnvironmentKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
@@ -32,13 +38,15 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		180FC67C2ABAF62500DD8477 /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
+		180FC68E2ABB14F900DD8477 /* KakaoService.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KakaoService.plist; sourceTree = "<group>"; };
+		180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
-		184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowEnvironmentKey.swift; sourceTree = "<group>"; };
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
-		18CD8F282AB98212006FEA6F /* igoMoney.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoney.entitlements; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCore.swift; sourceTree = "<group>"; };
 		18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provier.swift; sourceTree = "<group>"; };
@@ -53,7 +61,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180FC68B2ABAFAED00DD8477 /* KakaoSDKUser in Frameworks */,
 				18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */,
+				180FC6892ABAFAED00DD8477 /* KakaoSDKCommon in Frameworks */,
+				180FC6872ABAFAED00DD8477 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				184BBE302AB9FA7B00A810DB /* Info.plist */,
-				18CD8F282AB98212006FEA6F /* igoMoney.entitlements */,
+				180FC68E2ABB14F900DD8477 /* KakaoService.plist */,
 				180363B82AB8316C00082F8A /* Source */,
 				180363B72AB8316800082F8A /* Resource */,
 			);
@@ -167,6 +178,7 @@
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
 				184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */,
+				180FC67C2ABAF62500DD8477 /* AuthController.swift */,
 			);
 			path = AuthScene;
 			sourceTree = "<group>";
@@ -176,7 +188,8 @@
 			children = (
 				18D6236B2AB8BACD006EAC39 /* AuthButton.swift */,
 				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
-				184BBE2E2AB9F81B00A810DB /* WindowEnvironmentKey.swift */,
+				180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */,
+				180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -199,6 +212,9 @@
 			name = igoMoney;
 			packageProductDependencies = (
 				18D623652AB8A8AA006EAC39 /* ComposableArchitecture */,
+				180FC6862ABAFAED00DD8477 /* KakaoSDKAuth */,
+				180FC6882ABAFAED00DD8477 /* KakaoSDKCommon */,
+				180FC68A2ABAFAED00DD8477 /* KakaoSDKUser */,
 			);
 			productName = igoMoney;
 			productReference = 180363A62AB82DCD00082F8A /* igoMoney.app */;
@@ -230,6 +246,7 @@
 			mainGroup = 1803639D2AB82DCD00082F8A;
 			packageReferences = (
 				18D623642AB8A8AA006EAC39 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 180363A72AB82DCD00082F8A /* Products */;
 			projectDirPath = "";
@@ -245,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */,
 				184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */,
 				180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */,
 				180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */,
@@ -261,10 +279,12 @@
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
+				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
+				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
+				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
-				184BBE2F2AB9F81B00A810DB /* WindowEnvironmentKey.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
@@ -406,6 +426,7 @@
 				INFOPLIST_FILE = igoMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -437,6 +458,7 @@
 				INFOPLIST_FILE = igoMoney/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -477,6 +499,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 2.15.0;
+			};
+		};
 		18D623642AB8A8AA006EAC39 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -488,6 +518,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		180FC6862ABAFAED00DD8477 /* KakaoSDKAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKAuth;
+		};
+		180FC6882ABAFAED00DD8477 /* KakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKCommon;
+		};
+		180FC68A2ABAFAED00DD8477 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
+		};
 		18D623652AB8A8AA006EAC39 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 18D623642AB8A8AA006EAC39 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
