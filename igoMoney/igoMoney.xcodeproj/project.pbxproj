@@ -22,6 +22,8 @@
 		180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6962ABB35A800DD8477 /* HTTPMethod.swift */; };
 		180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6982ABB35C000DD8477 /* HTTPBody.swift */; };
 		180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69A2ABB35D200DD8477 /* APIError.swift */; };
+		180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69D2ABB488F00DD8477 /* UserClient.swift */; };
+		180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A12ABB48DC00DD8477 /* Networking.swift */; };
 		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
@@ -50,6 +52,8 @@
 		180FC6962ABB35A800DD8477 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		180FC6982ABB35C000DD8477 /* HTTPBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBody.swift; sourceTree = "<group>"; };
 		180FC69A2ABB35D200DD8477 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		180FC69D2ABB488F00DD8477 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
+		180FC6A12ABB48DC00DD8477 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				180FC69C2ABB488700DD8477 /* UserClient */,
 				180FC6922ABB337200DD8477 /* NetworkClient */,
 				18CD8F2E2AB9A1D6006FEA6F /* Models */,
 				18D6236A2AB8BAC7006EAC39 /* Utility */,
@@ -168,8 +173,17 @@
 				180FC6962ABB35A800DD8477 /* HTTPMethod.swift */,
 				180FC6982ABB35C000DD8477 /* HTTPBody.swift */,
 				180FC69A2ABB35D200DD8477 /* APIError.swift */,
+				180FC6A12ABB48DC00DD8477 /* Networking.swift */,
 			);
 			path = HelperModels;
+			sourceTree = "<group>";
+		};
+		180FC69C2ABB488700DD8477 /* UserClient */ = {
+			isa = PBXGroup;
+			children = (
+				180FC69D2ABB488F00DD8477 /* UserClient.swift */,
+			);
+			path = UserClient;
 			sourceTree = "<group>";
 		};
 		18CD8F292AB9823B006FEA6F /* SignUpView */ = {
@@ -310,6 +324,7 @@
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
+				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
@@ -317,6 +332,7 @@
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
+				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
