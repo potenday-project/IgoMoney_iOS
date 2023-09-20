@@ -24,6 +24,7 @@
 		180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69A2ABB35D200DD8477 /* APIError.swift */; };
 		180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69D2ABB488F00DD8477 /* UserClient.swift */; };
 		180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A12ABB48DC00DD8477 /* Networking.swift */; };
+		180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A32ABB4BC500DD8477 /* APIClient.swift */; };
 		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
@@ -54,6 +55,7 @@
 		180FC69A2ABB35D200DD8477 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		180FC69D2ABB488F00DD8477 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		180FC6A12ABB48DC00DD8477 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		180FC6A32ABB4BC500DD8477 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			children = (
 				180FC6952ABB359F00DD8477 /* HelperModels */,
 				180FC6932ABB338600DD8477 /* RequestGenerator.swift */,
+				180FC6A32ABB4BC500DD8477 /* APIClient.swift */,
 			);
 			path = NetworkClient;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
+				180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
