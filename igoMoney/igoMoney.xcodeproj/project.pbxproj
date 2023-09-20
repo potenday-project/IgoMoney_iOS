@@ -18,6 +18,10 @@
 		180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */; };
 		180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */ = {isa = PBXBuildFile; fileRef = 180FC68E2ABB14F900DD8477 /* KakaoService.plist */; };
 		180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */; };
+		180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6932ABB338600DD8477 /* RequestGenerator.swift */; };
+		180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6962ABB35A800DD8477 /* HTTPMethod.swift */; };
+		180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6982ABB35C000DD8477 /* HTTPBody.swift */; };
+		180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69A2ABB35D200DD8477 /* APIError.swift */; };
 		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
@@ -42,6 +46,10 @@
 		180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
 		180FC68E2ABB14F900DD8477 /* KakaoService.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KakaoService.plist; sourceTree = "<group>"; };
 		180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		180FC6932ABB338600DD8477 /* RequestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestGenerator.swift; sourceTree = "<group>"; };
+		180FC6962ABB35A800DD8477 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		180FC6982ABB35C000DD8477 /* HTTPBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBody.swift; sourceTree = "<group>"; };
+		180FC69A2ABB35D200DD8477 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -118,6 +126,7 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				180FC6922ABB337200DD8477 /* NetworkClient */,
 				18CD8F2E2AB9A1D6006FEA6F /* Models */,
 				18D6236A2AB8BAC7006EAC39 /* Utility */,
 				18D623672AB8A90A006EAC39 /* AuthScene */,
@@ -142,6 +151,25 @@
 				180363AB2AB82DCD00082F8A /* MainScene.swift */,
 			);
 			path = MainScene;
+			sourceTree = "<group>";
+		};
+		180FC6922ABB337200DD8477 /* NetworkClient */ = {
+			isa = PBXGroup;
+			children = (
+				180FC6952ABB359F00DD8477 /* HelperModels */,
+				180FC6932ABB338600DD8477 /* RequestGenerator.swift */,
+			);
+			path = NetworkClient;
+			sourceTree = "<group>";
+		};
+		180FC6952ABB359F00DD8477 /* HelperModels */ = {
+			isa = PBXGroup;
+			children = (
+				180FC6962ABB35A800DD8477 /* HTTPMethod.swift */,
+				180FC6982ABB35C000DD8477 /* HTTPBody.swift */,
+				180FC69A2ABB35D200DD8477 /* APIError.swift */,
+			);
+			path = HelperModels;
 			sourceTree = "<group>";
 		};
 		18CD8F292AB9823B006FEA6F /* SignUpView */ = {
@@ -277,18 +305,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
+				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
 				184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
+				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
+				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
+				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 			);
