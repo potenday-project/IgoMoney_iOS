@@ -53,6 +53,13 @@ struct ExploreChallengeDetail: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(
+            color: ColorConstants.gray4.opacity(0.2),
+            radius: 8,
+            y: 2
+        )
     }
 }
 
@@ -71,8 +78,5 @@ struct ExploreChallengeDetail_Previews: PreviewProvider {
                 }
             )
         )
-        .previewLayout(.sizeThatFits)
-        .background(Color.green)
-        .padding()
     }
 }

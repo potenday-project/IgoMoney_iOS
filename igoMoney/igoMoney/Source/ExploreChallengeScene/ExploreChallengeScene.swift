@@ -57,7 +57,7 @@ struct ExploreChallengeScene: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: .zero) {
             VStack(spacing: 12) {
                 // Header Section
                 headerSection
@@ -68,24 +68,24 @@ struct ExploreChallengeScene: View {
                 }
             }
             
-//            ScrollView(.vertical, showsIndicators: false) {
-//                ForEach(0..<100) { index in
-//
-//                    .padding(.vertical, 12)
-//                    .padding(.horizontal, 16)
-//                    .background(Color.white)
-//                    .cornerRadius(10)
-//                    .padding(.horizontal, 24)
-//                    .padding(.vertical, 12)
-//                    .shadow(
-//                        color: ColorConstants.gray2.opacity(0.2),
-//                        radius: 8,
-//                        y: 2
-//                    )
-//                }
-//            }
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: [.init()]) {
+                    ForEachStore(
+                        store.scope(
+                            state: \.challenges,
+                            action: ExploreChallengeCore.Action.detailAction
+                        )
+                    ) { store in
+                        ExploreChallengeDetail(store: store)
+                    }
+                }
+            }
+            .padding(.top, 24)
         }
         .background(Color.white)
+        .onAppear {
+            store.send(._onAppear)
+        }
     }
 }
 
