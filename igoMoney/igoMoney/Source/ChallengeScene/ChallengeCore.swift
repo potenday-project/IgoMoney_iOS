@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ChallengeCore: Reducer {
     struct State: Equatable {
-        var myChallengeState = MyChallengeCore.State(color: .red)
+        var myChallengeState = MyChallengeSectionCore.State(color: .red)
+        var emptyChallengeListState = EmptyChallengeListSectionCore.State()
     }
     
     enum Action {
-        case myChallengeAction(MyChallengeCore.Action)
+        case myChallengeAction(MyChallengeSectionCore.Action)
+        case emptyChallengeAction(EmptyChallengeListSectionCore.Action)
     }
     
     var body: some Reducer<State, Action> {
@@ -21,29 +23,17 @@ struct ChallengeCore: Reducer {
             switch action {
             case .myChallengeAction:
                 return .none
+            case .emptyChallengeAction:
+                return .none
             }
         }
         
         Scope(state: \.myChallengeState, action: /Action.myChallengeAction) {
-            MyChallengeCore()
+            MyChallengeSectionCore()
         }
-    }
-}
-
-struct MyChallengeCore: Reducer {
-    struct State: Equatable {
-        var color: Color // Action Test 용
-    }
-    
-    enum Action: Equatable {
-        case changeColor(Color)
-    }
-    
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case .changeColor(let color):
-            state.color = color
-            return .none
+        
+        Scope(state: \.emptyChallengeListState, action: /Action.emptyChallengeAction) {
+            EmptyChallengeListSectionCore()
         }
     }
 }
