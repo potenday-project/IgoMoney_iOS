@@ -66,11 +66,12 @@ struct ExploreChallengeScene: View {
                 // Filtering Section
                 WithViewStore(store, observe: { $0 }) { viewStore in
                     ExploreChallengeFilterSection(viewStore: viewStore)
+                        .padding(.horizontal, 24)
                 }
             }
             
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVGrid(columns: [.init()]) {
+                VStack {
                     ForEachStore(
                         store.scope(
                             state: \.challenges,
@@ -95,16 +96,20 @@ struct ExploreChallengeFilterSection: View {
     let viewStore: ViewStoreOf<ExploreChallengeCore>
     
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             ForEach(MoneyType.allCases, id: \.self) { money in
-                Button {
-                    viewStore.send(.selectMoney(money))
-                } label: {
+                HStack(alignment: .center) {
+                    Spacer()
+                    
                     Text(money.title)
+                        .lineLimit(1)
+                        .multilineTextAlignment(.center)
+                        .font(.pretendard(size: 14, weight: .medium))
+                        .minimumScaleFactor(0.8)
+                    
+                    Spacer()
                 }
-                .lineLimit(1)
-                .padding(8)
-                .font(.pretendard(size: 13, weight: .medium))
+                .padding(.vertical, 8)
                 .foregroundColor(
                     money == viewStore.selectedMoney ?
                         .black : ColorConstants.gray3
@@ -114,6 +119,9 @@ struct ExploreChallengeFilterSection: View {
                     ColorConstants.primary : ColorConstants.gray5
                 )
                 .cornerRadius(4)
+                .onTapGesture {
+                    viewStore.send(.selectMoney(money))
+                }
             }
         }
     }
