@@ -17,7 +17,7 @@ struct EmptyChallengeListSection: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             ChallengeSectionTitleView(sectionType: .emptyChallenge) {
                 store.send(.showExplore(true))
             }
@@ -54,5 +54,16 @@ struct EmptyChallengeListSection: View {
         .onAppear {
             store.send(._onAppear)
         }
+    }
+}
+
+struct EmptyChallengeListSection_Previews: PreviewProvider {
+    static var previews: some View {
+        EmptyChallengeListSection(
+            store: Store(
+                initialState: EmptyChallengeListSectionCore.State(),
+                reducer: { EmptyChallengeListSectionCore() }
+            )
+        )
     }
 }

@@ -19,7 +19,7 @@ struct ChallengeInformation: Decodable, Equatable {
             targetAmount: 30000,
             user: .default
         ),
-        count: 16
+        count: 3
     )
     
     
