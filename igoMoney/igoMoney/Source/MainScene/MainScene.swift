@@ -9,10 +9,44 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MainCore: Reducer {
-    struct State { }
+    struct State {
+        enum Tab {
+            case challenge
+            case myPage
+            
+            var selectedIconName: String {
+                switch self {
+                case .challenge:
+                    return "icon_bolt_selected"
+                case .myPage:
+                    return "icon_person_selected"
+                }
+            }
+            
+            var unSelectedIconName: String {
+                switch self {
+                case .challenge:
+                    return "icon_bolt_unselected"
+                case .myPage:
+                    return "icon_person_unselected"
+                }
+            }
+            
+            var title: String {
+                switch self {
+                case .challenge:
+                    return "챌린지"
+                case .myPage:
+                    return "마이페이지"
+                }
+            }
+        }
+        
+        var selectedTab: Tab = .challenge
+    }
     
     enum Action {
-        
+        case selectedTabChange(State.Tab)
     }
     
     func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -97,7 +131,7 @@ struct RoundTabBar<Content: View>: View {
                 
                 ForEach(1..<3, id: \.self) { index in
                     VStack {
-                        Image(systemName: "\(index).circle.fill")
+                        Image("icon_bolt_unselected")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 30)
