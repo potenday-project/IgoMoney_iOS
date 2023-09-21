@@ -78,7 +78,13 @@ struct ExploreChallengeScene: View {
                             action: ExploreChallengeCore.Action.detailAction
                         )
                     ) { store in
-                        ExploreChallengeDetail(store: store)
+                        HStack {
+                            Spacer()
+                            
+                            ExploreChallengeDetail(store: store)
+                            
+                            Spacer()
+                        }
                     }
                 }
             }
