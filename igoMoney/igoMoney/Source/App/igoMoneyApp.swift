@@ -40,7 +40,12 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
 //            )
 //        )
         
-        let rootView = MainScene()
+        let rootView = MainScene(
+            store: Store(
+                initialState: MainCore.State(),
+                reducer: { MainCore() }
+            )
+        )
         
         KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
         window?.rootViewController = UIHostingController(rootView: rootView)
