@@ -81,6 +81,7 @@ struct RoundTabBar<Content: View>: View {
             )
         }
         .edgesIgnoringSafeArea(.bottom)
+        .background(selectedTab == .challenge ? Color("background_color") : .white)
     }
 }
 
