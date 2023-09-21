@@ -25,14 +25,13 @@ struct MainScene: View {
                     y: 5
                 )
             ) {
-                ScrollView {
-                    ForEach(1..<100) { index in
-                        HStack {
-                            Text(index.description)
-                            
-                            Spacer()
-                        }
-                        .padding()
+                ZStack {
+                    if viewStore.selectedTab == .challenge {
+                        ChallengeScene()
+                    }
+                    
+                    if viewStore.selectedTab == .myPage {
+                        MyPageScene()
                     }
                 }
             }
