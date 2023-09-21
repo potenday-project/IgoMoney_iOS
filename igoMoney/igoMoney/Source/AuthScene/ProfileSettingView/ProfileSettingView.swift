@@ -62,12 +62,12 @@ struct ProfileSettingView: View {
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(
                     viewStore.nickNameState == .completeConfirm ?
-                    Color.black : ColorConstants.gray7
+                    Color.black : ColorConstants.gray4
                 )
                 .padding(.vertical)
                 .background(
                     viewStore.nickNameState == .completeConfirm ?
-                    ColorConstants.primary3 : ColorConstants.gray8
+                    ColorConstants.primary3 : ColorConstants.gray5
                 )
                 .cornerRadius(8)
                 .padding([.horizontal, .bottom], 24)
@@ -98,7 +98,7 @@ struct InputHeaderView: View {
             if let detail = detail {
                 Text(detail)
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(ColorConstants.gray6)
+                    .foregroundColor(ColorConstants.gray3)
             }
         }
     }
@@ -127,13 +127,13 @@ struct InputFormView: View {
             }
             .font(.system(size: 12, weight: .medium))
             .foregroundColor(
-                viewStore.nickNameState == .disableConfirm ? ColorConstants.gray7 : .white
+                viewStore.nickNameState == .disableConfirm ? ColorConstants.gray4 : .white
             )
             .padding(.horizontal, 8)
             .padding(.vertical, 5)
             .background(
                 viewStore.nickNameState == .disableConfirm ?
-                ColorConstants.gray7 : viewStore.nickNameState == .completeConfirm ?
+                ColorConstants.gray4 : viewStore.nickNameState == .completeConfirm ?
                 ColorConstants.primary3 : ColorConstants.primary
             )
             .cornerRadius(.infinity)

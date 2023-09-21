@@ -9,17 +9,31 @@ import ComposableArchitecture
 struct MainCore: Reducer {
     struct State: Equatable {
         var selectedTab: MainTab = .challenge
+        
+        var challengeState = ChallengeCore.State()
     }
     
     enum Action {
         case selectedTabChange(MainTab)
+        
+        // Child Action
+        case challengeAction(ChallengeCore.Action)
     }
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        switch action {
-        case .selectedTabChange(let tab):
-            state.selectedTab = tab
-            return .none
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .selectedTabChange(let tab):
+                state.selectedTab = tab
+                return .none
+            // Child Action
+            case .challengeAction:
+                return .none
+            }
+        }
+        
+        Scope(state: \.challengeState, action: /Action.challengeAction) {
+            ChallengeCore()
         }
     }
 }

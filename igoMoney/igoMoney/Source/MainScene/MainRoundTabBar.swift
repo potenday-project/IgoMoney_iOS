@@ -27,7 +27,7 @@ public struct TabConfiguration {
     
     static let `default` = TabConfiguration(
         accentColor: ColorConstants.primary,
-        defaultColor: ColorConstants.gray6,
+        defaultColor: ColorConstants.gray3,
         cornerRadius: 10
     )
 }
@@ -81,6 +81,7 @@ struct RoundTabBar<Content: View>: View {
             )
         }
         .edgesIgnoringSafeArea(.bottom)
+        .background(selectedTab == .challenge ? Color("background_color") : .white)
     }
 }
 
