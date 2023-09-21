@@ -25,10 +25,16 @@ struct MainScene: View {
                     y: 5
                 )
             ) {
-                ZStack {
-                    // TODO: - 사용자 선택에 따른 뷰 변화 추가하기
+                ScrollView {
+                    ForEach(1..<100) { index in
+                        HStack {
+                            Text(index.description)
+                            
+                            Spacer()
+                        }
+                        .padding()
+                    }
                 }
-                .background(Color.red)
             }
         }
     }

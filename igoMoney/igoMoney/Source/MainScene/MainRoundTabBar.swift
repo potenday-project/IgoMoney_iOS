@@ -54,8 +54,6 @@ struct RoundTabBar<Content: View>: View {
         VStack {
             content()
             
-            Spacer()
-            
             HStack {
                 Spacer()
                 
@@ -73,7 +71,7 @@ struct RoundTabBar<Content: View>: View {
                 }
             }
             .padding(.top, 8)
-            .padding(.bottom, 24)
+            .padding(.bottom, 32)
             .background(Color.white)
             .cornerRadius(20)
             .shadow(
@@ -96,7 +94,7 @@ extension RoundTabBar {
             Image(isActive ? tab.selectedIconName : tab.unSelectedIconName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 30)
+                .frame(width: 20)
                 .foregroundColor(
                     isActive ? tabSetting.accentColor : tabSetting.defaultColor
                 )
