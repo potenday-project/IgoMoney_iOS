@@ -6,17 +6,46 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct MainScene: View {
+    let store: StoreOf<MainCore>
     var body: some View {
-        VStack {
-            Text("I Go Money Scene")
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            RoundTabBar(
+                selectedTab: viewStore.binding(
+                    get: \.selectedTab,
+                    send: MainCore.Action.selectedTabChange
+                ),
+                tabSetting: .default,
+                shadowSetting: ShadowConfiguration(
+                    color: ColorConstants.gray6,
+                    radius: 10,
+                    x: .zero,
+                    y: 5
+                )
+            ) {
+                ZStack {
+                    if viewStore.selectedTab == .challenge {
+                        ChallengeScene()
+                    }
+                    
+                    if viewStore.selectedTab == .myPage {
+                        MyPageScene()
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainScene()
+        MainScene(
+            store: Store(
+                initialState: MainCore.State(),
+                reducer: { MainCore() }
+            )
+        )
     }
 }

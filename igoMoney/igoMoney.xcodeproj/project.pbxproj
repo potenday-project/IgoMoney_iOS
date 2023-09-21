@@ -28,6 +28,11 @@
 		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
+		187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C62ABC07AE00DCF08C /* MainTab.swift */; };
+		187252C92ABC07C700DCF08C /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C82ABC07C700DCF08C /* MainCore.swift */; };
+		187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */; };
+		187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */; };
+		187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252D02ABC0BA800DCF08C /* MyPageScene.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
 		18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */; };
@@ -60,6 +65,11 @@
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
+		187252C62ABC07AE00DCF08C /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
+		187252C82ABC07C700DCF08C /* MainCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
+		187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoundTabBar.swift; sourceTree = "<group>"; };
+		187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeScene.swift; sourceTree = "<group>"; };
+		187252D02ABC0BA800DCF08C /* MyPageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageScene.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCore.swift; sourceTree = "<group>"; };
@@ -132,6 +142,8 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
+				187252CC2ABC0B6200DCF08C /* ChallengeScene */,
 				180FC69C2ABB488700DD8477 /* UserClient */,
 				180FC6922ABB337200DD8477 /* NetworkClient */,
 				18CD8F2E2AB9A1D6006FEA6F /* Models */,
@@ -156,6 +168,9 @@
 			isa = PBXGroup;
 			children = (
 				180363AB2AB82DCD00082F8A /* MainScene.swift */,
+				187252C62ABC07AE00DCF08C /* MainTab.swift */,
+				187252C82ABC07C700DCF08C /* MainCore.swift */,
+				187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */,
 			);
 			path = MainScene;
 			sourceTree = "<group>";
@@ -187,6 +202,22 @@
 				180FC69D2ABB488F00DD8477 /* UserClient.swift */,
 			);
 			path = UserClient;
+			sourceTree = "<group>";
+		};
+		187252CC2ABC0B6200DCF08C /* ChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */,
+			);
+			path = ChallengeScene;
+			sourceTree = "<group>";
+		};
+		187252CF2ABC0B9C00DCF08C /* MyPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
+			);
+			path = MyPageScene;
 			sourceTree = "<group>";
 		};
 		18CD8F292AB9823B006FEA6F /* SignUpView */ = {
@@ -330,19 +361,24 @@
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
+				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
+				187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
+				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
+				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
+				187252C92ABC07C700DCF08C /* MainCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
