@@ -71,24 +71,19 @@ struct ExploreChallengeScene: View {
             }
             
             ScrollView(.vertical, showsIndicators: false) {
-                VStack {
+                VStack(spacing: 12) {
                     ForEachStore(
                         store.scope(
                             state: \.challenges,
                             action: ExploreChallengeCore.Action.detailAction
                         )
                     ) { store in
-                        HStack {
-                            Spacer()
-                            
-                            ExploreChallengeDetail(store: store)
-                            
-                            Spacer()
-                        }
+                        ExploreChallengeDetail(store: store)
                     }
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 24)
             }
-            .padding(.top, 24)
         }
         .background(Color.white)
         .onAppear {

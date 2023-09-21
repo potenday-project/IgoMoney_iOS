@@ -23,32 +23,36 @@ struct ExploreChallengeDetail: View {
                 }
             }
             
-            VStack(alignment: .leading, spacing: .zero) {
-                WithViewStore(store, observe: { $0.user.nickName }) { viewStore in
-                    Text(viewStore.state)
-                        .font(.pretendard(size: 12, weight: .medium))
-                }
-                
-                WithViewStore(store, observe: { $0.title }) { viewStore in
-                    Text(viewStore.state)
-                        .font(.pretendard(size: 16, weight: .bold))
-                        .padding(.bottom, 2)
-                }
-                
-                HStack {
-                    WithViewStore(store, observe: { $0.targetMoneyDescription }) { viewStore in
+            HStack {
+                VStack(alignment: .leading, spacing: .zero) {
+                    WithViewStore(store, observe: { $0.user.nickName }) { viewStore in
                         Text(viewStore.state)
+                            .font(.pretendard(size: 12, weight: .medium))
+                    }
+                    
+                    WithViewStore(store, observe: { $0.title }) { viewStore in
+                        Text(viewStore.state)
+                            .font(.pretendard(size: 16, weight: .bold))
+                            .padding(.bottom, 2)
+                    }
+                    
+                    HStack {
+                        WithViewStore(store, observe: { $0.targetMoneyDescription }) { viewStore in
+                            Text(viewStore.state)
+                                .padding(.horizontal, 4)
+                                .background(Color.red)
+                                .cornerRadius(4)
+                        }
+                        
+                        Text("내일부터 시작")
                             .padding(.horizontal, 4)
                             .background(Color.red)
                             .cornerRadius(4)
                     }
-                    
-                    Text("내일부터 시작")
-                        .padding(.horizontal, 4)
-                        .background(Color.red)
-                        .cornerRadius(4)
+                    .font(.pretendard(size: 12, weight: .medium))
                 }
-                .font(.pretendard(size: 12, weight: .medium))
+                
+                Spacer()
             }
         }
         .padding(.horizontal, 16)
