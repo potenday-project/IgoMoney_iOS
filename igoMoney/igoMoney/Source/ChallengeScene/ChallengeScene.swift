@@ -52,13 +52,40 @@ struct ChallengeScene: View {
     }
 }
 
+extension ChallengeScene {
+    enum Section {
+        case myChallenge
+        case emptyChallenge
+        
+        var title: String {
+            switch self {
+            case .myChallenge:
+                return "🔥 참여중인 챌린지"
+            case .emptyChallenge:
+                return "📣 대기중인 챌린지"
+            }
+        }
+        
+        var detail: String? {
+            switch self {
+            case .myChallenge:
+                return nil
+            case .emptyChallenge:
+                return "내가 도전하고 싶은 챌린지를 선택하세요."
+            }
+        }
+        
+        var hasButton: Bool {
+            return self == .emptyChallenge
+        }
+    }
+}
+
 struct MyChallengeSection: View {
     // TODO: - 섹션 reducer 연결하기
     var body: some View {
         ChallengeSectionTitleView(
-            title: "🔥 참여중인 챌린지",
-            detail: nil,
-            isButton: false,
+            sectionType: .myChallenge,
             buttonAction: nil
         )
         
@@ -72,18 +99,18 @@ struct EmptyChallengeSection: View {
     private let gridItems: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 16), count: 2)
     
     var body: some View {
-        ChallengeSectionTitleView(
-            title: "📣 대기중인 챌린지",
-            detail: "내가 도전하고 싶은 챌린지를 선택하세요.",
-            isButton: true) {
-            print("Tapped More Button")
+        ChallengeSectionTitleView(sectionType: .emptyChallenge) {
+            print("Move Empty List")
         }
         
         LazyVGrid(columns: gridItems, spacing: 12) {
             ForEach(1..<10, id: \.self) { _ in
                 // TODO: - 각 뷰마다 Reducer 가질 수 있도록 변경
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("같이 같이 절약 챌린지 성공해봐요!")
+                    Text("같이 절약 챌린지 성공해봐요!")
+                        .multilineTextAlignment(.leading)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(2)
                         .font(.system(size: 16, weight: .bold))
                     
                     Text("아이고머니님")
@@ -127,25 +154,32 @@ struct EmptyChallengeSection: View {
 }
 
 struct ChallengeSectionTitleView: View {
-    let title: String
-    let detail: String?
-    let isButton: Bool
+    let sectionType: ChallengeScene.Section
     let buttonAction: (() -> Void)?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
-                Text(title)
+                Text(sectionType.title)
                     .font(.system(size: 30, weight: .bold))
                 
                 Spacer()
                 
-                if isButton {
+                if sectionType.hasButton {
                     // TODO: - Button 생성
+                    Button {
+                        buttonAction?()
+                    } label: {
+                        Image(systemName: "chevron.right")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                    }
+
                 }
             }
             
-            if let detail = detail {
+            if let detail = sectionType.detail {
                 Text(detail)
                     .font(.system(size: 14, weight: .medium))
             }
@@ -156,27 +190,5 @@ struct ChallengeSectionTitleView: View {
 struct ChallengeScene_Previews: PreviewProvider {
     static var previews: some View {
         ChallengeScene()
-        
-        Group {
-            ChallengeSectionTitleView(
-                title: "🔥 참여중인 챌린지",
-                detail: "내가 도전하고 싶은 챌린지를 선택하세요.",
-                isButton: false,
-                buttonAction: nil
-            )
-            .background(Color.red)
-            .padding()
-            
-            ChallengeSectionTitleView(
-                title: "🔥 참여중인 챌린지",
-                detail: nil,
-                isButton: false,
-                buttonAction: nil
-            )
-            .background(Color.red)
-            .padding()
-        }
-        .previewLayout(.sizeThatFits)
-
     }
 }
