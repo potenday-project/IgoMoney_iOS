@@ -48,6 +48,7 @@
 		18599A6F2ABC4E1B0075DE76 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A642ABC4DE30075DE76 /* Pretendard-Bold.otf */; };
 		18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A702ABC505A0075DE76 /* Font + Extensions.swift */; };
 		18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */; };
+		18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
 		187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C62ABC07AE00DCF08C /* MainTab.swift */; };
 		187252C92ABC07C700DCF08C /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C82ABC07C700DCF08C /* MainCore.swift */; };
@@ -106,6 +107,7 @@
 		18599A662ABC4DE30075DE76 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		18599A702ABC505A0075DE76 /* Font + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extensions.swift"; sourceTree = "<group>"; };
 		18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCore.swift; sourceTree = "<group>"; };
+		18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeDetail.swift; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
 		187252C62ABC07AE00DCF08C /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		187252C82ABC07C700DCF08C /* MainCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			children = (
 				18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */,
 				18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */,
+				18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */,
 			);
 			path = ExploreChallengeScene;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
+				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,

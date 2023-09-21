@@ -11,16 +11,28 @@ import ComposableArchitecture
 struct ExploreChallengeCore: Reducer {
     struct State: Equatable {
         var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
+        var selectedMoney: MoneyType = .all
     }
     
     enum Action: Equatable {
+        // User Action
+        case selectMoney(MoneyType)
+        
+        // Inner Action
         case _onAppear
+        
+        // Child Action
         case detailAction(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            // User Action
+            case .selectMoney(let moneyType):
+                state.selectedMoney = moneyType
+                return .none
+                
             // Inner Action
             case ._onAppear:
                 let defaultValues = ChallengeInformation.default
