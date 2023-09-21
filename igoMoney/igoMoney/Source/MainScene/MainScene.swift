@@ -53,6 +53,9 @@ struct MainScene: View {
                                         ColorConstants.primary : ColorConstants.gray3
                                     )
                             }
+                            .onTapGesture {
+                                viewStore.send(.selectedTabChange(tab))
+                            }
                             
                             Spacer()
                         }
