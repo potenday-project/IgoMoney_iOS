@@ -12,12 +12,13 @@ struct MainScene: View {
     let store: StoreOf<MainCore>
     var body: some View {
         ZStack {
-            Color("background_color")
+            Color.white
                 .edgesIgnoringSafeArea(.all)
             
             WithViewStore(store, observe: { $0 }) { viewStore in
                 if viewStore.selectedTab == .challenge {
                     ChallengeScene()
+                        .padding(.bottom, 60)
                 }
                 
                 VStack {
@@ -37,14 +38,14 @@ struct MainScene: View {
                                 .frame(width: 20)
                                 .foregroundColor(
                                     viewStore.selectedTab == tab ?
-                                    ColorConstants.primary : ColorConstants.gray6
+                                    ColorConstants.primary : ColorConstants.gray3
                                 )
                                 
                                 Text(tab.title)
                                     .font(.system(size: 12, weight: .medium))
                                     .foregroundColor(
                                         viewStore.selectedTab == tab ?
-                                        ColorConstants.primary : ColorConstants.gray6
+                                        ColorConstants.primary : ColorConstants.gray3
                                     )
                             }
                             
@@ -56,7 +57,7 @@ struct MainScene: View {
                     .background(Color.white)
                     .cornerRadius(20)
                     .shadow(
-                        color: ColorConstants.gray6,
+                        color: ColorConstants.gray3,
                         radius: 10,
                         y: 5
                     )
