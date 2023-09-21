@@ -14,6 +14,7 @@ struct ChallengeCore: Reducer {
     }
     
     enum Action {
+        // Child Action
         case myChallengeAction(MyChallengeSectionCore.Action)
         case emptyChallengeAction(EmptyChallengeListSectionCore.Action)
     }
@@ -23,6 +24,7 @@ struct ChallengeCore: Reducer {
             switch action {
             case .myChallengeAction:
                 return .none
+                
             case .emptyChallengeAction:
                 return .none
             }

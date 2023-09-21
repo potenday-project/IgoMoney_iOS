@@ -19,7 +19,27 @@ struct EmptyChallengeListSection: View {
     var body: some View {
         VStack {
             ChallengeSectionTitleView(sectionType: .emptyChallenge) {
-                print("Move Empty List")
+                store.send(.showExplore(true))
+            }
+            
+            WithViewStore(store, observe: { $0 }) { viewStore in
+                NavigationLink(
+                    isActive: viewStore.binding(
+                        get: \.showExplore,
+                        send: EmptyChallengeListSectionCore.Action.showExplore
+                    )
+                ) {
+                    IfLetStore(
+                        store.scope(
+                            state: \.exploreChallengeState,
+                            action: EmptyChallengeListSectionCore.Action.exploreChallengeAction
+                        )
+                    ) { store in
+                        ExploreChallengeScene(store: store)
+                    }
+                } label: {
+                    EmptyView()
+                }
             }
             
             LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 12) {

@@ -20,5 +20,5 @@ enum ColorConstants {
     static let gray2 = Color("gray2")
     static let gray3 = Color("gray3")
     static let gray4 = Color("gray4")
-    static let gray5 = Color("gray8")
+    static let gray5 = Color("gray5")
 }

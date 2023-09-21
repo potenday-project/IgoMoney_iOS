@@ -32,6 +32,7 @@ enum MoneyType: CaseIterable, Hashable, Equatable {
 }
 
 struct ExploreChallengeScene: View {
+    @Environment(\.presentationMode) var presentationMode
     let store: StoreOf<ExploreChallengeCore>
     
     @ViewBuilder
@@ -86,6 +87,7 @@ struct ExploreChallengeScene: View {
         .onAppear {
             store.send(._onAppear)
         }
+        .navigationBarHidden(true)
     }
 }
 
