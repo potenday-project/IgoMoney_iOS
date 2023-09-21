@@ -21,11 +21,11 @@ struct ChallengeScene: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        VStack {
+            titleHeader
+            
             VStack {
-                titleHeader
-                
-                VStack {
+                ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
                         MyChallengeSection()
                         EmptyChallengeSection()
@@ -33,22 +33,15 @@ struct ChallengeScene: View {
                     .padding([.horizontal, .top], 24)
                     .padding(.bottom, 28)
                 }
-                .background(Color.white)
-                .cornerRadius(20, corner: .topLeft)
-                .cornerRadius(20, corner: .topRight)
             }
-            .edgesIgnoringSafeArea(.all)
+            .background(Color.white)
+            .cornerRadius(20, corner: .topLeft)
+            .cornerRadius(20, corner: .topRight)
         }
         .background(
             Color("background_color")
                 .edgesIgnoringSafeArea(.top)
         )
-        .onAppear {
-            UIScrollView.appearance().bounces = false
-        }
-        .onDisappear {
-            UIScrollView.appearance().bounces = true
-        }
     }
 }
 
