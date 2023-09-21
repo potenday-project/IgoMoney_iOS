@@ -17,8 +17,13 @@ struct MainScene: View {
             
             WithViewStore(store, observe: { $0 }) { viewStore in
                 if viewStore.selectedTab == .challenge {
-                    ChallengeScene()
-                        .padding(.bottom, 60)
+                    ChallengeScene(
+                        store: store.scope(
+                            state: \.challengeState,
+                            action: MainCore.Action.challengeAction
+                        )
+                    )
+                    .padding(.bottom, 60)
                 }
                 
                 VStack {

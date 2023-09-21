@@ -6,7 +6,11 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct ChallengeScene: View {
+    let store: StoreOf<ChallengeCore>
+    
     @ViewBuilder
     var titleHeader: some View {
         HStack {
@@ -27,7 +31,12 @@ struct ChallengeScene: View {
             VStack {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 16) {
-                        MyChallengeSection()
+                        MyChallengeSection(
+                            store: store.scope(
+                                state: \.myChallengeState,
+                                action: ChallengeCore.Action.myChallengeAction
+                            )
+                        )
                         EmptyChallengeSection()
                     }
                     .padding([.horizontal, .top], 24)
@@ -75,6 +84,7 @@ extension ChallengeScene {
 }
 
 struct MyChallengeSection: View {
+    let store: StoreOf<MyChallengeCore>
     // TODO: - 섹션 reducer 연결하기
     var body: some View {
         ChallengeSectionTitleView(
@@ -82,9 +92,20 @@ struct MyChallengeSection: View {
             buttonAction: nil
         )
         
-        // TODO: - 상태에 따른 화면 구현
-        RoundedRectangle(cornerRadius: 8)
-            .frame(height: 100)
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            // TODO: - 상태에 따른 화면 구현
+            RoundedRectangle(cornerRadius: 8)
+                .fill(viewStore.color)
+                .frame(height: 100)
+                .onTapGesture {
+                    let randomColor = Color(
+                        red: .random(in: 0...1),
+                        green: .random(in: 0...1),
+                        blue: .random(in: 0...1)
+                    )
+                    viewStore.send(.changeColor(randomColor))
+                }
+        }
     }
 }
 
@@ -182,6 +203,11 @@ struct ChallengeSectionTitleView: View {
 
 struct ChallengeScene_Previews: PreviewProvider {
     static var previews: some View {
-        ChallengeScene()
+        ChallengeScene(
+            store: Store(
+                initialState: ChallengeCore.State(),
+                reducer: { ChallengeCore() }
+            )
+        )
     }
 }
