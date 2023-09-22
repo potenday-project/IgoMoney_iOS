@@ -43,7 +43,7 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
     let rootView = MainScene(
       store: Store(
         initialState: MainCore.State(),
-        reducer: { MainCore() }
+        reducer: { MainCore()._printChanges() }
       )
     )
     

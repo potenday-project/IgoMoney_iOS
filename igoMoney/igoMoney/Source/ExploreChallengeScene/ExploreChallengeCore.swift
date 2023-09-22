@@ -12,7 +12,8 @@ struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
     var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
     var selectedMoney: MoneyType = .all
-    var showEnterChallenge: Bool = false
+    var showEnter: Bool = false
+    var selectedChallenge: EnterChallengeCore.State?
   }
   
   enum Action: Equatable {
@@ -21,9 +22,11 @@ struct ExploreChallengeCore: Reducer {
     
     // Inner Action
     case _onAppear
+    case _setShowEnter(Bool)
     
     // Child Action
     case detailAction(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
+    case enterAction(EnterChallengeCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -50,10 +53,24 @@ struct ExploreChallengeCore: Reducer {
         
         return .none
         
-        // Child Action
-      case .detailAction(let id, .didTap):
-        // TODO: - 화면 전환 구현하기
+      case ._setShowEnter(true):
+        state.showEnter = true
         return .none
+        
+      case ._setShowEnter(false):
+        state.showEnter = false
+        state.selectedChallenge = nil
+        return .none
+        
+        // Child Action
+      case .detailAction(let id, action: .didTap):
+        if let selectedItem = state.challenges.filter({ $0.id == id }).first {
+          state.selectedChallenge = EnterChallengeCore.State(challengeDetailState: selectedItem)
+        }
+        
+        return .run { send in
+          await send(._setShowEnter(true))
+        }
         
       case .detailAction:
         return .none
@@ -61,6 +78,9 @@ struct ExploreChallengeCore: Reducer {
     }
     .forEach(\.challenges, action: /Action.detailAction) {
       ChallengeDetailCore()
+    }
+    .ifLet(\.selectedChallenge, action: /Action.enterAction) {
+      EnterChallengeCore()
     }
   }
 }

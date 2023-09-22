@@ -70,6 +70,26 @@ struct ExploreChallengeScene: View {
         }
       }
       
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        NavigationLink(
+          isActive: viewStore.binding(
+            get: \.showEnter,
+            send: ExploreChallengeCore.Action._setShowEnter
+          )
+        ) {
+          IfLetStore(
+            store.scope(
+              state: \.selectedChallenge,
+              action: ExploreChallengeCore.Action.enterAction
+            )
+          ) { store in
+            EnterChallengeScene(store: store)
+          }
+        } label: {
+          EmptyView()
+        }
+      }
+      
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 12) {
           ForEachStore(
@@ -79,6 +99,9 @@ struct ExploreChallengeScene: View {
             )
           ) { store in
             ExploreChallengeDetail(store: store)
+              .onTapGesture {
+                store.send(.didTap)
+              }
           }
         }
         .padding(.horizontal, 24)

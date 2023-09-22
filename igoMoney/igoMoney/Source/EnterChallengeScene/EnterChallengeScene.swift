@@ -6,7 +6,11 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct EnterChallengeScene: View {
+  let store: StoreOf<EnterChallengeCore>
+  
   var body: some View {
     VStack {
       ZStack {
@@ -181,11 +185,17 @@ struct EnterChallengeScene: View {
       Color("background_color")
         .edgesIgnoringSafeArea(.all)
     )
+    .navigationBarHidden(true)
   }
 }
 
 struct EnterChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    EnterChallengeScene()
+    EnterChallengeScene(
+      store: Store(
+        initialState: EnterChallengeCore.State(challengeDetailState: .init(id: UUID(), title: "asnkjdnjaks", content: "asndknaksd", targetAmount: 10000, user: .default)),
+        reducer: { EnterChallengeCore() }
+      )
+    )
   }
 }
