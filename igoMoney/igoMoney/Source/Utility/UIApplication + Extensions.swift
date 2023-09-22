@@ -27,3 +27,23 @@ extension UIApplication {
     return keyWindow
   }
 }
+
+extension UIWindow {
+  public var topViewController: UIViewController? {
+    return self.topViewController(vc: self.rootViewController)
+  }
+  
+  public func topViewController(vc: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    if let nc = vc as? UINavigationController {
+      return self.topViewController(vc: nc.topViewController)
+    } else if let tc = vc as? UITabBarController {
+      return self.topViewController(vc: tc.selectedViewController)
+    } else {
+      if let pvc = vc?.presentedViewController {
+        return self.topViewController(vc: pvc)
+      } else {
+        return vc
+      }
+    }
+  }
+}

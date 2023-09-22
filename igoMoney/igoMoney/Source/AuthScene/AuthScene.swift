@@ -43,7 +43,7 @@ struct AuthScene: View {
           
           WithViewStore(store, observe: { $0 }) { viewStore in
             ForEach(viewStore.providers, id: \.rawValue) { provider in
-              AuthButton(provider: provider) {
+              IGOAuthButton(provider: provider) {
                 Task {
                   if provider == .kakao {
                     let token = await AuthController.shared.authorizationWithKakao()

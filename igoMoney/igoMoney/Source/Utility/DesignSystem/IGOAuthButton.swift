@@ -1,12 +1,12 @@
 //
-//  AuthButton.swift
+//  IGOAuthButton.swift
 //  igoMoney
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import SwiftUI
 
-struct AuthButton: View {
+struct IGOAuthButton: View {
   let provider: Provider
   let action: () -> Void
   

@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct EnterChallengeScene: View {
   let store: StoreOf<EnterChallengeCore>
+  @State private var showAlert: Bool = false
   
   // 사용자 챌린지 진행 방법 설명
   private enum DuringNotice: Hashable, CaseIterable, CustomStringConvertible {
@@ -147,6 +148,7 @@ struct EnterChallengeScene: View {
         
         Button {
           // TODO: - Enter Action 추가하기
+          showAlert.toggle()
         } label: {
           HStack {
             Spacer()
@@ -174,6 +176,30 @@ struct EnterChallengeScene: View {
       Color("background_color")
         .edgesIgnoringSafeArea(.all)
     )
+    .alert(isPresent: $showAlert) {
+      IGOAlertView {
+        VStack(alignment: .center) {
+          Image("icon_hand")
+          
+          Text("챌린지에\n참가하시겠습니까?")
+            .font(.pretendard(size: 18, weight: .bold))
+        }
+      } primaryButton: {
+        IGOAlertButton(
+          title: Text("네").foregroundColor(Color.black),
+          color: ColorConstants.primary
+        ) {
+          print("123")
+        }
+      } secondaryButton: {
+        IGOAlertButton(
+          title: Text("아니요").foregroundColor(ColorConstants.gray3),
+          color: ColorConstants.gray5
+        ) {
+          print("123")
+        }
+      }
+    }
     .navigationBarHidden(true)
   }
 }
