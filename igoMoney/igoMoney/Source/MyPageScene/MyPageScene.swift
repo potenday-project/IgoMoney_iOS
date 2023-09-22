@@ -7,9 +7,9 @@
 import SwiftUI
 
 struct MyPageScene: View {
-    var body: some View {
-        VStack {
-            Text("My Page Scene")
-        }
+  var body: some View {
+    VStack {
+      Text("My Page Scene")
     }
+  }
 }
