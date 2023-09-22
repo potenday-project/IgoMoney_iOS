@@ -44,13 +44,11 @@ struct ExploreChallengeCore: Reducer {
       // Inner Action
       case let ._setNavigation(selection: .some(id)):
         state.selection = Identified(nil, id: id)
-        state.isActivityIndicatorVisible = true
         return .run { send in
           await send(._setNavigationSelection)
         }.cancellable(id: CancelID.load, cancelInFlight: true)
         
       case ._setNavigation(selection: .none):
-        state.isActivityIndicatorVisible = false
         state.selection = nil
         return .cancel(id: CancelID.load)
         
@@ -61,7 +59,6 @@ struct ExploreChallengeCore: Reducer {
         }
         
         state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
-        state.isActivityIndicatorVisible = false
         return .none
         
         // Child Action

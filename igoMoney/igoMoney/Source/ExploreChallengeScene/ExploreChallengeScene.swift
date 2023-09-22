@@ -69,52 +69,59 @@ struct ExploreChallengeScene: View {
             .padding(.horizontal, 24)
         }
       }
-      ZStack {
-        ScrollView(.vertical, showsIndicators: false) {
-          VStack(spacing: 12) {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-              ForEach(viewStore.challenges, id: \.id) { challenge in
-                ZStack {
-                  ExploreChallengeDetail(challenge: challenge)
-                    .onTapGesture {
-                      viewStore.send(._setNavigation(selection: challenge.id))
-                    }
-                  
-                  NavigationLink(
-                    destination: IfLetStore(
-                      self.store.scope(
-                        state: \.selection?.value,
-                        action: ExploreChallengeCore.Action.enterAction
-                      )
-                    ) {
-                      EnterChallengeScene(store: $0)
-                        .navigationBarHidden(true)
-                    },
-                    tag: challenge.id,
-                    selection: viewStore.binding(
-                      get: \.selection?.id,
-                      send: ExploreChallengeCore.Action._setNavigation
-                    )
-                  ) {
-                    EmptyView()
-                  }
-                }
-              }
+      
+      ScrollView(.vertical, showsIndicators: false) {
+        VStack(spacing: 12) {
+          WithViewStore(store, observe: { $0.challenges }) { viewStore in
+            ForEach(viewStore.state, id: \.id) { challenge in
+              ExploreChallengeNavigationView(
+                challenge: challenge,
+                store: self.store
+              )
             }
           }
-          .padding(.horizontal, 24)
-          .padding(.top, 24)
         }
-
-        WithViewStore(store, observe: { $0 }) { viewStore in
-          if viewStore.isActivityIndicatorVisible {
-            ProgressView()
-          }
-        }
+        .padding(.horizontal, 24)
+        .padding(.top, 24)
       }
     }
     .background(Color.white)
     .navigationBarHidden(true)
+  }
+}
+
+struct ExploreChallengeNavigationView: View {
+  let challenge: ChallengeInformation
+  let store: StoreOf<ExploreChallengeCore>
+  
+  var body: some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      ZStack {
+        ExploreChallengeDetail(challenge: challenge)
+          .onTapGesture {
+            viewStore.send(._setNavigation(selection: challenge.id))
+          }
+        
+        NavigationLink(
+          destination: IfLetStore(
+            self.store.scope(
+              state: \.selection?.value,
+              action: ExploreChallengeCore.Action.enterAction
+            )
+          ) {
+            EnterChallengeScene(store: $0)
+              .navigationBarHidden(true)
+          },
+          tag: challenge.id,
+          selection: viewStore.binding(
+            get: \.selection?.id,
+            send: ExploreChallengeCore.Action._setNavigation
+          )
+        ) {
+          EmptyView()
+        }
+      }
+    }
   }
 }
 

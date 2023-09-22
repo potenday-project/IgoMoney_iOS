@@ -12,7 +12,7 @@ struct ExploreChallengeDetail: View {
   let challenge: ChallengeInformation
   
   var body: some View {
-    HStack(alignment: .top) {
+    HStack(alignment: .center) {
       if let path = challenge.user.profileImagePath {
         Image(path)
           .frame(width: 65, height: 65)
@@ -21,7 +21,7 @@ struct ExploreChallengeDetail: View {
           .frame(width: 65, height: 65)
       }
       
-      HStack {
+      HStack(alignment: .firstTextBaseline) {
         VStack(alignment: .leading, spacing: .zero) {
           Text(challenge.user.nickName + "님")
             .font(.pretendard(size: 12, weight: .medium))

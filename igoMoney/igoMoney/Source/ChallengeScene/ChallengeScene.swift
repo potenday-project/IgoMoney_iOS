@@ -97,7 +97,7 @@ struct ChallengeSectionTitleView: View {
     VStack(alignment: .leading, spacing: 2) {
       HStack {
         Text(sectionType.title)
-          .font(.system(size: 30, weight: .bold))
+          .font(.system(size: 20, weight: .bold))
         
         Spacer()
         

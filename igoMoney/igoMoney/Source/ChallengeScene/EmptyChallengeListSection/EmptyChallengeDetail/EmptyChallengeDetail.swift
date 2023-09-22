@@ -69,8 +69,8 @@ struct EmptyChallengeDetail: View {
       RoundedRectangle(cornerRadius: 10)
         .fill(.white)
         .shadow(
-          color: ColorConstants.gray2.opacity(0.3),
-          radius: 8,
+          color: ColorConstants.gray2.opacity(0.15),
+          radius: 4,
           y: 2
         )
     )

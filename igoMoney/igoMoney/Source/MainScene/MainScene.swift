@@ -66,8 +66,8 @@ struct MainScene: View {
             .background(Color.white)
             .cornerRadius(20)
             .shadow(
-              color: ColorConstants.gray3,
-              radius: 10,
+              color: ColorConstants.gray3.opacity(0.2),
+              radius: 8,
               y: 5
             )
           }
