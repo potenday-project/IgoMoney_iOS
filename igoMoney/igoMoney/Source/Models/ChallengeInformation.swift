@@ -6,7 +6,9 @@
 
 import Foundation
 
-struct ChallengeInformation: Decodable, Equatable {
+struct ChallengeInformation: Decodable, Equatable, Identifiable {
+  var id = UUID()
+  
   let title: String
   let content: String
   let targetAmount: Int
@@ -14,6 +16,7 @@ struct ChallengeInformation: Decodable, Equatable {
   
   static let `default`: [Self] = Array(
     repeating: ChallengeInformation(
+      id: UUID(),
       title: "일주일에 3만원으로 살아남기 👊🏻",
       content: "",
       targetAmount: 30000,
@@ -24,7 +27,7 @@ struct ChallengeInformation: Decodable, Equatable {
   
   
   static func == (lhs: ChallengeInformation, rhs: ChallengeInformation) -> Bool {
-    return lhs.title == rhs.title && lhs.user.id == rhs.user.id
+    return lhs.id == rhs.id
   }
 }
 

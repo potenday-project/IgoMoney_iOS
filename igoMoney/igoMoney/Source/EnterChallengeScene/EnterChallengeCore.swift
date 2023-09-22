@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct EnterChallengeCore: Reducer {
   struct State: Equatable {
-    let challengeDetailState: ChallengeDetailCore.State
+    let challenge: ChallengeInformation
   }
   
   enum Action: Equatable {

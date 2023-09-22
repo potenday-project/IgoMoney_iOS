@@ -36,6 +36,7 @@ struct EnterChallengeScene: View {
       } // Custom Navigation Bar
       .foregroundColor(.white)
       .padding(.horizontal, 24)
+      .padding(.top, 16)
       
       VStack(alignment: .leading, spacing: 8) {
         HStack {
@@ -193,7 +194,7 @@ struct EnterChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
     EnterChallengeScene(
       store: Store(
-        initialState: EnterChallengeCore.State(challengeDetailState: .init(id: UUID(), title: "asnkjdnjaks", content: "asndknaksd", targetAmount: 10000, user: .default)),
+        initialState: EnterChallengeCore.State(challenge: .default.first!),
         reducer: { EnterChallengeCore() }
       )
     )

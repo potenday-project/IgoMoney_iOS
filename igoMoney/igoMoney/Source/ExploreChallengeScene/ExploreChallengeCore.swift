@@ -10,10 +10,9 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
+    var challenges: IdentifiedArrayOf<ChallengeInformation> = []
     var selectedMoney: MoneyType = .all
-    var showEnter: Bool = false
-    var selectedChallenge: EnterChallengeCore.State?
+    var selection: Identified<ChallengeInformation.ID, EnterChallengeCore.State?>?
   }
   
   enum Action: Equatable {
@@ -22,11 +21,16 @@ struct ExploreChallengeCore: Reducer {
     
     // Inner Action
     case _onAppear
-    case _setShowEnter(Bool)
+    case _setNavigation(selection: UUID?)
+    case _setNavigationSelection
     
     // Child Action
     case detailAction(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     case enterAction(EnterChallengeCore.Action)
+  }
+  
+  private enum CancelID {
+    case load
   }
   
   var body: some Reducer<State, Action> {
@@ -39,48 +43,40 @@ struct ExploreChallengeCore: Reducer {
         
         // Inner Action
       case ._onAppear:
-        let defaultValues = ChallengeInformation.default
-        defaultValues.forEach {
-          let detailState = ChallengeDetailCore.State(
-            id: UUID(),
-            title: $0.title,
-            content: $0.content,
-            targetAmount: $0.targetAmount,
-            user: $0.user
-          )
-          state.challenges.append(detailState)
-        }
-        
+        guard state.challenges.isEmpty else { return .none }
+        state.challenges = IdentifiedArray(uniqueElements: ChallengeInformation.default)
         return .none
         
-      case ._setShowEnter(true):
-        state.showEnter = true
-        return .none
+      case let ._setNavigation(selection: .some(id)):
+        state.selection = Identified(nil, id: id)
+        return .run { send in
+          await send(._setNavigationSelection)
+        }.cancellable(id: CancelID.load, cancelInFlight: true)
         
-      case ._setShowEnter(false):
-        state.showEnter = false
-        state.selectedChallenge = nil
+      case ._setNavigation(selection: .none):
+        state.selection = nil
+        return .cancel(id: CancelID.load)
+        
+      case ._setNavigationSelection:
+        guard let id = state.selection?.id,
+              let enterChallenge = state.challenges[id: id] else { return .none }
+        
+        state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
         return .none
         
         // Child Action
-      case .detailAction(let id, action: .didTap):
-        if let selectedItem = state.challenges.filter({ $0.id == id }).first {
-          state.selectedChallenge = EnterChallengeCore.State(challengeDetailState: selectedItem)
-        }
-        
-        return .run { send in
-          await send(._setShowEnter(true))
-        }
-        
       case .detailAction:
+        return .none
+        
+      case .enterAction:
         return .none
       }
     }
-    .forEach(\.challenges, action: /Action.detailAction) {
-      ChallengeDetailCore()
-    }
-    .ifLet(\.selectedChallenge, action: /Action.enterAction) {
-      EnterChallengeCore()
+    .ifLet(\.selection, action: /Action.enterAction) {
+      EmptyReducer()
+        .ifLet(\Identified<ChallengeDetailCore.State.ID, EnterChallengeCore.State?>.value, action: .self) {
+          EnterChallengeCore()
+        }
     }
   }
 }

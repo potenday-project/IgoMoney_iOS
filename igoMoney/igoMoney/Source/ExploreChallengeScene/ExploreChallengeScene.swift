@@ -70,38 +70,30 @@ struct ExploreChallengeScene: View {
         }
       }
       
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        NavigationLink(
-          isActive: viewStore.binding(
-            get: \.showEnter,
-            send: ExploreChallengeCore.Action._setShowEnter
-          )
-        ) {
-          IfLetStore(
-            store.scope(
-              state: \.selectedChallenge,
-              action: ExploreChallengeCore.Action.enterAction
-            )
-          ) { store in
-            EnterChallengeScene(store: store)
-          }
-        } label: {
-          EmptyView()
-        }
-      }
-      
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 12) {
-          ForEachStore(
-            store.scope(
-              state: \.challenges,
-              action: ExploreChallengeCore.Action.detailAction
-            )
-          ) { store in
-            ExploreChallengeDetail(store: store)
-              .onTapGesture {
-                store.send(.didTap)
+          WithViewStore(store, observe: { $0 }) { viewStore in
+            ForEach(viewStore.challenges, id: \.id) { challenge in
+              NavigationLink(
+                destination: IfLetStore(
+                  self.store.scope(
+                    state: \.selection?.id,
+                    action: ExploreChallengeCore.Action.enterAction
+                  )
+                ) {
+//                  EnterChallengeScene(store: $0)
+                } else: {
+                  ProgressView()
+                },
+                tag: challenge.id,
+                selection: viewStore.binding(
+                  get: \.selection?.id,
+                  send: ExploreChallengeCore.Action._setNavigation
+                )
+              ) {
+                ExploreChallengeDetail(challenge: challenge)
               }
+            }
           }
         }
         .padding(.horizontal, 24)

@@ -74,6 +74,7 @@ struct MainScene: View {
           .edgesIgnoringSafeArea(.bottom)
         }
       }
+      .navigationViewStyle(.stack)
     }
     .navigationBarHidden(true)
   }
