@@ -23,10 +23,10 @@ struct ExploreChallengeDetail: View {
       
       HStack {
         VStack(alignment: .leading, spacing: .zero) {
-          Text(challenge.title)
+          Text(challenge.user.nickName + "님")
             .font(.pretendard(size: 12, weight: .medium))
           
-          Text(challenge.content)
+          Text(challenge.title)
             .font(.pretendard(size: 16, weight: .bold))
             .padding(.bottom, 2)
           

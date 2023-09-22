@@ -69,36 +69,48 @@ struct ExploreChallengeScene: View {
             .padding(.horizontal, 24)
         }
       }
-      
-      ScrollView(.vertical, showsIndicators: false) {
-        VStack(spacing: 12) {
-          WithViewStore(store, observe: { $0 }) { viewStore in
-            ForEach(viewStore.challenges, id: \.id) { challenge in
-              NavigationLink(
-                destination: IfLetStore(
-                  self.store.scope(
-                    state: \.selection?.value,
-                    action: ExploreChallengeCore.Action.enterAction
-                  )
-                ) {
-                  EnterChallengeScene(store: $0)
-                    .navigationBarHidden(true)
-                } else: {
-                  ProgressView()
-                },
-                tag: challenge.id,
-                selection: viewStore.binding(
-                  get: \.selection?.id,
-                  send: ExploreChallengeCore.Action._setNavigation
-                )
-              ) {
-                ExploreChallengeDetail(challenge: challenge)
+      ZStack {
+        ScrollView(.vertical, showsIndicators: false) {
+          VStack(spacing: 12) {
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              ForEach(viewStore.challenges, id: \.id) { challenge in
+                ZStack {
+                  ExploreChallengeDetail(challenge: challenge)
+                    .onTapGesture {
+                      viewStore.send(._setNavigation(selection: challenge.id))
+                    }
+                  
+                  NavigationLink(
+                    destination: IfLetStore(
+                      self.store.scope(
+                        state: \.selection?.value,
+                        action: ExploreChallengeCore.Action.enterAction
+                      )
+                    ) {
+                      EnterChallengeScene(store: $0)
+                        .navigationBarHidden(true)
+                    },
+                    tag: challenge.id,
+                    selection: viewStore.binding(
+                      get: \.selection?.id,
+                      send: ExploreChallengeCore.Action._setNavigation
+                    )
+                  ) {
+                    EmptyView()
+                  }
+                }
               }
             }
           }
+          .padding(.horizontal, 24)
+          .padding(.top, 24)
         }
-        .padding(.horizontal, 24)
-        .padding(.top, 24)
+
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          if viewStore.isActivityIndicatorVisible {
+            ProgressView()
+          }
+        }
       }
     }
     .background(Color.white)
