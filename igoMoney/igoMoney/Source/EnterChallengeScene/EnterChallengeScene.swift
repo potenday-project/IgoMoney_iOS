@@ -182,6 +182,7 @@ struct EnterChallengeScene: View {
           Image("icon_hand")
           
           Text("챌린지에\n참가하시겠습니까?")
+            .multilineTextAlignment(.center)
             .font(.pretendard(size: 18, weight: .bold))
         }
       } primaryButton: {
