@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<ChallengeInformation> = []
+    var challenges: IdentifiedArrayOf<ChallengeInformation> = IdentifiedArray(uniqueElements: ChallengeInformation.default)
     var selectedMoney: MoneyType = .all
     var selection: Identified<ChallengeInformation.ID, EnterChallengeCore.State?>?
   }
@@ -20,12 +20,11 @@ struct ExploreChallengeCore: Reducer {
     case selectMoney(MoneyType)
     
     // Inner Action
-    case _onAppear
+//    case _onAppear
     case _setNavigation(selection: UUID?)
     case _setNavigationSelection
     
     // Child Action
-    case detailAction(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     case enterAction(EnterChallengeCore.Action)
   }
   
@@ -42,14 +41,15 @@ struct ExploreChallengeCore: Reducer {
         return .none
         
         // Inner Action
-      case ._onAppear:
-        guard state.challenges.isEmpty else { return .none }
-        state.challenges = IdentifiedArray(uniqueElements: ChallengeInformation.default)
-        return .none
-        
+//      case ._onAppear:
+//        guard state.challenges.isEmpty else { return .none }
+//        state.challenges = IdentifiedArray(uniqueElements: ChallengeInformation.default)
+//        return .none
+//
       case let ._setNavigation(selection: .some(id)):
         state.selection = Identified(nil, id: id)
         return .run { send in
+          sleep(1)
           await send(._setNavigationSelection)
         }.cancellable(id: CancelID.load, cancelInFlight: true)
         
@@ -59,22 +59,21 @@ struct ExploreChallengeCore: Reducer {
         
       case ._setNavigationSelection:
         guard let id = state.selection?.id,
-              let enterChallenge = state.challenges[id: id] else { return .none }
+              let enterChallenge = state.challenges[id: id] else {
+          return .none
+        }
         
         state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
         return .none
         
         // Child Action
-      case .detailAction:
-        return .none
-        
       case .enterAction:
         return .none
       }
     }
     .ifLet(\.selection, action: /Action.enterAction) {
       EmptyReducer()
-        .ifLet(\Identified<ChallengeDetailCore.State.ID, EnterChallengeCore.State?>.value, action: .self) {
+        .ifLet(\Identified<ChallengeInformation.ID, EnterChallengeCore.State?>.value, action: .self) {
           EnterChallengeCore()
         }
     }

@@ -14,16 +14,26 @@ struct ChallengeInformation: Decodable, Equatable, Identifiable {
   let targetAmount: Int
   let user: User
   
-  static let `default`: [Self] = Array(
-    repeating: ChallengeInformation(
-      id: UUID(),
+  static let `default`: [Self] = [
+    ChallengeInformation(
       title: "일주일에 3만원으로 살아남기 👊🏻",
       content: "",
       targetAmount: 30000,
       user: .default
     ),
-    count: 3
-  )
+    ChallengeInformation(
+      title: "일주일에 3만원으로 살아남기 👊🏻",
+      content: "",
+      targetAmount: 30000,
+      user: .default
+    ),
+    ChallengeInformation(
+      title: "일주일에 3만원으로 살아남기 👊🏻",
+      content: "",
+      targetAmount: 30000,
+      user: .default
+    )
+  ]
   
   
   static func == (lhs: ChallengeInformation, rhs: ChallengeInformation) -> Bool {

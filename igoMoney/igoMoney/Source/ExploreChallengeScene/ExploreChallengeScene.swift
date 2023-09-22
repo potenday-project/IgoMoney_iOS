@@ -77,11 +77,12 @@ struct ExploreChallengeScene: View {
               NavigationLink(
                 destination: IfLetStore(
                   self.store.scope(
-                    state: \.selection?.id,
+                    state: \.selection?.value,
                     action: ExploreChallengeCore.Action.enterAction
                   )
                 ) {
-//                  EnterChallengeScene(store: $0)
+                  EnterChallengeScene(store: $0)
+                    .navigationBarHidden(true)
                 } else: {
                   ProgressView()
                 },
@@ -101,9 +102,6 @@ struct ExploreChallengeScene: View {
       }
     }
     .background(Color.white)
-    .onAppear {
-      store.send(._onAppear)
-    }
     .navigationBarHidden(true)
   }
 }
@@ -142,11 +140,15 @@ struct ExploreChallengeFilterSection: View {
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    ExploreChallengeScene(
-      store: Store(
-        initialState: ExploreChallengeCore.State(),
-        reducer: { ExploreChallengeCore() }
+    NavigationView {
+      ExploreChallengeScene(
+        store: Store(
+          initialState: ExploreChallengeCore.State(),
+          reducer: { ExploreChallengeCore() }
+        )
       )
-    )
+      .navigationBarHidden(true)
+    }
+    .navigationBarHidden(true)
   }
 }
