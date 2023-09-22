@@ -12,6 +12,7 @@ struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
     var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
     var selectedMoney: MoneyType = .all
+    var showEnterChallenge: Bool = false
   }
   
   enum Action: Equatable {
@@ -50,6 +51,10 @@ struct ExploreChallengeCore: Reducer {
         return .none
         
         // Child Action
+      case .detailAction(let id, .didTap):
+        // TODO: - 화면 전환 구현하기
+        return .none
+        
       case .detailAction:
         return .none
       }

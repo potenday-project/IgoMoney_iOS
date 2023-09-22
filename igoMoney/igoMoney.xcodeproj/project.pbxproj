@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */; };
 		180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363A92AB82DCD00082F8A /* igoMoneyApp.swift */; };
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeScene.swift; sourceTree = "<group>"; };
 		180363A62AB82DCD00082F8A /* igoMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = igoMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		180363A92AB82DCD00082F8A /* igoMoneyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = igoMoneyApp.swift; sourceTree = "<group>"; };
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1800BC922ABD6C6400938336 /* EnterChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
+			);
+			path = EnterChallengeScene;
+			sourceTree = "<group>";
+		};
 		1803639D2AB82DCD00082F8A = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +197,7 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1800BC922ABD6C6400938336 /* EnterChallengeScene */,
 				18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */,
 				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
 				187252CC2ABC0B6200DCF08C /* ChallengeScene */,
@@ -477,6 +488,7 @@
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
+				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
 				18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,

@@ -15,7 +15,7 @@ struct EmptyChallengeDetail: View {
     VStack(alignment: .leading, spacing: 8) {
       // 챌린지 타이틀
       WithViewStore(store, observe: { $0.title }) { viewStore in
-        Text("같이 절약 챌린지 성공해봐요!")
+        Text(viewStore.state)
           .multilineTextAlignment(.leading)
           .minimumScaleFactor(0.5)
           .lineLimit(2)
