@@ -23,11 +23,15 @@ struct ChallengeDetailCore: Reducer {
   }
   
   enum Action: Equatable, Sendable {
-    
+    // User Action
+    case didTap
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
+    switch action {
+    case .didTap:
+      return .none
+    }
   }
 }
 
