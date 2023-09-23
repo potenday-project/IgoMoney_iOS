@@ -32,7 +32,6 @@ enum MoneyType: CaseIterable, Hashable, Equatable {
 }
 
 struct ExploreChallengeScene: View {
-  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<ExploreChallengeCore>
   
   @ViewBuilder

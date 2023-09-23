@@ -73,6 +73,10 @@ struct EmptyChallengeListSectionCore: Reducer {
       case .challengeDetail:
         return .none
         
+      case .exploreChallengeAction(.enterAction(._closeAlert)):
+        state.showExplore = false
+        return .none
+        
       case .exploreChallengeAction:
         return .none
       }
