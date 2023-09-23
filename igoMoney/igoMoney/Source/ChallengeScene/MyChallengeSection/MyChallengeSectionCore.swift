@@ -58,10 +58,12 @@ struct MyChallengeSectionCore: Reducer {
         
       case ._presentChallengeSituation(true):
         state.presentSituation = true
+        state.challengeSituationState = ChallengeSituationCore.State()
         return .none
         
       case ._presentChallengeSituation(false):
         state.presentSituation = false
+        state.challengeSituationState = nil
         return .none
       }
     }

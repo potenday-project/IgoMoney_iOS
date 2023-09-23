@@ -58,8 +58,8 @@ struct MyChallengeSection: View {
                   state: \.challengeSituationState,
                   action: MyChallengeSectionCore.Action.situationAction
                 ),
-                then: { store in
-                  ExampleView(store: store)
+                then: { _ in
+                  ChallengeStateScene()
                 }
               ),
               isActive: viewStore.binding(
