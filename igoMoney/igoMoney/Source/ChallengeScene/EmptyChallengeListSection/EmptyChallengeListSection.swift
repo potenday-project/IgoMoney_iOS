@@ -18,7 +18,9 @@ struct EmptyChallengeListSection: View {
   
   var body: some View {
     VStack(spacing: 16) {
-      ChallengeSectionTitleView(sectionType: .emptyChallenge) {
+      ChallengeSectionTitleView(
+        sectionType: .emptyChallenge
+      ) {
         store.send(.showExplore(true))
       }
       

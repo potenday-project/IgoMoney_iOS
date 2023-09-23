@@ -8,9 +8,25 @@ import SwiftUI
 
 import ComposableArchitecture
 
+struct ChallengeSituationCore: Reducer {
+  struct State: Equatable {
+    
+  }
+  
+  enum Action {
+    
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    return .none
+  }
+}
+
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
-    var challengeState: ChallengeState = .empty
+    var challengeState: ChallengeState = .challenging
+    var presentSituation: Bool = false
+    var challengeSituationState: ChallengeSituationCore.State? = nil
     
     enum ChallengeState: CaseIterable {
       case empty
@@ -20,18 +36,37 @@ struct MyChallengeSectionCore: Reducer {
     }
   }
   
-  enum Action: Equatable {
-    case changeState
+  enum Action {
+    case tapChallengeStatus
+    
+    case _presentChallengeSituation(Bool)
+    
+    case situationAction(ChallengeSituationCore.Action)
   }
   
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .changeState:
-      guard let randomState = State.ChallengeState.allCases.randomElement() else {
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .tapChallengeStatus:
+        if state.challengeState == .challenging {
+          return .run { send in
+            await send(._presentChallengeSituation(true))
+          }
+        } else {
+          return .none
+        }
+        
+      case ._presentChallengeSituation(true):
+        state.presentSituation = true
+        return .none
+        
+      case ._presentChallengeSituation(false):
+        state.presentSituation = false
         return .none
       }
-      state.challengeState = randomState
-      return .none
+    }
+    .ifLet(\.challengeSituationState, action: /Action.situationAction) {
+      ChallengeSituationCore()
     }
   }
 }
