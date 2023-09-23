@@ -11,33 +11,71 @@ struct ChallengeInformation: Decodable, Equatable, Identifiable {
   
   let title: String
   let content: String
-  let targetAmount: Int
+  let targetAmount: TargetMoneyAmount
   let user: User
   
   static let `default`: [Self] = [
     ChallengeInformation(
       title: "일주일에 3만원으로 살아남기 👊🏻",
       content: "",
-      targetAmount: 30000,
+      targetAmount: .init(money: 10000),
       user: .default
     ),
     ChallengeInformation(
       title: "일주일에 3만원으로 살아남기 👊🏻",
       content: "",
-      targetAmount: 30000,
+      targetAmount: .init(money: 20000),
       user: .default
     ),
     ChallengeInformation(
       title: "일주일에 3만원으로 살아남기 👊🏻",
       content: "",
-      targetAmount: 30000,
+      targetAmount: .init(money: 30000),
+      user: .default
+    ),
+    ChallengeInformation(
+      title: "일주일에 3만원으로 살아남기 👊🏻",
+      content: "",
+      targetAmount: .init(money: 40000),
+      user: .default
+    ),
+    ChallengeInformation(
+      title: "일주일에 3만원으로 살아남기 👊🏻",
+      content: "",
+      targetAmount: .init(money: 50000),
       user: .default
     )
   ]
   
-  
   static func == (lhs: ChallengeInformation, rhs: ChallengeInformation) -> Bool {
     return lhs.id == rhs.id
+  }
+}
+
+struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
+  var id = UUID()
+  let money: Int
+  
+  var description: String {
+    return "💸 \(money)원"
+  }
+  
+  var colorName: String {
+    switch money {
+    case 10000..<20000:
+      return "yellow"
+    case 20000..<30000:
+      return "orange"
+    case 30000..<40000:
+      return "blue"
+    case 40000..<50000:
+      return "red"
+    case 50000...:
+      return "purple"
+      
+    default:
+      return "yellow"
+    }
   }
 }
 

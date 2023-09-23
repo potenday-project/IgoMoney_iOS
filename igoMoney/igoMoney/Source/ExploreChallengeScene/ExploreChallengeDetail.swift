@@ -33,12 +33,12 @@ struct ExploreChallengeDetail: View {
           HStack {
             Text(challenge.targetAmount.description)
               .padding(.horizontal, 4)
-              .background(Color.red)
+              .background(Color(challenge.targetAmount.colorName))
               .cornerRadius(4)
             
-            Text("내일부터 시작")
+            Text("⏰ 내일부터 시작")
               .padding(.horizontal, 4)
-              .background(Color.red)
+              .background(ColorConstants.primary7)
               .cornerRadius(4)
           }
           .font(.pretendard(size: 12, weight: .medium))

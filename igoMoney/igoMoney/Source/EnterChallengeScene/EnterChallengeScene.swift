@@ -229,16 +229,16 @@ struct ChallengeInformationCardView: View {
       
         Spacer()
         
-        Text("\(viewStore.challenge.targetAmount)원")
+        Text(viewStore.challenge.targetAmount.description)
           .padding(.horizontal, 4)
           .font(.pretendard(size: 12, weight: .medium))
-          .background(Color.red)
+          .background(Color(viewStore.challenge.targetAmount.colorName))
           .cornerRadius(4)
         
-        Text("내일 부터 시작")
+        Text("⏰ 내일 부터 시작")
           .padding(.horizontal, 4)
           .font(.pretendard(size: 12, weight: .medium))
-          .background(Color.red)
+          .background(ColorConstants.primary7)
           .cornerRadius(4)
         
       } // Challenge Information Header

@@ -30,14 +30,14 @@ struct EmptyChallengeDetail: View {
       
       VStack(alignment: .leading, spacing: 2) {
         // 챌린지 머니
-        WithViewStore(store, observe: { $0.targetMoneyDescription }) { viewStore in
-          Text(viewStore.state)
+        WithViewStore(store, observe: { $0.targetAmount }) { viewStore in
+          Text(viewStore.description)
             .padding(.horizontal, 2)
-            .background(ColorConstants.primary7)
+            .background(Color(viewStore.colorName))
             .cornerRadius(4)
         }
         
-        Text("내일부터 시작")
+        Text("⏰ 내일부터 시작")
           .padding(.horizontal, 2)
           .background(ColorConstants.primary7)
           .cornerRadius(4)

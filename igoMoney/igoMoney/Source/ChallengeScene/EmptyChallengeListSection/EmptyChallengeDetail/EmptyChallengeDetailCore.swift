@@ -14,12 +14,8 @@ struct ChallengeDetailCore: Reducer {
     
     var title: String
     var content: String
-    var targetAmount: Int
+    var targetAmount: TargetMoneyAmount
     var user: User
-    
-    var targetMoneyDescription: String {
-      return "💸 \(targetAmount)원"
-    }
   }
   
   enum Action: Equatable, Sendable {
