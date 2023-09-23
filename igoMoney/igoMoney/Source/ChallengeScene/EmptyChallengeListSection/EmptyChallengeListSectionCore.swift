@@ -37,6 +37,7 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .run { send in
           await send(._setExploreState)
         }
+        
       case .showExplore(false):
         return .run { send in
           await send(._removeExploreState)
@@ -68,14 +69,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         state.showExplore = false
         return .none
         
-        
         // Child Action
       case .challengeDetail:
         return .none
         
-      case .exploreChallengeAction(.enterAction(._closeAlert)):
-        state.showExplore = false
-        return .none
+      case .exploreChallengeAction(.enterAction(._closeAlert)), .exploreChallengeAction(.dismiss):
+        return .run { send in
+          await send(.showExplore(false))
+        }
         
       case .exploreChallengeAction:
         return .none

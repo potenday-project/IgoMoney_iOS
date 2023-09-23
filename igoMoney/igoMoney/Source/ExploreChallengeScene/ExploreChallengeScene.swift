@@ -41,13 +41,15 @@ struct ExploreChallengeScene: View {
           Text("챌린지 둘러보기")
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
-          Button(action: { }) {
+          Button(action: { store.send(.dismiss) }) {
             Image(systemName: "chevron.left")
               .font(.pretendard(size: 18, weight: .bold))
           }
           .accentColor(.black)
         } rightView: {
-          Button(action: {}) {
+          Button(action: {
+            // TODO: - 생성 화면 구현하기
+          }) {
             Image(systemName: "plus.circle")
           }
           .font(.pretendard(size: 18, weight: .bold))

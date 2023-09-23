@@ -19,9 +19,9 @@ struct ExploreChallengeCore: Reducer {
   enum Action: Equatable {
     // User Action
     case selectMoney(MoneyType)
+    case dismiss
     
     // Inner Action
-//    case _onAppear
     case _setNavigation(selection: UUID?)
     case _setNavigationSelection
     
@@ -39,6 +39,9 @@ struct ExploreChallengeCore: Reducer {
         // User Action
       case .selectMoney(let moneyType):
         state.selectedMoney = moneyType
+        return .none
+        
+      case .dismiss:
         return .none
         
       // Inner Action
