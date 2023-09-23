@@ -89,7 +89,7 @@ struct EnterChallengeScene: View {
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
           Button {
-            // TODO: - 뒤로가기 액션 추가하기
+            store.send(.dismiss)
           } label: {
             Image(systemName: "chevron.left")
               .font(.pretendard(size: 22, weight: .bold))

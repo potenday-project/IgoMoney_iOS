@@ -16,6 +16,7 @@ struct EnterChallengeCore: Reducer {
   enum Action: Equatable {
     // User Action
     case enterChallenge
+    case dismiss
     case setShowAlert(Bool)
     
     // Inner Action
@@ -31,6 +32,9 @@ struct EnterChallengeCore: Reducer {
         return .run { send in
           await send(._closeAlert)
         }
+        
+      case .dismiss:
+        return .none
         
       case .setShowAlert(true):
         state.showAlert = true

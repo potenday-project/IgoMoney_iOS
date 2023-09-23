@@ -34,33 +34,28 @@ enum MoneyType: CaseIterable, Hashable, Equatable {
 struct ExploreChallengeScene: View {
   let store: StoreOf<ExploreChallengeCore>
   
-  @ViewBuilder
-  var headerSection: some View {
-    HStack {
-      Text("챌린지 리스트")
-        .font(.system(size: 20, weight: .bold))
-      
-      Spacer()
-      
-      Button {
-        // TODO: - 챌린지 생성 이동 구현하기
-      } label: {
-        Image(systemName: "plus.circle")
-          .resizable()
-          .scaledToFit()
-          .frame(width: 20, height: 20)
-      }
-      .accentColor(.black)
-    }
-    .padding(.top, 16)
-    .padding(.horizontal, 24)
-  }
-  
   var body: some View {
     VStack(spacing: .zero) {
       VStack(spacing: 12) {
-        // Header Section
-        headerSection
+        IGONavigationBar {
+          Text("챌린지 둘러보기")
+            .font(.pretendard(size: 20, weight: .bold))
+        } leftView: {
+          Button(action: { }) {
+            Image(systemName: "chevron.left")
+              .font(.pretendard(size: 18, weight: .bold))
+          }
+          .accentColor(.black)
+        } rightView: {
+          Button(action: {}) {
+            Image(systemName: "plus.circle")
+          }
+          .font(.pretendard(size: 18, weight: .bold))
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
+        .accentColor(.black)
+
         
         // Filtering Section
         WithViewStore(store, observe: { $0 }) { viewStore in

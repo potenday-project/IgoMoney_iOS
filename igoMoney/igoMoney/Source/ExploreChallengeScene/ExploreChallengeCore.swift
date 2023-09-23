@@ -68,6 +68,11 @@ struct ExploreChallengeCore: Reducer {
           await send(._setNavigation(selection: nil))
         }
         
+      case .enterAction(.dismiss):
+        return .run { send in
+          await send(._setNavigation(selection: nil))
+        }
+        
       case .enterAction:
         return .none
       }
