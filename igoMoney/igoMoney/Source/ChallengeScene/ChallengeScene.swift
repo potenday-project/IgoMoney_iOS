@@ -94,7 +94,7 @@ struct ChallengeSectionTitleView: View {
   let buttonAction: (() -> Void)?
   
   var body: some View {
-    VStack(alignment: .leading, spacing: 2) {
+    VStack(alignment: .leading, spacing: 4) {
       HStack {
         Text(sectionType.title)
           .font(.system(size: 20, weight: .bold))
@@ -109,15 +109,16 @@ struct ChallengeSectionTitleView: View {
             Image(systemName: "chevron.right")
               .resizable()
               .scaledToFit()
-              .frame(width: 24, height: 24)
+              .frame(width: 10, height: 20)
           }
-          
+          .accentColor(.black)
         }
       }
       
       if let detail = sectionType.detail {
         Text(detail)
           .font(.system(size: 14, weight: .medium))
+          .foregroundColor(ColorConstants.gray)
       }
     }
   }

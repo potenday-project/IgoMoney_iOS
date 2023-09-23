@@ -19,7 +19,8 @@ struct EmptyChallengeDetail: View {
           .multilineTextAlignment(.leading)
           .minimumScaleFactor(0.5)
           .lineLimit(2)
-          .font(.system(size: 16, weight: .bold))
+          .font(.pretendard(size: 16, weight: .bold))
+          .lineHeight(font: .pretendard(size: 16, weight: .bold), lineHeight: 23)
       }
       
       // 챌린지 생성자 닉네임

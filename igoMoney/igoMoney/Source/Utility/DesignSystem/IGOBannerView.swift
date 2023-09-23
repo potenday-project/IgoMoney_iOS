@@ -25,21 +25,11 @@ struct IGOBannerView<T: View, M: View, B: View>: View {
     VStack(spacing: 4) {
       topView()
       
-      HStack {
-        Spacer()
-        
-        middleView()
-        
-        Spacer()
-      }
+      middleView()
+        .frame(maxWidth: .infinity)
       
-      HStack {
-        Spacer()
-        
-        bottomView()
-        
-        Spacer()
-      }
+      bottomView()
+        .frame(maxWidth: .infinity)
     }
     .padding(16)
     .background(ColorConstants.primary7)

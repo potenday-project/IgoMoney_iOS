@@ -6,21 +6,28 @@
 
 import SwiftUI
 
+enum PretendardWeight: String {
+  case extraLight = "ExtraLight"
+  case light = "Light"
+  case thin = "Thin"
+  case regular = "Regular"
+  case medium = "Medium"
+  case semiBold = "SemiBold"
+  case bold = "Bold"
+  case extraBold = "ExtraBold"
+  case black = "Black"
+}
+
 extension Font {
-  enum PretendardWeight: String {
-    case extraLight = "ExtraLight"
-    case light = "Light"
-    case thin = "Thin"
-    case regular = "Regular"
-    case medium = "Medium"
-    case semiBold = "SemiBold"
-    case bold = "Bold"
-    case extraBold = "ExtraBold"
-    case black = "Black"
-  }
-  
   static func pretendard(size: CGFloat, weight: PretendardWeight) -> Font {
     let fontName = "Pretendard-\(weight.rawValue)"
     return custom(fontName, size: size)
+  }
+}
+
+extension UIFont {
+  static func pretendard(size: CGFloat, weight: PretendardWeight) -> UIFont {
+    let fontName = "Pretendard-\(weight.rawValue)"
+    return UIFont(name: fontName, size: size) ?? .systemFont(ofSize: size)
   }
 }
