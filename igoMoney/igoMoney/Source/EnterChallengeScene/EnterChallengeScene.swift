@@ -82,94 +82,101 @@ struct EnterChallengeScene: View {
   }
   
   var body: some View {
-    VStack {
-      IGONavigationBar {
-        Text("챌린지 참여하기")
-          .font(.pretendard(size: 20, weight: .bold))
-      } leftView: {
-        Button {
-          // TODO: - 뒤로가기 액션 추가하기
-        } label: {
-          Image(systemName: "chevron.left")
-            .font(.pretendard(size: 22, weight: .bold))
+    ZStack {
+      VStack {
+        IGONavigationBar {
+          Text("챌린지 참여하기")
+            .font(.pretendard(size: 20, weight: .bold))
+        } leftView: {
+          Button {
+            // TODO: - 뒤로가기 액션 추가하기
+          } label: {
+            Image(systemName: "chevron.left")
+              .font(.pretendard(size: 22, weight: .bold))
+          }
+        } rightView: {
+          EmptyView()
         }
-      } rightView: {
-        EmptyView()
-      }
-      .padding(.top, 16)
-      .foregroundColor(.white)
-      .padding(.horizontal, 24)
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        ChallengeInformationCardView(viewStore: viewStore)
-      }
-      
-      VStack(spacing: 16) {
-        VStack {
-          challengeNoticeHeaderView(title: "📣 챌린지 진행 방법")
-          
-          VStack(alignment: .leading, spacing: 8) {
-            ForEach(DuringNotice.allCases, id: \.self) { notice in
-              ChallengeNoticeView(notice: notice.description) {
-                Text(notice.title)
+        .padding(.top, 16)
+        .foregroundColor(.white)
+        .padding(.horizontal, 24)
+        
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          ChallengeInformationCardView(viewStore: viewStore)
+        }
+        
+        VStack(spacing: 16) {
+          VStack {
+            challengeNoticeHeaderView(title: "📣 챌린지 진행 방법")
+            
+            VStack(alignment: .leading, spacing: 8) {
+              ForEach(DuringNotice.allCases, id: \.self) { notice in
+                ChallengeNoticeView(notice: notice.description) {
+                  Text(notice.title)
+                }
               }
             }
-          }
-          .font(.pretendard(size: 14, weight: .medium))
-          .padding(16)
-          .background(Color.white)
-          .cornerRadius(10)
-          .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 8, y: 2)
-        } // Challenge Doing Information
-        
-        VStack {
-          challengeNoticeHeaderView(title: "📌 챌린지 진행 시 꼭 알아주세요!")
+            .font(.pretendard(size: 14, weight: .medium))
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 8, y: 2)
+          } // Challenge Doing Information
           
-          VStack(alignment: .leading, spacing: 8) {
-            ForEach(Notice.allCases, id: \.self) { notice in
-              ChallengeNoticeView(notice: notice.description) {
-                Image(systemName: "checkmark.circle")
-                  .resizable()
-                  .scaledToFit()
-                  .frame(width: 16, height: 16)
-                  .padding(5)
+          VStack {
+            challengeNoticeHeaderView(title: "📌 챌린지 진행 시 꼭 알아주세요!")
+            
+            VStack(alignment: .leading, spacing: 8) {
+              ForEach(Notice.allCases, id: \.self) { notice in
+                ChallengeNoticeView(notice: notice.description) {
+                  Image(systemName: "checkmark.circle")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
+                    .padding(5)
+                }
               }
             }
-          }
-          .font(.pretendard(size: 14, weight: .medium))
+            .font(.pretendard(size: 14, weight: .medium))
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 8, y: 2)
+          } // Challenge Notice Information
+          
+          Spacer()
+          
+          Button {
+            store.send(.setShowAlert(true))
+          } label: {
+            HStack {
+              Spacer()
+              
+              Text("챌린지 참여하기")
+              
+              Spacer()
+            }
+          } // Enter Button
+          .font(.pretendard(size: 18, weight: .medium))
+          .foregroundColor(.black)
           .padding(16)
-          .background(Color.white)
-          .cornerRadius(10)
-          .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 8, y: 2)
-        } // Challenge Notice Information
-        
-        Spacer()
-        
-        Button {
-          // TODO: - Enter Action 추가하기
-          store.send(.setShowAlert(true))
-        } label: {
-          HStack {
-            Spacer()
-            
-            Text("챌린지 참여하기")
-            
-            Spacer()
-          }
-        } // Enter Button
-        .font(.pretendard(size: 18, weight: .medium))
-        .foregroundColor(.black)
-        .padding(16)
-        .background(ColorConstants.primary)
-        .cornerRadius(8)
+          .background(ColorConstants.primary)
+          .cornerRadius(8)
+        }
+        .padding(24)
+        .background(
+          Color.white
+        )
+        .cornerRadius(20, corner: .topLeft)
+        .cornerRadius(20, corner: .topRight)
+        .edgesIgnoringSafeArea(.bottom)
       }
-      .padding(24)
-      .background(
-        Color.white
-      )
-      .cornerRadius(20, corner: .topLeft)
-      .cornerRadius(20, corner: .topRight)
-      .edgesIgnoringSafeArea(.bottom)
+      
+      WithViewStore(store, observe: { $0.showProgressView }) { viewStore in
+        if viewStore.state {
+          ProgressView()
+        }
+      }
     }
     .background(
       Color("background_color")

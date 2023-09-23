@@ -10,6 +10,7 @@ struct EnterChallengeCore: Reducer {
   struct State: Equatable {
     let challenge: ChallengeInformation
     var showAlert: Bool = false
+    var showProgressView: Bool = false
   }
   
   enum Action: Equatable {
@@ -18,7 +19,7 @@ struct EnterChallengeCore: Reducer {
     case setShowAlert(Bool)
     
     // Inner Action
-    
+    case _closeAlert
   }
   
   var body: some Reducer<State, Action> {
@@ -26,8 +27,9 @@ struct EnterChallengeCore: Reducer {
       switch action {
       case .enterChallenge:
         // TODO: - 사용자 입장 메서드 수행
+        state.showProgressView = true
         return .run { send in
-          await send(.setShowAlert(false))
+          await send(._closeAlert)
         }
         
       case .setShowAlert(true):
@@ -35,6 +37,10 @@ struct EnterChallengeCore: Reducer {
         return .none
         
       case .setShowAlert(false):
+        state.showAlert = false
+        return .none
+        
+      case ._closeAlert:
         state.showAlert = false
         return .none
       }
