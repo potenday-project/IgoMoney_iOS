@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */; };
 		180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363A92AB82DCD00082F8A /* igoMoneyApp.swift */; };
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
@@ -25,7 +26,9 @@
 		180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69D2ABB488F00DD8477 /* UserClient.swift */; };
 		180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A12ABB48DC00DD8477 /* Networking.swift */; };
 		180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A32ABB4BC500DD8477 /* APIClient.swift */; };
-		184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */; };
+		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
+		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
+		18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */; };
 		184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */; };
 		18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A422ABC12FF0075DE76 /* RoundedCorner.swift */; };
 		18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A442ABC2A950075DE76 /* ChallengeCore.swift */; };
@@ -36,12 +39,27 @@
 		18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A522ABC34640075DE76 /* ChallengeInformation.swift */; };
 		18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */; };
 		18599A592ABC43D80075DE76 /* EmptyChallengeDetailCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */; };
+		18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */; };
+		18599A672ABC4E1B0075DE76 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A662ABC4DE30075DE76 /* Pretendard-Regular.otf */; };
+		18599A682ABC4E1B0075DE76 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A632ABC4DE30075DE76 /* Pretendard-Light.otf */; };
+		18599A692ABC4E1B0075DE76 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A652ABC4DE30075DE76 /* Pretendard-ExtraLight.otf */; };
+		18599A6A2ABC4E1B0075DE76 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A612ABC4DE30075DE76 /* Pretendard-Medium.otf */; };
+		18599A6B2ABC4E1B0075DE76 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A602ABC4DE30075DE76 /* Pretendard-ExtraBold.otf */; };
+		18599A6C2ABC4E1B0075DE76 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A5F2ABC4DE30075DE76 /* Pretendard-SemiBold.otf */; };
+		18599A6D2ABC4E1B0075DE76 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */; };
+		18599A6E2ABC4E1B0075DE76 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A622ABC4DE30075DE76 /* Pretendard-Black.otf */; };
+		18599A6F2ABC4E1B0075DE76 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A642ABC4DE30075DE76 /* Pretendard-Bold.otf */; };
+		18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A702ABC505A0075DE76 /* Font + Extensions.swift */; };
+		18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */; };
+		18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */; };
+		18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
 		187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C62ABC07AE00DCF08C /* MainTab.swift */; };
 		187252C92ABC07C700DCF08C /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C82ABC07C700DCF08C /* MainCore.swift */; };
 		187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */; };
 		187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */; };
 		187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252D02ABC0BA800DCF08C /* MyPageScene.swift */; };
+		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
 		18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */; };
@@ -50,10 +68,11 @@
 		18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
-		18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* AuthButton.swift */; };
+		18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeScene.swift; sourceTree = "<group>"; };
 		180363A62AB82DCD00082F8A /* igoMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = igoMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		180363A92AB82DCD00082F8A /* igoMoneyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = igoMoneyApp.swift; sourceTree = "<group>"; };
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
@@ -70,7 +89,9 @@
 		180FC69D2ABB488F00DD8477 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		180FC6A12ABB48DC00DD8477 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		180FC6A32ABB4BC500DD8477 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegate.swift; sourceTree = "<group>"; };
+		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		18497C1F2ABDFB320041C350 /* IGOAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertView.swift; sourceTree = "<group>"; };
+		18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertButton.swift; sourceTree = "<group>"; };
 		184BBE302AB9FA7B00A810DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		184BBE312AB9FAF800A810DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18599A422ABC12FF0075DE76 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
@@ -82,12 +103,27 @@
 		18599A522ABC34640075DE76 /* ChallengeInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformation.swift; sourceTree = "<group>"; };
 		18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChallengeDetail.swift; sourceTree = "<group>"; };
 		18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChallengeDetailCore.swift; sourceTree = "<group>"; };
+		18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeScene.swift; sourceTree = "<group>"; };
+		18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		18599A5F2ABC4DE30075DE76 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		18599A602ABC4DE30075DE76 /* Pretendard-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraBold.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-ExtraBold.otf"; sourceTree = "<group>"; };
+		18599A612ABC4DE30075DE76 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Medium.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		18599A622ABC4DE30075DE76 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Black.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Black.otf"; sourceTree = "<group>"; };
+		18599A632ABC4DE30075DE76 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Light.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Light.otf"; sourceTree = "<group>"; };
+		18599A642ABC4DE30075DE76 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		18599A652ABC4DE30075DE76 /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-ExtraLight.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
+		18599A662ABC4DE30075DE76 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Regular.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		18599A702ABC505A0075DE76 /* Font + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extensions.swift"; sourceTree = "<group>"; };
+		18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCore.swift; sourceTree = "<group>"; };
+		18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeDetail.swift; sourceTree = "<group>"; };
+		18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extensions.swift"; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
 		187252C62ABC07AE00DCF08C /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		187252C82ABC07C700DCF08C /* MainCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
 		187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoundTabBar.swift; sourceTree = "<group>"; };
 		187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeScene.swift; sourceTree = "<group>"; };
 		187252D02ABC0BA800DCF08C /* MyPageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageScene.swift; sourceTree = "<group>"; };
+		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		18CD8F2C2AB995F5006FEA6F /* SignUpCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCore.swift; sourceTree = "<group>"; };
@@ -95,7 +131,7 @@
 		18CD8F312AB9A57D006FEA6F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
-		18D6236B2AB8BACD006EAC39 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAuthButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +149,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1800BC922ABD6C6400938336 /* EnterChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
+				18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */,
+			);
+			path = EnterChallengeScene;
+			sourceTree = "<group>";
+		};
 		1803639D2AB82DCD00082F8A = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +196,7 @@
 		180363B72AB8316800082F8A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				18599A5D2ABC4DDA0075DE76 /* Fonts */,
 				180363AF2AB82DCE00082F8A /* Preview Content */,
 				180363AD2AB82DCE00082F8A /* Assets.xcassets */,
 			);
@@ -160,6 +206,8 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1800BC922ABD6C6400938336 /* EnterChallengeScene */,
+				18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */,
 				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
 				187252CC2ABC0B6200DCF08C /* ChallengeScene */,
 				180FC69C2ABB488700DD8477 /* UserClient */,
@@ -222,6 +270,18 @@
 			path = UserClient;
 			sourceTree = "<group>";
 		};
+		18497C232ABDFC040041C350 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
+				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
+				18497C1F2ABDFB320041C350 /* IGOAlertView.swift */,
+				18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */,
+				18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		18599A472ABC32060075DE76 /* MyChallengeSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +308,32 @@
 				18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */,
 			);
 			path = EmptyChallengeDetail;
+			sourceTree = "<group>";
+		};
+		18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */,
+				18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */,
+				18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */,
+			);
+			path = ExploreChallengeScene;
+			sourceTree = "<group>";
+		};
+		18599A5D2ABC4DDA0075DE76 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				18599A622ABC4DE30075DE76 /* Pretendard-Black.otf */,
+				18599A642ABC4DE30075DE76 /* Pretendard-Bold.otf */,
+				18599A602ABC4DE30075DE76 /* Pretendard-ExtraBold.otf */,
+				18599A652ABC4DE30075DE76 /* Pretendard-ExtraLight.otf */,
+				18599A632ABC4DE30075DE76 /* Pretendard-Light.otf */,
+				18599A612ABC4DE30075DE76 /* Pretendard-Medium.otf */,
+				18599A662ABC4DE30075DE76 /* Pretendard-Regular.otf */,
+				18599A5F2ABC4DE30075DE76 /* Pretendard-SemiBold.otf */,
+				18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		187252CC2ABC0B6200DCF08C /* ChallengeScene */ = {
@@ -303,7 +389,6 @@
 				18CD8F292AB9823B006FEA6F /* SignUpView */,
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
-				184BBE2C2AB9F61D00A810DB /* SignInWithAppleDelegate.swift */,
 				180FC67C2ABAF62500DD8477 /* AuthController.swift */,
 			);
 			path = AuthScene;
@@ -312,11 +397,12 @@
 		18D6236A2AB8BAC7006EAC39 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				18D6236B2AB8BACD006EAC39 /* AuthButton.swift */,
+				18497C232ABDFC040041C350 /* DesignSystem */,
 				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
 				180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */,
 				180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */,
-				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
+				18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */,
+				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -389,10 +475,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18599A6F2ABC4E1B0075DE76 /* Pretendard-Bold.otf in Resources */,
+				18599A692ABC4E1B0075DE76 /* Pretendard-ExtraLight.otf in Resources */,
 				180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */,
+				18599A6B2ABC4E1B0075DE76 /* Pretendard-ExtraBold.otf in Resources */,
 				184BBE322AB9FAF800A810DB /* LaunchScreen.storyboard in Resources */,
+				18599A6A2ABC4E1B0075DE76 /* Pretendard-Medium.otf in Resources */,
+				18599A672ABC4E1B0075DE76 /* Pretendard-Regular.otf in Resources */,
 				180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */,
+				18599A6C2ABC4E1B0075DE76 /* Pretendard-SemiBold.otf in Resources */,
 				180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */,
+				18599A6D2ABC4E1B0075DE76 /* Pretendard-Thin.otf in Resources */,
+				18599A6E2ABC4E1B0075DE76 /* Pretendard-Black.otf in Resources */,
+				18599A682ABC4E1B0075DE76 /* Pretendard-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,38 +500,47 @@
 			files = (
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
-				184BBE2D2AB9F61D00A810DB /* SignInWithAppleDelegate.swift in Sources */,
-				18D6236C2AB8BACD006EAC39 /* AuthButton.swift in Sources */,
+				18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */,
+				18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
 				18599A4B2ABC321E0075DE76 /* MyChallengeSectionCore.swift in Sources */,
 				180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
+				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
+				18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */,
+				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
+				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
 				187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
+				18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */,
+				18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
+				18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
+				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
+				18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */,
 				187252C92ABC07C700DCF08C /* MainCore.swift in Sources */,
 				18599A592ABC43D80075DE76 /* EmptyChallengeDetailCore.swift in Sources */,
 			);
@@ -566,7 +670,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = igoMoney/igoMoney.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 999;
 				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
@@ -575,19 +679,22 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.igo.igoMoney;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -598,7 +705,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = igoMoney/igoMoney.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 999;
 				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
@@ -607,19 +714,22 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.igo.igoMoney;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

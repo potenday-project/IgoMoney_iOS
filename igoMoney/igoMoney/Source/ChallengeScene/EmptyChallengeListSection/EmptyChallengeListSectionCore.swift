@@ -9,45 +9,84 @@ import Foundation
 import ComposableArchitecture
 
 struct EmptyChallengeListSectionCore: Reducer {
-    struct State: Equatable {
-        var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
-    }
+  struct State: Equatable {
+    var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
+    var showExplore: Bool = false
+    var exploreChallengeState: ExploreChallengeCore.State?
+  }
+  
+  enum Action: Equatable, Sendable {
+    // User Action
+    case showExplore(Bool)
     
-    enum Action: Equatable, Sendable {
+    // Inner Action
+    case _onAppear
+    case _setExploreState
+    case _removeExploreState
+    
+    // Child Action
+    case challengeDetail(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
+    case exploreChallengeAction(ExploreChallengeCore.Action)
+  }
+  
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
         // User Action
+      case .showExplore(true):
+        return .run { send in
+          await send(._setExploreState)
+        }
+        
+      case .showExplore(false):
+        return .run { send in
+          await send(._removeExploreState)
+        }
+        
         // Inner Action
-        case _onAppear
+      case ._onAppear:
+        let informations = ChallengeInformation.default
+        informations.forEach {
+          let detailState = ChallengeDetailCore.State(
+            id: UUID(),
+            title: $0.title,
+            content: $0.content,
+            targetAmount: $0.targetAmount,
+            user: $0.user
+          )
+          state.challenges.append(detailState)
+        }
+        
+        return .none
+        
+      case ._setExploreState:
+        state.exploreChallengeState = ExploreChallengeCore.State()
+        state.showExplore = true
+        return .none
+        
+      case ._removeExploreState:
+        state.exploreChallengeState = nil
+        state.showExplore = false
+        return .none
         
         // Child Action
-        case challengeDetail(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
-    }
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            // Inner Action
-            case ._onAppear:
-                let informations = ChallengeInformation.default
-                informations.forEach {
-                    let detailState = ChallengeDetailCore.State(
-                        id: UUID(),
-                        title: $0.title,
-                        content: $0.content,
-                        targetAmount: $0.targetAmount,
-                        user: $0.user
-                    )
-                    state.challenges.append(detailState)
-                }
-                
-                return .none
-            
-            // Child Action
-            case .challengeDetail:
-                return .none
-            }
+      case .challengeDetail:
+        return .none
+        
+      case .exploreChallengeAction(.enterAction(._closeAlert)), .exploreChallengeAction(.dismiss):
+        return .run { send in
+          await send(.showExplore(false))
         }
-        .forEach(\.challenges, action: /Action.challengeDetail) {
-            ChallengeDetailCore()
-        }
+        
+      case .exploreChallengeAction:
+        return .none
+      }
     }
+    .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {
+      ExploreChallengeCore()
+    }
+    .forEach(\.challenges, action: /Action.challengeDetail) {
+      ChallengeDetailCore()
+    }
+  }
 }

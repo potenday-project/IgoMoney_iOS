@@ -9,12 +9,12 @@ import ComposableArchitecture
 struct APIClient: Networking { }
 
 extension APIClient: DependencyKey {
-    static var liveValue: APIClient = APIClient()
+  static var liveValue: APIClient = APIClient()
 }
 
 extension DependencyValues {
-    var apiClient: APIClient {
-        get { self[APIClient.self] }
-        set { self[APIClient.self] = newValue }
-    }
+  var apiClient: APIClient {
+    get { self[APIClient.self] }
+    set { self[APIClient.self] = newValue }
+  }
 }

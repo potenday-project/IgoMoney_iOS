@@ -9,25 +9,25 @@ import Foundation
 import ComposableArchitecture
 
 struct ChallengeDetailCore: Reducer {
-    struct State: Equatable, Identifiable {
-        let id: UUID
-        
-        var title: String
-        var content: String
-        var targetAmount: Int
-        var user: User
-        
-        var targetMoneyDescription: String {
-            return "💸 \(targetAmount)원"
-        }
-    }
+  struct State: Equatable, Identifiable {
+    let id: UUID
     
-    enum Action: Equatable, Sendable {
-        
+    var title: String
+    var content: String
+    var targetAmount: TargetMoneyAmount
+    var user: User
+  }
+  
+  enum Action: Equatable, Sendable {
+    // User Action
+    case didTap
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .didTap:
+      return .none
     }
-    
-    func reduce(into state: inout State, action: Action) -> Effect<Action> {
-        return .none
-    }
+  }
 }
 
