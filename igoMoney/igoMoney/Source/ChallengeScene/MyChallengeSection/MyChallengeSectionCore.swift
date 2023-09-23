@@ -8,21 +8,65 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct MyChallengeSectionCore: Reducer {
+struct ChallengeSituationCore: Reducer {
   struct State: Equatable {
-    var color: Color // Action Test 용
+    
   }
   
-  enum Action: Equatable {
-    case changeColor(Color)
+  enum Action {
+    
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .changeColor(let color):
-      state.color = color
-      return .none
-    }
+    return .none
   }
 }
 
+struct MyChallengeSectionCore: Reducer {
+  struct State: Equatable {
+    var challengeState: ChallengeState = .challenging
+    var presentSituation: Bool = false
+    var challengeSituationState: ChallengeSituationCore.State? = nil
+    
+    enum ChallengeState: CaseIterable {
+      case empty
+      case waiting
+      case challenging
+      case result
+    }
+  }
+  
+  enum Action {
+    case tapChallengeStatus
+    
+    case _presentChallengeSituation(Bool)
+    
+    case situationAction(ChallengeSituationCore.Action)
+  }
+  
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .tapChallengeStatus:
+        if state.challengeState == .challenging {
+          return .run { send in
+            await send(._presentChallengeSituation(true))
+          }
+        } else {
+          return .none
+        }
+        
+      case ._presentChallengeSituation(true):
+        state.presentSituation = true
+        return .none
+        
+      case ._presentChallengeSituation(false):
+        state.presentSituation = false
+        return .none
+      }
+    }
+    .ifLet(\.challengeSituationState, action: /Action.situationAction) {
+      ChallengeSituationCore()
+    }
+  }
+}

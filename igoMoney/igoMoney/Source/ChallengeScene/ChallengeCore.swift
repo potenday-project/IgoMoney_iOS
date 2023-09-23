@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChallengeCore: Reducer {
   struct State: Equatable {
-    var myChallengeState = MyChallengeSectionCore.State(color: .red)
+    var myChallengeState = MyChallengeSectionCore.State()
     var emptyChallengeListState = EmptyChallengeListSectionCore.State()
   }
   
