@@ -97,6 +97,24 @@ struct AuthCore: Reducer {
           await send(.presentProfileSetting(true))
         }
         
+      case .profileSettingAction(.startChallenge):
+        let keyWindow = UIApplication.shared.connectedScenes
+          .filter { $0.activationState == .foregroundActive }
+          .compactMap { $0 as? UIWindowScene }
+          .first?
+          .windows
+          .filter { $0.isKeyWindow }
+          .first
+        keyWindow?.rootViewController = UIHostingController(
+          rootView: MainScene(
+            store: Store(
+              initialState: MainCore.State(),
+              reducer: { MainCore() }
+            )
+          )
+        )
+        return .none
+        
       default:
         return .none
       }

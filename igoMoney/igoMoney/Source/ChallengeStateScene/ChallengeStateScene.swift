@@ -7,6 +7,10 @@
 import SwiftUI
 
 struct ChallengeStateScene: View {
+  @State private var showWrite: Bool = false
+  @State private var showDetailList: Bool = false
+  @State private var showDetail: Bool = false
+  
   var body: some View {
     
     VStack {
@@ -225,33 +229,70 @@ struct ChallengeStateScene: View {
               .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
             }
             .padding(.bottom, 16)
-            
-            Button(action: { }) {
-              HStack(alignment: .center) {
-                VStack(alignment: .leading) {
-                  Text("9월 24일 1일차")
-                    .font(.pretendard(size: 12, weight: .medium))
-                    .foregroundColor(ColorConstants.gray)
-                    .lineHeight(font: .pretendard(size: 12, weight: .medium), lineHeight: 16)
-                  
-                  Text("오늘 하루 지출 내역 입력하기")
-                    .font(.pretendard(size: 16, weight: .bold))
-                    .lineHeight(font: .pretendard(size: 16, weight: .bold), lineHeight: 23)
-                    .foregroundColor(.black)
-                }
+
+            HStack(alignment: .center) {
+              VStack(alignment: .leading) {
+                Text("9월 24일 1일차")
+                  .font(.pretendard(size: 12, weight: .medium))
+                  .foregroundColor(ColorConstants.gray)
+                  .lineHeight(font: .pretendard(size: 12, weight: .medium), lineHeight: 16)
                 
-                Spacer()
-                
-                Image("icon_edit")
+                Text("오늘 하루 지출 내역 입력하기")
+                  .font(.pretendard(size: 16, weight: .bold))
+                  .lineHeight(font: .pretendard(size: 16, weight: .bold), lineHeight: 23)
+                  .foregroundColor(.black)
               }
-              .padding(16)
-              .background(ColorConstants.primary8)
-              .cornerRadius(10)
+              
+              Spacer()
+              
+              Image("icon_edit")
             }
+            .padding(16)
+            .background(ColorConstants.primary8)
+            .cornerRadius(10)
             .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+            .onTapGesture {
+              showWrite.toggle()
+            }
+            
+            if showDetailList {
+              VStack(spacing: .zero) {
+                HStack(spacing: 12) {
+                  Image("example_food")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 60, height: 60, alignment: .center)
+                    .cornerRadius(9)
+                  
+                  VStack(alignment: .leading, spacing: 4) {
+                    Text("9월 24일 1일차")
+                      .font(.pretendard(size: 12, weight: .medium))
+                    
+                    Text("오늘은 도시락을 먹어서 지출은 커피값만!")
+                      .lineLimit(1)
+                      .font(.pretendard(size: 16, weight: .bold))
+                    
+                    Text("총 3000원 지출")
+                      .padding(.horizontal, 4)
+                      .background(ColorConstants.blue)
+                      .font(.pretendard(size: 12, weight: .medium))
+                  }
+                  
+                  Spacer()
+                }
+                .padding(16)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+                .onTapGesture {
+                  showDetail.toggle()
+                }
+              }
+              .padding(.top, 12)
+            }
           }
           .padding(.horizontal, 24)
-          .padding(.bottom, 30)
+          .padding(.bottom, 300)
           .background(Color.white.edgesIgnoringSafeArea(.all))
           .cornerRadius(10, corner: .topLeft)
           .cornerRadius(10, corner: .topRight)
@@ -263,11 +304,184 @@ struct ChallengeStateScene: View {
       Color("background_color")
         .edgesIgnoringSafeArea(.all)
     )
+    .fullScreenCover(isPresented: $showWrite) {
+      WriteChallengeView(showWrite: $showWrite)
+    }
+    .fullScreenCover(isPresented: $showDetail) {
+      ZStack {
+        Color.black.opacity(0.9)
+          .edgesIgnoringSafeArea(.all)
+        Image("detailScreen")
+          .resizable()
+          .scaledToFit()
+          .frame(height: 600)
+          .edgesIgnoringSafeArea(.all)
+          .onTapGesture {
+            showDetail.toggle()
+          }
+      }
+    }
+  }
+}
+
+struct WriteChallengeView: View {
+  @Binding var showWrite: Bool
+  @State private var imageList: [String] = []
+  @State private var moneyAmount: String = ""
+  @State private var title: String = ""
+  @State private var content: String = ""
+  
+  var body: some View {
+    VStack(spacing: 16) {
+      IGONavigationBar {
+        Text("9월 24일 1일차")
+          .font(.pretendard(size: 20, weight: .bold))
+      } leftView: {
+        Image(systemName: "xmark")
+          .onTapGesture {
+            showWrite.toggle()
+          }
+      } rightView: {
+        EmptyView()
+      }
+      
+      VStack {
+        HStack {
+          Text("뒷주머니님과 대결중")
+            .font(.pretendard(size: 14, weight: .bold))
+          
+          Spacer()
+          
+          Text("💸 30000원")
+            .padding(.horizontal, 4)
+            .background(ColorConstants.blue)
+            .cornerRadius(4)
+        }
+
+        HStack {
+          Text("일주일에 3만원으로 살아남기 👊🏻")
+          
+          Spacer()
+        }
+        .font(.pretendard(size: 16, weight: .bold))
+      } // Header View
+      .padding(16)
+      .background(Color.white)
+      .cornerRadius(10)
+      .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+      
+      VStack(spacing: 8) {
+        headerView(title: "인증사진", detail: "")
+        
+        Button(action: { }) {
+          VStack {
+            Image("icon_photo")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 18, height: 18)
+            
+            Text("이미지 등록하기")
+              .font(.pretendard(size: 16, weight: .semiBold))
+          }
+          .frame(maxWidth: .infinity)
+          .padding(16)
+          .background(Color.white)
+          .cornerRadius(8)
+          .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+        }
+      }
+      
+      VStack(spacing: 8) {
+        headerView(title: "금액", detail: "")
+        
+        textField(
+          placeholder: "금액을 입력해주세요.",
+          text: $moneyAmount,
+          isActive: moneyAmount.count == 5
+        )
+      }
+      
+      VStack(spacing: 8) {
+        headerView(title: "제목", detail: "최소 5자 / 최대 15자")
+
+        textField(
+          placeholder: "제목을 입력해주세요.",
+          text: $title,
+          isActive: title.count > 5 && title.count < 16
+        )
+      }
+      
+      VStack(spacing: 8) {
+        headerView(title: "내용", detail: "최소 30자 / 최대 100자")
+        
+        textField(
+          placeholder: "지출 내용을 입력해주세요.",
+          text: $content,
+          isActive: content.count > 30 && content.count < 100
+        )
+      }
+      
+      Spacer()
+      
+      Button(action: { }) {
+        Text("인증하기")
+          .font(.pretendard(size: 18, weight: .medium))
+      }
+      .padding(16)
+      .frame(maxWidth: .infinity)
+      .background(
+        (
+          moneyAmount.isEmpty || title.count < 5 || title.count > 15 || content.count < 30 || content.count > 100
+        ) ? ColorConstants.gray5 : ColorConstants.primary
+      )
+      .foregroundColor(
+        (
+          moneyAmount.isEmpty || title.count < 5 || title.count > 15 || content.count < 30 || content.count > 100
+        ) ? ColorConstants.gray4 : Color.black
+      )
+      .cornerRadius(8)
+      .disabled(
+        moneyAmount.isEmpty || title.count < 5 || title.count > 15 || content.count < 30 || content.count > 100
+      )
+    }
+    .padding(.horizontal, 24)
+  }
+  
+  @ViewBuilder
+  func headerView(title: String, detail: String) -> some View {
+    HStack {
+      Text(title)
+        .font(.pretendard(size: 18, weight: .bold))
+      
+      Spacer()
+      
+      Text(detail)
+        .font(.pretendard(size: 12, weight: .medium))
+        .foregroundColor(ColorConstants.gray3)
+    }
+  }
+  
+  @ViewBuilder
+  func textField(placeholder: String, text: Binding<String>, isActive: Bool) -> some View {
+    TextField(placeholder, text: text)
+      .textFieldStyle(.plain)
+      .font(.pretendard(size: 16, weight: .medium))
+      .padding(.horizontal, 16)
+      .padding(.vertical, 12)
+      .background(
+        isActive ? ColorConstants.primary7 : Color.white
+      )
+      .overlay(
+        RoundedRectangle(cornerRadius: 10)
+          .stroke(
+            isActive ? ColorConstants.primary : ColorConstants.gray4
+          )
+      )
   }
 }
 
 struct ChallengeStateScene_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengeStateScene()
+    WriteChallengeView(showWrite: .constant(true))
   }
 }

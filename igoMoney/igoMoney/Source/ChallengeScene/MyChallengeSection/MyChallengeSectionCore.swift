@@ -24,7 +24,7 @@ struct ChallengeSituationCore: Reducer {
 
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
-    var challengeState: ChallengeState = .challenging
+    var challengeState: ChallengeState = .empty
     var presentSituation: Bool = false
     var challengeSituationState: ChallengeSituationCore.State? = nil
     
