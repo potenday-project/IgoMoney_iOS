@@ -229,7 +229,7 @@ struct ChallengeStateScene: View {
               .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
             }
             .padding(.bottom, 16)
-
+            
             HStack(alignment: .center) {
               VStack(alignment: .leading) {
                 Text("9월 24일 1일차")
@@ -305,7 +305,7 @@ struct ChallengeStateScene: View {
         .edgesIgnoringSafeArea(.all)
     )
     .fullScreenCover(isPresented: $showWrite) {
-      WriteChallengeView(showWrite: $showWrite)
+      WriteChallengeView(showWrite: $showWrite, showDetailList: $showDetailList)
     }
     .fullScreenCover(isPresented: $showDetail) {
       ZStack {
@@ -326,13 +326,15 @@ struct ChallengeStateScene: View {
 
 struct WriteChallengeView: View {
   @Binding var showWrite: Bool
+  @Binding var showDetailList: Bool
   @State private var imageList: [String] = []
   @State private var moneyAmount: String = ""
   @State private var title: String = ""
   @State private var content: String = ""
+  @State private var showAlert: Bool = false
   
   var body: some View {
-    VStack(spacing: 16) {
+    VStack(spacing: .zero) {
       IGONavigationBar {
         Text("9월 24일 1일차")
           .font(.pretendard(size: 20, weight: .bold))
@@ -344,117 +346,127 @@ struct WriteChallengeView: View {
       } rightView: {
         EmptyView()
       }
+      .padding(.vertical, 16)
+      .padding(.horizontal, 24)
       
-      VStack {
-        HStack {
-          Text("뒷주머니님과 대결중")
-            .font(.pretendard(size: 14, weight: .bold))
-          
-          Spacer()
-          
-          Text("💸 30000원")
-            .padding(.horizontal, 4)
-            .background(ColorConstants.blue)
-            .cornerRadius(4)
-        }
-
-        HStack {
-          Text("일주일에 3만원으로 살아남기 👊🏻")
-          
-          Spacer()
-        }
-        .font(.pretendard(size: 16, weight: .bold))
-      } // Header View
-      .padding(16)
-      .background(Color.white)
-      .cornerRadius(10)
-      .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
-      
-      VStack(spacing: 8) {
-        headerView(title: "인증사진", detail: "")
-        
-        Button(action: {
-          self.imageList.append("example_food")
-        }) {
+      ScrollView {
+        VStack(spacing: 16) {
           VStack {
-            Image("icon_photo")
-              .resizable()
-              .scaledToFit()
-              .frame(width: 18, height: 18)
+            HStack {
+              Text("뒷주머니님과 대결중")
+                .font(.pretendard(size: 14, weight: .bold))
+              
+              Spacer()
+              
+              Text("💸 30000원")
+                .padding(.horizontal, 4)
+                .background(ColorConstants.blue)
+                .cornerRadius(4)
+            }
             
-            Text("이미지 등록하기")
-              .font(.pretendard(size: 16, weight: .semiBold))
-          }
-          .frame(maxWidth: .infinity)
+            HStack {
+              Text("일주일에 3만원으로 살아남기 👊🏻")
+              
+              Spacer()
+            }
+            .font(.pretendard(size: 16, weight: .bold))
+          } // Header View
           .padding(16)
           .background(Color.white)
-          .cornerRadius(8)
+          .cornerRadius(10)
           .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
-        }
-        ScrollView(.horizontal, showsIndicators: false) {
-          HStack {
-            ForEach(0..<imageList.count, id: \.self) { imageIndex in
-              let imagePath = imageList[imageIndex]
-                Image(imagePath)
+          
+          VStack(spacing: 8) {
+            headerView(title: "인증사진", detail: "")
+            
+            Button(action: {
+              self.imageList.append("example_food")
+            }) {
+              VStack {
+                Image("icon_photo")
                   .resizable()
-                  .scaledToFill()
-                  .frame(width: 80, height: 80)
-                  .cornerRadius(8)
-                  .overlay(
-                    HStack {
-                      Spacer()
-                      
-                      Image(systemName: "xmark.circle")
-                    }
-                      .onTapGesture {
-                        imageList.remove(at: imageIndex)
-                      }
-                    ,
-                    alignment: .top
-                  )
+                  .scaledToFit()
+                  .frame(width: 18, height: 18)
+                
+                Text("이미지 등록하기")
+                  .font(.pretendard(size: 16, weight: .semiBold))
+              }
+              .frame(maxWidth: .infinity)
+              .padding(16)
+              .background(Color.white)
+              .cornerRadius(8)
+              .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
             }
+            ScrollView(.horizontal, showsIndicators: false) {
+              HStack {
+                ForEach(0..<imageList.count, id: \.self) { imageIndex in
+                  let imagePath = imageList[imageIndex]
+                  Image(imagePath)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 80, height: 80)
+                    .cornerRadius(8)
+                    .overlay(
+                      HStack {
+                        Spacer()
+                        
+                        Image(systemName: "xmark.circle")
+                      }
+                        .onTapGesture {
+                          imageList.remove(at: imageIndex)
+                        }
+                      ,
+                      alignment: .top
+                    )
+                }
+              }
+            }
+            
+          }
+          
+          VStack(spacing: 8) {
+            headerView(title: "금액", detail: "")
+            
+            textField(
+              placeholder: "금액을 입력해주세요.",
+              text: $moneyAmount,
+              isActive: moneyAmount.isEmpty == false
+            )
+          }
+          
+          VStack(spacing: 8) {
+            headerView(title: "제목", detail: "최소 5자 / 최대 15자")
+            
+            textField(
+              placeholder: "제목을 입력해주세요.",
+              text: $title,
+              isActive: title.count > 5 && title.count < 16
+            )
+          }
+          
+          VStack(spacing: 8) {
+            headerView(title: "내용", detail: "최소 30자 / 최대 100자")
+            
+            textField(
+              placeholder: "지출 내용을 입력해주세요.",
+              text: $content,
+              isActive: content.count > 30 && content.count < 100
+            )
           }
         }
-        
+        .padding(.horizontal, 24)
       }
-      
-      VStack(spacing: 8) {
-        headerView(title: "금액", detail: "")
-        
-        textField(
-          placeholder: "금액을 입력해주세요.",
-          text: $moneyAmount,
-          isActive: moneyAmount.count == 5
-        )
-      }
-      
-      VStack(spacing: 8) {
-        headerView(title: "제목", detail: "최소 5자 / 최대 15자")
-
-        textField(
-          placeholder: "제목을 입력해주세요.",
-          text: $title,
-          isActive: title.count > 5 && title.count < 16
-        )
-      }
-      
-      VStack(spacing: 8) {
-        headerView(title: "내용", detail: "최소 30자 / 최대 100자")
-        
-        textField(
-          placeholder: "지출 내용을 입력해주세요.",
-          text: $content,
-          isActive: content.count > 30 && content.count < 100
-        )
-      }
+      .padding(.bottom, 24)
       
       Spacer()
       
-      Button(action: { }) {
+      Button(action: {
+        showAlert = true
+      }) {
         Text("인증하기")
           .font(.pretendard(size: 18, weight: .medium))
       }
-      .padding(16)
+      .padding(.vertical, 16)
       .frame(maxWidth: .infinity)
       .background(
         (
@@ -470,8 +482,29 @@ struct WriteChallengeView: View {
       .disabled(
         moneyAmount.isEmpty || title.count < 5 || title.count > 15 || content.count < 30 || content.count > 100
       )
+      .padding(.horizontal, 24)
+      .padding(.bottom, 16)
     }
-    .padding(.horizontal, 24)
+    .alert(isPresent: $showAlert) {
+      IGOAlertView {
+        VStack {
+          Image("icon_clap")
+          
+          Text("인증이 완료됐어요!\n마지막날까지 응원할께요")
+            .multilineTextAlignment(.center)
+            .font(.pretendard(size: 18, weight: .bold))
+        }
+      } primaryButton: {
+        IGOAlertButton(
+          title: Text("확인").foregroundColor(Color.black),
+          color: ColorConstants.primary
+        ) {
+          showDetailList = true
+          showAlert = false
+          showWrite = false
+        }
+      }
+    }
   }
   
   @ViewBuilder
@@ -509,6 +542,6 @@ struct WriteChallengeView: View {
 
 struct ChallengeStateScene_Previews: PreviewProvider {
   static var previews: some View {
-    WriteChallengeView(showWrite: .constant(true))
+    WriteChallengeView(showWrite: .constant(true), showDetailList: .constant(true))
   }
 }
