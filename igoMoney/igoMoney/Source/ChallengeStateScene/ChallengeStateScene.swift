@@ -373,7 +373,9 @@ struct WriteChallengeView: View {
       VStack(spacing: 8) {
         headerView(title: "인증사진", detail: "")
         
-        Button(action: { }) {
+        Button(action: {
+          self.imageList.append("example_food")
+        }) {
           VStack {
             Image("icon_photo")
               .resizable()
@@ -389,6 +391,31 @@ struct WriteChallengeView: View {
           .cornerRadius(8)
           .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
         }
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack {
+            ForEach(0..<imageList.count, id: \.self) { imageIndex in
+              let imagePath = imageList[imageIndex]
+                Image(imagePath)
+                  .resizable()
+                  .scaledToFill()
+                  .frame(width: 80, height: 80)
+                  .cornerRadius(8)
+                  .overlay(
+                    HStack {
+                      Spacer()
+                      
+                      Image(systemName: "xmark.circle")
+                    }
+                      .onTapGesture {
+                        imageList.remove(at: imageIndex)
+                      }
+                    ,
+                    alignment: .top
+                  )
+            }
+          }
+        }
+        
       }
       
       VStack(spacing: 8) {
