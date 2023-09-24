@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ChallengeStateScene: View {
   @State private var showWrite: Bool = false
-  @State private var showDetailList: Bool = false
+  @State private var showDetailList: Bool = true
   @State private var showDetail: Bool = false
   
   var body: some View {
@@ -285,7 +285,7 @@ struct ChallengeStateScene: View {
                 .cornerRadius(10)
                 .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
                 .onTapGesture {
-                  showDetail.toggle()
+                  showDetail = true
                 }
               }
               .padding(.top, 12)
@@ -308,18 +308,7 @@ struct ChallengeStateScene: View {
       WriteChallengeView(showWrite: $showWrite, showDetailList: $showDetailList)
     }
     .fullScreenCover(isPresented: $showDetail) {
-      ZStack {
-        Color.black.opacity(0.9)
-          .edgesIgnoringSafeArea(.all)
-        Image("detailScreen")
-          .resizable()
-          .scaledToFit()
-          .frame(height: 600)
-          .edgesIgnoringSafeArea(.all)
-          .onTapGesture {
-            showDetail.toggle()
-          }
-      }
+      ChallengeDetailView(showDetail: $showDetail)
     }
   }
 }
@@ -540,8 +529,100 @@ struct WriteChallengeView: View {
   }
 }
 
+struct ChallengeDetailView: View {
+  @Binding var showDetail: Bool
+  
+  var body: some View {
+    ZStack {
+      Color.black.opacity(0.5)
+        .edgesIgnoringSafeArea(.all)
+      
+      VStack(spacing: 8) {
+        HStack {
+          Spacer()
+          
+          Button(action: { }) {
+            Image(systemName: "xmark")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 12, height: 12)
+          }
+        }
+        .foregroundColor(.black)
+        .padding(.horizontal, 24)
+        .padding(.top, 24)
+        
+        HStack {
+          VStack(alignment: .leading, spacing: 4) {
+            Text("9월 24일 1일차")
+              .font(.pretendard(size: 14, weight: .bold))
+            
+            Text("3000원 지출")
+              .font(.pretendard(size: 16, weight: .medium))
+              .padding(.horizontal, 4)
+              .background(ColorConstants.blue)
+              .cornerRadius(4)
+          }
+          
+          Spacer()
+        }
+        .padding(.horizontal, 24)
+        
+        Divider()
+          .padding(.horizontal, 24)
+        
+        Image("example_food")
+          .resizable()
+          .scaledToFill()
+          .frame(
+            width: 300, height: 300
+          )
+          .cornerRadius(8)
+          .padding(.horizontal, 24)
+        
+        Divider()
+          .padding(.horizontal, 24)
+        
+        HStack {
+          Text("오늘은 도시락을 먹어서 지출은 커피값만! 🤟")
+          
+          Spacer()
+        }
+        .font(.pretendard(size: 16, weight: .bold))
+        .padding(.horizontal, 24)
+        
+        Divider()
+          .padding(.horizontal, 24)
+        
+        HStack {
+          Text("의도치않게 커피값 지출...")
+          
+          Spacer()
+        }
+        .font(.pretendard(size: 14, weight: .bold))
+        .padding(.horizontal, 24)
+        
+        HStack {
+          Spacer()
+          
+          Button(action: { }) {
+            Text("수정하기")
+              .foregroundColor(ColorConstants.gray2)
+              .font(.pretendard(size: 14, weight: .bold))
+          }
+        }
+        .padding(.vertical, 24)
+        .padding(.horizontal, 24)
+      }
+      .background(Color.white)
+      .cornerRadius(8)
+      .padding(.horizontal, 24)
+    }
+  }
+}
+
 struct ChallengeStateScene_Previews: PreviewProvider {
   static var previews: some View {
-    WriteChallengeView(showWrite: .constant(true), showDetailList: .constant(true))
+    ChallengeDetailView(showDetail: .constant(true))
   }
 }
