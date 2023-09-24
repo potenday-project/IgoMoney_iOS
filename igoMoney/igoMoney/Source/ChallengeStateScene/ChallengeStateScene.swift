@@ -26,7 +26,7 @@ struct ChallengeStateScene: View {
       .padding(.horizontal, 24)
       .padding(.vertical, 16)
       
-      ScrollView {
+      ScrollView(showsIndicators: false) {
         VStack {
           VStack(alignment: .leading, spacing: 2) {
             HStack {
@@ -150,6 +150,7 @@ struct ChallengeStateScene: View {
           .cornerRadius(10)
           .padding(.horizontal, 24)
           .padding(.top, 16)
+          .padding(.bottom, 36)
           
           VStack(spacing: .zero) {
             HStack {
@@ -250,8 +251,8 @@ struct ChallengeStateScene: View {
             .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
           }
           .padding(.horizontal, 24)
-          .padding(.bottom, 200)
-          .background(Color.white)
+          .padding(.bottom, 30)
+          .background(Color.white.edgesIgnoringSafeArea(.all))
           .cornerRadius(10, corner: .topLeft)
           .cornerRadius(10, corner: .topRight)
         }
