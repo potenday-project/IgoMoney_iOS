@@ -33,19 +33,19 @@ class SceneDelegate: NSObject, UIWindowSceneDelegate {
   ) {
     guard let windowScene = scene as? UIWindowScene else { return }
     window = UIWindow(windowScene: windowScene)
-    //        let rootView = AuthScene(
-    //            store: Store(
-    //                initialState : AuthCore.State(),
-    //                reducer: { AuthCore()._printChanges() }
-    //            )
-    //        )
+//    let rootView = AuthScene(
+//      store: Store(
+//        initialState : AuthCore.State(),
+//        reducer: { AuthCore()._printChanges() }
+//      )
+//    )
     
-    let rootView = MainScene(
-      store: Store(
-        initialState: MainCore.State(),
-        reducer: { MainCore()._printChanges() }
-      )
-    )
+        let rootView = MainScene(
+          store: Store(
+            initialState: MainCore.State(),
+            reducer: { MainCore() }
+          )
+        )
     
     KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
     window?.rootViewController = UIHostingController(rootView: rootView)

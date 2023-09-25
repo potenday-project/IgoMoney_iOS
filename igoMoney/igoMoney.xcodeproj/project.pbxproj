@@ -26,6 +26,7 @@
 		180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69D2ABB488F00DD8477 /* UserClient.swift */; };
 		180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A12ABB48DC00DD8477 /* Networking.swift */; };
 		180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A32ABB4BC500DD8477 /* APIClient.swift */; };
+		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
 		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
 		18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */; };
@@ -55,6 +56,9 @@
 		18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */; };
 		185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CF48A2ABF40E500B72237 /* LineHeight.swift */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
+		1865C4152AC13853006B5B8A /* ChallengeGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C4142AC13853006B5B8A /* ChallengeGraphView.swift */; };
+		1865C4182AC14662006B5B8A /* ChallengeAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C4172AC14662006B5B8A /* ChallengeAnalysisView.swift */; };
+		1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */; };
 		187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C62ABC07AE00DCF08C /* MainTab.swift */; };
 		187252C92ABC07C700DCF08C /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C82ABC07C700DCF08C /* MainCore.swift */; };
 		187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */; };
@@ -91,6 +95,7 @@
 		180FC69D2ABB488F00DD8477 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		180FC6A12ABB48DC00DD8477 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		180FC6A32ABB4BC500DD8477 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		18497C1F2ABDFB320041C350 /* IGOAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertView.swift; sourceTree = "<group>"; };
 		18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertButton.swift; sourceTree = "<group>"; };
@@ -121,6 +126,9 @@
 		18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extensions.swift"; sourceTree = "<group>"; };
 		185CF48A2ABF40E500B72237 /* LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineHeight.swift; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
+		1865C4142AC13853006B5B8A /* ChallengeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeGraphView.swift; sourceTree = "<group>"; };
+		1865C4172AC14662006B5B8A /* ChallengeAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAnalysisView.swift; sourceTree = "<group>"; };
+		1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extensions.swift"; sourceTree = "<group>"; };
 		187252C62ABC07AE00DCF08C /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		187252C82ABC07C700DCF08C /* MainCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
 		187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoundTabBar.swift; sourceTree = "<group>"; };
@@ -210,6 +218,9 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1865C4162AC14632006B5B8A /* ChallengeAnalysisView */,
+				1865C4132AC13844006B5B8A /* ChallengeGraphView */,
+				183B475E2ABF449900976BFF /* ChallengeStateScene */,
 				1800BC922ABD6C6400938336 /* EnterChallengeScene */,
 				18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */,
 				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
@@ -272,6 +283,14 @@
 				180FC69D2ABB488F00DD8477 /* UserClient.swift */,
 			);
 			path = UserClient;
+			sourceTree = "<group>";
+		};
+		183B475E2ABF449900976BFF /* ChallengeStateScene */ = {
+			isa = PBXGroup;
+			children = (
+				183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */,
+			);
+			path = ChallengeStateScene;
 			sourceTree = "<group>";
 		};
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
@@ -339,6 +358,22 @@
 				18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		1865C4132AC13844006B5B8A /* ChallengeGraphView */ = {
+			isa = PBXGroup;
+			children = (
+				1865C4142AC13853006B5B8A /* ChallengeGraphView.swift */,
+			);
+			path = ChallengeGraphView;
+			sourceTree = "<group>";
+		};
+		1865C4162AC14632006B5B8A /* ChallengeAnalysisView */ = {
+			isa = PBXGroup;
+			children = (
+				1865C4172AC14662006B5B8A /* ChallengeAnalysisView.swift */,
+			);
+			path = ChallengeAnalysisView;
 			sourceTree = "<group>";
 		};
 		187252CC2ABC0B6200DCF08C /* ChallengeScene */ = {
@@ -409,6 +444,7 @@
 				18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */,
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
 				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
+				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -520,12 +556,14 @@
 				18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
+				1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */,
+				183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
 				187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
@@ -539,8 +577,10 @@
 				18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
+				1865C4182AC14662006B5B8A /* ChallengeAnalysisView.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
+				1865C4152AC13853006B5B8A /* ChallengeGraphView.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
