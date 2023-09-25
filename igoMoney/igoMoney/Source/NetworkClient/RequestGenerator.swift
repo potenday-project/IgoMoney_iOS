@@ -28,8 +28,8 @@ extension RequestGenerator {
     header.forEach {
       request.setValue($0.value as? String, forHTTPHeaderField: $0.key)
     }
+    request.httpMethod = method.stringValue
     request.httpBody = body.data
     return request
   }
 }
-

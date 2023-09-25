@@ -24,17 +24,21 @@ struct AuthCore: Reducer {
     // User Action
     case presentSignUp(Bool)
     case presentProfileSetting(Bool)
-    case didTapLoginButton(Provider)
+    case didTapKakaoLogin
+    case didTapAppleLogin(identityCode: String, authCode: String)
     
     // Inner Action
     case _loginWithKakao
     case _loginWithApple
     case _setNavigationIsActive
+    case _authTokenResponse(TaskResult<AuthToken>)
     
     // Child Action
     case signUpAction(SignUpCore.Action)
     case profileSettingAction(ProfileSettingCore.Action)
   }
+  
+  @Dependency(\.userClient) var userClient
   
   private enum CancelID { case load }
   
@@ -42,15 +46,18 @@ struct AuthCore: Reducer {
     Reduce { state, action in
       switch action {
         // User Action
-      case .didTapLoginButton(let provider):
-        switch provider {
-        case .kakao:
-          return .run { send in
-            await send(._loginWithKakao)
-          }
-          
-        case .apple:
-          return .none
+      case ._loginWithKakao:
+        return .none
+        
+      case let .didTapAppleLogin(identityCode, authCode):
+        return .run { send in
+          await send(
+            ._authTokenResponse(
+              TaskResult {
+                try await userClient.signInApple(identityCode, authCode)
+              }
+            )
+          )
         }
         
       case .presentSignUp(true):
@@ -88,6 +95,14 @@ struct AuthCore: Reducer {
         
       case ._setNavigationIsActive:
         state.profileSettingState = ProfileSettingCore.State()
+        return .none
+        
+      case ._authTokenResponse(.success(let token)):
+        print(token)
+        return .none
+        
+      case ._authTokenResponse(.failure(let error)):
+        print(error)
         return .none
         
         // Child Action
