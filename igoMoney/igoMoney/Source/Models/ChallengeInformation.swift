@@ -12,7 +12,18 @@ struct ChallengeInformation: Decodable, Equatable, Identifiable {
   let title: String
   let content: String
   let targetAmount: TargetMoneyAmount
+  var startDate: Date? = nil
   let user: User
+  
+  var challengeDateRange: [Date] {
+    guard let startDate = startDate else { return Array(repeating: Date(), count: 7) }
+    var dates = [Date]()
+    for index in 0..<7 {
+      let interval = Double(index * 86400)
+      dates.append(startDate.addingTimeInterval(interval))
+    }
+    return dates
+  }
   
   static let `default`: [Self] = [
     ChallengeInformation(
