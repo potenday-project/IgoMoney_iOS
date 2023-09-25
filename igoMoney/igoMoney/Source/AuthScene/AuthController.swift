@@ -15,7 +15,7 @@ import KakaoSDKUser
 class AuthController: NSObject {
   static let shared = AuthController()
   private var authToken: OAuthToken?
-  var appleCompletion: ((_ idToken: String, _ authToken: String) -> Void)?
+  var appleCompletion: ((_ userIdentifier: String, _ idToken: String, _ authToken: String) -> Void)?
   
   init(authToken: OAuthToken? = nil) {
     self.authToken = authToken
@@ -70,8 +70,8 @@ extension AuthController: ASAuthorizationControllerDelegate {
             let authToken = String(data: authData, encoding: .utf8) else {
         return
       }
-      
-      appleCompletion?(idToken, authToken)
+      let user = credential.user
+      appleCompletion?(user, idToken, authToken)
     }
     
   }

@@ -34,7 +34,7 @@ struct ChallengeGraphCardView: View {
     VStack(spacing: 8) {
       HStack(alignment: .bottom) {
         WithViewStore(store, observe: { $0.information }) { viewStore in
-          Text(viewStore.user.nickName)
+          Text(viewStore.user.nickName ?? "")
             .font(.pretendard(size: 16, weight: .bold))
         }
         

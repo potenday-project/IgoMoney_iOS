@@ -91,15 +91,28 @@ struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
 }
 
 struct User: Decodable, Equatable {
-  let id: String
-  let nickName: String
-  let profileImagePath: String?
+  let id: Int
+  let provider: Provider?
   let email: String
+  let nickName: String?
+  let profileImagePath: String?
+  let role: String
+  
+  enum CodingKeys: String, CodingKey {
+    case id = "id"
+    case provider = "provider"
+    case email = "email"
+    case nickName = "nickname"
+    case profileImagePath = "image"
+    case role = "role"
+  }
   
   static let `default` = User(
-    id: UUID().uuidString,
-    nickName: "아이고머니",
+    id: 2,
+    provider: nil,
+    email: "dlrudals8899@gmail.com",
+    nickName: nil,
     profileImagePath: nil,
-    email: "cow970814@naver.com"
+    role: "ROLE_USER"
   )
 }

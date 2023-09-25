@@ -52,8 +52,8 @@ struct AuthScene: View {
                 }
                 
                 if provider == .apple {
-                  AuthController.shared.appleCompletion = { idToken, authToken in
-                    viewStore.send(.didTapAppleLogin(identityCode: idToken, authCode: authToken))
+                  AuthController.shared.appleCompletion = { user, idToken, authToken in
+                    viewStore.send(.didTapAppleLogin(user: user, identityCode: idToken, authCode: authToken))
                   }
                   
                   AuthController.shared.authorizationWithApple()

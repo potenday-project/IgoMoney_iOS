@@ -25,13 +25,14 @@ struct AuthCore: Reducer {
     case presentSignUp(Bool)
     case presentProfileSetting(Bool)
     case didTapKakaoLogin
-    case didTapAppleLogin(identityCode: String, authCode: String)
+    case didTapAppleLogin(user: String, identityCode: String, authCode: String)
     
     // Inner Action
     case _loginWithKakao
     case _loginWithApple
     case _setNavigationIsActive
     case _authTokenResponse(TaskResult<AuthToken>)
+    case _userInformationResponse(TaskResult<User>)
     
     // Child Action
     case signUpAction(SignUpCore.Action)
@@ -49,12 +50,12 @@ struct AuthCore: Reducer {
       case ._loginWithKakao:
         return .none
         
-      case let .didTapAppleLogin(identityCode, authCode):
+      case let .didTapAppleLogin(user, identityCode, authCode):
         return .run { send in
           await send(
             ._authTokenResponse(
               TaskResult {
-                try await userClient.signInApple(identityCode, authCode)
+                try await userClient.signInApple(user, identityCode, authCode)
               }
             )
           )
@@ -97,12 +98,34 @@ struct AuthCore: Reducer {
         state.profileSettingState = ProfileSettingCore.State()
         return .none
         
-      case ._authTokenResponse(.success(let token)):
-        print(token)
-        return .none
+      case ._authTokenResponse(.success):
+        return .run { send in
+          await send(
+            ._userInformationResponse(
+              TaskResult {
+                try await userClient.getUserInformation("2")
+              }
+            )
+          )
+        }
         
       case ._authTokenResponse(.failure(let error)):
         print(error)
+        return .none
+        
+      case ._userInformationResponse(.success(let user)):
+        if user.nickName == nil {
+          return .run { send in
+            await send(.presentSignUp(true))
+          }
+        } else {
+          return .run { send in
+            await send(.profileSettingAction(.startChallenge))
+          }
+        }
+        
+      case ._userInformationResponse(.failure):
+        print("Error in User Information Response")
         return .none
         
         // Child Action

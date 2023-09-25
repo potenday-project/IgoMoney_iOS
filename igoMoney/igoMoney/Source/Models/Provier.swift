@@ -4,9 +4,9 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
-enum Provider: String, Equatable, CaseIterable, CustomStringConvertible {
-  case kakao
-  case apple
+enum Provider: String, Equatable, CaseIterable, CustomStringConvertible, Codable {
+  case kakao = "kakao"
+  case apple = "apple"
   
   var description: String {
     switch self {
