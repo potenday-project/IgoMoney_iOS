@@ -42,9 +42,24 @@ struct ChallengeUserControlView: View {
   }
 }
 
+struct UserRecord: Decodable, Identifiable, Equatable {
+  var id = UUID()
+  let title: String
+  let content: String
+  let imagePath: String
+  let cost: Int
+  
+  static let `default` = [
+    UserRecord(title: "오늘은 도시락을 먹어서 지출은 커피만!", content: "", imagePath: "", cost: 3000),
+    UserRecord(title: "오늘은 도시락을 먹어서 지출은 커피만!", content: "", imagePath: "", cost: 2000),
+    UserRecord(title: "오늘은 도시락을 먹어서 지출은 커피만!", content: "", imagePath: "", cost: 1000)
+  ]
+}
+
 struct ChallengeAnalysisCore: Reducer {
   struct State {
     let information: ChallengeInformation
+    let records: [UserRecord] = UserRecord.default
   }
   
   enum Action {
@@ -105,6 +120,35 @@ struct ChallengeAnalysisView: View {
     } // Input Section
   }
   
+  @ViewBuilder
+  private func userRecordView(with record: UserRecord) -> some View {
+    HStack {
+      Image("example_food")
+        .resizable()
+        .scaledToFill()
+        .frame(width: 60, height: 60)
+        .cornerRadius(10)
+      
+      VStack(alignment: .leading, spacing: 4) {
+        Text("9월 24일 1일차")
+          .font(.pretendard(size: 12, weight: .medium))
+        
+        Text(record.title)
+          .lineLimit(1)
+          .font(.pretendard(size: 16, weight: .bold))
+        
+        Text("\(record.cost) 원")
+          .font(.pretendard(size: 12, weight: .medium))
+          .lineHeight(font: .pretendard(size: 12, weight: .medium), lineHeight: 16)
+          .padding(.horizontal, 4)
+          .background(ColorConstants.blue)
+          .cornerRadius(4)
+      }
+      
+      Spacer()
+    }
+  }
+  
   var body: some View {
     VStack(spacing: 24) {
       ChallengeUserControlView()
@@ -133,6 +177,16 @@ struct ChallengeAnalysisView: View {
         .background(ColorConstants.primary8)
         .cornerRadius(10)
         .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+      
+      WithViewStore(store, observe: { $0.records }) { viewStore in
+        ForEach(viewStore.state, id: \.title) { content in
+          userRecordView(with: content)
+            .padding(16)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: ColorConstants.gray2.opacity(0.1), radius: 4, y: 2)
+        }
+      }
       
       Rectangle()
         .fill(.white)
