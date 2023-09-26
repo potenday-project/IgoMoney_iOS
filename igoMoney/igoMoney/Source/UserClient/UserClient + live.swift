@@ -55,7 +55,6 @@ extension UserClient {
       KeyChainClient.saveIdentifier(identifier: user)
       KeyChainClient.create(authToken: response)
       return response
-      
     } checkNicknameDuplicate: { nickName in
       return true
     } getUserInformation: { userID in

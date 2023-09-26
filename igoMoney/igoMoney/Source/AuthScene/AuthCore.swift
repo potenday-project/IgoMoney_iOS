@@ -120,7 +120,7 @@ struct AuthCore: Reducer {
           }
         } else {
           return .run { send in
-            await send(.profileSettingAction(.startChallenge))
+            await send(.profileSettingAction(.startChallenge), animation: .easeIn(duration: 0.1))
           }
         }
         
@@ -136,13 +136,8 @@ struct AuthCore: Reducer {
         }
         
       case .profileSettingAction(.startChallenge):
-        let keyWindow = UIApplication.shared.connectedScenes
-          .filter { $0.activationState == .foregroundActive }
-          .compactMap { $0 as? UIWindowScene }
-          .first?
-          .windows
-          .filter { $0.isKeyWindow }
-          .first
+        let keyWindow = UIApplication.shared.topWindow()
+        
         keyWindow?.rootViewController = UIHostingController(
           rootView: MainScene(
             store: Store(

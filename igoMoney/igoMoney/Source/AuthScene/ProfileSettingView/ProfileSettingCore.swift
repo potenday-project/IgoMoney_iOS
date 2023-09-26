@@ -20,19 +20,25 @@ struct ProfileSettingCore: Reducer {
     // Inner Action
     case _changeText(String)
     case _setShowNickNameConfirm
+    case _checkNickNameResponse(TaskResult<Bool>)
   }
+  
+  @Dependency(\.userClient) var userClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
       // User Action
     case .confirmNickName:
-      // TODO: - 사용자 닉네임 중복 API 호출
-      guard let randomElement = [ConfirmState.duplicateNickName, ConfirmState.completeConfirm]
-        .randomElement() else {
-        return .none
+      let nickName = state.nickName
+      return .run { send in
+        await send(
+          ._checkNickNameResponse(
+            TaskResult {
+              await userClient.checkNicknameDuplicate(nickName)
+            }
+          )
+        )
       }
-      state.nickNameState = randomElement
-      return .none
       
     case .startChallenge:
       // TODO: - 로그인 후 화면 이동하기
@@ -42,8 +48,6 @@ struct ProfileSettingCore: Reducer {
     case ._changeText(let nickName):
       let trimNickName = nickName.trimmingCharacters(in: .whitespacesAndNewlines)
       
-      if trimNickName.count >= 8 || trimNickName.isEmpty { return .none }
-      
       state.nickName = trimNickName
       
       return .run { send in
@@ -51,7 +55,21 @@ struct ProfileSettingCore: Reducer {
       }
       
     case ._setShowNickNameConfirm:
-      state.nickNameState = .readyConfirm
+      let count = state.nickName.count
+      let status: ConfirmState = ((3...8) ~= count) ? .readyConfirm : .disableConfirm
+      state.nickNameState = status
+      return .none
+      
+    case ._checkNickNameResponse(.success(let isConfirm)):
+      if isConfirm {
+        state.nickNameState = .completeConfirm
+      } else {
+        state.nickNameState = .duplicateNickName
+      }
+      
+      return .none
+      
+    case ._checkNickNameResponse(.failure):
       return .none
     }
   }
