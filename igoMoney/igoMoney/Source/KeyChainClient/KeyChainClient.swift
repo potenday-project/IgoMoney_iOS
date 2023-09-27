@@ -7,6 +7,15 @@
 import Foundation
 import Security
 
+import Dependencies
+
+//struct KeyChainClient {
+//  var saveIdentifier: @Sendable (_ identifier: String) -> Bool
+//  var saveToken: @Sendable (_ token: AuthToken) -> Bool
+//  var readIdentifier: @Sendable () -> String
+//  var readToken: @Sendable () -> AuthToken?
+//}
+
 class KeyChainClient {
   static let serviceName = "igomoneyService"
   static let account = "com.app.igomoney"
@@ -145,3 +154,9 @@ class KeyChainClient {
     }
   }
 }
+
+//extension KeyChainClient: DependencyKey {
+//  static var liveValue: KeyChainClient {
+//    return Self
+//  }
+//}

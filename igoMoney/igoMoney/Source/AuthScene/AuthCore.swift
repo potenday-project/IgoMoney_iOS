@@ -28,6 +28,7 @@ struct AuthCore: Reducer {
     case didTapAppleLogin(user: String, identityCode: String, authCode: String)
     
     // Inner Action
+    case _onAppear
     case _setNavigationIsActive
     case _authTokenResponse(TaskResult<AuthToken>)
     case _userInformationResponse(TaskResult<User>)
@@ -47,6 +48,7 @@ struct AuthCore: Reducer {
       switch action {
       // User Action
       case let .didTapAppleLogin(user, identityCode, authCode):
+        print("User Client is \(userClient)")
         return .run { send in
           await send(
             ._authTokenResponse(
@@ -89,7 +91,7 @@ struct AuthCore: Reducer {
           await send(
             ._userInformationResponse(
               TaskResult {
-                try await userClient.getUserInformation("2")
+                try await userClient.getUserInformation("1")
               }
             )
           )

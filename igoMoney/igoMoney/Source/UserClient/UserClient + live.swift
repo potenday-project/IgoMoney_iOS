@@ -39,6 +39,7 @@ extension UserClient {
     return Self { token in
       return true
     } signInApple: { user, idToken, authCode in
+      print(user, idToken, authCode)
       guard let data = ["id_token": idToken, "code": authCode].toJsonString()?.data(using: .utf8) else {
         throw APIError.badRequest(400)
       }

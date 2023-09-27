@@ -87,6 +87,9 @@ struct AuthScene: View {
           }
         }
       }
+      .onAppear {
+        store.send(._onAppear)
+      }
       .navigationTitle("")
       .navigationBarHidden(true)
     }

@@ -40,6 +40,14 @@ struct AppCore: Reducer {
   }
   
   var body: some Reducer<State, Action> {
+    Scope(state: /State.logIn, action: /Action.mainAction) {
+      MainCore()
+    }
+    
+    Scope(state: /State.logOut, action: /Action.authAction) {
+      AuthCore()
+    }
+    
     Reduce { state, action in
       switch action {
       case .authAction(._presentMainScene):
@@ -65,6 +73,7 @@ struct AppView: View {
         ) { store in
           MainScene(store: store)
         }
+        
       case .logOut:
         CaseLet(
           /AppCore.State.logOut,
@@ -77,12 +86,11 @@ struct AppView: View {
   }
 }
 
-//#Preview {
-
-//}
-
-struct AppView_Previews: PreviewProvider {
-  static var previews: some View {
-      AppView(store: Store(initialState: AppCore.State.logOut(.init()), reducer: { AppCore() }))
-  }
+#Preview {
+  AppView(
+    store: Store(
+      initialState: AppCore.State.logIn(.init()),
+      reducer: { AppCore() }
+    )
+  )
 }
