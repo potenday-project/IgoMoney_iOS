@@ -28,11 +28,10 @@ struct AuthCore: Reducer {
     case didTapAppleLogin(user: String, identityCode: String, authCode: String)
     
     // Inner Action
-    case _loginWithKakao
-    case _loginWithApple
     case _setNavigationIsActive
     case _authTokenResponse(TaskResult<AuthToken>)
     case _userInformationResponse(TaskResult<User>)
+    case _presentMainScene
     
     // Child Action
     case signUpAction(SignUpCore.Action)
@@ -46,10 +45,7 @@ struct AuthCore: Reducer {
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
-        // User Action
-      case ._loginWithKakao:
-        return .none
-        
+      // User Action
       case let .didTapAppleLogin(user, identityCode, authCode):
         return .run { send in
           await send(
@@ -83,17 +79,7 @@ struct AuthCore: Reducer {
         state.profileSettingState = nil
         return .cancel(id: CancelID.load)
         
-        // Inner Action
-      case ._loginWithKakao:
-        return .run { send in
-          await send(.presentSignUp(true))
-        }
-        
-      case ._loginWithApple:
-        return .run { send in
-          await send(.presentSignUp(true))
-        }
-        
+      // Inner Action
       case ._setNavigationIsActive:
         state.profileSettingState = ProfileSettingCore.State()
         return .none
@@ -114,15 +100,19 @@ struct AuthCore: Reducer {
         return .none
         
       case ._userInformationResponse(.success(let user)):
-        if user.nickName == nil {
+        guard let nickName = user.nickName else {
+          return .run { send in
+            await send(._presentMainScene)
+          }
+        }
+        
+        if nickName.isEmpty {
           return .run { send in
             await send(.presentSignUp(true))
           }
-        } else {
-          return .run { send in
-            await send(.profileSettingAction(.startChallenge), animation: .easeIn(duration: 0.1))
-          }
         }
+        
+        return .none
         
       case ._userInformationResponse(.failure):
         print("Error in User Information Response")
@@ -136,17 +126,9 @@ struct AuthCore: Reducer {
         }
         
       case .profileSettingAction(.startChallenge):
-        let keyWindow = UIApplication.shared.topWindow()
-        
-        keyWindow?.rootViewController = UIHostingController(
-          rootView: MainScene(
-            store: Store(
-              initialState: MainCore.State(),
-              reducer: { MainCore() }
-            )
-          )
-        )
-        return .none
+        return .run {
+          await $0(._presentMainScene)
+        }
         
       default:
         return .none

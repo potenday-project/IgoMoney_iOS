@@ -10,79 +10,79 @@ import SwiftUI
 import ComposableArchitecture
 import KakaoSDKCommon
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-  func application(
-    _ application: UIApplication,
-    configurationForConnecting connectingSceneSession: UISceneSession,
-    options: UIScene.ConnectionOptions
-  ) -> UISceneConfiguration {
-    return UISceneConfiguration(
-      name: "Default Configuration",
-      sessionRole: connectingSceneSession.role
-    )
+@main
+struct igoMoneyApp: App {
+  init() {
+    KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
+  }
+  
+  var body: some Scene {
+    WindowGroup {
+      AppView(
+        store: Store(
+          initialState: AppCore.State.logOut(AuthCore.State()),
+          reducer: { AppCore()._printChanges() }
+        )
+      )
+    }
   }
 }
 
-class SceneDelegate: NSObject, UIWindowSceneDelegate {
-  var window: UIWindow?
+struct AppCore: Reducer {
+  enum State {
+    case logIn(MainCore.State)
+    case logOut(AuthCore.State)
+  }
   
-  func scene(
-    _ scene: UIScene,
-    willConnectTo session: UISceneSession,
-    options connectionOptions: UIScene.ConnectionOptions
-  ) {
-    guard let windowScene = scene as? UIWindowScene else { return }
-    window = UIWindow(windowScene: windowScene)
-    
-    let appleIDProvider = ASAuthorizationAppleIDProvider()
-    appleIDProvider.getCredentialState(forUserID: KeyChainClient.currentUserIdentifier) { [weak self] status, error in
-
-      switch status {
-      case .authorized:
-        guard let token = KeyChainClient.read() else {
-          fallthrough
-        }
-        
-        DispatchQueue.main.async {
-          if token.isExpired {
-              self?.showLoginView()
-          } else {
-            self?.showMainView()
-          }
-        }
-        
+  enum Action {
+    case mainAction(MainCore.Action)
+    case authAction(AuthCore.Action)
+  }
+  
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .authAction(._presentMainScene):
+        state = .logIn(MainCore.State())
+        return .none
       default:
-        DispatchQueue.main.async {
-          self?.showLoginView()
+        return .none
+      }
+    }
+  }
+}
+
+struct AppView: View {
+  let store: StoreOf<AppCore>
+  
+  var body: some View {
+    SwitchStore(store) { state in
+      switch state {
+      case .logIn:
+        CaseLet(
+          /AppCore.State.logIn,
+          action: AppCore.Action.mainAction
+        ) { store in
+          MainScene(store: store)
+        }
+      case .logOut:
+        CaseLet(
+          /AppCore.State.logOut,
+          action: AppCore.Action.authAction
+        ) { store in
+          AuthScene(store: store)
         }
       }
     }
-    
-    window?.makeKeyAndVisible()
   }
 }
 
-private extension SceneDelegate {
-  func showMainView() {
-    let rootView = MainScene(
-      store: Store(
-        initialState: MainCore.State(),
-        reducer: { MainCore()._printChanges() }
-      )
-    )
-    
-    self.window?.rootViewController = UIHostingController(rootView: rootView)
-  }
-  
-  func showLoginView() {
-    let rootView = AuthScene(
-      store: Store(
-        initialState: AuthCore.State(),
-        reducer: { AuthCore()._printChanges() }
-      )
-    )
-    
-    self.window?.rootViewController = UIHostingController(rootView: rootView)
+//#Preview {
+
+//}
+
+struct AppView_Previews: PreviewProvider {
+  static var previews: some View {
+      AppView(store: Store(initialState: AppCore.State.logOut(.init()), reducer: { AppCore() }))
   }
 }

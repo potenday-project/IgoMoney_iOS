@@ -47,7 +47,7 @@ struct AuthScene: View {
                 Task {
                   if provider == .kakao {
                     let token = await AuthController.shared.authorizationWithKakao()
-                    viewStore.send(._loginWithKakao)
+//                    viewStore.send(._loginWithKakao)
                   }
                 }
                 
