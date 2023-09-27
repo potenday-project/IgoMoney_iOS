@@ -91,7 +91,7 @@ struct AuthCore: Reducer {
           await send(
             ._userInformationResponse(
               TaskResult {
-                try await userClient.getUserInformation("1")
+                try await userClient.getUserInformation("2")
               }
             )
           )
@@ -103,18 +103,16 @@ struct AuthCore: Reducer {
         
       case ._userInformationResponse(.success(let user)):
         guard let nickName = user.nickName else {
-          return .run { send in
-            await send(._presentMainScene)
-          }
-        }
-        
-        if nickName.isEmpty {
+          // 닉네임이 없는 경우
           return .run { send in
             await send(.presentSignUp(true))
           }
         }
         
-        return .none
+        // 닉네임이 있는 경우
+        return .run { send in
+          await send(._presentMainScene)
+        }
         
       case ._userInformationResponse(.failure):
         print("Error in User Information Response")

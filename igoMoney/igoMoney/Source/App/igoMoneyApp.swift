@@ -20,7 +20,7 @@ struct igoMoneyApp: App {
     WindowGroup {
       AppView(
         store: Store(
-          initialState: AppCore.State.logOut(AuthCore.State()),
+          initialState: AppCore.State(),
           reducer: { AppCore()._printChanges() }
         )
       )

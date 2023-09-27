@@ -7,9 +7,16 @@
 import ComposableArchitecture
 
 struct AppCore: Reducer {
-  enum State {
-    case logIn(MainCore.State)
-    case logOut(AuthCore.State)
+  enum SessionState {
+    case auth
+    case main
+  }
+  
+  struct State {
+    var mainState = MainCore.State()
+    var authState = AuthCore.State()
+    
+    var currentState: SessionState = .auth
   }
   
   enum Action {
@@ -18,18 +25,18 @@ struct AppCore: Reducer {
   }
   
   var body: some Reducer<State, Action> {
-    Scope(state: /State.logIn, action: /Action.mainAction) {
+    Scope(state: \.mainState, action: /Action.mainAction) {
       MainCore()
     }
     
-    Scope(state: /State.logOut, action: /Action.authAction) {
+    Scope(state: \.authState, action: /Action.authAction) {
       AuthCore()
     }
     
     Reduce { state, action in
       switch action {
-      case .authAction(._presentMainScene):
-        state = .logIn(MainCore.State())
+      case .authAction(._presentMainScene), .authAction(.profileSettingAction(.startChallenge)):
+        state.currentState = .main
         return .none
       default:
         return .none

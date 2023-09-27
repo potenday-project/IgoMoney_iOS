@@ -12,23 +12,23 @@ struct AppView: View {
   let store: StoreOf<AppCore>
   
   var body: some View {
-    SwitchStore(store) { state in
-      switch state {
-      case .logIn:
-        CaseLet(
-          /AppCore.State.logIn,
-          action: AppCore.Action.mainAction
-        ) { store in
-          MainScene(store: store)
-        }
-        
-      case .logOut:
-        CaseLet(
-          /AppCore.State.logOut,
-          action: AppCore.Action.authAction
-        ) { store in
-          AuthScene(store: store)
-        }
+    WithViewStore(store, observe: { $0.currentState }) { viewStore in
+      if viewStore.state == .auth {
+        AuthScene(
+          store: self.store.scope(
+            state: \.authState,
+            action: AppCore.Action.authAction
+          )
+        )
+      }
+      
+      if viewStore.state == .main {
+        MainScene(
+          store: self.store.scope(
+            state: \.mainState,
+            action: AppCore.Action.mainAction
+          )
+        )
       }
     }
   }
@@ -37,7 +37,7 @@ struct AppView: View {
 #Preview ("App View") {
   AppView(
     store: Store(
-      initialState: AppCore.State.logOut(.init()),
+      initialState: AppCore.State(),
       reducer: { AppCore() }
     )
   )
