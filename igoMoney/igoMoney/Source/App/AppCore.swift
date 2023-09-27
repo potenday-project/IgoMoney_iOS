@@ -35,7 +35,7 @@ struct AppCore: Reducer {
     
     Reduce { state, action in
       switch action {
-      case .authAction(._presentMainScene), .authAction(.profileSettingAction(.startChallenge)):
+      case .authAction(._presentMainScene):
         state.currentState = .main
         return .none
       default:
