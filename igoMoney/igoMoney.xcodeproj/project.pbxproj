@@ -68,6 +68,8 @@
 		18B437772AC16E410026A71E /* UserClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437762AC16E410026A71E /* UserClient + live.swift */; };
 		18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437792AC170B30026A71E /* AuthAPI.swift */; };
 		18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B4377C2AC17ED10026A71E /* KeyChainClient.swift */; };
+		18B6306A2AC408A300F638C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B630692AC408A300F638C0 /* AppView.swift */; };
+		18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6306B2AC408A800F638C0 /* AppCore.swift */; };
 		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* SignUpView.swift */; };
@@ -141,6 +143,8 @@
 		18B437762AC16E410026A71E /* UserClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserClient + live.swift"; sourceTree = "<group>"; };
 		18B437792AC170B30026A71E /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		18B4377C2AC17ED10026A71E /* KeyChainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainClient.swift; sourceTree = "<group>"; };
+		18B630692AC408A300F638C0 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		18B6306B2AC408A800F638C0 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -248,6 +252,8 @@
 			isa = PBXGroup;
 			children = (
 				180363A92AB82DCD00082F8A /* igoMoneyApp.swift */,
+				18B630692AC408A300F638C0 /* AppView.swift */,
+				18B6306B2AC408A800F638C0 /* AppCore.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -583,6 +589,7 @@
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
+				18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
@@ -613,6 +620,7 @@
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
+				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
