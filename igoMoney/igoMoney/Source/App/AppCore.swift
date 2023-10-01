@@ -44,12 +44,14 @@ struct AppCore: Reducer {
     Reduce { state, action in
       switch action {
       case ._onAppear:
-        if state.currentState == .onBoarding {
-          return .run { send in
-            let isSuccess = await autoSignIn()
-            await send(._autoSignIn(isSuccess))
-          }
-        }
+//        if state.currentState == .onBoarding {
+//          return .run { send in
+//            let isSuccess = await autoSignIn()
+//            await send(._autoSignIn(isSuccess))
+//          }
+//        }
+        
+        state.currentState = .auth
         
         return .none
         

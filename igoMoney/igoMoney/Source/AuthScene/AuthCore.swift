@@ -48,7 +48,6 @@ struct AuthCore: Reducer {
       switch action {
       // User Action
       case let .didTapAppleLogin(user, identityCode, authCode):
-        print("User Client is \(userClient)")
         return .run { send in
           await send(
             ._authTokenResponse(
@@ -86,12 +85,12 @@ struct AuthCore: Reducer {
         state.profileSettingState = ProfileSettingCore.State()
         return .none
         
-      case ._authTokenResponse(.success):
+      case let ._authTokenResponse(.success(token)):
         return .run { send in
           await send(
             ._userInformationResponse(
               TaskResult {
-                try await userClient.getUserInformation("2")
+                try await userClient.getUserInformation(token.userID.description)
               }
             )
           )

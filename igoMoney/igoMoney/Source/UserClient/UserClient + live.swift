@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct AuthToken: Codable, Equatable {
+  let userID: Int
   let accessToken: String
   let expiresAt: String
   let idToken: String
@@ -21,15 +22,13 @@ struct AuthToken: Codable, Equatable {
   }
   
   enum CodingKeys: String, CodingKey {
+    case userID = "userId"
     case accessToken = "access_token"
     case expiresAt = "expires_in"
     case idToken = "id_token"
     case refreshToken = "refresh_token"
     case tokenType = "token_type"
   }
-  
-  static let failureDefault: Self = .init(accessToken: "", expiresAt: "0", idToken: "", refreshToken: "", tokenType: "bearer")
-  static let successDefault: Self = .init(accessToken: "", expiresAt: "3600", idToken: "", refreshToken: "", tokenType: "bearer")
 }
 
 extension UserClient {

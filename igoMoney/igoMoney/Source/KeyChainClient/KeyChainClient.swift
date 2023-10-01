@@ -145,14 +145,6 @@ class KeyChainClient {
     
     return status == errSecSuccess
   }
-  
-  static func read(isFail: Bool) -> AuthToken? {
-    if isFail {
-      return .failureDefault
-    } else {
-      return .successDefault
-    }
-  }
 }
 
 //extension KeyChainClient: DependencyKey {
