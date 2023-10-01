@@ -8,14 +8,15 @@ import Foundation
 
 enum HTTPBody {
   case json(value: Data)
-  case multipart(values: [String: String])
+  case multipart(boundary: String, values: [String: String])
   
   var data: Data {
     switch self {
     case .json(let value):
       return value
-    case .multipart(let values):
-      return MultipartForm(values: values).httpBody()
+    case .multipart(let boundary, let values):
+      return MultipartForm(boundary: boundary, values: values)
+        .httpBody()
     }
   }
 }

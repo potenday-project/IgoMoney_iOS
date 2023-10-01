@@ -11,6 +11,8 @@ import SwiftUI
 
 struct AuthCore: Reducer {
   struct State: Equatable {
+    var currentUser: User? = nil
+    
     let providers: [Provider] = Provider.allCases
     var showSignUp: Bool = false
     var isNavigationBarHidden: Bool = true
@@ -82,7 +84,8 @@ struct AuthCore: Reducer {
         
       // Inner Action
       case ._setNavigationIsActive:
-        state.profileSettingState = ProfileSettingCore.State()
+        guard let userID = state.currentUser?.userID else { return .none }
+        state.profileSettingState = ProfileSettingCore.State(userID: userID.description)
         return .none
         
       case let ._authTokenResponse(.success(token)):
@@ -101,6 +104,7 @@ struct AuthCore: Reducer {
         return .none
         
       case ._userInformationResponse(.success(let user)):
+        state.currentUser = user
         guard let nickName = user.nickName else {
           // 닉네임이 없는 경우
           return .run { send in

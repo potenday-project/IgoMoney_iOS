@@ -42,8 +42,26 @@ extension UserClient {
         .data
         .base64EncodedString()
         .isEmpty
-    } updateUserInformation: { _ in
-      return true
+    } updateUserInformation: { id, nickName in
+      let boundary = "Boundary_\(UUID().uuidString)"
+      let api = AuthAPI(
+        method: .patch,
+        path: "/users",
+        query: [:],
+        header: [
+          "Content-Type": "multipart/form-data; boundary=\(boundary)"
+        ],
+        body: .multipart(
+          boundary: boundary,
+          values: ["id": id, "nickname": nickName]
+        )
+      )
+      
+      return try await apiClient.execute(to: api)
+        .data
+        .base64EncodedString()
+        .isEmpty
+      
     } getUserInformation: { userID in
       let api = AuthAPI(method: .get, path: "/users/\(userID)", query: [:], header: [:], body: nil)
       

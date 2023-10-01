@@ -8,6 +8,7 @@ import ComposableArchitecture
 
 struct ProfileSettingCore: Reducer {
   struct State: Equatable {
+    var userID: String
     var nickName: String = ""
     var nickNameState: ConfirmState = .disableConfirm
   }
@@ -21,6 +22,7 @@ struct ProfileSettingCore: Reducer {
     case _changeText(String)
     case _setShowNickNameConfirm
     case _checkNickNameResponse(TaskResult<Bool>)
+    case _updateNickNameResponse(TaskResult<Bool>)
   }
   
   @Dependency(\.userClient) var userClient
@@ -41,8 +43,15 @@ struct ProfileSettingCore: Reducer {
       }
       
     case .startChallenge:
-      // TODO: - 로그인 후 화면 이동하기
-      return .none
+      return .run { [state] send in
+        await send(
+          ._updateNickNameResponse(
+            TaskResult {
+              try await userClient.updateUserInformation(state.userID, state.nickName)
+            }
+          )
+        )
+      }
       
       // Inner Action
     case ._changeText(let nickName):
@@ -67,6 +76,9 @@ struct ProfileSettingCore: Reducer {
         state.nickNameState = .duplicateNickName
       }
       
+      return .none
+      
+    case ._updateNickNameResponse:
       return .none
       
     case ._checkNickNameResponse(.failure):

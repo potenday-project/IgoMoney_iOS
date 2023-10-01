@@ -7,18 +7,12 @@
 import Foundation
 
 struct MultipartForm {
-  let id = UUID()
+  let boundary: String
   var values: [String: String]
-  
-  init(values: [String : String]) {
-    self.values = values
-  }
 }
 
 extension MultipartForm {
   func httpBody() -> Data {
-    let boundary = "Boundary_\(id.uuidString)"
-    
     var data = Data()
     
     values.forEach { (key, value) in
@@ -33,6 +27,10 @@ extension MultipartForm {
       data.append(contentData)
     }
     
+    guard let endData = "\r\n--\(boundary)--\r\n".data(using: .utf8) else {
+      return Data()
+    }
+    data.append(endData)
     return data
   }
 }

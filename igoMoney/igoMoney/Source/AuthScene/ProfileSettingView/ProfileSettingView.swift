@@ -152,7 +152,7 @@ struct ProfileSettingView_Previews: PreviewProvider {
     NavigationView {
       ProfileSettingView(
         store: Store(
-          initialState: ProfileSettingCore.State(),
+          initialState: ProfileSettingCore.State(userID: "1"),
           reducer: { ProfileSettingCore() }
         )
       )

@@ -91,7 +91,7 @@ struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
 }
 
 struct User: Decodable, Equatable {
-  let id: Int
+  let userID: Int
   let provider: Provider?
   let email: String
   let nickName: String?
@@ -99,7 +99,7 @@ struct User: Decodable, Equatable {
   let role: String
   
   enum CodingKeys: String, CodingKey {
-    case id = "id"
+    case userID = "id"
     case provider = "provider"
     case email = "email"
     case nickName = "nickname"
@@ -108,7 +108,7 @@ struct User: Decodable, Equatable {
   }
   
   static let `default` = User(
-    id: 2,
+    userID: 2,
     provider: nil,
     email: "dlrudals8899@gmail.com",
     nickName: nil,

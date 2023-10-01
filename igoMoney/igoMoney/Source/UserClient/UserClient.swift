@@ -11,7 +11,7 @@ struct UserClient {
   var signInApple: @Sendable (_ user: String, _ idToken: String, _ authCode: String) async throws -> AuthToken
   // TODO: - Refresh Token Method 구현
   var checkNicknameDuplicate: @Sendable (_ nickName: String) async throws -> Bool
-  var updateUserInformation: @Sendable (User) async throws -> Bool
+  var updateUserInformation: @Sendable (_ userID: String, _ nickName: String) async throws -> Bool
   var getUserInformation: @Sendable (_ userID: String) async throws -> User
   var signOut: @Sendable () -> Void
 }
