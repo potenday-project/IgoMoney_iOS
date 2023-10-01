@@ -63,9 +63,14 @@ struct AppCore: Reducer {
         state.currentState = .auth
         return .none
         
-      case .authAction(._presentMainScene):
-        state.currentState = .main
+      case .mainAction(.myPageAction(.settingAction(._withdrawResponse(.success)))):
+        state.currentState = .auth
         return .none
+        
+      case .authAction(._presentMainScene):
+        state.authState = AuthCore.State()
+        state.currentState = .main
+        return .none.animation()
         
       default:
         return .none
@@ -86,7 +91,7 @@ private extension AppCore {
     
     let state = await withCheckedContinuation { continuation in
       provider.getCredentialState(forUserID: KeyChainClient.currentUserIdentifier) { state, error in
-        if let error = error {
+        if let _ = error {
           continuation.resume(
             returning: ASAuthorizationAppleIDProvider.CredentialState.notFound
           )
