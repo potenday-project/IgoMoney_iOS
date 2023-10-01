@@ -13,6 +13,15 @@ struct AppView: View {
   
   var body: some View {
     WithViewStore(store, observe: { $0.currentState }) { viewStore in
+      if viewStore.state == .onBoarding {
+        ZStack {
+          Color("background_color")
+            .edgesIgnoringSafeArea(.all)
+          
+          Image("icon_launch")
+        }
+      }
+      
       if viewStore.state == .auth {
         AuthScene(
           store: self.store.scope(
@@ -31,14 +40,19 @@ struct AppView: View {
         )
       }
     }
+    .onAppear {
+      store.send(._onAppear)
+    }
   }
 }
 
 #Preview ("App View") {
-  AppView(
-    store: Store(
-      initialState: AppCore.State(),
-      reducer: { AppCore() }
+  Group {
+    AppView(
+      store: Store(
+        initialState: AppCore.State(currentState: .onBoarding),
+        reducer: { AppCore() }
+      )
     )
-  )
+  }
 }
