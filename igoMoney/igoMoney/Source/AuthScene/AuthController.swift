@@ -14,19 +14,19 @@ import KakaoSDKUser
 @MainActor
 class AuthController: NSObject {
   static let shared = AuthController()
-  
   private var authToken: OAuthToken?
+  var appleCompletion: ((_ userIdentifier: String, _ idToken: String, _ authToken: String) -> Void)?
   
-  private init(authToken: OAuthToken? = nil) {
+  init(authToken: OAuthToken? = nil) {
     self.authToken = authToken
   }
   
   func authorizationWithApple() {
     let IdRequest = ASAuthorizationAppleIDProvider().createRequest()
-    let passwordRequest = ASAuthorizationPasswordProvider().createRequest()
+//    let passwordRequest = ASAuthorizationPasswordProvider().createRequest()
     IdRequest.requestedScopes = [.fullName, .email]
     
-    let controller = ASAuthorizationController(authorizationRequests: [IdRequest, passwordRequest])
+    let controller = ASAuthorizationController(authorizationRequests: [IdRequest])
     controller.delegate = self
     controller.presentationContextProvider = self
     controller.performRequests()
@@ -60,24 +60,20 @@ extension AuthController: ASAuthorizationControllerDelegate {
   }
   
   func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-    switch authorization.credential {
-    case let appleIdCredential as ASAuthorizationAppleIDCredential:
-      if let _ = appleIdCredential.email, let _ = appleIdCredential.fullName {
-        // Do Register New Account
-      } else {
-        // Do Register Exist Account
+    if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+      guard let idTokenData = credential.identityToken,
+            let authData = credential.authorizationCode else {
+        return
       }
       
-      break
-      
-    case let passwordCredential as ASPasswordCredential:
-      // SIgn In with User And Password
-      
-      break
-      
-    default:
-      break
+      guard let idToken = String(data: idTokenData, encoding: .utf8),
+            let authToken = String(data: authData, encoding: .utf8) else {
+        return
+      }
+      let user = credential.user
+      appleCompletion?(user, idToken, authToken)
     }
+    
   }
 }
 

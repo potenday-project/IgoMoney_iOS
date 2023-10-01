@@ -25,7 +25,7 @@ struct EmptyChallengeDetail: View {
       
       // 챌린지 생성자 닉네임
       WithViewStore(store, observe: { $0.user }) { viewStore in
-        Text(viewStore.nickName)
+        Text(viewStore.nickName ?? "")
           .font(.system(size: 12, weight: .medium))
       }
       

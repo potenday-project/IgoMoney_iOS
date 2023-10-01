@@ -12,7 +12,7 @@ protocol RequestGenerator {
   var path: String { get }
   var query: [String: Any] { get }
   var header: [String: Any] { get }
-  var body: HTTPBody { get }
+  var body: HTTPBody? { get }
 }
 
 extension RequestGenerator {
@@ -28,8 +28,8 @@ extension RequestGenerator {
     header.forEach {
       request.setValue($0.value as? String, forHTTPHeaderField: $0.key)
     }
-    request.httpBody = body.data
+    request.httpMethod = method.stringValue
+    request.httpBody = body?.data
     return request
   }
 }
-

@@ -11,6 +11,8 @@ import SwiftUI
 
 struct AuthCore: Reducer {
   struct State: Equatable {
+    var currentUser: User? = nil
+    
     let providers: [Provider] = Provider.allCases
     var showSignUp: Bool = false
     var isNavigationBarHidden: Bool = true
@@ -24,33 +26,38 @@ struct AuthCore: Reducer {
     // User Action
     case presentSignUp(Bool)
     case presentProfileSetting(Bool)
-    case didTapLoginButton(Provider)
+    case didTapKakaoLogin
+    case didTapAppleLogin(user: String, identityCode: String, authCode: String)
     
     // Inner Action
-    case _loginWithKakao
-    case _loginWithApple
+    case _onAppear
     case _setNavigationIsActive
+    case _authTokenResponse(TaskResult<AuthToken>)
+    case _userInformationResponse(TaskResult<User>)
+    case _presentMainScene
     
     // Child Action
     case signUpAction(SignUpCore.Action)
     case profileSettingAction(ProfileSettingCore.Action)
   }
   
+  @Dependency(\.userClient) var userClient
+  
   private enum CancelID { case load }
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
-        // User Action
-      case .didTapLoginButton(let provider):
-        switch provider {
-        case .kakao:
-          return .run { send in
-            await send(._loginWithKakao)
-          }
-          
-        case .apple:
-          return .none
+      // User Action
+      case let .didTapAppleLogin(user, identityCode, authCode):
+        return .run { send in
+          await send(
+            ._authTokenResponse(
+              TaskResult {
+                try await userClient.signInApple(user, identityCode, authCode)
+              }
+            )
+          )
         }
         
       case .presentSignUp(true):
@@ -75,19 +82,43 @@ struct AuthCore: Reducer {
         state.profileSettingState = nil
         return .cancel(id: CancelID.load)
         
-        // Inner Action
-      case ._loginWithKakao:
-        return .run { send in
-          await send(.presentSignUp(true))
-        }
-        
-      case ._loginWithApple:
-        return .run { send in
-          await send(.presentSignUp(true))
-        }
-        
+      // Inner Action
       case ._setNavigationIsActive:
-        state.profileSettingState = ProfileSettingCore.State()
+        guard let userID = state.currentUser?.userID else { return .none }
+        state.profileSettingState = ProfileSettingCore.State(userID: userID.description)
+        return .none
+        
+      case let ._authTokenResponse(.success(token)):
+        return .run { send in
+          await send(
+            ._userInformationResponse(
+              TaskResult {
+                try await userClient.getUserInformation(token.userID.description)
+              }
+            )
+          )
+        }
+        
+      case ._authTokenResponse(.failure(let error)):
+        print(error)
+        return .none
+        
+      case ._userInformationResponse(.success(let user)):
+        state.currentUser = user
+        guard let nickName = user.nickName else {
+          // 닉네임이 없는 경우
+          return .run { send in
+            await send(.presentSignUp(true))
+          }
+        }
+        
+        // 닉네임이 있는 경우
+        return .run { send in
+          await send(._presentMainScene)
+        }
+        
+      case ._userInformationResponse(.failure):
+        print("Error in User Information Response")
         return .none
         
         // Child Action
@@ -97,23 +128,10 @@ struct AuthCore: Reducer {
           await send(.presentProfileSetting(true))
         }
         
-      case .profileSettingAction(.startChallenge):
-        let keyWindow = UIApplication.shared.connectedScenes
-          .filter { $0.activationState == .foregroundActive }
-          .compactMap { $0 as? UIWindowScene }
-          .first?
-          .windows
-          .filter { $0.isKeyWindow }
-          .first
-        keyWindow?.rootViewController = UIHostingController(
-          rootView: MainScene(
-            store: Store(
-              initialState: MainCore.State(),
-              reducer: { MainCore() }
-            )
-          )
-        )
-        return .none
+      case .profileSettingAction(._updateNickNameResponse(.success)):
+        return .run {
+          await $0(._presentMainScene)
+        }
         
       default:
         return .none

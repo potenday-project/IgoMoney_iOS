@@ -47,11 +47,15 @@ struct AuthScene: View {
                 Task {
                   if provider == .kakao {
                     let token = await AuthController.shared.authorizationWithKakao()
-                    viewStore.send(._loginWithKakao)
+//                    viewStore.send(._loginWithKakao)
                   }
                 }
                 
                 if provider == .apple {
+                  AuthController.shared.appleCompletion = { user, idToken, authToken in
+                    viewStore.send(.didTapAppleLogin(user: user, identityCode: idToken, authCode: authToken))
+                  }
+                  
                   AuthController.shared.authorizationWithApple()
                 }
               }
@@ -82,6 +86,9 @@ struct AuthScene: View {
               .animation(.spring(), value: UUID())
           }
         }
+      }
+      .onAppear {
+        store.send(._onAppear)
       }
       .navigationTitle("")
       .navigationBarHidden(true)

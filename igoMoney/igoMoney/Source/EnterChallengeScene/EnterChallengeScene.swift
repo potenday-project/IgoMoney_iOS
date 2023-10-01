@@ -223,7 +223,7 @@ struct ChallengeInformationCardView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack {
-        Text("\(viewStore.challenge.user.nickName)님 챌린지")
+        Text("\(viewStore.challenge.user.nickName ?? "")님 챌린지")
           .font(.pretendard(size: 14, weight: .bold))
           .foregroundColor(ColorConstants.gray2)
       
