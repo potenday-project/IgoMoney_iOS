@@ -15,7 +15,6 @@ extension UserClient {
     return Self { token in
       return true
     } signInApple: { user, idToken, authCode in
-      print(user, idToken, authCode)
       guard let data = ["id_token": idToken, "code": authCode].toJsonString()?.data(using: .utf8) else {
         throw APIError.badRequest(400)
       }
@@ -33,7 +32,16 @@ extension UserClient {
       KeyChainClient.create(authToken: response)
       return response
     } checkNicknameDuplicate: { nickName in
-      return true
+      let api = AuthAPI(
+        method: .get,
+        path: "/users/nickname/\(nickName)",
+        query: [:],
+        header: [:]
+      )
+      return try await apiClient.execute(to: api)
+        .data
+        .base64EncodedString()
+        .isEmpty
     } getUserInformation: { userID in
       let api = AuthAPI(method: .get, path: "/users/\(userID)", query: [:], header: [:], body: nil)
       

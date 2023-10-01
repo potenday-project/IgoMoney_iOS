@@ -8,15 +8,20 @@ import Foundation
 
 protocol Networking {
   func request<T: Decodable>(to generator: RequestGenerator) async throws -> T
+  func execute(to generator: RequestGenerator) async throws -> (data: Data, response: URLResponse)
 }
 
 extension Networking {
-  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
+  func execute(to generator: RequestGenerator) async throws -> (data: Data, response: URLResponse) {
     guard let request = try? generator.generate() else {
       throw APIError.didNotConvertRequest
     }
     
-    let (data, response) = try await URLSession.shared.data(for: request)
+    return try await URLSession.shared.data(for: request)
+  }
+  
+  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
+    let (data, response) = try await execute(to: generator)
     
     guard let response = response as? HTTPURLResponse else {
       throw APIError.invalidResponse

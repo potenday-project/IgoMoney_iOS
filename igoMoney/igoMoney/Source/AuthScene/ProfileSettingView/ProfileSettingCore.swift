@@ -34,7 +34,7 @@ struct ProfileSettingCore: Reducer {
         await send(
           ._checkNickNameResponse(
             TaskResult {
-              await userClient.checkNicknameDuplicate(nickName)
+              try await userClient.checkNicknameDuplicate(nickName)
             }
           )
         )
