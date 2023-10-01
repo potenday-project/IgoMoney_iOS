@@ -27,4 +27,6 @@ enum ColorConstants {
   static let yellow = Color("yellow")
   static let blue = Color("blue")
   static let purple = Color("purple")
+  
+  static let warning = Color("alert")
 }
