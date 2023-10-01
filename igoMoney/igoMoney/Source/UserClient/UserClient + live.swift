@@ -42,6 +42,8 @@ extension UserClient {
         .data
         .base64EncodedString()
         .isEmpty
+    } updateUserInformation: { _ in
+      return true
     } getUserInformation: { userID in
       let api = AuthAPI(method: .get, path: "/users/\(userID)", query: [:], header: [:], body: nil)
       
