@@ -11,6 +11,7 @@ struct MainCore: Reducer {
     var selectedTab: MainTab = .challenge
     
     var challengeState = ChallengeCore.State()
+    var myPageState = MyPageCore.State()
   }
   
   enum Action {
@@ -18,6 +19,7 @@ struct MainCore: Reducer {
     
     // Child Action
     case challengeAction(ChallengeCore.Action)
+    case myPageAction(MyPageCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -34,6 +36,10 @@ struct MainCore: Reducer {
     
     Scope(state: \.challengeState, action: /Action.challengeAction) {
       ChallengeCore()
+    }
+    
+    Scope(state: \.myPageState, action: /Action.myPageAction) {
+      MyPageCore()
     }
   }
 }

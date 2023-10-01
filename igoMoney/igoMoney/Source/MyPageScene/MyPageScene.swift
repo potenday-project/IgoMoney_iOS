@@ -6,19 +6,25 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct MyPageScene: View {
+  let store: StoreOf<MyPageCore>
+  
   var body: some View {
     VStack {
-      IGONavigationBar {
-        EmptyView()
-      } leftView: {
-        Text("마이페이지")
-          .font(.pretendard(size: 20, weight: .bold))
-      } rightView: {
-        Button {
-          // TODO: - 설정 이동 메서드 구현
-        } label: {
-          Image("icon_gear")
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        IGONavigationBar {
+          EmptyView()
+        } leftView: {
+          Text("마이페이지")
+            .font(.pretendard(size: 20, weight: .bold))
+        } rightView: {
+          Button {
+            // TODO: - 설정 이동 메서드 구현
+          } label: {
+            Image("icon_gear")
+          }
         }
       }
       
@@ -31,5 +37,10 @@ struct MyPageScene: View {
 }
 
 #Preview {
-  MyPageScene()
+  MyPageScene(
+    store: Store(
+      initialState: MyPageCore.State(),
+      reducer: { MyPageCore() }
+    )
+  )
 }

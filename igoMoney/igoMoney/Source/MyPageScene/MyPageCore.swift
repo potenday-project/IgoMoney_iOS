@@ -7,7 +7,7 @@
 import ComposableArchitecture
 
 struct MyPageCore: Reducer {
-  struct State {
+  struct State: Equatable {
     
   }
   
