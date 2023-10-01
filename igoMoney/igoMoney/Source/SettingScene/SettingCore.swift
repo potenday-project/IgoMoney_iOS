@@ -11,9 +11,34 @@ struct SettingCore: Reducer {
     let settings = Setting.allCases
   }
   
-  enum Action { }
+  @Dependency(\.userClient) var userClient
+  
+  enum Action {
+    case withdraw
+    
+    case _withdrawResponse(TaskResult<Bool>)
+  }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
+    switch action {
+    case .withdraw:
+      return .run { send in
+        await send(
+          ._withdrawResponse(
+            TaskResult {
+              try await userClient.withdraw()
+            }
+          )
+        )
+      }
+      
+    case ._withdrawResponse(.success):
+      print("Success Withdraw")
+      return .none
+      
+    case ._withdrawResponse(.failure):
+      print("Failure Withdraw")
+      return .none
+    }
   }
 }

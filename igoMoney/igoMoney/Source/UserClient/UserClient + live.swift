@@ -69,6 +69,30 @@ extension UserClient {
       return response
     } signOut: {
       return ()
+    } withdraw: {
+      guard let token = KeyChainClient.read() else {
+        throw APIError.badRequest(400)
+      }
+      
+      guard let tokenData = [
+        "userId": token.userID.description,
+        "token": token.refreshToken,
+        "token_type_hint": "refresh_token"
+      ].toJsonString()?.data(using: .utf8) else {
+        return false
+      }
+      
+      let api = AuthAPI(
+        method: .post,
+        path: "/auth/signout/apple",
+        query: [:],
+        header: ["Content-Type": "application/json"],
+        body: .json(value: tokenData)
+      )
+      
+      let response = try await apiClient.execute(to: api)
+      print(response)
+      return true
     }
   }()
 }

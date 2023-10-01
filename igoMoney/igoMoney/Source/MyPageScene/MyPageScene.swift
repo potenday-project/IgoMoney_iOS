@@ -51,5 +51,7 @@ struct MyPageScene: View {
         reducer: { MyPageCore() }
       )
     )
+    .navigationBarHidden(true)
   }
+  .navigationViewStyle(.stack)
 }

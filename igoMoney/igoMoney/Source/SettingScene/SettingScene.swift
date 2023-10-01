@@ -33,7 +33,9 @@ struct SettingScene: View {
         ScrollView {
           ForEach(viewStore.state, id: \.rawValue) { setting in
             Button {
-              
+              if setting == .withdraw {
+                viewStore.send(.withdraw)
+              }
             } label: {
               HStack {
                 Text(setting.description)

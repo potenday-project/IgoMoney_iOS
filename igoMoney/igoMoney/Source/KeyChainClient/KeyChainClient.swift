@@ -128,12 +128,12 @@ class KeyChainClient {
       return false
     }
     let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: serviceName,
+      kSecAttrAccount as String: account,
     ]
     
     let attributes: [String: Any] = [
-      kSecAttrService as String: serviceName,
-      kSecAttrAccount as String: account,
       kSecValueData as String: tokenData
     ]
     
