@@ -90,9 +90,9 @@ extension UserClient {
         body: .json(value: tokenData)
       )
       
-      let response = try await apiClient.execute(to: api)
-      print(response)
-      return true
+      return try await apiClient.execute(to: api)
+        .data
+        .isEmpty
     }
   }()
 }
