@@ -20,11 +20,18 @@ struct MyPageScene: View {
           Text("마이페이지")
             .font(.pretendard(size: 20, weight: .bold))
         } rightView: {
-          Button {
-            // TODO: - 설정 이동 메서드 구현
-          } label: {
-            Image("icon_gear")
-          }
+          NavigationLink(
+            destination: SettingScene(
+              store: store.scope(
+                state: \.settingState,
+                action: MyPageCore.Action.settingAction
+              )
+            )
+            .navigationBarHidden(true),
+            label: {
+              Image("icon_gear")
+            }
+          )
         }
       }
       
@@ -37,10 +44,12 @@ struct MyPageScene: View {
 }
 
 #Preview {
-  MyPageScene(
-    store: Store(
-      initialState: MyPageCore.State(),
-      reducer: { MyPageCore() }
+  NavigationView {
+    MyPageScene(
+      store: Store(
+        initialState: MyPageCore.State(),
+        reducer: { MyPageCore() }
+      )
     )
-  )
+  }
 }

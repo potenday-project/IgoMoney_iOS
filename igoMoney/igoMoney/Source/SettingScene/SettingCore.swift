@@ -7,7 +7,7 @@
 import ComposableArchitecture
 
 struct SettingCore: Reducer {
-  struct State {
+  struct State: Equatable {
     let settings = Setting.allCases
   }
   

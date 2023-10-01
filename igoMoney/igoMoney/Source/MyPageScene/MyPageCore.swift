@@ -8,11 +8,11 @@ import ComposableArchitecture
 
 struct MyPageCore: Reducer {
   struct State: Equatable {
-    
+    var settingState = SettingCore.State()
   }
   
   enum Action {
-    
+    case settingAction(SettingCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -21,6 +21,10 @@ struct MyPageCore: Reducer {
       default:
         return .none
       }
+    }
+    
+    Scope(state: \.settingState, action: /Action.settingAction) {
+      SettingCore()
     }
   }
 }

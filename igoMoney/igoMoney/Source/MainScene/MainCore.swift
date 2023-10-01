@@ -31,6 +31,9 @@ struct MainCore: Reducer {
         // Child Action
       case .challengeAction:
         return .none
+        
+      case .myPageAction:
+        return .none
       }
     }
     
