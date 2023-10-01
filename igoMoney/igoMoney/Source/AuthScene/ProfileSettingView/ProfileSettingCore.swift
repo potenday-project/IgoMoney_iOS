@@ -78,10 +78,10 @@ struct ProfileSettingCore: Reducer {
       
       return .none
       
-    case ._updateNickNameResponse:
+    case ._checkNickNameResponse(.failure):
       return .none
       
-    case ._checkNickNameResponse(.failure):
+    case ._updateNickNameResponse:
       return .none
     }
   }

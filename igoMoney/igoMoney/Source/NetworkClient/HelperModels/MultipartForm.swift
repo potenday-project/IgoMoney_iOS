@@ -27,7 +27,7 @@ extension MultipartForm {
       data.append(contentData)
     }
     
-    guard let endData = "\r\n--\(boundary)--\r\n".data(using: .utf8) else {
+    guard let endData = "--\(boundary)--\r\n".data(using: .utf8) else {
       return Data()
     }
     data.append(endData)

@@ -128,7 +128,7 @@ struct AuthCore: Reducer {
           await send(.presentProfileSetting(true))
         }
         
-      case .profileSettingAction(.startChallenge):
+      case .profileSettingAction(._updateNickNameResponse(.success)):
         return .run {
           await $0(._presentMainScene)
         }
