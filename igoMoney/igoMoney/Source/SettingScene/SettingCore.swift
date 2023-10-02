@@ -17,14 +17,24 @@ struct SettingCore: Reducer {
     case signOut
     case withdraw
     
+    case _removeTokenResponse(TaskResult<Void>)
     case _withdrawResponse(TaskResult<Bool>)
   }
+  
+  @Dependency(\.keyChainClient) var keyChainClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .signOut:
-      KeyChainClient.removeAuthToken()
-      return .none
+      return .run { send in
+        await send(
+          ._removeTokenResponse(
+            TaskResult {
+              try await keyChainClient.delete(.token, SystemConfigConstants.tokenService)
+            }
+          )
+        )
+      }
       
     case .withdraw:
       return .run { send in
@@ -44,6 +54,10 @@ struct SettingCore: Reducer {
     case ._withdrawResponse(.failure):
       print("Failure Withdraw")
       return .none
+      
+    case ._removeTokenResponse:
+      return .none
+      
     }
   }
 }

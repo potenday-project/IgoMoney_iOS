@@ -11,6 +11,7 @@ import ComposableArchitecture
 extension UserClient {
   static var liveValue: UserClient = {
     @Dependency(\.apiClient) var apiClient
+    @Dependency(\.keyChainClient) var keyChainClient
     
     return Self { token in
       return true
@@ -28,8 +29,10 @@ extension UserClient {
       )
       
       let response: AuthToken = try await apiClient.request(to: api)
-      KeyChainClient.saveIdentifier(identifier: user)
-      KeyChainClient.create(authToken: response)
+      guard let tokenData = try? JSONEncoder().encode(response),
+            let userData = user.data(using: .utf8) else { throw APIError.badRequest(400) }
+      try await keyChainClient.save(userData, .userIdentifier, SystemConfigConstants.userIdentifierService)
+      try await keyChainClient.save(tokenData, .token, SystemConfigConstants.tokenService)
       return response
     } checkNicknameDuplicate: { nickName in
       let api = AuthAPI(
@@ -70,7 +73,10 @@ extension UserClient {
     } signOut: {
       return ()
     } withdraw: {
-      guard let token = KeyChainClient.read() else {
+      guard let token: AuthToken = try await keyChainClient.read(
+        .token,
+        SystemConfigConstants.tokenService
+      ).toDecodable() else {
         throw APIError.badRequest(400)
       }
       

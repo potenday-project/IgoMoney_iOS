@@ -16,151 +16,131 @@ import Dependencies
 //  var readToken: @Sendable () -> AuthToken?
 //}
 
-class KeyChainClient {
-  static let serviceName = "igomoneyService"
-  static let account = "com.app.igomoney"
-  
-  static var currentUserIdentifier: String {
-    return KeyChainClient.readIdentifier()
-  }
-  
-  @discardableResult
-  static func saveIdentifier(identifier: String) -> Bool {
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
-      kSecAttrAccount as String: "userIdentifier",
-      kSecValueData as String: identifier.data(using: .utf8)!
-    ]
+enum ServiceKeys: NSString {
+  case token
+  case userIdentifier
+}
+
+protocol KeyChain {
+  @Sendable func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws
+  @Sendable func update(_ data: Data, _ services: ServiceKeys, _ account: String) async throws
+  @Sendable func delete(_ services: ServiceKeys, _ account: String) async throws
+  @Sendable func read(_ service: ServiceKeys, _ account: String) async throws -> Data
+}
+
+struct KeyChainClient: KeyChain {
+  enum KeyChainError: Error {
+    case itemNotFound
+    case duplicatedItem
+    case invalidItemFormat
+    case unexpectedStatus(OSStatus)
+    case errorStatus(String?)
     
-    let status = SecItemAdd(query as CFDictionary, nil)
-    
-    return status == errSecSuccess
-  }
-  
-  @discardableResult
-  static func create(authToken: AuthToken) -> Bool {
-    guard let tokenData = try? JSONEncoder().encode(authToken) else {
-      return false
+    init(status: OSStatus) {
+      switch status {
+      case errSecItemNotFound:
+        self = .itemNotFound
+      case errSecDuplicateItem:
+        self = .duplicatedItem
+      default:
+        let message = SecCopyErrorMessageString(status, nil) as String?
+        self = .errorStatus(message)
+      }
     }
-    
+  }
+  
+  func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
+      kSecAttrService as String: services.rawValue,
       kSecAttrAccount as String: account,
-      kSecValueData as String: tokenData
+      kSecValueData as String: data
     ]
     
     let status = SecItemAdd(query as CFDictionary, nil)
     
     if status == errSecDuplicateItem {
-      return update(authToken: authToken)
-    }
-    
-    return status == errSecSuccess
-  }
-  
-  @discardableResult
-  static func read() -> AuthToken? {
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
-      kSecAttrAccount as String: account,
-      kSecMatchLimit as String: kSecMatchLimitOne,
-      kSecReturnData as String: true,
-      kSecReturnAttributes as String: true
-    ]
-    
-    var item: CFTypeRef?
-    let status = SecItemCopyMatching(query as CFDictionary, &item)
-    
-    guard status != errSecItemNotFound else {
-      return nil
+      try await update(data, services, account)
+      return
     }
     
     guard status == errSecSuccess else {
-      return nil
+      throw KeyChainError(status: status)
     }
-    
-    guard let existingItem = item as? [String: Any],
-          let tokenData = existingItem[kSecValueData as String] as? Data,
-          let decodeToken = try? JSONDecoder().decode(AuthToken.self, from: tokenData) else {
-      return nil
-    }
-    
-    return decodeToken
   }
   
-  @discardableResult
-  static func readIdentifier() -> String {
+  func update(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
-      kSecAttrAccount as String: "userIdentifier",
-      kSecMatchLimit as String: kSecMatchLimitOne,
-      kSecReturnData as String: true,
-      kSecReturnAttributes as String: true
-    ]
-    
-    var item: CFTypeRef?
-    let status = SecItemCopyMatching(query as CFDictionary, &item)
-    
-    guard status != errSecItemNotFound else {
-      return ""
-    }
-    
-    guard status == errSecSuccess else {
-      return ""
-    }
-    
-    guard let existingItem = item as? [String: Any],
-          let identifierData = existingItem[kSecValueData as String] as? Data,
-          let decodeToken = String(data: identifierData, encoding: .utf8) else {
-      return ""
-    }
-    
-    return decodeToken
-  }
-  
-  @discardableResult
-  static func update(authToken: AuthToken) -> Bool {
-    guard let tokenData = try? JSONEncoder().encode(authToken) else {
-      return false
-    }
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
+      kSecAttrService as String: services.rawValue,
       kSecAttrAccount as String: account,
     ]
     
     let attributes: [String: Any] = [
-      kSecValueData as String: tokenData
+      kSecValueData as String: data
     ]
     
     let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
     
     guard status != errSecItemNotFound else {
-      return false
+      throw KeyChainError(status: status)
     }
     
-    return status == errSecSuccess
+    guard status == errSecSuccess else {
+      throw KeyChainError.unexpectedStatus(status)
+    }
   }
   
-  @discardableResult
-  static func removeAuthToken() -> Bool {
+  func delete(_ services: ServiceKeys, _ account: String) async throws {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: serviceName,
-      kSecAttrAccount as String: account,
+      kSecAttrService as String: services.rawValue,
+      kSecAttrAccount as String: account
     ]
     
     let status = SecItemDelete(query as CFDictionary)
-    return status == errSecSuccess || status == errSecItemNotFound
+    
+    guard status == errSecSuccess else {
+      throw KeyChainError.unexpectedStatus(status)
+    }
+  }
+  
+  func read(_ service: ServiceKeys, _ account: String) async throws -> Data {
+    let query: [String: Any] = [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: service.rawValue,
+      kSecAttrAccount as String: account,
+      kSecMatchLimit as String: kSecMatchLimitOne,
+      kSecReturnData as String: true,
+      kSecReturnAttributes as String: true
+    ]
+    
+    var item: CFTypeRef?
+    let status = SecItemCopyMatching(query as CFDictionary, &item)
+    
+    guard status != errSecItemNotFound else {
+      throw KeyChainError.itemNotFound
+    }
+    
+    guard status == errSecSuccess else {
+      throw KeyChainError.unexpectedStatus(status)
+    }
+    
+    guard let value = item as? Data else {
+      throw KeyChainError.invalidItemFormat
+    }
+    
+    return value
   }
 }
 
-//extension KeyChainClient: DependencyKey {
-//  static var liveValue: KeyChainClient {
-//    return Self
-//  }
-//}
+private enum KeychainClientKey: DependencyKey {
+  static let liveValue = KeyChainClient()
+}
+
+extension DependencyValues {
+  var keyChainClient: KeyChainClient {
+    get { self[KeychainClientKey.self] }
+    set { self[KeychainClientKey.self] = newValue }
+  }
+}

@@ -35,6 +35,8 @@ struct AppCore: Reducer {
     case authAction(AuthCore.Action)
   }
   
+  @Dependency(\.keyChainClient) var keyChainClient
+  
   var body: some Reducer<State, Action> {
     Scope(state: \.mainState, action: /Action.mainAction) {
       MainCore()
@@ -102,10 +104,18 @@ private extension AppCore {
   }
   
   func signInWithApple() async -> ASAuthorizationAppleIDProvider.CredentialState {
+    @Dependency(\.keyChainClient) var keyChainClient
     let provider = ASAuthorizationAppleIDProvider()
     
+    guard let userIdentifier = try? await keyChainClient.read(
+      .userIdentifier,
+      SystemConfigConstants.userIdentifierService
+    ) else {
+      return .notFound
+    }
+    
     let state = await withCheckedContinuation { continuation in
-      provider.getCredentialState(forUserID: KeyChainClient.currentUserIdentifier) { state, error in
+      provider.getCredentialState(forUserID: userIdentifier.toString()) { state, error in
         if let _ = error {
           continuation.resume(
             returning: ASAuthorizationAppleIDProvider.CredentialState.notFound

@@ -12,6 +12,7 @@
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
+		1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */; };
 		180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC67C2ABAF62500DD8477 /* AuthController.swift */; };
 		180FC6872ABAFAED00DD8477 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6862ABAFAED00DD8477 /* KakaoSDKAuth */; };
 		180FC6892ABAFAED00DD8477 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6882ABAFAED00DD8477 /* KakaoSDKCommon */; };
@@ -95,6 +96,7 @@
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data + Extensions.swift"; sourceTree = "<group>"; };
 		180FC67C2ABAF62500DD8477 /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
 		180FC68E2ABB14F900DD8477 /* KakaoService.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KakaoService.plist; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
 				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
 				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
+				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */,
 				18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */,
 				18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */,
+				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
