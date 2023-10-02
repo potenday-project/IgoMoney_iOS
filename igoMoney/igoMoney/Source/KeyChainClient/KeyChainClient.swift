@@ -145,6 +145,18 @@ class KeyChainClient {
     
     return status == errSecSuccess
   }
+  
+  @discardableResult
+  static func removeAuthToken() -> Bool {
+    let query: [String: Any] = [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: serviceName,
+      kSecAttrAccount as String: account,
+    ]
+    
+    let status = SecItemDelete(query as CFDictionary)
+    return status == errSecSuccess || status == errSecItemNotFound
+  }
 }
 
 //extension KeyChainClient: DependencyKey {

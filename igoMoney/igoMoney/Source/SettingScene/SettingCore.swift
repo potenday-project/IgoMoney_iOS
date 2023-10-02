@@ -23,6 +23,7 @@ struct SettingCore: Reducer {
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .signOut:
+      KeyChainClient.removeAuthToken()
       return .none
       
     case .withdraw:
