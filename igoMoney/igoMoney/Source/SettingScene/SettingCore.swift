@@ -18,6 +18,7 @@ struct SettingCore: Reducer {
     case withdraw
     
     case _removeTokenResponse(TaskResult<Void>)
+    case _removeUserIdentifierResponse(TaskResult<Void>)
     case _withdrawResponse(TaskResult<Bool>)
   }
   
@@ -48,14 +49,32 @@ struct SettingCore: Reducer {
       }
       
     case ._withdrawResponse(.success):
-      print("Success Withdraw")
-      return .none
+      return .concatenate(
+        .run { send in
+          await send(
+            ._removeTokenResponse(
+              TaskResult {
+                try await keyChainClient.delete(.token, SystemConfigConstants.tokenService)
+              }
+            )
+          )
+        },
+        .run { send in
+          await send(
+            ._removeUserIdentifierResponse(
+              TaskResult {
+                try await keyChainClient.delete(.userIdentifier, SystemConfigConstants.userIdentifierService)
+              }
+            )
+          )
+        }
+      )
       
     case ._withdrawResponse(.failure):
       print("Failure Withdraw")
       return .none
       
-    case ._removeTokenResponse:
+    case ._removeTokenResponse, ._removeUserIdentifierResponse:
       return .none
       
     }

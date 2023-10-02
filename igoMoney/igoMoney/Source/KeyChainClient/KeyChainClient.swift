@@ -9,13 +9,6 @@ import Security
 
 import Dependencies
 
-//struct KeyChainClient {
-//  var saveIdentifier: @Sendable (_ identifier: String) -> Bool
-//  var saveToken: @Sendable (_ token: AuthToken) -> Bool
-//  var readIdentifier: @Sendable () -> String
-//  var readToken: @Sendable () -> AuthToken?
-//}
-
 enum ServiceKeys: NSString {
   case token
   case userIdentifier
@@ -126,7 +119,7 @@ struct KeyChainClient: KeyChain {
       throw KeyChainError.unexpectedStatus(status)
     }
     
-    guard let value = item as? Data else {
+    guard let value = item?[kSecValueData] as? Data else {
       throw KeyChainError.invalidItemFormat
     }
     
