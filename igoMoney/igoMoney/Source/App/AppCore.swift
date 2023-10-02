@@ -27,6 +27,9 @@ struct AppCore: Reducer {
     // Inner Action
     case _onAppear
     case _autoSignIn(Bool)
+    case _presentAuth
+    case _presentMain
+    
     // Child Action
     case mainAction(MainCore.Action)
     case authAction(AuthCore.Action)
@@ -56,16 +59,28 @@ struct AppCore: Reducer {
         return .none
         
       case ._autoSignIn(true):
+        return .run { send in
+          await send(._presentMain)
+        }
+        
+      case ._autoSignIn(false):
+        return .run { send in
+          await send(._presentAuth)
+        }
+        
+      case ._presentMain:
         state.currentState = .main
         return .none
         
-      case ._autoSignIn(false):
+      case ._presentAuth:
         state.currentState = .auth
         return .none
         
-      case .mainAction(.myPageAction(.settingAction(._withdrawResponse(.success)))):
-        state.currentState = .auth
-        return .none
+      case .mainAction(.myPageAction(.settingAction(._withdrawResponse(.success)))), 
+          .mainAction(.myPageAction(.settingAction(.signOut))):
+        return .run { send in
+          await send(._presentAuth)
+        }
         
       case .authAction(._presentMainScene):
         state.authState = AuthCore.State()

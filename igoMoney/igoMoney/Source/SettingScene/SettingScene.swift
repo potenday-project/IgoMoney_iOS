@@ -53,6 +53,17 @@ struct SettingScene: View {
     .padding(.horizontal, 24)
     .padding(.vertical, 16)
   }
+  
+  private func doingAction(to viewStore: ViewStoreOf<SettingCore>, for actionType: Setting) {
+    switch actionType {
+    case .logOut:
+      viewStore.send(.signOut)
+    case .withdraw:
+      viewStore.send(.withdraw)
+    default:
+      return
+    }
+  }
 }
 
 #Preview {

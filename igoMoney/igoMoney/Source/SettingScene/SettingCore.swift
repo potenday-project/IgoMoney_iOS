@@ -14,6 +14,7 @@ struct SettingCore: Reducer {
   @Dependency(\.userClient) var userClient
   
   enum Action {
+    case signOut
     case withdraw
     
     case _withdrawResponse(TaskResult<Bool>)
@@ -21,6 +22,9 @@ struct SettingCore: Reducer {
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
+    case .signOut:
+      return .none
+      
     case .withdraw:
       return .run { send in
         await send(
