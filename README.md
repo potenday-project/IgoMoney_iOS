@@ -27,6 +27,5 @@
 <img src="./Previews/iGoMoneyDiagram.jpg">
 
 ## 미리보기
-<body>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/Uss5qsSTfJY?si=oq9Psc-gFbNmScDR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</body>
+### 대모영상 보러가기
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/Uss5qsSTfJY/0.jpg)](https://www.youtube.com/watch?v=Uss5qsSTfJY)
