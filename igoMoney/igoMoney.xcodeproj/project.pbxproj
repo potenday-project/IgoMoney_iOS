@@ -327,6 +327,7 @@
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
 				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
 				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
 				18497C1F2ABDFB320041C350 /* IGOAlertView.swift */,
@@ -502,7 +503,6 @@
 				180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */,
 				18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */,
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
-				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
 				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
 				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
 			);
