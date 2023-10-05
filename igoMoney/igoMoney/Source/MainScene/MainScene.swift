@@ -27,6 +27,15 @@ struct MainScene: View {
             .padding(.bottom, 60)
           }
           
+          if viewStore.selectedTab == .myPage {
+            MyPageScene(
+              store: store.scope(
+                state: \.myPageState,
+                action: MainCore.Action.myPageAction
+              )
+            )
+          }
+          
           VStack {
             Spacer()
             
@@ -70,7 +79,7 @@ struct MainScene: View {
               radius: 8,
               y: 5
             )
-          }
+          } // Tab Section
           .edgesIgnoringSafeArea(.bottom)
         }
       }

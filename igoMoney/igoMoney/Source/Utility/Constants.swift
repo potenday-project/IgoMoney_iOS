@@ -27,4 +27,11 @@ enum ColorConstants {
   static let yellow = Color("yellow")
   static let blue = Color("blue")
   static let purple = Color("purple")
+  
+  static let warning = Color("alert")
+}
+
+enum SystemConfigConstants {
+  static let tokenService = "com.igo.igomoney"
+  static let userIdentifierService = "userIdentifier"
 }
