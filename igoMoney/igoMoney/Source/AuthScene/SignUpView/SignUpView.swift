@@ -24,10 +24,11 @@ struct SignUpView: View {
     VStack(alignment: .leading, spacing: .zero) {
       VStack(spacing: 4) {
         informationBaseView(with: TextConstants.title)
-          .font(.system(size: 20, weight: .bold))
+          .font(.pretendard(size: 18, weight: .bold))
         
         informationBaseView(with: TextConstants.subTitle)
-          .font(.system(size: 14, weight: .regular))
+          .font(.pretendard(size: 14, weight: .medium))
+          .foregroundColor(ColorConstants.gray2)
       }
       .padding(.vertical, 24)
       
@@ -37,13 +38,14 @@ struct SignUpView: View {
             viewStore.send(.didTapAll)
           } content: {
             Text(TextConstants.allAgreeText)
-              .font(.system(size: 18, weight: .bold))
+              .font(.pretendard(size: 18, weight: .bold))
           }
         }
         
         CheckButton(isAccentColor: false, isHidden: true, action: { }) {
           Text(TextConstants.allAgreeDetailText)
-            .font(.system(size: 14, weight: .medium))
+            .font(.pretendard(size: 14, weight: .medium))
+            .foregroundColor(ColorConstants.gray2)
         }
       }
       
@@ -93,12 +95,12 @@ struct SignUpView: View {
         }
         .font(.system(size: 18, weight: .bold))
         .foregroundColor(
-          viewStore.isAgreeAll ? .black : .gray.opacity(0.3)
+          viewStore.isAgreeAll ? .black : ColorConstants.gray4
         )
         .disabled(viewStore.isAgreeAll == false)
         .padding(.vertical)
         .background(
-          viewStore.isAgreeAll ? ColorConstants.primary : .gray.opacity(0.3)
+          viewStore.isAgreeAll ? ColorConstants.primary : ColorConstants.gray5
         )
         .cornerRadius(8)
         .padding(.bottom, 24)
@@ -106,7 +108,8 @@ struct SignUpView: View {
     }
     .padding()
     .background(Color.white)
-    .clipShape(RoundedRectangle(cornerRadius: 8))
+    .cornerRadius(20, corner: .topLeft)
+    .cornerRadius(20, corner: .topRight)
     .edgesIgnoringSafeArea(.bottom)
   }
 }
@@ -135,21 +138,21 @@ struct PrivacyCheckView: View {
     } content: {
       Text(TextConstants.necessaryText)
         .foregroundColor(.gray)
-        .font(.system(size: 12, weight: .regular))
+        .font(.pretendard(size: 12, weight: .medium))
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(Color.gray.opacity(0.3))
+        .background(ColorConstants.gray5)
         .cornerRadius(4)
       
       Text(title)
-        .font(.system(size: 16, weight: .regular))
+        .font(.pretendard(size: 16, weight: .medium))
       
       Spacer()
       
       Button(TextConstants.showText) {
         viewAction()
       }
-      .font(.system(size: 16, weight: .medium))
+      .font(.pretendard(size: 12, weight: .medium))
       .foregroundColor(.gray)
     }
   }
@@ -189,7 +192,7 @@ struct CheckButton<Content: View>: View {
       } label: {
         signUpCheckImage()
           .accentColor(
-            isAccentColor ? ColorConstants.primary : Color.gray.opacity(0.3)
+            isAccentColor ? ColorConstants.primary : ColorConstants.gray5
           )
       }
       .opacity(isHidden ? .zero : 1)
