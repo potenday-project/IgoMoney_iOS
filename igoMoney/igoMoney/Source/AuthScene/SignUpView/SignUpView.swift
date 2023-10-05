@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct SignUpView: View {
   let store: StoreOf<SignUpCore>
+  @Environment(\.openURL) var openURLAction
   
   @ViewBuilder
   private func informationBaseView(with text: String) -> some View {
@@ -20,52 +21,67 @@ struct SignUpView: View {
     }
   }
   
+  private func openURL(to urlString: String) {
+    guard let url = URL(string: urlString) else { return }
+    self.openURLAction(url)
+  }
+  
   var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      informationBaseView(with: TextConstants.title)
-        .font(.system(size: 20, weight: .bold))
+    VStack(alignment: .leading, spacing: .zero) {
+      VStack(spacing: 4) {
+        informationBaseView(with: TextConstants.title)
+          .font(.pretendard(size: 18, weight: .bold))
+        
+        informationBaseView(with: TextConstants.subTitle)
+          .font(.pretendard(size: 14, weight: .medium))
+          .foregroundColor(ColorConstants.gray2)
+      }
+      .padding(.vertical, 24)
       
-      informationBaseView(with: TextConstants.subTitle)
-        .font(.system(size: 14, weight: .regular))
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        CheckButton(isAccentColor: viewStore.isAgreeAll) {
-          viewStore.send(.didTapAll)
-        } content: {
-          Text(TextConstants.allAgreeText)
-            .font(.system(size: 18, weight: .bold))
+      VStack(alignment: .leading, spacing: 4) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          CheckButton(isAccentColor: viewStore.isAgreeAll) {
+            viewStore.send(.didTapAll)
+          } content: {
+            Text(TextConstants.allAgreeText)
+              .font(.pretendard(size: 18, weight: .bold))
+          }
+        }
+        
+        CheckButton(isAccentColor: false, isHidden: true, action: { }) {
+          Text(TextConstants.allAgreeDetailText)
+            .font(.pretendard(size: 14, weight: .medium))
+            .foregroundColor(ColorConstants.gray2)
         }
       }
       
-      CheckButton(isAccentColor: false, isHidden: true, action: { }) {
-        Text(TextConstants.allAgreeDetailText)
-          .font(.system(size: 14, weight: .medium))
-      }
       
       Rectangle()
         .fill(Color.gray.opacity(0.3))
         .frame(height: 1)
-        .padding(.vertical, 10)
+        .padding(.vertical, 16)
       
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        PrivacyCheckView(
-          title: TextConstants.privacyText,
-          isAccentColor: viewStore.isAgreePrivacy
-        ) {
-          viewStore.send(.didTapAgreePrivacy)
-        } viewAction: {
-          print("Tapped 서비스 이용약관")
+      VStack(spacing: 12) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          PrivacyCheckView(
+            title: TextConstants.privacyText,
+            isAccentColor: viewStore.isAgreePrivacy
+          ) {
+            viewStore.send(.didTapAgreePrivacy)
+          } viewAction: {
+            self.openURL(to: TextConstants.privacyURLString)
+          }
         }
-      }
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        PrivacyCheckView(
-          title: TextConstants.termsText,
-          isAccentColor: viewStore.isAgreeTerms
-        ) {
-          viewStore.send(.didTapAgreeTerms)
-        } viewAction: {
-          print("Tapped 서비스 이용약관")
+        
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          PrivacyCheckView(
+            title: TextConstants.termsText,
+            isAccentColor: viewStore.isAgreeTerms
+          ) {
+            viewStore.send(.didTapAgreeTerms)
+          } viewAction: {
+            self.openURL(to: TextConstants.termURLString)
+          }
         }
       }
       
@@ -85,12 +101,12 @@ struct SignUpView: View {
         }
         .font(.system(size: 18, weight: .bold))
         .foregroundColor(
-          viewStore.isAgreeAll ? .black : .gray.opacity(0.3)
+          viewStore.isAgreeAll ? .black : ColorConstants.gray4
         )
         .disabled(viewStore.isAgreeAll == false)
         .padding(.vertical)
         .background(
-          viewStore.isAgreeAll ? ColorConstants.primary : .gray.opacity(0.3)
+          viewStore.isAgreeAll ? ColorConstants.primary : ColorConstants.gray5
         )
         .cornerRadius(8)
         .padding(.bottom, 24)
@@ -98,7 +114,8 @@ struct SignUpView: View {
     }
     .padding()
     .background(Color.white)
-    .clipShape(RoundedRectangle(cornerRadius: 8))
+    .cornerRadius(20, corner: .topLeft)
+    .cornerRadius(20, corner: .topRight)
     .edgesIgnoringSafeArea(.bottom)
   }
 }
@@ -127,21 +144,21 @@ struct PrivacyCheckView: View {
     } content: {
       Text(TextConstants.necessaryText)
         .foregroundColor(.gray)
-        .font(.system(size: 12, weight: .regular))
+        .font(.pretendard(size: 12, weight: .medium))
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(Color.gray.opacity(0.3))
+        .background(ColorConstants.gray5)
         .cornerRadius(4)
       
       Text(title)
-        .font(.system(size: 16, weight: .regular))
+        .font(.pretendard(size: 16, weight: .medium))
       
       Spacer()
       
       Button(TextConstants.showText) {
         viewAction()
       }
-      .font(.system(size: 16, weight: .medium))
+      .font(.pretendard(size: 12, weight: .medium))
       .foregroundColor(.gray)
     }
   }
@@ -181,7 +198,7 @@ struct CheckButton<Content: View>: View {
       } label: {
         signUpCheckImage()
           .accentColor(
-            isAccentColor ? ColorConstants.primary : Color.gray.opacity(0.3)
+            isAccentColor ? ColorConstants.primary : ColorConstants.gray5
           )
       }
       .opacity(isHidden ? .zero : 1)
@@ -212,6 +229,9 @@ private extension SignUpView {
     static let privacyText = "개인 정보 처리방침"
     static let termsText = "서비스 이용약관"
     static let confirmText = "확인"
+    
+    static let privacyURLString = "https://scarlet-tsunami-ae6.notion.site/1108380d3ad64a2f987134e283220852?pvs=4"
+    static let termURLString = "https://scarlet-tsunami-ae6.notion.site/9c400f50565d45508eaaae7cc6c312f8?pvs=4"
   }
 }
 

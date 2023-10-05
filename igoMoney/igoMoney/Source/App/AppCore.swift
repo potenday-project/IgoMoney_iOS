@@ -27,10 +27,15 @@ struct AppCore: Reducer {
     // Inner Action
     case _onAppear
     case _autoSignIn(Bool)
+    case _presentAuth
+    case _presentMain
+    
     // Child Action
     case mainAction(MainCore.Action)
     case authAction(AuthCore.Action)
   }
+  
+  @Dependency(\.keyChainClient) var keyChainClient
   
   var body: some Reducer<State, Action> {
     Scope(state: \.mainState, action: /Action.mainAction) {
@@ -56,16 +61,33 @@ struct AppCore: Reducer {
         return .none
         
       case ._autoSignIn(true):
+        return .run { send in
+          await send(._presentMain)
+        }
+        
+      case ._autoSignIn(false):
+        return .run { send in
+          await send(._presentAuth)
+        }
+        
+      case ._presentMain:
         state.currentState = .main
         return .none
         
-      case ._autoSignIn(false):
+      case ._presentAuth:
         state.currentState = .auth
         return .none
         
+      case .mainAction(.myPageAction(.settingAction(._removeTokenResponse(.success)))),
+          .mainAction(.myPageAction(.settingAction(._removeUserIdentifierResponse(.success)))):
+        return .run { send in
+          await send(._presentAuth)
+        }
+        
       case .authAction(._presentMainScene):
+        state.authState = AuthCore.State()
         state.currentState = .main
-        return .none
+        return .none.animation()
         
       default:
         return .none
@@ -82,11 +104,19 @@ private extension AppCore {
   }
   
   func signInWithApple() async -> ASAuthorizationAppleIDProvider.CredentialState {
+    @Dependency(\.keyChainClient) var keyChainClient
     let provider = ASAuthorizationAppleIDProvider()
     
+    guard let userIdentifier = try? await keyChainClient.read(
+      .userIdentifier,
+      SystemConfigConstants.userIdentifierService
+    ) else {
+      return .notFound
+    }
+    
     let state = await withCheckedContinuation { continuation in
-      provider.getCredentialState(forUserID: KeyChainClient.currentUserIdentifier) { state, error in
-        if let error = error {
+      provider.getCredentialState(forUserID: userIdentifier.toString()) { state, error in
+        if let _ = error {
           continuation.resume(
             returning: ASAuthorizationAppleIDProvider.CredentialState.notFound
           )

@@ -14,6 +14,7 @@ struct UserClient {
   var updateUserInformation: @Sendable (_ userID: String, _ nickName: String) async throws -> Bool
   var getUserInformation: @Sendable (_ userID: String) async throws -> User
   var signOut: @Sendable () -> Void
+  var withdraw: @Sendable () async throws -> Bool
 }
 
 extension UserClient: DependencyKey { }

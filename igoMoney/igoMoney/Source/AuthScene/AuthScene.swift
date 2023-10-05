@@ -80,10 +80,14 @@ struct AuthScene: View {
                 .edgesIgnoringSafeArea(.all)
             }
             
-            SignUpView(store: store)
-              .padding(.top, UIScreen.main.bounds.height / 2)
-              .transition(.move(edge: .bottom))
-              .animation(.spring(), value: UUID())
+            VStack {
+              Spacer()
+              
+              SignUpView(store: store)
+                .frame(height: UIScreen.main.bounds.height * 0.6)
+                .transition(.move(edge: .bottom))
+                .animation(.spring(), value: UUID())
+            }
           }
         }
       }
@@ -134,7 +138,7 @@ struct OnBoarding_Preview: PreviewProvider {
   static var previews: some View {
     AuthScene(
       store: Store(
-        initialState: AuthCore.State(),
+        initialState: AuthCore.State(signUpState: SignUpCore.State()),
         reducer: { AuthCore() }
       )
     )
