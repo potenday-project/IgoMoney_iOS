@@ -9,7 +9,7 @@ import Foundation
 import Dependencies
 
 struct ChallengeClient {
-  var getMyChallenge: @Sendable (_ userID: String) async throws -> Challenge
+  var getMyChallenge: @Sendable () async throws -> Challenge
 }
 
 extension ChallengeClient: DependencyKey { }

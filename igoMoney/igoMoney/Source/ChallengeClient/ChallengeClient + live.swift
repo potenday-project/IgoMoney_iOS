@@ -10,10 +10,14 @@ extension ChallengeClient {
   static var liveValue: ChallengeClient = {
     @Dependency(\.apiClient) var apiClient
     
-    return Self { userID in
+    return Self {
+      guard let user = APIClient.currentUser else {
+        throw APIError.badRequest(400)
+      }
+      
       let requestGenerator = ChallengeAPI(
         method: .get,
-        path: "/challenges/my-active-challenge/\(userID)",
+        path: "/challenges/my-active-challenge/\(user.userID.description)",
         query: [:],
         header: [:]
       )

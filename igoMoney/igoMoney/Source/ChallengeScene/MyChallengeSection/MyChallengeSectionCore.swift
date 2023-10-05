@@ -31,7 +31,7 @@ struct MyChallengeSectionCore: Reducer {
           await send(
             ._myChallengeResponse(
               TaskResult {
-                try await challengeClient.getMyChallenge("4")
+                try await challengeClient.getMyChallenge()
               }
             )
           )
