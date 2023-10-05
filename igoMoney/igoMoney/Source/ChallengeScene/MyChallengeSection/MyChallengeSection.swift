@@ -66,6 +66,9 @@ struct MyChallengeSection: View {
         RoundedRectangle(cornerRadius: 10)
           .stroke(ColorConstants.primary)
       )
+      .onAppear {
+        store.send(._onAppear)
+      }
     }
   }
 }

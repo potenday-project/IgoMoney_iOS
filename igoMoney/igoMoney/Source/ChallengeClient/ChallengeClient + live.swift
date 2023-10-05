@@ -11,7 +11,15 @@ extension ChallengeClient {
     @Dependency(\.apiClient) var apiClient
     
     return Self { userID in
-      return .default
+      let requestGenerator = ChallengeAPI(
+        method: .get,
+        path: "/challenges/my-active-challenge/\(userID)",
+        query: [:],
+        header: [:]
+      )
+      
+      let response: Challenge = try await apiClient.request(to: requestGenerator)
+      return response
     }
   }()
 }
