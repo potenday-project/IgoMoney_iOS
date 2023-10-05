@@ -41,8 +41,11 @@ struct MyChallengeSectionCore: Reducer {
         state.currentChallengeState = challenge
         return .none
         
-      case ._myChallengeResponse(.failure(let error)):
-        print(error)
+      case ._myChallengeResponse(.failure(let error as APIError)):
+        if case APIError.badRequest(409) = error {
+          state.currentChallengeState = nil
+        }
+        
         return .none
         
       default:
