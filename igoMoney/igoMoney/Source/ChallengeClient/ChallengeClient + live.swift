@@ -7,9 +7,11 @@
 import Dependencies
 
 extension ChallengeClient {
-  static var liveValue: ChallengeClient {
-    return self.init(getMyChallenge: { _ in
+  static var liveValue: ChallengeClient = {
+    @Dependency(\.apiClient) var apiClient
+    
+    return Self { userID in
       return .default
-    })
-  }
+    }
+  }()
 }
