@@ -6,6 +6,43 @@
 
 import Foundation
 
+struct Challenge: Decodable {
+  let recordID: Int
+  let userID: Int
+  let leaderID: Int
+  let winnerID: Int?
+  let title: String
+  let content: String
+  let targetAmount: TargetMoneyAmount
+  let startDate: Date?
+  let term: Int
+  let endDate: Date?
+  
+  enum CodingKeys: String, CodingKey {
+    case recordID = "recordId"
+    case userID = "id"
+    case leaderID = "leaderId"
+    case winnerID = "winnerId"
+    case title, content, targetAmount, startDate, term, endDate
+  }
+}
+
+extension Challenge {
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    recordID = try container.decode(Int.self, forKey: .recordID)
+    userID = try container.decode(Int.self, forKey: .userID)
+    leaderID = try container.decode(Int.self, forKey: .leaderID)
+    winnerID = try? container.decode(Int.self, forKey: .winnerID)
+    title = try container.decode(String.self, forKey: .title)
+    content = try container.decode(String.self, forKey: .content)
+    targetAmount = try container.decode(TargetMoneyAmount.self, forKey: .targetAmount)
+    term = try container.decode(Int.self, forKey: .term)
+    startDate = try? container.decode(Date.self, forKey: .startDate)
+    endDate = try? container.decode(Date.self, forKey: .endDate)
+  }
+}
+
 struct ChallengeInformation: Decodable, Equatable, Identifiable {
   var id = UUID()
   
