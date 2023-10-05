@@ -25,9 +25,6 @@ struct ChallengeCore: Reducer {
       case .myChallengeAction:
         return .none
         
-      case .emptyChallengeAction(.exploreChallengeAction(.enterAction(._closeAlert))):
-        return .none
-        
       case .emptyChallengeAction:
         return .none
       }

@@ -8,20 +8,6 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ChallengeSituationCore: Reducer {
-  struct State: Equatable {
-    
-  }
-  
-  enum Action {
-    
-  }
-  
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
-  }
-}
-
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
     var currentChallengeState: Challenge?
