@@ -6,8 +6,10 @@
 
 import Dependencies
 
-//extension ChallengeClient: DependencyKey {
-//  static var liveValue: ChallengeClient {
-//    return self.init(getMyChallenge: { })
-//  }
-//}
+extension ChallengeClient {
+  static var liveValue: ChallengeClient {
+    return self.init(getMyChallenge: { _ in
+      return .default
+    })
+  }
+}

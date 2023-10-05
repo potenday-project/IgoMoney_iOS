@@ -41,6 +41,19 @@ extension Challenge {
     startDate = try? container.decode(Date.self, forKey: .startDate)
     endDate = try? container.decode(Date.self, forKey: .endDate)
   }
+  
+  static let `default`: Challenge = .init(
+    recordID: 1,
+    userID: 4,
+    leaderID: 4,
+    winnerID: nil,
+    title: "같이 절약 챌린지 성공해봐요!",
+    content: "오늘부터 일주일 동안 30000원으로 대결하실 분~",
+    targetAmount: .init(money: 30000),
+    startDate: nil,
+    term: 5,
+    endDate: nil
+  )
 }
 
 struct ChallengeInformation: Decodable, Equatable, Identifiable {
