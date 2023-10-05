@@ -42,13 +42,17 @@ struct KeyChainClient: KeyChain {
     }
   }
   
-  func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
-    let query: [String: Any] = [
+  static func generateQuery(serviceKey: NSString, account: String) -> [String: Any] {
+    return [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: services.rawValue,
-      kSecAttrAccount as String: account,
-      kSecValueData as String: data
-    ]
+      kSecAttrService as String: serviceKey,
+      kSecAttrAccount as String: account
+    ] as [String: Any]
+  }
+  
+  func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
+    var query = Self.generateQuery(serviceKey: services.rawValue, account: account)
+    query[kSecValueData as String] = data
     
     let status = SecItemAdd(query as CFDictionary, nil)
     
@@ -63,11 +67,7 @@ struct KeyChainClient: KeyChain {
   }
   
   func update(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: services.rawValue,
-      kSecAttrAccount as String: account,
-    ]
+    let query = Self.generateQuery(serviceKey: services.rawValue, account: account)
     
     let attributes: [String: Any] = [
       kSecValueData as String: data
@@ -85,11 +85,7 @@ struct KeyChainClient: KeyChain {
   }
   
   func delete(_ services: ServiceKeys, _ account: String) async throws {
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: services.rawValue,
-      kSecAttrAccount as String: account
-    ]
+    let query = Self.generateQuery(serviceKey: services.rawValue, account: account)
     
     let status = SecItemDelete(query as CFDictionary)
     
@@ -99,14 +95,10 @@ struct KeyChainClient: KeyChain {
   }
   
   func read(_ service: ServiceKeys, _ account: String) async throws -> Data {
-    let query: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: service.rawValue,
-      kSecAttrAccount as String: account,
-      kSecMatchLimit as String: kSecMatchLimitOne,
-      kSecReturnData as String: true,
-      kSecReturnAttributes as String: true
-    ]
+    var query = Self.generateQuery(serviceKey: service.rawValue, account: account)
+    query[kSecMatchLimit as String] = kSecMatchLimitOne
+    query[kSecReturnData as String] = true
+    query[kSecReturnAttributes as String] = true
     
     var item: CFTypeRef?
     let status = SecItemCopyMatching(query as CFDictionary, &item)
