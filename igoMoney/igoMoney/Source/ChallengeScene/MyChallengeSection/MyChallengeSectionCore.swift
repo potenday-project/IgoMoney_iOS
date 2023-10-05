@@ -24,51 +24,44 @@ struct ChallengeSituationCore: Reducer {
 
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
-    var challengeState: ChallengeState = .empty
-    var presentSituation: Bool = false
-    var challengeSituationState: ChallengeSituationCore.State? = nil
-    
-    enum ChallengeState: CaseIterable {
-      case empty
-      case waiting
-      case challenging
-      case result
-    }
+    var currentChallengeState: Challenge?
   }
   
   enum Action {
-    case tapChallengeStatus
+    case _onAppear
+    case _myChallengeResponse(TaskResult<Challenge>)
     
-    case _presentChallengeSituation(Bool)
-    
-    case situationAction(ChallengeSituationCore.Action)
+    // Child Action
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
-      case .tapChallengeStatus:
-        if state.challengeState == .challenging {
-          return .run { send in
-            await send(._presentChallengeSituation(true))
-          }
-        } else {
-          return .none
+        
+      case ._onAppear:
+        return .run { send in
+          await send(
+            ._myChallengeResponse(
+              TaskResult {
+                try await challengeClient.getMyChallenge("4")
+              }
+            )
+          )
         }
         
-      case ._presentChallengeSituation(true):
-        state.presentSituation = true
-        state.challengeSituationState = ChallengeSituationCore.State()
+      case ._myChallengeResponse(.success(let challenge)):
+        state.currentChallengeState = challenge
         return .none
         
-      case ._presentChallengeSituation(false):
-        state.presentSituation = false
-        state.challengeSituationState = nil
+      case ._myChallengeResponse(.failure(let error)):
+        print(error)
+        return .none
+        
+      default:
         return .none
       }
-    }
-    .ifLet(\.challengeSituationState, action: /Action.situationAction) {
-      ChallengeSituationCore()
     }
   }
 }

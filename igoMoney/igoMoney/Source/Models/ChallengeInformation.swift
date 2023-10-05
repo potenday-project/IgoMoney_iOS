@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct Challenge: Decodable {
+struct Challenge: Decodable, Equatable {
   let recordID: Int
   let userID: Int
   let leaderID: Int

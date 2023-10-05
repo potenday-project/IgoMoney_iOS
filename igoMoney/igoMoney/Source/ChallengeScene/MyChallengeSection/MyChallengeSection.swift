@@ -18,9 +18,39 @@ struct MyChallengeSection: View {
         buttonAction: nil
       )
       
-      WithViewStore(store, observe: { $0.challengeState }) { viewStore in
-        switch viewStore.state {
-        case .empty:
+      WithViewStore(store, observe: { $0.currentChallengeState }) { viewStore in
+        if let challenge = viewStore.state { // 참가중인 챌린지 있는 경우
+          MyChallengeBannerView(
+            subTitle: "뒷주머니님과 챌린지 중", 
+            title: challenge.title
+          ) {
+            HStack(spacing: 4) {
+              Text(challenge.targetAmount.description)
+                .font(.pretendard(size: 12, weight: .medium))
+                .lineHeight(
+                  font: .pretendard(size: 12, weight: .medium),
+                  lineHeight: 16
+                )
+                .padding(.horizontal, 4)
+                .background(
+                  Color(challenge.targetAmount.colorName)
+                )
+                .cornerRadius(4)
+              
+              if let challengeDate = challenge.startDate {
+                Text("📅 \(challengeDate.toString(with: "M월 dd일"))")
+                  .font(.pretendard(size: 12, weight: .medium))
+                  .lineHeight(
+                    font: .pretendard(size: 12, weight: .medium),
+                    lineHeight: 16
+                  )
+                  .padding(.horizontal, 4)
+                  .background(ColorConstants.primary6)
+                  .cornerRadius(4)
+              }
+            }
+          }
+        } else { // 참가중인 챌린지가 없는 경우
           MyChallengeBannerView(
             iconName: "plus.circle",
             title: "아직 진행중인 챌린지가 없어요"
@@ -29,80 +59,7 @@ struct MyChallengeSection: View {
               .font(.pretendard(size: 12, weight: .medium))
               .lineLimit(1)
               .minimumScaleFactor(0.8)
-          } // 챌린지 없음
-          
-        case .waiting:
-          MyChallengeBannerView(
-            subTitle: "🤔",
-            title: "챌린지할 상대를 기다리고 있어요!"
-          ) {
-            HStack(spacing: 4) {
-              Text("💸 30000원")
-                .font(.pretendard(size: 12, weight: .medium))
-                .padding(.horizontal, 4)
-                .background(ColorConstants.primary6)
-                .cornerRadius(4)
-              
-              Text("📅 대기중")
-                .font(.pretendard(size: 12, weight: .medium))
-                .padding(.horizontal, 4)
-                .background(ColorConstants.primary6)
-                .cornerRadius(4)
-            }
-          } // 챌린지 waiting
-        case .challenging:
-          WithViewStore(store, observe: { $0 }) { viewStore in
-            NavigationLink(
-              destination: IfLetStore(
-                store.scope(
-                  state: \.challengeSituationState,
-                  action: MyChallengeSectionCore.Action.situationAction
-                ),
-                then: { _ in
-                  ChallengeStateScene()
-                }
-              ),
-              isActive: viewStore.binding(
-                get: \.presentSituation,
-                send: MyChallengeSectionCore.Action._presentChallengeSituation
-              )
-            ) {
-              MyChallengeBannerView(
-                subTitle: "내일 부터 뒷주머니님과 챌린지",
-                title: "일주일에 3만원으로 살아남기"
-              ) {
-                HStack(spacing: 4) {
-                  Text("💸 30000원")
-                    .font(.pretendard(size: 12, weight: .medium))
-                    .padding(.horizontal, 4)
-                    .background(ColorConstants.primary6)
-                    .cornerRadius(4)
-                  
-                  Text("📅 9월 24일 일요일 시작")
-                    .font(.pretendard(size: 12, weight: .medium))
-                    .padding(.horizontal, 4)
-                    .background(ColorConstants.primary6)
-                    .cornerRadius(4)
-                }
-              } // 챌린지 상황 뷰
-            }
-            .buttonStyle(.plain)
           }
-          
-        case .result:
-          MyChallengeBannerView(
-            subTitle: "뒷주머니님과 챌린지 완료",
-            title: "아이고머니님!챌린지에서 승리하셨어요 🥇"
-          ) {
-            Button(action: { }) {
-              Text("확인하기")
-            }
-            .font(.pretendard(size: 12, weight: .medium))
-            .padding(.horizontal, 4)
-            .background(ColorConstants.primary6)
-            .foregroundColor(.black)
-            .cornerRadius(4)
-          } // 챌린지 결과 뷰
         }
       }
       .overlay(
@@ -159,41 +116,21 @@ struct MyChallengeBannerView<B: View>: View {
   }
 }
 
-struct ExampleView: View {
-  let store: StoreOf<ChallengeSituationCore>
-  
-  var body: some View {
-    Text("Example Situation View")
-  }
-}
-
 struct MyChallengeSection_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       MyChallengeSection(
         store: Store(
-          initialState: MyChallengeSectionCore.State(challengeState: .empty),
+          initialState: MyChallengeSectionCore.State(),
           reducer: { MyChallengeSectionCore() }
         )
       )
       
       MyChallengeSection(
         store: Store(
-          initialState: MyChallengeSectionCore.State(challengeState: .waiting),
-          reducer: { MyChallengeSectionCore() }
-        )
-      )
-      
-      MyChallengeSection(
-        store: Store(
-          initialState: MyChallengeSectionCore.State(challengeState: .challenging),
-          reducer: { MyChallengeSectionCore() }
-        )
-      )
-      
-      MyChallengeSection(
-        store: Store(
-          initialState: MyChallengeSectionCore.State(challengeState: .result),
+          initialState: MyChallengeSectionCore.State(
+            currentChallengeState: .default
+          ),
           reducer: { MyChallengeSectionCore() }
         )
       )
