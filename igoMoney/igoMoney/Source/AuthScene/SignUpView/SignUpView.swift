@@ -21,51 +21,59 @@ struct SignUpView: View {
   }
   
   var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      informationBaseView(with: TextConstants.title)
-        .font(.system(size: 20, weight: .bold))
+    VStack(alignment: .leading, spacing: .zero) {
+      VStack(spacing: 4) {
+        informationBaseView(with: TextConstants.title)
+          .font(.system(size: 20, weight: .bold))
+        
+        informationBaseView(with: TextConstants.subTitle)
+          .font(.system(size: 14, weight: .regular))
+      }
+      .padding(.vertical, 24)
       
-      informationBaseView(with: TextConstants.subTitle)
-        .font(.system(size: 14, weight: .regular))
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        CheckButton(isAccentColor: viewStore.isAgreeAll) {
-          viewStore.send(.didTapAll)
-        } content: {
-          Text(TextConstants.allAgreeText)
-            .font(.system(size: 18, weight: .bold))
+      VStack(alignment: .leading, spacing: 4) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          CheckButton(isAccentColor: viewStore.isAgreeAll) {
+            viewStore.send(.didTapAll)
+          } content: {
+            Text(TextConstants.allAgreeText)
+              .font(.system(size: 18, weight: .bold))
+          }
+        }
+        
+        CheckButton(isAccentColor: false, isHidden: true, action: { }) {
+          Text(TextConstants.allAgreeDetailText)
+            .font(.system(size: 14, weight: .medium))
         }
       }
       
-      CheckButton(isAccentColor: false, isHidden: true, action: { }) {
-        Text(TextConstants.allAgreeDetailText)
-          .font(.system(size: 14, weight: .medium))
-      }
       
       Rectangle()
         .fill(Color.gray.opacity(0.3))
         .frame(height: 1)
-        .padding(.vertical, 10)
+        .padding(.vertical, 16)
       
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        PrivacyCheckView(
-          title: TextConstants.privacyText,
-          isAccentColor: viewStore.isAgreePrivacy
-        ) {
-          viewStore.send(.didTapAgreePrivacy)
-        } viewAction: {
-          print("Tapped 서비스 이용약관")
+      VStack(spacing: 12) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          PrivacyCheckView(
+            title: TextConstants.privacyText,
+            isAccentColor: viewStore.isAgreePrivacy
+          ) {
+            viewStore.send(.didTapAgreePrivacy)
+          } viewAction: {
+            print("Tapped 서비스 이용약관")
+          }
         }
-      }
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        PrivacyCheckView(
-          title: TextConstants.termsText,
-          isAccentColor: viewStore.isAgreeTerms
-        ) {
-          viewStore.send(.didTapAgreeTerms)
-        } viewAction: {
-          print("Tapped 서비스 이용약관")
+        
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          PrivacyCheckView(
+            title: TextConstants.termsText,
+            isAccentColor: viewStore.isAgreeTerms
+          ) {
+            viewStore.send(.didTapAgreeTerms)
+          } viewAction: {
+            print("Tapped 서비스 이용약관")
+          }
         }
       }
       
