@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct SignUpView: View {
   let store: StoreOf<SignUpCore>
+  @Environment(\.openURL) var openURLAction
   
   @ViewBuilder
   private func informationBaseView(with text: String) -> some View {
@@ -18,6 +19,11 @@ struct SignUpView: View {
       
       Spacer()
     }
+  }
+  
+  private func openURL(to urlString: String) {
+    guard let url = URL(string: urlString) else { return }
+    self.openURLAction(url)
   }
   
   var body: some View {
@@ -63,7 +69,7 @@ struct SignUpView: View {
           ) {
             viewStore.send(.didTapAgreePrivacy)
           } viewAction: {
-            print("Tapped 서비스 이용약관")
+            self.openURL(to: TextConstants.privacyURLString)
           }
         }
         
@@ -74,7 +80,7 @@ struct SignUpView: View {
           ) {
             viewStore.send(.didTapAgreeTerms)
           } viewAction: {
-            print("Tapped 서비스 이용약관")
+            self.openURL(to: TextConstants.termURLString)
           }
         }
       }
@@ -223,6 +229,9 @@ private extension SignUpView {
     static let privacyText = "개인 정보 처리방침"
     static let termsText = "서비스 이용약관"
     static let confirmText = "확인"
+    
+    static let privacyURLString = "https://scarlet-tsunami-ae6.notion.site/1108380d3ad64a2f987134e283220852?pvs=4"
+    static let termURLString = "https://scarlet-tsunami-ae6.notion.site/9c400f50565d45508eaaae7cc6c312f8?pvs=4"
   }
 }
 

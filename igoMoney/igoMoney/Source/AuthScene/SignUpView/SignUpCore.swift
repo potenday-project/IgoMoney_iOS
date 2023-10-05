@@ -4,6 +4,8 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import Foundation
+
 import ComposableArchitecture
 
 struct SignUpCore: Reducer {
@@ -23,35 +25,37 @@ struct SignUpCore: Reducer {
     case didTapConfirm
   }
   
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .didTapAll:
-      if state.isAgreePrivacy && state.isAgreeTerms {
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .didTapAll:
+        if state.isAgreePrivacy && state.isAgreeTerms {
+          state.isAgreePrivacy.toggle()
+          state.isAgreeTerms.toggle()
+          return .none
+        }
+        
+        if state.isAgreePrivacy == false {
+          state.isAgreePrivacy.toggle()
+        }
+        
+        if state.isAgreeTerms == false {
+          state.isAgreeTerms.toggle()
+        }
+        
+        return .none
+        
+      case .didTapAgreePrivacy:
         state.isAgreePrivacy.toggle()
+        return .none
+        
+      case .didTapAgreeTerms:
         state.isAgreeTerms.toggle()
         return .none
+        
+      case .didTapConfirm:
+        return .none
       }
-      
-      if state.isAgreePrivacy == false {
-        state.isAgreePrivacy.toggle()
-      }
-      
-      if state.isAgreeTerms == false {
-        state.isAgreeTerms.toggle()
-      }
-      
-      return .none
-      
-    case .didTapAgreePrivacy:
-      state.isAgreePrivacy.toggle()
-      return .none
-      
-    case .didTapAgreeTerms:
-      state.isAgreeTerms.toggle()
-      return .none
-      
-    case .didTapConfirm:
-      return .none
     }
   }
 }
