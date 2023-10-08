@@ -18,36 +18,38 @@ struct EmptyChallengeListSection: View {
   
   var body: some View {
     VStack(spacing: 16) {
-      ChallengeSectionTitleView(
-        sectionType: .emptyChallenge
-      ) {
-        store.send(.showExplore(true))
-      }
-      
       WithViewStore(store, observe: { $0 }) { viewStore in
-        NavigationLink(
-          isActive: viewStore.binding(
-            get: \.showExplore,
-            send: EmptyChallengeListSectionCore.Action.showExplore
-          )
-        ) {
-          IfLetStore(
-            store.scope(
-              state: \.exploreChallengeState,
-              action: EmptyChallengeListSectionCore.Action.exploreChallengeAction
+        ZStack {
+          NavigationLink(
+            isActive: viewStore.binding(
+              get: \.showExplore,
+              send: EmptyChallengeListSectionCore.Action.showExplore
             )
-          ) { store in
-            ExploreChallengeScene(store: store)
+          ) {
+            IfLetStore(
+              store.scope(
+                state: \.exploreChallengeState,
+                action: EmptyChallengeListSectionCore.Action.exploreChallengeAction
+              )
+            ) { store in
+              ExploreChallengeScene(store: store)
+            }
+          } label: {
+            EmptyView()
           }
-        } label: {
-          EmptyView()
+          
+          ChallengeSectionTitleView(sectionType: .emptyChallenge) {
+            store.send(.showExplore(true))
+          }
         }
       }
       
-      LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 12) {
-        ForEachStore(store.scope(
-          state: \.challenges,
-          action: EmptyChallengeListSectionCore.Action.challengeDetail)
+      LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
+        ForEachStore(
+          store.scope(
+            state: \.challenges,
+            action: EmptyChallengeListSectionCore.Action.challengeDetail
+          )
         ) { store in
           EmptyChallengeDetail(store: store)
         }
