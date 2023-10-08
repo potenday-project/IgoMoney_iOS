@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
-    var currentChallengeState: Challenge?
+    var userChallenge: ChallengeStatus = .notInChallenge
   }
   
   enum Action {
@@ -18,6 +18,13 @@ struct MyChallengeSectionCore: Reducer {
     case _myChallengeResponse(TaskResult<Challenge>)
     
     // Child Action
+  }
+  
+  enum ChallengeStatus: Equatable {
+    case processingChallenge(Challenge)
+    case waitingUser(Challenge)
+    case waitingStart(Challenge)
+    case notInChallenge
   }
   
   @Dependency(\.challengeClient) var challengeClient
@@ -38,12 +45,23 @@ struct MyChallengeSectionCore: Reducer {
         }
         
       case ._myChallengeResponse(.success(let challenge)):
-        state.currentChallengeState = challenge
+        if challenge.competitorID == nil {
+          state.userChallenge = .waitingUser(challenge)
+          return .none
+        }
+        
+        if challenge.isStart == false {
+          state.userChallenge = .waitingStart(challenge)
+          return .none
+        }
+        
+        state.userChallenge = .processingChallenge(challenge)
         return .none
         
       case ._myChallengeResponse(.failure(let error as APIError)):
+        // 챌린지가 없는 경우 또는 에러가 발생한 경우
         if case APIError.badRequest(409) = error {
-          state.currentChallengeState = nil
+          state.userChallenge = .notInChallenge
         }
         
         return .none

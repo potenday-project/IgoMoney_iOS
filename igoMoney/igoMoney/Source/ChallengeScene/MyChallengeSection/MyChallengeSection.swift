@@ -11,6 +11,29 @@ import ComposableArchitecture
 struct MyChallengeSection: View {
   let store: StoreOf<MyChallengeSectionCore>
   // TODO: - 섹션 reducer 연결하기
+  
+  @ViewBuilder
+  func challengeInformationView(to challenge: Challenge) -> some View {
+    HStack(spacing: 4) {
+      Text(challenge.targetAmount.description)
+        .padding(.horizontal, 4)
+        .background(
+          Color(challenge.targetAmount.colorName)
+        )
+        .cornerRadius(4)
+      
+      Text("⏰ \(challenge.startDate?.toString(with: "MM월 dd일 시작") ?? "")")
+        .padding(.horizontal, 4)
+        .background(ColorConstants.primary6)
+        .cornerRadius(4)
+    }
+    .font(.pretendard(size: 12, weight: .medium))
+    .lineHeight(
+      font: .pretendard(size: 12, weight: .medium),
+      lineHeight: 16
+    )
+  }
+  
   var body: some View {
     VStack {
       ChallengeSectionTitleView(
@@ -18,39 +41,30 @@ struct MyChallengeSection: View {
         buttonAction: nil
       )
       
-      WithViewStore(store, observe: { $0.currentChallengeState }) { viewStore in
-        if let challenge = viewStore.state { // 참가중인 챌린지 있는 경우
+      WithViewStore(store, observe: { $0.userChallenge }) { status in
+        switch status.state {
+        case .processingChallenge(let challenge):
+          MyChallengeBannerView(title: challenge.title) {
+            challengeInformationView(to: challenge)
+          }
+          
+        case .waitingUser(let challenge):
           MyChallengeBannerView(
-            subTitle: "뒷주머니님과 챌린지 중", 
+            subTitle: "🤔",
+            title: "챌린지할 상대를 기다리고 있어요!"
+          ) {
+            challengeInformationView(to: challenge)
+          }
+          
+        case .waitingStart(let challenge):
+          MyChallengeBannerView(
+            subTitle: "챌린지 시작 대기중",
             title: challenge.title
           ) {
-            HStack(spacing: 4) {
-              Text(challenge.targetAmount.description)
-                .font(.pretendard(size: 12, weight: .medium))
-                .lineHeight(
-                  font: .pretendard(size: 12, weight: .medium),
-                  lineHeight: 16
-                )
-                .padding(.horizontal, 4)
-                .background(
-                  Color(challenge.targetAmount.colorName)
-                )
-                .cornerRadius(4)
-              
-              if let challengeDate = challenge.startDate {
-                Text("📅 \(challengeDate.toString(with: "M월 dd일"))")
-                  .font(.pretendard(size: 12, weight: .medium))
-                  .lineHeight(
-                    font: .pretendard(size: 12, weight: .medium),
-                    lineHeight: 16
-                  )
-                  .padding(.horizontal, 4)
-                  .background(ColorConstants.primary6)
-                  .cornerRadius(4)
-              }
-            }
+            challengeInformationView(to: challenge)
           }
-        } else { // 참가중인 챌린지가 없는 경우
+          
+        case .notInChallenge:
           MyChallengeBannerView(
             iconName: "plus.circle",
             title: "아직 진행중인 챌린지가 없어요"
@@ -102,7 +116,7 @@ struct MyChallengeBannerView<B: View>: View {
             Text(subTitle)
               .font(.pretendard(size: 12, weight: .medium))
               .lineLimit(1)
-              .minimumScaleFactor(0.8)
+              .foregroundColor(ColorConstants.gray2)
           } else {
             EmptyView()
           }
@@ -124,15 +138,8 @@ struct MyChallengeSection_Previews: PreviewProvider {
     Group {
       MyChallengeSection(
         store: Store(
-          initialState: MyChallengeSectionCore.State(),
-          reducer: { MyChallengeSectionCore() }
-        )
-      )
-      
-      MyChallengeSection(
-        store: Store(
           initialState: MyChallengeSectionCore.State(
-            currentChallengeState: .default
+            userChallenge: .waitingStart(.default)
           ),
           reducer: { MyChallengeSectionCore() }
         )
