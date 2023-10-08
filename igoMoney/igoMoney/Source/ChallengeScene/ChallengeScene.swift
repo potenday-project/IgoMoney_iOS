@@ -28,26 +28,24 @@ struct ChallengeScene: View {
     VStack {
       titleHeader
       
-      VStack {
-        ScrollView(showsIndicators: false) {
-          VStack(spacing: 16) {
-            MyChallengeSection(
-              store: store.scope(
-                state: \.myChallengeState,
-                action: ChallengeCore.Action.myChallengeAction
-              )
+      ScrollView(.vertical, showsIndicators: false) {
+        VStack(spacing: 32) {
+          MyChallengeSection(
+            store: store.scope(
+              state: \.myChallengeState,
+              action: ChallengeCore.Action.myChallengeAction
             )
-            
-            EmptyChallengeListSection(
-              store: store.scope(
-                state: \.emptyChallengeListState,
-                action: ChallengeCore.Action.emptyChallengeAction
-              )
+          )
+          
+          EmptyChallengeListSection(
+            store: store.scope(
+              state: \.emptyChallengeListState,
+              action: ChallengeCore.Action.emptyChallengeAction
             )
-          }
-          .padding([.horizontal, .top], 24)
-          .padding(.bottom, 28)
+          )
         }
+        .padding(24)
+        .background(Color.white)
       }
       .background(Color.white)
       .cornerRadius(20, corner: .topLeft)
@@ -79,7 +77,7 @@ extension ChallengeScene {
       case .myChallenge:
         return nil
       case .emptyChallenge:
-        return "내가 도전하고 싶은 챌린지를 선택하세요."
+        return "도전하고 싶은 챌린지를 선택하세요."
       }
     }
     
@@ -102,7 +100,6 @@ struct ChallengeSectionTitleView: View {
         Spacer()
         
         if sectionType.hasButton {
-          // TODO: - Button 생성
           Button {
             buttonAction?()
           } label: {
@@ -117,8 +114,9 @@ struct ChallengeSectionTitleView: View {
       
       if let detail = sectionType.detail {
         Text(detail)
-          .font(.system(size: 14, weight: .medium))
+          .font(.pretendard(size: 14, weight: .medium))
           .foregroundColor(ColorConstants.gray)
+          .lineHeight(font: .pretendard(size: 14, weight: .medium), lineHeight: 20)
       }
     }
   }
