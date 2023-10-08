@@ -27,6 +27,10 @@
 		180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC69D2ABB488F00DD8477 /* UserClient.swift */; };
 		180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A12ABB48DC00DD8477 /* Networking.swift */; };
 		180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC6A32ABB4BC500DD8477 /* APIClient.swift */; };
+		181988AC2ACE72310021214C /* ChallengeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988AB2ACE72310021214C /* ChallengeClient.swift */; };
+		181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988AD2ACE73F40021214C /* ChallengeClient + live.swift */; };
+		181988B02ACE75CC0021214C /* DateFormatter + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */; };
+		181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988B12ACE80840021214C /* ChallengeAPI.swift */; };
 		1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */; };
 		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
@@ -108,6 +112,10 @@
 		180FC69D2ABB488F00DD8477 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		180FC6A12ABB48DC00DD8477 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		180FC6A32ABB4BC500DD8477 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		181988AB2ACE72310021214C /* ChallengeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeClient.swift; sourceTree = "<group>"; };
+		181988AD2ACE73F40021214C /* ChallengeClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeClient + live.swift"; sourceTree = "<group>"; };
+		181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + Extensions.swift"; sourceTree = "<group>"; };
+		181988B12ACE80840021214C /* ChallengeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAPI.swift; sourceTree = "<group>"; };
 		1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
@@ -243,6 +251,7 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				181988AA2ACE72200021214C /* ChallengeClient */,
 				18A152302AC97FD100B8B8A4 /* SettingScene */,
 				18B4377B2AC17EC90026A71E /* KeyChainClient */,
 				1865C4162AC14632006B5B8A /* ChallengeAnalysisView */,
@@ -314,6 +323,15 @@
 				18B437762AC16E410026A71E /* UserClient + live.swift */,
 			);
 			path = UserClient;
+			sourceTree = "<group>";
+		};
+		181988AA2ACE72200021214C /* ChallengeClient */ = {
+			isa = PBXGroup;
+			children = (
+				181988AB2ACE72310021214C /* ChallengeClient.swift */,
+				181988AD2ACE73F40021214C /* ChallengeClient + live.swift */,
+			);
+			path = ChallengeClient;
 			sourceTree = "<group>";
 		};
 		183B475E2ABF449900976BFF /* ChallengeStateScene */ = {
@@ -441,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				18B437792AC170B30026A71E /* AuthAPI.swift */,
+				181988B12ACE80840021214C /* ChallengeAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -505,6 +524,7 @@
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
 				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
 				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
+				181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -610,7 +630,9 @@
 				18599A4B2ABC321E0075DE76 /* MyChallengeSectionCore.swift in Sources */,
 				180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
+				181988B02ACE75CC0021214C /* DateFormatter + Extensions.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
+				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
 				185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */,
 				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
@@ -618,6 +640,7 @@
 				18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
+				181988AC2ACE72310021214C /* ChallengeClient.swift in Sources */,
 				1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */,
@@ -639,6 +662,7 @@
 				18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */,
 				18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */,
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
+				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,

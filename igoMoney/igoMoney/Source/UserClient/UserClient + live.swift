@@ -69,6 +69,7 @@ extension UserClient {
       let api = AuthAPI(method: .get, path: "/users/\(userID)", query: [:], header: [:], body: nil)
       
       let response: User = try await apiClient.request(to: api)
+      APIClient.currentUser = response
       return response
     } signOut: {
       return ()

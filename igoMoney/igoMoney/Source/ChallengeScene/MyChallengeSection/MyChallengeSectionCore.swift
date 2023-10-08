@@ -8,67 +8,67 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ChallengeSituationCore: Reducer {
-  struct State: Equatable {
-    
-  }
-  
-  enum Action {
-    
-  }
-  
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
-  }
-}
-
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
-    var challengeState: ChallengeState = .empty
-    var presentSituation: Bool = false
-    var challengeSituationState: ChallengeSituationCore.State? = nil
-    
-    enum ChallengeState: CaseIterable {
-      case empty
-      case waiting
-      case challenging
-      case result
-    }
+    var userChallenge: ChallengeStatus = .notInChallenge
   }
   
   enum Action {
-    case tapChallengeStatus
+    case _onAppear
+    case _myChallengeResponse(TaskResult<Challenge>)
     
-    case _presentChallengeSituation(Bool)
-    
-    case situationAction(ChallengeSituationCore.Action)
+    // Child Action
   }
+  
+  enum ChallengeStatus: Equatable {
+    case processingChallenge(Challenge)
+    case waitingUser(Challenge)
+    case waitingStart(Challenge)
+    case notInChallenge
+  }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
-      case .tapChallengeStatus:
-        if state.challengeState == .challenging {
-          return .run { send in
-            await send(._presentChallengeSituation(true))
-          }
-        } else {
+        
+      case ._onAppear:
+        return .run { send in
+          await send(
+            ._myChallengeResponse(
+              TaskResult {
+                try await challengeClient.getMyChallenge()
+              }
+            )
+          )
+        }
+        
+      case ._myChallengeResponse(.success(let challenge)):
+        if challenge.competitorID == nil {
+          state.userChallenge = .waitingUser(challenge)
           return .none
         }
         
-      case ._presentChallengeSituation(true):
-        state.presentSituation = true
-        state.challengeSituationState = ChallengeSituationCore.State()
+        if challenge.isStart == false {
+          state.userChallenge = .waitingStart(challenge)
+          return .none
+        }
+        
+        state.userChallenge = .processingChallenge(challenge)
         return .none
         
-      case ._presentChallengeSituation(false):
-        state.presentSituation = false
-        state.challengeSituationState = nil
+      case ._myChallengeResponse(.failure(let error as APIError)):
+        // 챌린지가 없는 경우 또는 에러가 발생한 경우
+        if case APIError.badRequest(409) = error {
+          state.userChallenge = .notInChallenge
+        }
+        
+        return .none
+        
+      default:
         return .none
       }
-    }
-    .ifLet(\.challengeSituationState, action: /Action.situationAction) {
-      ChallengeSituationCore()
     }
   }
 }

@@ -6,6 +6,73 @@
 
 import Foundation
 
+struct Challenge: Decodable, Equatable {
+  let challengeID: Int
+  let recordID: Int?
+  let leaderID: Int
+  let competitorID: Int?
+  let winnerID: Int?
+  let title: String
+  let content: String
+  let targetAmount: TargetMoneyAmount
+  let startDate: Date?
+  let term: Int?
+  let endDate: Date?
+  
+  var isStart: Bool {
+    if let startDate = startDate {
+      return startDate <= Date()
+    }
+    
+    return false
+  }
+  
+  var userDescription: String {
+    return isStart ? "\(challengeID)님과 챌린지 진행 중" : "\(challengeID)님과 챌린지"
+  }
+  
+  enum CodingKeys: String, CodingKey {
+    case recordID = "recordId"
+    case challengeID = "id"
+    case leaderID = "leaderId"
+    case competitorID = "competitorId"
+    case winnerID = "winnerId"
+    case title, content, targetAmount, startDate, term, endDate
+  }
+}
+
+extension Challenge {
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    recordID = try? container.decode(Int.self, forKey: .recordID)
+    challengeID = try container.decode(Int.self, forKey: .challengeID)
+    leaderID = try container.decode(Int.self, forKey: .leaderID)
+    competitorID = try? container.decode(Int.self, forKey: .competitorID)
+    winnerID = try? container.decode(Int.self, forKey: .winnerID)
+    title = try container.decode(String.self, forKey: .title)
+    content = try container.decode(String.self, forKey: .content)
+    let moneyValue = try container.decode(Int.self, forKey: .targetAmount)
+    targetAmount = TargetMoneyAmount(money: moneyValue)
+    term = try? container.decode(Int.self, forKey: .term)
+    startDate = try? container.decode(Date.self, forKey: .startDate)
+    endDate = try? container.decode(Date.self, forKey: .endDate)
+  }
+  
+  static let `default`: Challenge = .init(
+    challengeID: 1,
+    recordID: nil,
+    leaderID: 4,
+    competitorID: nil,
+    winnerID: nil,
+    title: "같이 절약 챌린지 성공해봐요!",
+    content: "오늘부터 일주일 동안 30000원으로 대결하실 분~",
+    targetAmount: .init(money: 30000),
+    startDate: Date(),
+    term: 5,
+    endDate: nil
+  )
+}
+
 struct ChallengeInformation: Decodable, Equatable, Identifiable {
   var id = UUID()
   
@@ -64,11 +131,10 @@ struct ChallengeInformation: Decodable, Equatable, Identifiable {
 }
 
 struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
-  var id = UUID()
   let money: Int
   
   var description: String {
-    return "💸 \(money)원"
+    return "\(money / 10000)만원"
   }
   
   var colorName: String {

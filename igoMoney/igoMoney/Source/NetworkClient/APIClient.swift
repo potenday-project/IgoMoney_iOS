@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct APIClient: Networking {
+  static var currentUser: User? = nil
   func request<T>(to generator: RequestGenerator) async throws -> T where T : Decodable {
     do {
       let request = try generator.generate()
