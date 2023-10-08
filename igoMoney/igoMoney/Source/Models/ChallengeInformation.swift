@@ -182,3 +182,14 @@ struct User: Decodable, Equatable {
     role: "ROLE_USER"
   )
 }
+
+extension User {
+  init(userID: Int) {
+    self.userID = userID
+    self.provider = nil
+    self.email = ""
+    self.nickName = nil
+    self.profileImagePath = nil
+    self.role = "ROLE_USER"
+  }
+}

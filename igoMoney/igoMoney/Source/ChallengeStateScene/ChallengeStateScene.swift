@@ -15,7 +15,7 @@ struct ChallengeInformationDetailView: View {
     VStack(alignment: .leading, spacing: 2) {
       HStack {
         WithViewStore(store, observe: { $0 }) { viewStore in
-          Text(viewStore.user.nickName ?? "" + "님과 대결중")
+          Text("님과 대결중")
             .font(.pretendard(size: 14, weight: .bold))
             .foregroundColor(ColorConstants.gray2)
         }

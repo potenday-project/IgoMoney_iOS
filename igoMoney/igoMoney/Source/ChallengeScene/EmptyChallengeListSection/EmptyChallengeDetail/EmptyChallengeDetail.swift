@@ -24,7 +24,7 @@ struct EmptyChallengeDetail: View {
       }
       
       // 챌린지 생성자 닉네임
-      WithViewStore(store, observe: { $0.user }) { viewStore in
+      WithViewStore(store, observe: { $0.leader }) { viewStore in
         Text(viewStore.nickName ?? "")
           .font(.system(size: 12, weight: .medium))
       }
@@ -49,7 +49,7 @@ struct EmptyChallengeDetail: View {
         Spacer()
         
         // 사용자 이미지
-        WithViewStore(store, observe: { $0.user.profileImagePath }) { viewStore in
+        WithViewStore(store, observe: { $0.leader.profileImagePath }) { viewStore in
           if let path = viewStore.state {
             // 사용자 프로필 이미지로 변경하기
             Image("default_profile")
