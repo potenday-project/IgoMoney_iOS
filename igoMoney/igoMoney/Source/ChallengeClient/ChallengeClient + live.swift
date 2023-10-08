@@ -24,6 +24,16 @@ extension ChallengeClient {
       
       let response: Challenge = try await apiClient.request(to: requestGenerator)
       return response
+    } fetchNotStartedChallenge: {
+      let requestGenerator = ChallengeAPI(
+        method: .get,
+        path: "/challenges/notstarted",
+        query: [:],
+        header: [:]
+      )
+      
+      let response: [Challenge] = try await apiClient.request(to: requestGenerator)
+      return response
     }
   }()
 }

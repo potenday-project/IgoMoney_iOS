@@ -23,11 +23,14 @@ struct EmptyChallengeListSectionCore: Reducer {
     case _onAppear
     case _setExploreState
     case _removeExploreState
+    case notStartedChallengeListResponse(TaskResult<[Challenge]>)
     
     // Child Action
     case challengeDetail(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
@@ -45,19 +48,15 @@ struct EmptyChallengeListSectionCore: Reducer {
         
         // Inner Action
       case ._onAppear:
-        let informations = ChallengeInformation.default
-        informations.forEach {
-          let detailState = ChallengeDetailCore.State(
-            id: UUID(),
-            title: $0.title,
-            content: $0.content,
-            targetAmount: $0.targetAmount,
-            user: $0.user
+        return .run { send in
+          await send(
+            .notStartedChallengeListResponse(
+              TaskResult {
+                try await challengeClient.fetchNotStartedChallenge()
+              }
+            )
           )
-          state.challenges.append(detailState)
         }
-        
-        return .none
         
       case ._setExploreState:
         state.exploreChallengeState = ExploreChallengeCore.State()
@@ -69,6 +68,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         state.showExplore = false
         return .none
         
+      case .notStartedChallengeListResponse(.success(let challenges)):
+        let challengeStates = challenges.map { ChallengeDetailCore.State(challenge: $0) }
+        state.challenges = IdentifiedArray(uniqueElements: challengeStates)
+        return .none
+        
+      case .notStartedChallengeListResponse(.failure):
+        print("Error in fetch Empty Challenges")
+        return .none
         // Child Action
       case .challengeDetail:
         return .none

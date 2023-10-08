@@ -16,6 +16,14 @@ struct ChallengeDetailCore: Reducer {
     var content: String
     var targetAmount: TargetMoneyAmount
     var user: User
+    
+    init(challenge: Challenge) {
+      self.id = UUID()
+      self.title = challenge.title
+      self.content = challenge.content
+      self.targetAmount = challenge.targetAmount
+      self.user = .default
+    }
   }
   
   enum Action: Equatable, Sendable {

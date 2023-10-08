@@ -75,22 +75,6 @@ struct ChallengeStateScene: View {
         
         ScrollView(showsIndicators: false) {
           VStack(spacing: 16) {
-            ChallengeInformationDetailView(
-              store: Store(
-                initialState: ChallengeDetailCore.State(
-                  id: UUID(),
-                  title: "일주일에 3만원으로 살아남기",
-                  content: "",
-                  targetAmount: .init(money: 30000),
-                  user: .default
-                ), reducer: {
-                  ChallengeDetailCore()
-                }
-              )
-            )
-            .padding(.horizontal, 24)
-            .background(Color("background_color"))
-            
             ChallengeGraphView()
               .padding(.horizontal, 24)
               .background(Color("background_color"))
