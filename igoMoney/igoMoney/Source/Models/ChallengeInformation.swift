@@ -59,16 +59,16 @@ extension Challenge {
   }
   
   static let `default`: Challenge = .init(
-    challengeID: 1,
+    challengeID: 3,
     recordID: nil,
-    leaderID: 4,
+    leaderID: 2,
     competitorID: nil,
     winnerID: nil,
-    title: "같이 절약 챌린지 성공해봐요!",
-    content: "오늘부터 일주일 동안 30000원으로 대결하실 분~",
+    title: "만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요!",
+    content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
     targetAmount: .init(money: 30000),
-    startDate: Date(),
-    term: 5,
+    startDate: nil,
+    term: nil,
     endDate: nil
   )
 }
