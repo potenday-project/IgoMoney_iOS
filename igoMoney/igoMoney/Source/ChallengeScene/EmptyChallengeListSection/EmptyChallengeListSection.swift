@@ -47,20 +47,38 @@ struct EmptyChallengeListSection: View {
       WithViewStore(store, observe: { $0 }) { viewStore in
         LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
           ForEach(viewStore.challenges, id: \.id) { challenge in
-            NavigationLink(
-              destination: EnterChallengeScene(
-                store: Store(
-                  initialState: EnterChallengeCore.State(challenge: challenge),
-                  reducer: { EnterChallengeCore()._printChanges() }
+            ZStack {
+              NavigationLink(
+                isActive: viewStore.binding(
+                  get: { $0.enterSelection != nil },
+                  send: { newValue in
+                    let challengeValue = (newValue ? challenge : nil)
+                    return .showEnter(challengeValue)
+                  }
                 )
-              )
-            ) {
+              ) {
+                IfLetStore(
+                  self.store.scope(
+                    state: \.enterSelection,
+                    action: EmptyChallengeListSectionCore.Action.enterAction
+                  )
+                ) { store in
+                  EnterChallengeScene(store: store)
+                }
+              } label: {
+                EmptyView()
+              }
+              
+              
               EmptyChallengeDetail(
                 store: Store(
                   initialState: ChallengeDetailCore.State(challenge: challenge),
                   reducer: { ChallengeDetailCore() }
                 )
               )
+              .onTapGesture {
+                viewStore.send(.showEnter(challenge))
+              }
             }
           }
           

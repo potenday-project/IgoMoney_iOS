@@ -15,12 +15,13 @@ struct EmptyChallengeListSectionCore: Reducer {
     var showExplore: Bool = false
     
     var exploreChallengeState: ExploreChallengeCore.State?
-    var enterSelection: Challenge?
+    var enterSelection: EnterChallengeCore.State?
   }
   
   enum Action: Equatable, Sendable {
     // User Action
     case showExplore(Bool)
+    case showEnter(Challenge?)
     
     // Inner Action
     case _onAppear
@@ -50,6 +51,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .run { send in
           await send(._removeExploreState)
         }
+        
+      case let .showEnter(.some(challenge)):
+        state.enterSelection = EnterChallengeCore.State(challenge: challenge)
+        return .none
+        
+      case .showEnter(.none):
+        state.enterSelection = nil
+        return .none
         
       case ._onAppear:
         return .run { send in
@@ -94,6 +103,9 @@ struct EmptyChallengeListSectionCore: Reducer {
     }
     .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {
       ExploreChallengeCore()
+    }
+    .ifLet(\.enterSelection, action: /Action.enterAction) {
+      EnterChallengeCore()
     }
    }
 }
