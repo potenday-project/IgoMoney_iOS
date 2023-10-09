@@ -79,11 +79,6 @@ struct CreateChallengeButton: View {
         Spacer()
         
         Image("icon_add_task")
-          .background(
-            Circle()
-              .fill(ColorConstants.primary6)
-              .frame(width: 50, height: 50)
-          )
       }
     }
     .padding(16)
