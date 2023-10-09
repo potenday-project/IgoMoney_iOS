@@ -51,7 +51,7 @@ struct EmptyChallengeListSection: View {
               destination: EnterChallengeScene(
                 store: Store(
                   initialState: EnterChallengeCore.State(challenge: challenge),
-                  reducer: { EnterChallengeCore() }
+                  reducer: { EnterChallengeCore()._printChanges() }
                 )
               )
             ) {

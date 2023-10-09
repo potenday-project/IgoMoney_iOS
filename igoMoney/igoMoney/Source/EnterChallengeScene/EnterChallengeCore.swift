@@ -11,8 +11,6 @@ struct EnterChallengeCore: Reducer {
     let challenge: Challenge
     var showAlert: Bool = false
     var showProgressView: Bool = false
-    
-    var isBeingDismiss: Bool = false
   }
   
   enum Action: Equatable {
@@ -32,7 +30,7 @@ struct EnterChallengeCore: Reducer {
         // TODO: - 사용자 입장 메서드 수행
         state.showProgressView = true
         return .run { send in
-          await send(._closeAlert)
+          await send(.setShowAlert(true))
         }
         
       case .dismiss:

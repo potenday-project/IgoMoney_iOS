@@ -15,26 +15,23 @@ struct EmptyChallengeListSectionCore: Reducer {
     var showExplore: Bool = false
     
     var exploreChallengeState: ExploreChallengeCore.State?
-    var enterChallengeSelection: Identified<ChallengeDetailCore.State.ID, EnterChallengeCore.State?>?
+    var enterSelection: Challenge?
   }
   
   enum Action: Equatable, Sendable {
     // User Action
     case showExplore(Bool)
-    case setEnterNavigation(selection: UUID?)
     
     // Inner Action
     case _onAppear
     case _setExploreState
     case _removeExploreState
     
-    case _setNavigationEnterSelection
-    
     case _notStartedChallengeListResponse(TaskResult<[Challenge]>)
     
     // Child Action
-    case enterAction(EnterChallengeCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
+    case enterAction(EnterChallengeCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
@@ -54,18 +51,6 @@ struct EmptyChallengeListSectionCore: Reducer {
           await send(._removeExploreState)
         }
         
-      case let .setEnterNavigation(.some(id)):
-        state.enterChallengeSelection = Identified(nil, id: id)
-        return .run { send in
-          await send(._setNavigationEnterSelection)
-        }
-        .cancellable(id: CancelID.load, cancelInFlight: true)
-        
-      case .setEnterNavigation(.none):
-        state.enterChallengeSelection = nil
-        return .cancel(id: CancelID.load)
-        
-        // Inner Action
       case ._onAppear:
         return .run { send in
           await send(
@@ -87,9 +72,6 @@ struct EmptyChallengeListSectionCore: Reducer {
         state.showExplore = false
         return .none
         
-      case ._setNavigationEnterSelection:
-        return .none
-        
       case ._notStartedChallengeListResponse(.success(let challenges)):
         state.challenges = challenges
         return .none
@@ -105,9 +87,6 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case .exploreChallengeAction:
         return .none
-        
-      case .enterAction(.dismiss):
-        return .send(.setEnterNavigation(selection: nil), animation: .smooth)
         
       case .enterAction:
         return .none

@@ -54,6 +54,8 @@ extension View {
       .filter { $0.isKeyWindow }
       .first
     
+    print(#fileID, #function, #line, "alert Window \(keyWindow)")
+    
     let viewController = UIHostingController(rootView: alert())
     viewController.modalTransitionStyle = .crossDissolve
     viewController.modalPresentationStyle = .overCurrentContext
