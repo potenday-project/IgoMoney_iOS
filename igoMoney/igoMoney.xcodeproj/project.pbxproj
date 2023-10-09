@@ -58,7 +58,6 @@
 		18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A702ABC505A0075DE76 /* Font + Extensions.swift */; };
 		18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */; };
 		18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */; };
-		18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */; };
 		185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CF48A2ABF40E500B72237 /* LineHeight.swift */; };
 		18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */; };
 		1865C4152AC13853006B5B8A /* ChallengeGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C4142AC13853006B5B8A /* ChallengeGraphView.swift */; };
@@ -144,7 +143,6 @@
 		18599A702ABC505A0075DE76 /* Font + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + Extensions.swift"; sourceTree = "<group>"; };
 		18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCore.swift; sourceTree = "<group>"; };
 		18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeDetail.swift; sourceTree = "<group>"; };
-		18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extensions.swift"; sourceTree = "<group>"; };
 		185CF48A2ABF40E500B72237 /* LineHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineHeight.swift; sourceTree = "<group>"; };
 		18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingCore.swift; sourceTree = "<group>"; };
 		1865C4142AC13853006B5B8A /* ChallengeGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeGraphView.swift; sourceTree = "<group>"; };
@@ -520,7 +518,6 @@
 				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
 				180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */,
 				180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */,
-				18599A762ABCA1910075DE76 /* UINavigationController + Extensions.swift */,
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
 				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
 				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
@@ -637,7 +634,6 @@
 				185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */,
 				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* SignUpCore.swift in Sources */,
-				18599A772ABCA1910075DE76 /* UINavigationController + Extensions.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				181988AC2ACE72310021214C /* ChallengeClient.swift in Sources */,

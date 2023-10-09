@@ -59,7 +59,11 @@ struct EmptyChallengeListSection: View {
               ), then: {
                 EnterChallengeScene(store: $0)
               }, else: {
-                Color("background_color")
+                ZStack {
+                  Color("background_color").edgesIgnoringSafeArea(.all)
+                  
+                  ProgressView()
+                }
               }),
               tag: detailStore.withState(\.id),
               selection: viewStore.binding(
@@ -113,11 +117,14 @@ struct CreateChallengeButton: View {
 
 struct EmptyChallengeListSection_Previews: PreviewProvider {
   static var previews: some View {
-    EmptyChallengeListSection(
-      store: Store(
-        initialState: EmptyChallengeListSectionCore.State(),
-        reducer: { EmptyChallengeListSectionCore() }
+    NavigationView {
+      EmptyChallengeListSection(
+        store: Store(
+          initialState: EmptyChallengeListSectionCore.State(),
+          reducer: { EmptyChallengeListSectionCore() }
+        )
       )
-    )
+    }
+    .navigationViewStyle(.stack)
   }
 }
