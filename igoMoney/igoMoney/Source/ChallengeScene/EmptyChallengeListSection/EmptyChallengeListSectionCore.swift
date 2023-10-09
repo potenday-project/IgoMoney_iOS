@@ -55,10 +55,10 @@ struct EmptyChallengeListSectionCore: Reducer {
         }
         
       case .showEnter(true):
-        return .none
+        return .send(._setEnterState(challenge: nil))
         
       case .showEnter(false):
-        return .none
+        return .send(._removeEnterState)
         
         // Inner Action
       case ._onAppear:
@@ -84,6 +84,7 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case ._setEnterState(let challenge):
         guard let challenge = challenge else { return .none }
+        
         state.enterChallengeState = EnterChallengeCore.State(challenge: challenge)
         state.showEnter = true
         return .none
