@@ -78,9 +78,6 @@ struct EmptyChallengeDetail: View {
     .onAppear {
       store.send(._onAppear)
     }
-    .onTapGesture {
-      store.send(.didTap)
-    }
   }
 }
 

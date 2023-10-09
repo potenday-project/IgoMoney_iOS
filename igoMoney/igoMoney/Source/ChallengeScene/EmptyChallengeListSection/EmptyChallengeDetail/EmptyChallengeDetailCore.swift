@@ -31,8 +31,7 @@ struct ChallengeDetailCore: Reducer {
   
   enum Action: Equatable, Sendable {
     // User Action
-    case didTap
-    
+    // Inner Action
     case _onAppear
     case _challengeUserFetchResponse(TaskResult<User>)
   }
@@ -41,9 +40,6 @@ struct ChallengeDetailCore: Reducer {
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .didTap:
-      return .none
-      
     case ._onAppear:
       return .run { [state] send in
         await send(

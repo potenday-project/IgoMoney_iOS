@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import UIKit
+import SwiftUI
 
 extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
   open override func viewDidLoad() {

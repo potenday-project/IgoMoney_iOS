@@ -44,39 +44,37 @@ struct EmptyChallengeListSection: View {
         }
       }
       
-      LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
-        ForEachStore(
-          store.scope(
-            state: \.challenges,
-            action: EmptyChallengeListSectionCore.Action.challengeDetail
-          )
-        ) { detailStore in
-          WithViewStore(self.store, observe: { $0 }) { viewStore in
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
+          ForEachStore(
+            store.scope(
+              state: \.challenges,
+              action: EmptyChallengeListSectionCore.Action.challengeDetail
+            )
+          ) { detailStore in
             NavigationLink(
-              isActive: viewStore.binding(
-                get: \.showEnter,
-                send: EmptyChallengeListSectionCore.Action.showEnter
-              )
-            ) {
-              IfLetStore(
-                self.store.scope(
-                  state: \.enterChallengeState,
-                  action: EmptyChallengeListSectionCore.Action.enterChallengeAction
-                )
-              ) { store in
-                EnterChallengeScene(store: store)
-              }
-            } label: {
-              EmptyChallengeDetail(store: detailStore)
+              destination: IfLetStore(self.store.scope(
+                state: \.enterChallengeSelection?.value,
+                action: EmptyChallengeListSectionCore.Action.enterAction
+              ), then: {
+                EnterChallengeScene(store: $0)
+              }, else: {
+                Color("background_color")
+              }),
+              tag: detailStore.withState(\.id),
+              selection: viewStore.binding(
+                get: \.enterChallengeSelection?.id,
+                send: EmptyChallengeListSectionCore.Action.setEnterNavigation(selection:)
+              ),
+              label: { EmptyChallengeDetail(store: detailStore) }
+            )
+          }
+          
+          CreateChallengeButton()
+            .onTapGesture {
+              // TODO: - 챌린지 생성 화면 이동 메서드 구현
             }
-            .buttonStyle(.plain)
-          }
         }
-        
-        CreateChallengeButton()
-          .onTapGesture {
-            // TODO: - 챌린지 생성 화면 이동 메서드 구현
-          }
       }
     }
     .onAppear {
