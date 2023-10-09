@@ -55,12 +55,12 @@ struct EmptyChallengeDetail: View {
             Image("default_profile")
               .resizable()
               .scaledToFit()
-              .frame(width: 60)
+              .frame(width: 50)
           } else {
             Image("default_profile")
               .resizable()
               .scaledToFit()
-              .frame(width: 60)
+              .frame(width: 50)
           }
         }
       }

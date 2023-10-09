@@ -53,11 +53,49 @@ struct EmptyChallengeListSection: View {
         ) { store in
           EmptyChallengeDetail(store: store)
         }
+        
+        CreateChallengeButton()
+          .onTapGesture {
+            // TODO: - 챌린지 생성 화면 이동 메서드 구현
+          }
       }
     }
     .onAppear {
       store.send(._onAppear)
     }
+  }
+}
+
+struct CreateChallengeButton: View {
+  var body: some View {
+    VStack(alignment: .leading) {
+      Text("직접 챌린지\n방만들어보기")
+        .font(.pretendard(size: 16, weight: .semiBold))
+        .lineHeight(font: .pretendard(size: 16, weight: .semiBold), lineHeight: 23)
+      
+      Spacer()
+      
+      HStack {
+        Spacer()
+        
+        Image("icon_add_task")
+          .background(
+            Circle()
+              .fill(ColorConstants.primary6)
+              .frame(width: 50, height: 50)
+          )
+      }
+    }
+    .padding(16)
+    .background(
+      RoundedRectangle(cornerRadius: 10)
+        .fill(ColorConstants.primary8)
+        .shadow(
+          color: ColorConstants.gray2.opacity(0.15),
+          radius: 4,
+          y: 2
+        )
+    )
   }
 }
 
