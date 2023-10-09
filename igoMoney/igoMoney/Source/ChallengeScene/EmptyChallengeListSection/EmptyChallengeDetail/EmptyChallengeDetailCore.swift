@@ -17,12 +17,15 @@ struct ChallengeDetailCore: Reducer {
     var targetAmount: TargetMoneyAmount
     var leader: User
     
+    var challenge: Challenge
+    
     init(challenge: Challenge) {
       self.id = UUID()
       self.title = challenge.title
       self.content = challenge.content
       self.targetAmount = challenge.targetAmount
       self.leader = User(userID: challenge.leaderID)
+      self.challenge = challenge
     }
   }
   

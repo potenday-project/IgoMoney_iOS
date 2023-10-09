@@ -70,10 +70,10 @@ struct ExploreChallengeScene: View {
         VStack(spacing: 12) {
           WithViewStore(store, observe: { $0.challenges }) { viewStore in
             ForEach(viewStore.state, id: \.id) { challenge in
-              ExploreChallengeNavigationView(
-                challenge: challenge,
-                store: self.store
-              )
+//              ExploreChallengeNavigationView(
+//                challenge: challenge,
+//                store: self.store
+//              )
             }
           }
         }
@@ -87,7 +87,7 @@ struct ExploreChallengeScene: View {
 }
 
 struct ExploreChallengeNavigationView: View {
-  let challenge: ChallengeInformation
+  let challenge: Challenge
   let store: StoreOf<ExploreChallengeCore>
   
   var body: some View {

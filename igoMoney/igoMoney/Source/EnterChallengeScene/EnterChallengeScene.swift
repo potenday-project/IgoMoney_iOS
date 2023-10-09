@@ -223,9 +223,9 @@ struct ChallengeInformationCardView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack {
-        Text("\(viewStore.challenge.user.nickName ?? "")님 챌린지")
-          .font(.pretendard(size: 14, weight: .bold))
-          .foregroundColor(ColorConstants.gray2)
+//        Text("\(viewStore.challenge..nickName ?? "")님 챌린지")
+//          .font(.pretendard(size: 14, weight: .bold))
+//          .foregroundColor(ColorConstants.gray2)
       
         Spacer()
         
@@ -285,7 +285,7 @@ struct EnterChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
     EnterChallengeScene(
       store: Store(
-        initialState: EnterChallengeCore.State(challenge: .default.first!),
+        initialState: EnterChallengeCore.State(challenge: .default),
         reducer: { EnterChallengeCore() }
       )
     )

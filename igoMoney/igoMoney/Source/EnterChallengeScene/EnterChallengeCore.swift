@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct EnterChallengeCore: Reducer {
   struct State: Equatable {
-    let challenge: ChallengeInformation
+    let challenge: Challenge
     var showAlert: Bool = false
     var showProgressView: Bool = false
   }

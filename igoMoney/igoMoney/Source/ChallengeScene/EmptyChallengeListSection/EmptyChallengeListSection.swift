@@ -50,8 +50,27 @@ struct EmptyChallengeListSection: View {
             state: \.challenges,
             action: EmptyChallengeListSectionCore.Action.challengeDetail
           )
-        ) { store in
-          EmptyChallengeDetail(store: store)
+        ) { detailStore in
+          WithViewStore(self.store, observe: { $0 }) { viewStore in
+            NavigationLink(
+              isActive: viewStore.binding(
+                get: \.showEnter,
+                send: EmptyChallengeListSectionCore.Action.showEnter
+              )
+            ) {
+              IfLetStore(
+                self.store.scope(
+                  state: \.enterChallengeState,
+                  action: EmptyChallengeListSectionCore.Action.enterChallengeAction
+                )
+              ) { store in
+                EnterChallengeScene(store: store)
+              }
+            } label: {
+              EmptyChallengeDetail(store: detailStore)
+            }
+            .buttonStyle(.plain)
+          }
         }
         
         CreateChallengeButton()
