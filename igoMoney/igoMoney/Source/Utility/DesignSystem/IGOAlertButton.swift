@@ -24,9 +24,25 @@ struct IGOAlertButton: View {
       action()
     } label: {
       title
-        .frame(maxWidth: 200, maxHeight: 40)
+        .frame(maxWidth: .infinity, maxHeight: 40)
     }
     .background(color)
     .cornerRadius(8)
   }
+}
+
+#Preview {
+  HStack(spacing: 8) {
+    IGOAlertButton(
+      title: Text("네").foregroundColor(.black),
+      color: ColorConstants.primary,
+      action: { }
+    )
+    IGOAlertButton(
+      title: Text("네").foregroundColor(.black),
+      color: ColorConstants.primary,
+      action: { }
+    )
+  }
+  .previewLayout(.sizeThatFits)
 }

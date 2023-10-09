@@ -9,7 +9,7 @@ import SwiftUI
 struct IGOAlertView<Content: View>: View {
   let content: Content
   let primaryButton: IGOAlertButton
-  let secondaryButton: IGOAlertButton?
+  let cancelButton: IGOAlertButton?
   
   init(
     content: () -> Content,
@@ -18,28 +18,29 @@ struct IGOAlertView<Content: View>: View {
   ) {
     self.content = content()
     self.primaryButton = primaryButton()
-    self.secondaryButton = secondaryButton?()
+    self.cancelButton = secondaryButton?()
   }
   
   var body: some View {
     ZStack {
       Color.black.opacity(0.4).ignoresSafeArea()
       
-      VStack(spacing: 16) {
+      VStack(spacing: 24) {
         content
         
-        VStack(spacing: 8) {
-          primaryButton
-          
-          if let secondaryButton = secondaryButton {
+        HStack(spacing: 8) {
+          if let secondaryButton = cancelButton {
             secondaryButton
           }
+          
+          primaryButton
         }
       }
-      .padding(.vertical, 36)
-      .padding(.horizontal, 24)
+      .padding(24)
       .background(Color.white)
       .cornerRadius(8)
+      .padding(.horizontal, 60)
+      .padding(.vertical, 10)
     }
   }
 }
@@ -54,8 +55,6 @@ extension View {
       .filter { $0.isKeyWindow }
       .first
     
-    print(#fileID, #function, #line, "alert Window \(keyWindow)")
-    
     let viewController = UIHostingController(rootView: alert())
     viewController.modalTransitionStyle = .crossDissolve
     viewController.modalPresentationStyle = .overCurrentContext
@@ -68,6 +67,26 @@ extension View {
       } else {
         keyWindow?.topViewController?.dismiss(animated: true)
       }
+    }
+  }
+}
+
+#Preview {
+  IGOAlertView {
+    Text("챌린지에 참가하시겠습니까?")
+      .multilineTextAlignment(.center)
+      .font(.pretendard(size: 18, weight: .bold))
+  } primaryButton: {
+    IGOAlertButton(
+      title: Text("네").foregroundColor(Color.black),
+      color: ColorConstants.primary
+    ) {
+    }
+  } secondaryButton: {
+    IGOAlertButton(
+      title: Text("아니요").foregroundColor(ColorConstants.gray3),
+      color: ColorConstants.gray5
+    ) {
     }
   }
 }
