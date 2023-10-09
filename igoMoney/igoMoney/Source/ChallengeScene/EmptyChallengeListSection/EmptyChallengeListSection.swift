@@ -46,32 +46,22 @@ struct EmptyChallengeListSection: View {
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
-          ForEachStore(
-            store.scope(
-              state: \.challenges,
-              action: EmptyChallengeListSectionCore.Action.challengeDetail
-            )
-          ) { detailStore in
+          ForEach(viewStore.challenges, id: \.id) { challenge in
             NavigationLink(
-              destination: IfLetStore(self.store.scope(
-                state: \.enterChallengeSelection?.value,
-                action: EmptyChallengeListSectionCore.Action.enterAction
-              ), then: {
-                EnterChallengeScene(store: $0)
-              }, else: {
-                ZStack {
-                  Color("background_color").edgesIgnoringSafeArea(.all)
-                  
-                  ProgressView()
-                }
-              }),
-              tag: detailStore.withState(\.id),
-              selection: viewStore.binding(
-                get: \.enterChallengeSelection?.id,
-                send: EmptyChallengeListSectionCore.Action.setEnterNavigation(selection:)
-              ),
-              label: { EmptyChallengeDetail(store: detailStore) }
-            )
+              destination: EnterChallengeScene(
+                store: Store(
+                  initialState: EnterChallengeCore.State(challenge: challenge),
+                  reducer: { EnterChallengeCore() }
+                )
+              )
+            ) {
+              EmptyChallengeDetail(
+                store: Store(
+                  initialState: ChallengeDetailCore.State(challenge: challenge),
+                  reducer: { ChallengeDetailCore() }
+                )
+              )
+            }
           }
           
           CreateChallengeButton()

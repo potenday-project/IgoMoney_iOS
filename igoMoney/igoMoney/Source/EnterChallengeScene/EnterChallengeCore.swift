@@ -11,6 +11,8 @@ struct EnterChallengeCore: Reducer {
     let challenge: Challenge
     var showAlert: Bool = false
     var showProgressView: Bool = false
+    
+    var isBeingDismiss: Bool = false
   }
   
   enum Action: Equatable {

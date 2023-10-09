@@ -13,6 +13,7 @@
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
 		180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363B02AB82DCE00082F8A /* Preview Assets.xcassets */; };
 		1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */; };
+		1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1809AC3E2AD4371100FB044A /* UINavigationController + Extensions.swift */; };
 		180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180FC67C2ABAF62500DD8477 /* AuthController.swift */; };
 		180FC6872ABAFAED00DD8477 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6862ABAFAED00DD8477 /* KakaoSDKAuth */; };
 		180FC6892ABAFAED00DD8477 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 180FC6882ABAFAED00DD8477 /* KakaoSDKCommon */; };
@@ -100,6 +101,7 @@
 		180363AD2AB82DCE00082F8A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		180363B02AB82DCE00082F8A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data + Extensions.swift"; sourceTree = "<group>"; };
+		1809AC3E2AD4371100FB044A /* UINavigationController + Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extensions.swift"; sourceTree = "<group>"; };
 		180FC67C2ABAF62500DD8477 /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extensions.swift"; sourceTree = "<group>"; };
 		180FC68E2ABB14F900DD8477 /* KakaoService.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KakaoService.plist; sourceTree = "<group>"; };
@@ -522,6 +524,7 @@
 				1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */,
 				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
 				181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */,
+				1809AC3E2AD4371100FB044A /* UINavigationController + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
 				18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
+				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,

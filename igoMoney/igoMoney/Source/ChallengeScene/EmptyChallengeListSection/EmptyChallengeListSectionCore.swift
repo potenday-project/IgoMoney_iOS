@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct EmptyChallengeListSectionCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
+    var challenges: [Challenge] = []
     
     var showExplore: Bool = false
     
@@ -33,7 +33,6 @@ struct EmptyChallengeListSectionCore: Reducer {
     case _notStartedChallengeListResponse(TaskResult<[Challenge]>)
     
     // Child Action
-    case challengeDetail(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     case enterAction(EnterChallengeCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
   }
@@ -89,22 +88,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .none
         
       case ._setNavigationEnterSelection:
-        guard let id = state.enterChallengeSelection?.id,
-              let challenge = state.challenges[id: id]?.challenge else { return .none }
-        state.enterChallengeSelection?.value = EnterChallengeCore.State(challenge: challenge)
         return .none
         
       case ._notStartedChallengeListResponse(.success(let challenges)):
-        let challengeStates = challenges.map { ChallengeDetailCore.State(challenge: $0) }
-        state.challenges = IdentifiedArray(uniqueElements: challengeStates)
+        state.challenges = challenges
         return .none
         
       case ._notStartedChallengeListResponse(.failure):
         print("Error in fetch Empty Challenges")
-        return .none
-        // Child Action
-        
-      case .challengeDetail:
         return .none
         
       case .exploreChallengeAction(.enterAction(._closeAlert)), .exploreChallengeAction(.dismiss):
@@ -115,21 +106,15 @@ struct EmptyChallengeListSectionCore: Reducer {
       case .exploreChallengeAction:
         return .none
         
+      case .enterAction(.dismiss):
+        return .send(.setEnterNavigation(selection: nil), animation: .smooth)
+        
       case .enterAction:
         return .none
       }
     }
     .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {
       ExploreChallengeCore()
-    }
-    .forEach(\.challenges, action: /Action.challengeDetail) {
-      ChallengeDetailCore()
-    }
-    .ifLet(\State.enterChallengeSelection, action: /Action.enterAction) {
-      EmptyReducer()
-        .ifLet(\Identified<ChallengeDetailCore.State.ID, EnterChallengeCore.State?>.value, action: .self) {
-          EnterChallengeCore()
-        }
     }
    }
 }

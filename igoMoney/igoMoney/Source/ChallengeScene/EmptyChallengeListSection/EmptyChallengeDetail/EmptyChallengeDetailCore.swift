@@ -60,4 +60,3 @@ struct ChallengeDetailCore: Reducer {
     }
   }
 }
-
