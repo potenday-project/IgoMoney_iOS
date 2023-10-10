@@ -75,7 +75,7 @@ struct EnterChallengeButton: View {
   let store: StoreOf<EnterChallengeButtonCore>
   
   var body: some View {
-    WithViewStore(store, observe: { $0.buttonDisable }) { buttonDisable in
+    WithViewStore(store, observe: { $0 }) { viewStore in
       Button(action: {
       }) {
         Text("챌린지 참가하기")
@@ -84,16 +84,16 @@ struct EnterChallengeButton: View {
       .frame(maxWidth: .infinity)
       .font(.pretendard(size: 18, weight: .medium))
       .foregroundColor(
-        buttonDisable.state ? ColorConstants.gray3 : .black
+        viewStore.canEnter ? .black : ColorConstants.gray3
       )
       .background(
-        buttonDisable.state ? ColorConstants.gray5 : ColorConstants.primary
+        viewStore.canEnter ? ColorConstants.primary : ColorConstants.gray5
       )
       .cornerRadius(8)
-      .disabled(buttonDisable.state)
-      .onAppear {
-        store.send(.onAppear)
-      }
+      .disabled(viewStore.canEnter == false)
+    }
+    .onAppear {
+      store.send(.onAppear)
     }
   }
 }
@@ -104,12 +104,11 @@ struct ChallengeInformationCardView: View {
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       VStack(alignment: .leading, spacing: 8) {
-        
         HStack {
           VStack(alignment: .leading, spacing: 4) {
-//              Text("\(viewStore ?? "")님과 챌린지")
-//                .font(.pretendard(size: 14, weight: .bold))
-//                .foregroundColor(ColorConstants.gray2)
+            Text("\(viewStore.leaderName ?? "")님과 챌린지")
+                .font(.pretendard(size: 14, weight: .bold))
+                .foregroundColor(ColorConstants.gray2)
             
             Text(viewStore.challenge.title)
               .font(.pretendard(size: 18, weight: .bold))
@@ -146,6 +145,9 @@ struct ChallengeInformationCardView: View {
     .background(Color.white)
     .cornerRadius(10)
     .padding(24)
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
 }
 
