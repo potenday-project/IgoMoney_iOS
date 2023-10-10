@@ -34,8 +34,18 @@ extension ChallengeClient {
       
       let response: [Challenge] = try await apiClient.request(to: requestGenerator)
       return response
-    } enterChallenge: { challengeID, userID in
+    } enterChallenge: { challengeID in
+      guard let userID = APIClient.currentUser else { return }
       
+      let requestGenerator = ChallengeAPI(
+        method: .post,
+        path: "/challenges/apply/\(challengeID)/\(userID.userID.description)",
+        query: [:],
+        header: [:]
+      )
+      
+      let response = try await apiClient.execute(to: requestGenerator)
+      return
     }
   }()
 }
