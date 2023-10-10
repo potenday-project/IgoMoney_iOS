@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EnterChallengeScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<EnterChallengeCore>
   
   @ViewBuilder
@@ -18,6 +19,7 @@ struct EnterChallengeScene: View {
         .font(.pretendard(size: 20, weight: .bold))
     } leftView: {
       Button {
+        presentationMode.wrappedValue.dismiss()
       } label: {
         Image(systemName: "chevron.left")
           .font(.pretendard(size: 22, weight: .bold))

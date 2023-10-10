@@ -117,6 +117,7 @@ struct CreateChallengeButton: View {
           y: 2
         )
     )
+    .frame(minHeight: 190)
   }
 }
 

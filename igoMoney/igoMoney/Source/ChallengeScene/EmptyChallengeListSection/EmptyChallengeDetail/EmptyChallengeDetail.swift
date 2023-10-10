@@ -21,7 +21,6 @@ struct EmptyChallengeDetail: View {
           .font(.pretendard(size: 16, weight: .semiBold))
           .lineHeight(font: .pretendard(size: 16, weight: .semiBold), lineHeight: 23)
       }
-
       
       // 챌린지 생성자 닉네임
       WithViewStore(store, observe: { $0.leader }) { viewStore in
@@ -75,6 +74,7 @@ struct EmptyChallengeDetail: View {
           y: 2
         )
     )
+    .frame(minHeight: 190)
     .onAppear {
       store.send(._onAppear)
     }
