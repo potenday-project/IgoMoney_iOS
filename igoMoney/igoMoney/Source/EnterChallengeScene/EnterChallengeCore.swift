@@ -9,6 +9,10 @@ import ComposableArchitecture
 struct EnterChallengeButtonCore: Reducer {
   struct State: Equatable {
     var canEnter: Bool = true
+    
+    var buttonDisable: Bool {
+      return canEnter == false
+    }
   }
   
   @Dependency(\.challengeClient) var challengeClient
@@ -71,6 +75,7 @@ struct EnterChallengeCore: Reducer {
   
   enum Action: Equatable {
     case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
+    case enterChallengeButtonAction(EnterChallengeButtonCore.Action)
   }
   
   @Dependency(\.userClient) var userClient
@@ -79,6 +84,10 @@ struct EnterChallengeCore: Reducer {
   var body: some Reducer<State, Action> {
     Scope(state: \.challengeInformationState, action: /Action.enterChallengeInformationAction) {
       EnterChallengeInformationCore()
+    }
+    
+    Scope(state: \.enterChallengeButtonState, action: /Action.enterChallengeButtonAction) {
+      EnterChallengeButtonCore()
     }
     
     Reduce { state, action in
