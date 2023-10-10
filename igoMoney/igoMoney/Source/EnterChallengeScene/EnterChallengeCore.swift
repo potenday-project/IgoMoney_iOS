@@ -91,7 +91,15 @@ struct EnterChallengeCore: Reducer {
         }
         
       case ._enterChallengeResponse(.failure(let error)):
-        print(error)
+        if case let .badRequest(statusCode) = error as? APIError {
+          if statusCode == 409 {
+            // 이미 챌린지를 가지고 있는 경우 - 버튼 비활성화
+          }
+          
+          if statusCode == 404 {
+            // 알수 없는 오류 발생 (사용자 나 챌린지의 정보가 잘못됨
+          }
+        }
         return .none
       }
     }
