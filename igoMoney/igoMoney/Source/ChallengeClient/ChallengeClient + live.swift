@@ -35,7 +35,9 @@ extension ChallengeClient {
       let response: [Challenge] = try await apiClient.request(to: requestGenerator)
       return response
     } enterChallenge: { challengeID in
-      guard let userID = APIClient.currentUser else { return }
+      guard let userID = APIClient.currentUser else {
+        throw APIError.badRequest(400)
+      }
       
       let requestGenerator = ChallengeAPI(
         method: .post,
@@ -44,8 +46,11 @@ extension ChallengeClient {
         header: [:]
       )
       
-      let response = try await apiClient.execute(to: requestGenerator)
-      return
+      print(requestGenerator)
+      
+      let data = try await apiClient.execute(to: requestGenerator)
+      print(#fileID, #function, #line, "Challenge Apply Response", String(data: data, encoding: .utf8))
+      return true
     }
   }()
 }

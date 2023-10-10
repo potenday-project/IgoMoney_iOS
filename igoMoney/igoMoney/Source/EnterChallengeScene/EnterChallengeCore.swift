@@ -29,9 +29,11 @@ struct EnterChallengeCore: Reducer {
     case _onAppear
     case _closeAlert
     case _fetchLeaderResponse(TaskResult<User>)
+    case _enterChallengeResponse(TaskResult<Bool>)
   }
   
   @Dependency(\.userClient) var userClient
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
@@ -39,8 +41,14 @@ struct EnterChallengeCore: Reducer {
       case .enterChallenge:
         // TODO: - 사용자 입장 메서드 수행
         state.showProgressView = true
-        return .run { send in
-          await send(.setShowAlert(false))
+        return .run { [challengeID = state.challenge.id] send in
+          await send(
+            ._enterChallengeResponse(
+              TaskResult {
+                try await challengeClient.enterChallenge(challengeID.description)
+              }
+            )
+          )
         }
         
       case .dismiss:
@@ -74,6 +82,16 @@ struct EnterChallengeCore: Reducer {
         return .none
         
       case ._fetchLeaderResponse(.failure):
+        return .none
+        
+      case ._enterChallengeResponse(.success):
+        state.showProgressView = false
+        return .run { send in
+          await send(._closeAlert)
+        }
+        
+      case ._enterChallengeResponse(.failure(let error)):
+        print(error)
         return .none
       }
     }
