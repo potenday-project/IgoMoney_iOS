@@ -34,6 +34,8 @@ extension ChallengeClient {
       
       let response: [Challenge] = try await apiClient.request(to: requestGenerator)
       return response
+    } enterChallenge: { challengeID, userID in
+      
     }
   }()
 }

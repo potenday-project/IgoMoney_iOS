@@ -11,6 +11,7 @@ import Dependencies
 struct ChallengeClient {
   var getMyChallenge: @Sendable () async throws -> Challenge
   var fetchNotStartedChallenge: @Sendable () async throws -> [Challenge]
+  var enterChallenge: @Sendable (_ challengeID: String, _ userID: String) async throws -> Void
 }
 
 extension ChallengeClient: DependencyKey { }
