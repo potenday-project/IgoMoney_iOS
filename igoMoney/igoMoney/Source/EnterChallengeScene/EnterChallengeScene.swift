@@ -19,7 +19,7 @@ struct EnterChallengeScene: View {
         .font(.pretendard(size: 20, weight: .bold))
     } leftView: {
       Button {
-        presentationMode.wrappedValue.dismiss()
+        store.send(.dismissView)
       } label: {
         Image(systemName: "chevron.left")
           .font(.pretendard(size: 22, weight: .bold))
@@ -69,6 +69,11 @@ struct EnterChallengeScene: View {
           .edgesIgnoringSafeArea(.top)
       )
       .navigationBarHidden(true)
+      .onChange(of: ViewStore(store, observe: { $0.dismissView }).state, perform: { newValue in
+        if newValue {
+          presentationMode.wrappedValue.dismiss()
+        }
+      })
       .alert(
         isPresent: ViewStore(store, observe: { $0.showAlert })
           .binding(send: EnterChallengeCore.Action.showAlert)

@@ -95,6 +95,7 @@ struct EnterChallengeCore: Reducer {
   struct State: Equatable {
     var showAlert: Bool = false
     var showProgressView: Bool = false
+    var dismissView: Bool = false
     
     var enterChallengeButtonState = EnterChallengeButtonCore.State()
     var challengeInformationState: EnterChallengeInformationCore.State
@@ -107,6 +108,7 @@ struct EnterChallengeCore: Reducer {
   enum Action: Equatable {
     case showAlert(Bool)
     case enterChallenge
+    case dismissView
     
     case _requestEnterChallenge(TaskResult<Bool>)
     
@@ -159,12 +161,16 @@ struct EnterChallengeCore: Reducer {
           )
         }
         
+      case .dismissView:
+        state.dismissView = true
+        return .none
+        
       case .enterChallengeButtonAction(.didTapButton):
         return .send(.showAlert(true))
         
       case ._requestEnterChallenge(.success):
         state.showProgressView = false
-        return .none
+        return .send(.dismissView)
         
       case ._requestEnterChallenge(.failure):
         print("에러 발생")
