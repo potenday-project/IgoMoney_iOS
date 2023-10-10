@@ -67,17 +67,37 @@ struct EnterChallengeScene: View {
           .edgesIgnoringSafeArea(.top)
       )
       .navigationBarHidden(true)
+      .alert(
+        isPresent: ViewStore(store, observe: { $0.showAlert })
+          .binding(send: EnterChallengeCore.Action.showAlert)
+      ) {
+        IGOAlertView {
+          Text("챌린지에 참가하시겠습니까?")
+        } primaryButton: {
+          IGOAlertButton(
+            title: Text("네").foregroundColor(.black),
+            color: ColorConstants.primary3,
+            action: { }
+          )
+        } secondaryButton: {
+          IGOAlertButton(
+            title: Text("아니요").foregroundColor(ColorConstants.gray3),
+            color: ColorConstants.gray5,
+            action: { store.send(.showAlert(false)) }
+          )
+        }
+      }
     }
   }
 }
-
 struct EnterChallengeButton: View {
   let store: StoreOf<EnterChallengeButtonCore>
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-      Button(action: {
-      }) {
+      Button {
+        viewStore.send(.didTapButton)
+      } label: {
         Text("챌린지 참가하기")
       }
       .padding()
@@ -107,8 +127,8 @@ struct ChallengeInformationCardView: View {
         HStack {
           VStack(alignment: .leading, spacing: 4) {
             Text("\(viewStore.leaderName ?? "")님과 챌린지")
-                .font(.pretendard(size: 14, weight: .bold))
-                .foregroundColor(ColorConstants.gray2)
+              .font(.pretendard(size: 14, weight: .bold))
+              .foregroundColor(ColorConstants.gray2)
             
             Text(viewStore.challenge.title)
               .font(.pretendard(size: 18, weight: .bold))

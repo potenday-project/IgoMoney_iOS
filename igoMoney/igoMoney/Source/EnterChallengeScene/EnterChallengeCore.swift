@@ -15,6 +15,8 @@ struct EnterChallengeButtonCore: Reducer {
   
   enum Action: Equatable {
     case onAppear
+    case didTapButton
+    
     case _fetchCanEnterResponse(TaskResult<Challenge>)
   }
   
@@ -30,6 +32,9 @@ struct EnterChallengeButtonCore: Reducer {
           )
         )
       }
+      
+    case .didTapButton:
+      return .none
       
     case ._fetchCanEnterResponse(.success):
       state.canEnter = false
@@ -99,6 +104,8 @@ struct EnterChallengeCore: Reducer {
   }
   
   enum Action: Equatable {
+    case showAlert(Bool)
+    
     case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
     case enterChallengeButtonAction(EnterChallengeButtonCore.Action)
   }
@@ -126,7 +133,21 @@ struct EnterChallengeCore: Reducer {
     }
     
     Reduce { state, action in
-      return .none
+      switch action {
+      case .showAlert(true):
+        state.showAlert = true
+        return .none
+        
+      case .showAlert(false):
+        state.showAlert = false
+        return .none
+        
+      case .enterChallengeButtonAction(.didTapButton):
+        return .send(.showAlert(true))
+        
+      default:
+        return .none
+      }
     }
   }
 }
