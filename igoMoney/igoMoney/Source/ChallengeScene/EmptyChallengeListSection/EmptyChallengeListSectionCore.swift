@@ -89,11 +89,6 @@ struct EmptyChallengeListSectionCore: Reducer {
         print("Error in fetch Empty Challenges")
         return .none
         
-      case .exploreChallengeAction(.enterAction(._closeAlert)), .exploreChallengeAction(.dismiss):
-        return .run { send in
-          await send(.showExplore(false))
-        }
-        
       case .exploreChallengeAction:
         return .none
         

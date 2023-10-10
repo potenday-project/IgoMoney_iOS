@@ -6,102 +6,83 @@
 
 import ComposableArchitecture
 
-struct EnterChallengeCore: Reducer {
+struct EnterChallengeButtonCore: Reducer {
+  struct State: Equatable {
+    var canEnter: Bool = true
+  }
+  
+  @Dependency(\.challengeClient) var challengeClient
+  
+  enum Action: Equatable {
+    case onAppear
+    case _fetchEnterChallengeResponse(TaskResult<Challenge>)
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .onAppear:
+      return .run { send in
+        await send(
+          ._fetchEnterChallengeResponse(
+            TaskResult {
+              try await challengeClient.getMyChallenge()
+            }
+          )
+        )
+      }
+      
+    case ._fetchEnterChallengeResponse(.success):
+      state.canEnter = true
+      return .none
+      
+    case ._fetchEnterChallengeResponse(.failure):
+      state.canEnter = false
+      return .none
+    }
+  }
+}
+
+struct EnterChallengeInformationCore: Reducer {
   struct State: Equatable {
     let challenge: Challenge
+  }
+  
+  enum Action: Equatable {
+    
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    return .none
+  }
+}
+
+struct EnterChallengeCore: Reducer {
+  struct State: Equatable {
     var showAlert: Bool = false
     var showProgressView: Bool = false
     
-    var leader: User?
+    var enterChallengeButtonState = EnterChallengeButtonCore.State()
+    var challengeInformationState: EnterChallengeInformationCore.State
     
-    var leaderID: String {
-      return challenge.leaderID.description
+    init(challenge: Challenge) {
+      self.challengeInformationState = EnterChallengeInformationCore.State(challenge: challenge)
     }
   }
   
   enum Action: Equatable {
-    // User Action
-    case enterChallenge
-    case dismiss
-    case setShowAlert(Bool)
-    
-    // Inner Action
-    case _onAppear
-    case _closeAlert
-    case _fetchLeaderResponse(TaskResult<User>)
-    case _enterChallengeResponse(TaskResult<Bool>)
+    case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
   }
   
   @Dependency(\.userClient) var userClient
   @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.challengeInformationState, action: /Action.enterChallengeInformationAction) {
+      EnterChallengeInformationCore()
+    }
+    
     Reduce { state, action in
-      switch action {
-      case .enterChallenge:
-        // TODO: - 사용자 입장 메서드 수행
-        state.showProgressView = true
-        return .run { [challengeID = state.challenge.id] send in
-          await send(
-            ._enterChallengeResponse(
-              TaskResult {
-                try await challengeClient.enterChallenge(challengeID.description)
-              }
-            )
-          )
-        }
-        
-      case .dismiss:
-        return .none
-        
-      case .setShowAlert(true):
-        state.showAlert = true
-        return .none
-        
-      case .setShowAlert(false):
-        state.showAlert = false
-        return .none
-        
-      case ._onAppear:
-        return .run { [leaderID = state.leaderID] send in
-            await send(
-              ._fetchLeaderResponse(
-                TaskResult {
-                  try await userClient.getUserInformation(leaderID)
-                }
-              )
-            )
-        }
-        
-      case ._closeAlert:
-        state.showAlert = false
-        return .none
-        
-      case ._fetchLeaderResponse(.success(let leader)):
-        state.leader = leader
-        return .none
-        
-      case ._fetchLeaderResponse(.failure):
-        return .none
-        
-      case ._enterChallengeResponse(.success):
-        state.showProgressView = false
-        return .run { send in
-          await send(._closeAlert)
-        }
-        
-      case ._enterChallengeResponse(.failure(let error)):
-        if case let .badRequest(statusCode) = error as? APIError {
-          if statusCode == 409 {
-            // 이미 챌린지를 가지고 있는 경우 - 버튼 비활성화
-          }
-          
-          if statusCode == 404 {
-            // 알수 없는 오류 발생 (사용자 나 챌린지의 정보가 잘못됨
-          }
-        }
-        return .none
-      }
+      return .none
     }
   }
 }

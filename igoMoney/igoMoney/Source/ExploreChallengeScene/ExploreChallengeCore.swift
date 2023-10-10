@@ -67,17 +67,6 @@ struct ExploreChallengeCore: Reducer {
         return .none
         
         // Child Action
-      case .enterAction(._closeAlert):
-        return .run { send in
-          sleep(1)
-          await send(._setNavigation(selection: nil))
-        }
-        
-      case .enterAction(.dismiss):
-        return .run { send in
-          await send(._setNavigation(selection: nil))
-        }
-        
       case .enterAction:
         return .none
       }
