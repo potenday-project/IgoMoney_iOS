@@ -73,18 +73,23 @@ struct EnterChallengeScene: View {
       ) {
         IGOAlertView {
           Text("챌린지에 참가하시겠습니까?")
+            .font(.pretendard(size: 18, weight: .medium))
         } primaryButton: {
-          IGOAlertButton(
-            title: Text("네").foregroundColor(.black),
-            color: ColorConstants.primary3,
-            action: { }
-          )
+          IGOAlertButton(color: ColorConstants.primary) {
+            // TODO: - 사용자 참가 네트워크 메서드 구현
+          } title: {
+            Text("네")
+              .font(.pretendard(size: 16, weight: .medium))
+              .foregroundColor(.black)
+          }
         } secondaryButton: {
-          IGOAlertButton(
-            title: Text("아니요").foregroundColor(ColorConstants.gray3),
-            color: ColorConstants.gray5,
-            action: { store.send(.showAlert(false)) }
-          )
+          IGOAlertButton(color: ColorConstants.gray5) {
+            store.send(.showAlert(false))
+          } title: {
+            Text("아니요")
+              .font(.pretendard(size: 16, weight: .medium))
+              .foregroundColor(ColorConstants.gray3)
+          }
         }
       }
     }

@@ -70,23 +70,3 @@ extension View {
     }
   }
 }
-
-#Preview {
-  IGOAlertView {
-    Text("챌린지에 참가하시겠습니까?")
-      .multilineTextAlignment(.center)
-      .font(.pretendard(size: 18, weight: .bold))
-  } primaryButton: {
-    IGOAlertButton(
-      title: Text("네").foregroundColor(Color.black),
-      color: ColorConstants.primary
-    ) {
-    }
-  } secondaryButton: {
-    IGOAlertButton(
-      title: Text("아니요").foregroundColor(ColorConstants.gray3),
-      color: ColorConstants.gray5
-    ) {
-    }
-  }
-}
