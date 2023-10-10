@@ -47,13 +47,7 @@ struct IGOAlertView<Content: View>: View {
 
 extension View {
   func alert<Content: View>(isPresent: Binding<Bool>, alert: () -> IGOAlertView<Content>) -> some View {
-    let keyWindow = UIApplication.shared.connectedScenes
-      .filter { $0.activationState == .foregroundActive }
-      .compactMap { $0 as? UIWindowScene }
-      .first?
-      .windows
-      .filter { $0.isKeyWindow }
-      .first
+    let keyWindow = UIApplication.shared.topWindow()
     
     let viewController = UIHostingController(rootView: alert())
     viewController.modalTransitionStyle = .crossDissolve

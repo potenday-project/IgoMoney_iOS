@@ -77,6 +77,7 @@ struct EnterChallengeScene: View {
         } primaryButton: {
           IGOAlertButton(color: ColorConstants.primary) {
             // TODO: - 사용자 참가 네트워크 메서드 구현
+            store.send(.enterChallenge)
           } title: {
             Text("네")
               .font(.pretendard(size: 16, weight: .medium))
@@ -92,6 +93,12 @@ struct EnterChallengeScene: View {
           }
         }
       }
+      
+//      WithViewStore(store, observe: { $0.showProgressView }) { showProgress in
+//        if showProgress.state {
+//          ProgressView()
+//        }
+//      }
     }
   }
 }

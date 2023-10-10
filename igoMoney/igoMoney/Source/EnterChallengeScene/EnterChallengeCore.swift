@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import ComposableArchitecture
+import Foundation
 
 struct EnterChallengeButtonCore: Reducer {
   struct State: Equatable {
@@ -105,6 +106,9 @@ struct EnterChallengeCore: Reducer {
   
   enum Action: Equatable {
     case showAlert(Bool)
+    case enterChallenge
+    
+    case _requestEnterChallenge(TaskResult<Bool>)
     
     case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
     case enterChallengeButtonAction(EnterChallengeButtonCore.Action)
@@ -142,8 +146,29 @@ struct EnterChallengeCore: Reducer {
         state.showAlert = false
         return .none
         
+      case .enterChallenge:
+        state.showAlert = false
+        state.showProgressView = true
+        return .run { [challengeID = state.challengeInformationState.challenge.id] send in
+          await send(
+            ._requestEnterChallenge(
+              TaskResult {
+                try await challengeClient.enterChallenge(challengeID.description)
+              }
+            )
+          )
+        }
+        
       case .enterChallengeButtonAction(.didTapButton):
         return .send(.showAlert(true))
+        
+      case ._requestEnterChallenge(.success):
+        state.showProgressView = false
+        return .none
+        
+      case ._requestEnterChallenge(.failure):
+        print("에러 발생")
+        return .none
         
       default:
         return .none
