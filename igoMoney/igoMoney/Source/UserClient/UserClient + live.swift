@@ -41,10 +41,7 @@ extension UserClient {
         query: [:],
         header: [:]
       )
-      return try await apiClient.execute(to: api)
-        .data
-        .base64EncodedString()
-        .isEmpty
+      return try await apiClient.execute(to: api).isEmpty
     } updateUserInformation: { id, nickName in
       let boundary = "Boundary_\(UUID().uuidString)"
       let api = AuthAPI(
@@ -60,10 +57,7 @@ extension UserClient {
         )
       )
       
-      return try await apiClient.execute(to: api)
-        .data
-        .base64EncodedString()
-        .isEmpty
+      return try await apiClient.execute(to: api).isEmpty
       
     } getUserInformation: { userID in
       let api = AuthAPI(method: .get, path: "/users/\(userID)", query: [:], header: [:], body: nil)
@@ -97,9 +91,7 @@ extension UserClient {
         body: .json(value: tokenData)
       )
       
-      return try await apiClient.execute(to: api)
-        .data
-        .isEmpty
+      return try await apiClient.execute(to: api).isEmpty
     }
   }()
 }
