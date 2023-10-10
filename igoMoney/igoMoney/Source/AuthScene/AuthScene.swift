@@ -49,14 +49,17 @@ struct AuthScene: View {
                     let token = await AuthController.shared.authorizationWithKakao()
 //                    viewStore.send(._loginWithKakao)
                   }
-                }
-                
-                if provider == .apple {
-                  AuthController.shared.appleCompletion = { user, idToken, authToken in
-                    viewStore.send(.didTapAppleLogin(user: user, identityCode: idToken, authCode: authToken))
-                  }
                   
-                  AuthController.shared.authorizationWithApple()
+                  if provider == .apple {
+                    let response = try await AuthController.shared.authorizationWithApple()
+                    viewStore.send(
+                      .didTapAppleLogin(
+                        user: response.userIdentifier,
+                        identityCode: response.idToken,
+                        authCode: response.authToken
+                      )
+                    )
+                  }
                 }
               }
               .padding(.horizontal)

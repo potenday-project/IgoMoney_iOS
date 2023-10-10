@@ -14,14 +14,38 @@ import KakaoSDKUser
 @MainActor
 class AuthController: NSObject {
   static let shared = AuthController()
+  
+  typealias AppleTokenResponse = (userIdentifier: String, idToken: String, authToken: String)
+  typealias AppleToken = (response: AppleTokenResponse?, error: Error?)
+  
   private var authToken: OAuthToken?
-  var appleCompletion: ((_ userIdentifier: String, _ idToken: String, _ authToken: String) -> Void)?
+  var appleCompletion: ((AppleToken) -> Void)?
   
   init(authToken: OAuthToken? = nil) {
     self.authToken = authToken
   }
   
-  func authorizationWithApple() {
+  func authorizationWithApple() async throws -> AppleTokenResponse {
+    return try await withCheckedThrowingContinuation { continuation in
+      self.appleCompletion = { appleToken in
+        if let error = appleToken.error {
+          continuation.resume(throwing: error)
+          return
+        }
+        
+        if let response = appleToken.response {
+          continuation.resume(returning: response)
+          return
+        }
+        
+        continuation.resume(throwing: ASAuthorizationError(ASAuthorizationError.invalidResponse))
+      }
+      
+      self.requestAppleAuthController()
+    }
+  }
+  
+  func requestAppleAuthController() {
     let IdRequest = ASAuthorizationAppleIDProvider().createRequest()
 //    let passwordRequest = ASAuthorizationPasswordProvider().createRequest()
     IdRequest.requestedScopes = [.fullName, .email]
@@ -55,8 +79,8 @@ extension AuthController {
 
 extension AuthController: ASAuthorizationControllerDelegate {
   func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-    // Handling Apple Sign Error
-    print(error)
+    appleCompletion?(AppleToken(nil, error))
+    appleCompletion = nil
   }
   
   func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -71,7 +95,8 @@ extension AuthController: ASAuthorizationControllerDelegate {
         return
       }
       let user = credential.user
-      appleCompletion?(user, idToken, authToken)
+      let response = AppleTokenResponse(user, idToken, authToken)
+      appleCompletion?(AppleToken(response, nil))
     }
     
   }
