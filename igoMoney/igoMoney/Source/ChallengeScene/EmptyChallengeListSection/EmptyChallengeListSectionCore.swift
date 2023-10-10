@@ -10,24 +10,33 @@ import ComposableArchitecture
 
 struct EmptyChallengeListSectionCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<ChallengeDetailCore.State> = []
+    var challenges: [Challenge] = []
+    
     var showExplore: Bool = false
+    
     var exploreChallengeState: ExploreChallengeCore.State?
+    var enterSelection: EnterChallengeCore.State?
   }
   
   enum Action: Equatable, Sendable {
     // User Action
     case showExplore(Bool)
+    case showEnter(Challenge?)
     
     // Inner Action
     case _onAppear
     case _setExploreState
     case _removeExploreState
     
+    case _notStartedChallengeListResponse(TaskResult<[Challenge]>)
+    
     // Child Action
-    case challengeDetail(id: ChallengeDetailCore.State.ID, action: ChallengeDetailCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
+    case enterAction(EnterChallengeCore.Action)
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
+  private enum CancelID { case load }
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
@@ -43,21 +52,24 @@ struct EmptyChallengeListSectionCore: Reducer {
           await send(._removeExploreState)
         }
         
-        // Inner Action
-      case ._onAppear:
-        let informations = ChallengeInformation.default
-        informations.forEach {
-          let detailState = ChallengeDetailCore.State(
-            id: UUID(),
-            title: $0.title,
-            content: $0.content,
-            targetAmount: $0.targetAmount,
-            user: $0.user
-          )
-          state.challenges.append(detailState)
-        }
-        
+      case let .showEnter(.some(challenge)):
+        state.enterSelection = EnterChallengeCore.State(challenge: challenge)
         return .none
+        
+      case .showEnter(.none):
+        state.enterSelection = nil
+        return .none
+        
+      case ._onAppear:
+        return .run { send in
+          await send(
+            ._notStartedChallengeListResponse(
+              TaskResult {
+                try await challengeClient.fetchNotStartedChallenge()
+              }
+            )
+          )
+        }
         
       case ._setExploreState:
         state.exploreChallengeState = ExploreChallengeCore.State()
@@ -69,24 +81,27 @@ struct EmptyChallengeListSectionCore: Reducer {
         state.showExplore = false
         return .none
         
-        // Child Action
-      case .challengeDetail:
+      case ._notStartedChallengeListResponse(.success(let challenges)):
+        state.challenges = challenges
+        print(state.challenges)
         return .none
         
-      case .exploreChallengeAction(.enterAction(._closeAlert)), .exploreChallengeAction(.dismiss):
-        return .run { send in
-          await send(.showExplore(false))
-        }
+      case ._notStartedChallengeListResponse(.failure):
+        print("Error in fetch Empty Challenges")
+        return .none
         
       case .exploreChallengeAction:
+        return .none
+        
+      case .enterAction:
         return .none
       }
     }
     .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {
       ExploreChallengeCore()
     }
-    .forEach(\.challenges, action: /Action.challengeDetail) {
-      ChallengeDetailCore()
+    .ifLet(\.enterSelection, action: /Action.enterAction) {
+      EnterChallengeCore()
     }
-  }
+   }
 }

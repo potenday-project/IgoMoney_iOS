@@ -10,9 +10,9 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<ChallengeInformation> = IdentifiedArray(uniqueElements: ChallengeInformation.default)
+    var challenges: IdentifiedArrayOf<Challenge> = []
     var selectedMoney: MoneyType = .all
-    var selection: Identified<ChallengeInformation.ID, EnterChallengeCore.State?>?
+    var selection: Identified<Challenge.ID, EnterChallengeCore.State?>?
     var isActivityIndicatorVisible: Bool = false
   }
   
@@ -22,7 +22,7 @@ struct ExploreChallengeCore: Reducer {
     case dismiss
     
     // Inner Action
-    case _setNavigation(selection: UUID?)
+    case _setNavigation(selection: Int?)
     case _setNavigationSelection
     
     // Child Action
@@ -56,33 +56,24 @@ struct ExploreChallengeCore: Reducer {
         return .cancel(id: CancelID.load)
         
       case ._setNavigationSelection:
-        guard let id = state.selection?.id,
-              let enterChallenge = state.challenges[id: id] else {
-          return .none
-        }
+//        guard let id = state.selection?.id,
+//              let enterChallenge = state.challenges[id: id] else {
+//          return .none
+//        }
+//        
+//        state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
+//        return .none
         
-        state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
         return .none
         
         // Child Action
-      case .enterAction(._closeAlert):
-        return .run { send in
-          sleep(1)
-          await send(._setNavigation(selection: nil))
-        }
-        
-      case .enterAction(.dismiss):
-        return .run { send in
-          await send(._setNavigation(selection: nil))
-        }
-        
       case .enterAction:
         return .none
       }
     }
     .ifLet(\.selection, action: /Action.enterAction) {
       EmptyReducer()
-        .ifLet(\Identified<ChallengeInformation.ID, EnterChallengeCore.State?>.value, action: .self) {
+        .ifLet(\Identified<Challenge.ID, EnterChallengeCore.State?>.value, action: .self) {
           EnterChallengeCore()
         }
     }

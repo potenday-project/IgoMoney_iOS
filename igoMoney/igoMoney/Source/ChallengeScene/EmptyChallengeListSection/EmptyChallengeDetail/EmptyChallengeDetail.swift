@@ -17,14 +17,13 @@ struct EmptyChallengeDetail: View {
       WithViewStore(store, observe: { $0.title }) { viewStore in
         Text(viewStore.state)
           .multilineTextAlignment(.leading)
-          .minimumScaleFactor(0.5)
           .lineLimit(2)
-          .font(.pretendard(size: 16, weight: .bold))
-          .lineHeight(font: .pretendard(size: 16, weight: .bold), lineHeight: 23)
+          .font(.pretendard(size: 16, weight: .semiBold))
+          .lineHeight(font: .pretendard(size: 16, weight: .semiBold), lineHeight: 23)
       }
       
       // 챌린지 생성자 닉네임
-      WithViewStore(store, observe: { $0.user }) { viewStore in
+      WithViewStore(store, observe: { $0.leader }) { viewStore in
         Text(viewStore.nickName ?? "")
           .font(.system(size: 12, weight: .medium))
       }
@@ -49,18 +48,18 @@ struct EmptyChallengeDetail: View {
         Spacer()
         
         // 사용자 이미지
-        WithViewStore(store, observe: { $0.user.profileImagePath }) { viewStore in
+        WithViewStore(store, observe: { $0.leader.profileImagePath }) { viewStore in
           if let path = viewStore.state {
             // 사용자 프로필 이미지로 변경하기
             Image("default_profile")
               .resizable()
               .scaledToFit()
-              .frame(width: 60)
+              .frame(width: 50)
           } else {
             Image("default_profile")
               .resizable()
               .scaledToFit()
-              .frame(width: 60)
+              .frame(width: 50)
           }
         }
       }
@@ -75,5 +74,19 @@ struct EmptyChallengeDetail: View {
           y: 2
         )
     )
+    .frame(minHeight: 190)
+    .onAppear {
+      store.send(._onAppear)
+    }
   }
+}
+
+#Preview {
+  EmptyChallengeDetail(
+    store: Store(
+      initialState: ChallengeDetailCore.State(
+        challenge: .default
+      ), reducer: { ChallengeDetailCore() }
+    )
+  )
 }

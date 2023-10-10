@@ -8,20 +8,16 @@ import Foundation
 
 protocol Networking {
   func request<T: Decodable>(to generator: RequestGenerator) async throws -> T
-  func execute(to generator: RequestGenerator) async throws -> (data: Data, response: URLResponse)
+  func execute(to generator: RequestGenerator) async throws -> Data
 }
 
 extension Networking {
-  func execute(to generator: RequestGenerator) async throws -> (data: Data, response: URLResponse) {
+  func execute(to generator: RequestGenerator) async throws -> Data {
     guard let request = try? generator.generate() else {
       throw APIError.didNotConvertRequest
     }
     
-    return try await URLSession.shared.data(for: request)
-  }
-  
-  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
-    let (data, response) = try await execute(to: generator)
+    let (data, response) = try await URLSession.shared.data(for: request)
     
     guard let response = response as? HTTPURLResponse else {
       throw APIError.invalidResponse
@@ -29,11 +25,16 @@ extension Networking {
     
     try handleStatusCode(with: response.statusCode)
     
-    guard let decodedData = try? JSONDecoder().decode(T.self, from: data) else {
+    return data
+  }
+  
+  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
+    let data = try await execute(to: generator)
+    guard let decodeData = try? JSONDecoder().decode(T.self, from: data) else {
       throw APIError.couldNotConvertJson
     }
     
-    return decodedData
+    return decodeData
   }
   
   private func handleStatusCode(with code: Int) throws {

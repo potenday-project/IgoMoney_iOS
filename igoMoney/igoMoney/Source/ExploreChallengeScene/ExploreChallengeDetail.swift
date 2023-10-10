@@ -9,22 +9,22 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreChallengeDetail: View {
-  let challenge: ChallengeInformation
+  let challenge: Challenge
   
   var body: some View {
     HStack(alignment: .center) {
-      if let path = challenge.user.profileImagePath {
-        Image(path)
-          .frame(width: 65, height: 65)
-      } else {
-        Image("default_profile")
-          .frame(width: 65, height: 65)
-      }
+//      if let path = challenge.user.profileImagePath {
+//        Image(path)
+//          .frame(width: 65, height: 65)
+//      } else {
+//        Image("default_profile")
+//          .frame(width: 65, height: 65)
+//      }
       
       HStack(alignment: .firstTextBaseline) {
         VStack(alignment: .leading, spacing: .zero) {
-          Text(challenge.user.nickName ?? "" + "님")
-            .font(.pretendard(size: 12, weight: .medium))
+//          Text(challenge.user.nickName ?? "" + "님")
+//            .font(.pretendard(size: 12, weight: .medium))
           
           Text(challenge.title)
             .font(.pretendard(size: 16, weight: .bold))
@@ -56,11 +56,5 @@ struct ExploreChallengeDetail: View {
       radius: 8,
       y: 2
     )
-  }
-}
-
-struct ExploreChallengeDetail_Previews: PreviewProvider {
-  static var previews: some View {
-    ExploreChallengeDetail(challenge: .default.first!)
   }
 }

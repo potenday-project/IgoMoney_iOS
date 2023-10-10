@@ -13,10 +13,10 @@ struct IGOAlertButton: View {
   private let title: Text
   let color: Color?
   
-  init(title: Text, color: Color? = nil, action: @escaping Action) {
-    self.title = title
+  init(color: Color? = nil, action: @escaping Action, title: () -> Text) {
     self.color = color
     self.action = action
+    self.title = title()
   }
   
   var body: some View {
@@ -24,9 +24,30 @@ struct IGOAlertButton: View {
       action()
     } label: {
       title
-        .frame(maxWidth: 200, maxHeight: 40)
+        .frame(maxWidth: .infinity, maxHeight: 40)
     }
     .background(color)
     .cornerRadius(8)
   }
+}
+
+#Preview {
+  HStack(spacing: 8) {
+    IGOAlertButton(color: ColorConstants.primary) {
+      
+    } title: {
+      Text("네")
+        .foregroundColor(.black)
+        .font(.pretendard(size: 16, weight: .medium))
+    }
+    
+    IGOAlertButton(color: ColorConstants.primary) {
+      
+    } title: {
+      Text("아니요")
+        .foregroundColor(.black)
+        .font(.pretendard(size: 16, weight: .medium))
+    }
+  }
+  .previewLayout(.sizeThatFits)
 }

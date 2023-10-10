@@ -24,6 +24,33 @@ extension ChallengeClient {
       
       let response: Challenge = try await apiClient.request(to: requestGenerator)
       return response
+    } fetchNotStartedChallenge: {
+      let requestGenerator = ChallengeAPI(
+        method: .get,
+        path: "/challenges/notstarted",
+        query: [:],
+        header: [:]
+      )
+      
+      let response: [Challenge] = try await apiClient.request(to: requestGenerator)
+      return response
+    } enterChallenge: { challengeID in
+      guard let userID = APIClient.currentUser else {
+        throw APIError.badRequest(400)
+      }
+      
+      let requestGenerator = ChallengeAPI(
+        method: .post,
+        path: "/challenges/apply/\(challengeID)/\(userID.userID.description)",
+        query: [:],
+        header: [:]
+      )
+      
+      print(requestGenerator)
+      
+      let data = try await apiClient.execute(to: requestGenerator)
+      print(#fileID, #function, #line, "Challenge Apply Response", String(data: data, encoding: .utf8))
+      return true
     }
   }()
 }

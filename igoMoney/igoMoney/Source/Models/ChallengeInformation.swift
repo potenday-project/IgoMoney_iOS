@@ -6,8 +6,8 @@
 
 import Foundation
 
-struct Challenge: Decodable, Equatable {
-  let challengeID: Int
+struct Challenge: Decodable, Equatable, Identifiable {
+  let id: Int
   let recordID: Int?
   let leaderID: Int
   let competitorID: Int?
@@ -28,12 +28,12 @@ struct Challenge: Decodable, Equatable {
   }
   
   var userDescription: String {
-    return isStart ? "\(challengeID)님과 챌린지 진행 중" : "\(challengeID)님과 챌린지"
+    return isStart ? "\(id)님과 챌린지 진행 중" : "\(id)님과 챌린지"
   }
   
   enum CodingKeys: String, CodingKey {
     case recordID = "recordId"
-    case challengeID = "id"
+    case id = "id"
     case leaderID = "leaderId"
     case competitorID = "competitorId"
     case winnerID = "winnerId"
@@ -44,8 +44,8 @@ struct Challenge: Decodable, Equatable {
 extension Challenge {
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
+    id = try container.decode(Int.self, forKey: .id)
     recordID = try? container.decode(Int.self, forKey: .recordID)
-    challengeID = try container.decode(Int.self, forKey: .challengeID)
     leaderID = try container.decode(Int.self, forKey: .leaderID)
     competitorID = try? container.decode(Int.self, forKey: .competitorID)
     winnerID = try? container.decode(Int.self, forKey: .winnerID)
@@ -59,75 +59,18 @@ extension Challenge {
   }
   
   static let `default`: Challenge = .init(
-    challengeID: 1,
+    id: 3,
     recordID: nil,
-    leaderID: 4,
+    leaderID: 2,
     competitorID: nil,
     winnerID: nil,
-    title: "같이 절약 챌린지 성공해봐요!",
-    content: "오늘부터 일주일 동안 30000원으로 대결하실 분~",
+    title: "만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요!",
+    content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
     targetAmount: .init(money: 30000),
-    startDate: Date(),
-    term: 5,
+    startDate: nil,
+    term: nil,
     endDate: nil
   )
-}
-
-struct ChallengeInformation: Decodable, Equatable, Identifiable {
-  var id = UUID()
-  
-  let title: String
-  let content: String
-  let targetAmount: TargetMoneyAmount
-  var startDate: Date? = nil
-  let user: User
-  
-  var challengeDateRange: [Date] {
-    guard let startDate = startDate else { return Array(repeating: Date(), count: 7) }
-    var dates = [Date]()
-    for index in 0..<7 {
-      let interval = Double(index * 86400)
-      dates.append(startDate.addingTimeInterval(interval))
-    }
-    return dates
-  }
-  
-  static let `default`: [Self] = [
-    ChallengeInformation(
-      title: "일주일에 3만원으로 살아남기 👊🏻",
-      content: "",
-      targetAmount: .init(money: 10000),
-      user: .default
-    ),
-    ChallengeInformation(
-      title: "일주일에 3만원으로 살아남기 👊🏻",
-      content: "",
-      targetAmount: .init(money: 20000),
-      user: .default
-    ),
-    ChallengeInformation(
-      title: "일주일에 3만원으로 살아남기 👊🏻",
-      content: "",
-      targetAmount: .init(money: 30000),
-      user: .default
-    ),
-    ChallengeInformation(
-      title: "일주일에 3만원으로 살아남기 👊🏻",
-      content: "",
-      targetAmount: .init(money: 40000),
-      user: .default
-    ),
-    ChallengeInformation(
-      title: "일주일에 3만원으로 살아남기 👊🏻",
-      content: "",
-      targetAmount: .init(money: 50000),
-      user: .default
-    )
-  ]
-  
-  static func == (lhs: ChallengeInformation, rhs: ChallengeInformation) -> Bool {
-    return lhs.id == rhs.id
-  }
 }
 
 struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
@@ -181,4 +124,15 @@ struct User: Decodable, Equatable {
     profileImagePath: nil,
     role: "ROLE_USER"
   )
+}
+
+extension User {
+  init(userID: Int) {
+    self.userID = userID
+    self.provider = nil
+    self.email = ""
+    self.nickName = nil
+    self.profileImagePath = nil
+    self.role = "ROLE_USER"
+  }
 }
