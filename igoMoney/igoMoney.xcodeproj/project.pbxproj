@@ -33,6 +33,7 @@
 		181988B02ACE75CC0021214C /* DateFormatter + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */; };
 		181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988B12ACE80840021214C /* ChallengeAPI.swift */; };
 		1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */; };
+		182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */; };
 		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
 		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
@@ -118,6 +119,7 @@
 		181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter + Extensions.swift"; sourceTree = "<group>"; };
 		181988B12ACE80840021214C /* ChallengeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAPI.swift; sourceTree = "<group>"; };
 		1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomScene.swift; sourceTree = "<group>"; };
 		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		18497C1F2ABDFB320041C350 /* IGOAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertView.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				182B1B5D2AD678C700D01DBA /* GenerateRoomScene */,
 				181988AA2ACE72200021214C /* ChallengeClient */,
 				18A152302AC97FD100B8B8A4 /* SettingScene */,
 				18B4377B2AC17EC90026A71E /* KeyChainClient */,
@@ -332,6 +335,14 @@
 				181988AD2ACE73F40021214C /* ChallengeClient + live.swift */,
 			);
 			path = ChallengeClient;
+			sourceTree = "<group>";
+		};
+		182B1B5D2AD678C700D01DBA /* GenerateRoomScene */ = {
+			isa = PBXGroup;
+			children = (
+				182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */,
+			);
+			path = GenerateRoomScene;
 			sourceTree = "<group>";
 		};
 		183B475E2ABF449900976BFF /* ChallengeStateScene */ = {
@@ -668,6 +679,7 @@
 				18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
+				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
 				1865C4182AC14662006B5B8A /* ChallengeAnalysisView.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
