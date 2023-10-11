@@ -21,6 +21,7 @@ struct GenerateRoomCore: Reducer {
     case selectTargetAmount(TargetMoneyAmount)
     case selectCategory(ChallengeCategory)
     case didChangeTitle(String)
+    case didChangeContent(String)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -35,6 +36,10 @@ struct GenerateRoomCore: Reducer {
       
     case .didChangeTitle(let title):
       state.title = title
+      return .none
+      
+    case .didChangeContent(let content):
+      state.content = content
       return .none
       
     default:

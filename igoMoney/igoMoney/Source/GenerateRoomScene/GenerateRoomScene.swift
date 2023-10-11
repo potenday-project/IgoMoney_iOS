@@ -198,14 +198,18 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            TextView(
-              configuration: textViewConfiguration,
-              textLimit: 50,
-              text: .constant(""),
-              height: .constant(.infinity)
-            )
-            .frame(minHeight: 70, maxHeight: .infinity)
-            .background(Color.red)
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              TextView(
+                configuration: textViewConfiguration,
+                textLimit: 50,
+                text: viewStore.binding(
+                  get: \.content,
+                  send: GenerateRoomCore.Action.didChangeContent
+                ),
+                height: .constant(.infinity)
+              )
+              .frame(minHeight: 70, maxHeight: .infinity)
+            }
           }
         }
         .padding(.horizontal, 24)
