@@ -89,7 +89,12 @@ struct ExploreChallengeScene: View {
           send: ExploreChallengeCore.Action.showGenerate
         )
       ) {
-        GenerateRoomScene()
+        GenerateRoomScene(
+          store: self.store.scope(
+            state: \.generateState,
+            action: ExploreChallengeCore.Action.generateAction
+          )
+        )
       }
       .navigationBarHidden(true)
   }

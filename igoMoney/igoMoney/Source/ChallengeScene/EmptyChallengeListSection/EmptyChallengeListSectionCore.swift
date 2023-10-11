@@ -17,6 +17,8 @@ struct EmptyChallengeListSectionCore: Reducer {
     
     var exploreChallengeState: ExploreChallengeCore.State?
     var enterSelection: EnterChallengeCore.State?
+    
+    var generateChallengeState = GenerateRoomCore.State()
   }
   
   enum Action: Equatable, Sendable {
@@ -35,12 +37,17 @@ struct EmptyChallengeListSectionCore: Reducer {
     // Child Action
     case exploreChallengeAction(ExploreChallengeCore.Action)
     case enterAction(EnterChallengeCore.Action)
+    case generateAction(GenerateRoomCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
   private enum CancelID { case load }
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.generateChallengeState, action: /Action.generateAction) {
+      GenerateRoomCore()
+    }
+    
     Reduce { state, action in
       switch action {
         // User Action

@@ -6,10 +6,10 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 struct GenerateRoomScene: View {
-  @State private var title: String = ""
-  @State private var content: String = ""
-  
+  let store: StoreOf<GenerateRoomCore>
   var body: some View {
     VStack(spacing: 24) {
       // 네비게이션 바
@@ -184,5 +184,10 @@ struct GenerateRoomScene: View {
 }
 
 #Preview {
-  GenerateRoomScene()
+  GenerateRoomScene(
+    store: Store(
+      initialState: GenerateRoomCore.State(),
+      reducer: { GenerateRoomCore() }
+    )
+  )
 }

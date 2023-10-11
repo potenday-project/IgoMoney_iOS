@@ -16,6 +16,8 @@ struct ExploreChallengeCore: Reducer {
     
     var showGenerate: Bool = false
     var isActivityIndicatorVisible: Bool = false
+    
+    var generateState = GenerateRoomCore.State()
   }
   
   enum Action: Equatable {
@@ -30,6 +32,7 @@ struct ExploreChallengeCore: Reducer {
     
     // Child Action
     case enterAction(EnterChallengeCore.Action)
+    case generateAction(GenerateRoomCore.Action)
   }
   
   private enum CancelID {
@@ -37,6 +40,10 @@ struct ExploreChallengeCore: Reducer {
   }
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.generateState, action: /Action.generateAction) {
+      GenerateRoomCore()
+    }
+    
     Reduce { state, action in
       switch action {
         // User Action

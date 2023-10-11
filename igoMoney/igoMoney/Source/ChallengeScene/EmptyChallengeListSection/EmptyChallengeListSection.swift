@@ -96,7 +96,12 @@ struct EmptyChallengeListSection: View {
           send: EmptyChallengeListSectionCore.Action.showGenerate
         )
     ) {
-      GenerateRoomScene()
+      GenerateRoomScene(
+        store: self.store.scope(
+          state: \.generateChallengeState,
+          action: EmptyChallengeListSectionCore.Action.generateAction
+        )
+      )
     }
   }
 }

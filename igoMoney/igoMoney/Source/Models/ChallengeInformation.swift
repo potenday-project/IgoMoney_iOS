@@ -77,7 +77,7 @@ extension Challenge {
   )
 }
 
-enum ChallengeCategory: Int, Decodable, CustomStringConvertible {
+enum ChallengeCategory: Int, Decodable, CustomStringConvertible, CaseIterable {
   case living = 1
   case food
   case traffic
