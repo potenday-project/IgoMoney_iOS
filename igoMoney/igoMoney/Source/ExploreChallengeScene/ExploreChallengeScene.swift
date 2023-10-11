@@ -47,9 +47,9 @@ struct ExploreChallengeScene: View {
           }
           .accentColor(.black)
         } rightView: {
-          Button(action: {
-            // TODO: - 생성 화면 구현하기
-          }) {
+          Button{
+            store.send(.showGenerate(true))
+          } label: {
             Image(systemName: "plus.circle")
           }
           .font(.pretendard(size: 18, weight: .bold))
@@ -82,7 +82,16 @@ struct ExploreChallengeScene: View {
       }
     }
     .background(Color.white)
-    .navigationBarHidden(true)
+    .fullScreenCover(
+      isPresented: ViewStore(store, observe: { $0 })
+        .binding(
+          get: \.showGenerate,
+          send: ExploreChallengeCore.Action.showGenerate
+        )
+      ) {
+        GenerateRoomScene()
+      }
+      .navigationBarHidden(true)
   }
 }
 
@@ -155,15 +164,11 @@ struct ExploreChallengeFilterSection: View {
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationView {
-      ExploreChallengeScene(
-        store: Store(
-          initialState: ExploreChallengeCore.State(),
-          reducer: { ExploreChallengeCore() }
-        )
+    ExploreChallengeScene(
+      store: Store(
+        initialState: ExploreChallengeCore.State(),
+        reducer: { ExploreChallengeCore() }
       )
-      .navigationBarHidden(true)
-    }
-    .navigationBarHidden(true)
+    )
   }
 }

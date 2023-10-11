@@ -81,13 +81,22 @@ struct EmptyChallengeListSection: View {
           
           CreateChallengeButton()
             .onTapGesture {
-              // TODO: - 챌린지 생성 화면 이동 메서드 구현
+              viewStore.send(.showGenerate(true))
             }
         }
       }
     }
     .onAppear {
       store.send(._onAppear)
+    }
+    .fullScreenCover(
+      isPresented: ViewStore(store, observe: { $0 })
+        .binding(
+          get: \.showGenerate,
+          send: EmptyChallengeListSectionCore.Action.showGenerate
+        )
+    ) {
+      GenerateRoomScene()
     }
   }
 }

@@ -13,6 +13,7 @@ struct EmptyChallengeListSectionCore: Reducer {
     var challenges: [Challenge] = []
     
     var showExplore: Bool = false
+    var showGenerate: Bool = false
     
     var exploreChallengeState: ExploreChallengeCore.State?
     var enterSelection: EnterChallengeCore.State?
@@ -22,6 +23,7 @@ struct EmptyChallengeListSectionCore: Reducer {
     // User Action
     case showExplore(Bool)
     case showEnter(Challenge?)
+    case showGenerate(Bool)
     
     // Inner Action
     case _onAppear
@@ -58,6 +60,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case .showEnter(.none):
         state.enterSelection = nil
+        return .none
+        
+      case .showGenerate(true):
+        state.showGenerate = true
+        return .none
+        
+      case .showGenerate(false):
+        state.showGenerate = false
         return .none
         
       case ._onAppear:

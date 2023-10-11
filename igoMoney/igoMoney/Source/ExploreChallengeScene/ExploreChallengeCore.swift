@@ -13,12 +13,15 @@ struct ExploreChallengeCore: Reducer {
     var challenges: IdentifiedArrayOf<Challenge> = []
     var selectedMoney: MoneyType = .all
     var selection: Identified<Challenge.ID, EnterChallengeCore.State?>?
+    
+    var showGenerate: Bool = false
     var isActivityIndicatorVisible: Bool = false
   }
   
   enum Action: Equatable {
     // User Action
     case selectMoney(MoneyType)
+    case showGenerate(Bool)
     case dismiss
     
     // Inner Action
@@ -39,6 +42,14 @@ struct ExploreChallengeCore: Reducer {
         // User Action
       case .selectMoney(let moneyType):
         state.selectedMoney = moneyType
+        return .none
+        
+      case .showGenerate(true):
+        state.showGenerate = true
+        return .none
+        
+      case .showGenerate(false):
+        state.showGenerate = false
         return .none
         
       case .dismiss:
