@@ -9,6 +9,17 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GenerateRoomScene: View {
+  private let textViewConfiguration = TextView.Configuration(
+    maxHeight: 200,
+    textFont: .pretendard(size: 16, weight: .medium),
+    cornerRadius: 4,
+    borderWidth: 1,
+    borderColor: UIColor(named: "gray4"),
+    textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
+    placeholder: "챌린지 내용을 입력해주세요.",
+    placeholderColor: UIColor(named: "gray3") ?? .gray
+  )
+  
   let store: StoreOf<GenerateRoomCore>
   
   @ViewBuilder
@@ -152,7 +163,7 @@ struct GenerateRoomScene: View {
             .buttonStyle(.plain)
             .background(
               RoundedRectangle(cornerRadius: 4)
-                .stroke(ColorConstants.gray3)
+                .stroke(ColorConstants.gray3, lineWidth: 1)
             )
           }
           
@@ -165,21 +176,17 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            TextView(
-              configuration: .init(
-                maxHeight: 200,
-                textFont: .pretendard(size: 16, weight: .medium),
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              TextView(
+                configuration: textViewConfiguration,
                 textLimit: 15,
-                cornerRadius: 4,
-                borderWidth: 1,
-                borderColor: UIColor(named: "gray4"),
-                textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
-                placeholder: "제목을 입력해주세요.",
-                placeholderColor: UIColor(named: "gray3") ?? .gray
-              ),
-              text: .constant(""),
-              height: .constant(.infinity)
-            )
+                text: viewStore.binding(
+                  get: \.title,
+                  send: GenerateRoomCore.Action.didChangeTitle
+                ),
+                height: .constant(.infinity)
+              )
+            }
           }
           
           // 챌린지 내용 섹션
@@ -192,21 +199,13 @@ struct GenerateRoomScene: View {
               .foregroundColor(ColorConstants.gray3)
           } content: {
             TextView(
-              configuration: .init(
-                maxHeight: 200,
-                textFont: .pretendard(size: 16, weight: .medium),
-                textLimit: 50,
-                cornerRadius: 4,
-                borderWidth: 1,
-                borderColor: UIColor(named: "gray4"),
-                textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
-                placeholder: "챌린지 내용을 입력해주세요.",
-                placeholderColor: UIColor(named: "gray3") ?? .gray
-              ),
+              configuration: textViewConfiguration,
+              textLimit: 50,
               text: .constant(""),
               height: .constant(.infinity)
             )
             .frame(minHeight: 70, maxHeight: .infinity)
+            .background(Color.red)
           }
         }
         .padding(.horizontal, 24)

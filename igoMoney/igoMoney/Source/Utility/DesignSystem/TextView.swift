@@ -8,6 +8,7 @@ import SwiftUI
 
 public struct TextView: UIViewRepresentable {
   let configuration: Configuration
+  var textLimit: Int = 10
   @Binding var text: String
   @Binding var height: CGFloat
   
@@ -15,7 +16,6 @@ public struct TextView: UIViewRepresentable {
     var maxHeight: CGFloat
     var textFont: UIFont
     var textColor: UIColor = .label
-    var textLimit: Int = 10
     var cornerRadius: CGFloat? = nil
     var borderWidth: CGFloat? = nil
     var borderColor: UIColor? = nil
@@ -84,18 +84,17 @@ public struct TextView: UIViewRepresentable {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-      parent.text = textView.text
-      
       if textView.text.isEmpty {
         textView.textColor = parent.configuration.placeholderColor
       } else {
         textView.textColor = parent.configuration.textColor
       }
       
-      if textView.text.count > parent.configuration.textLimit {
+      if textView.text.count > parent.textLimit {
         textView.text.removeLast()
       }
       
+      parent.text = textView.text
       parent.updateHeight(textView)
     }
     
@@ -110,6 +109,5 @@ public struct TextView: UIViewRepresentable {
         textView.text = parent.configuration.placeholder
       }
     }
-    
   }
 }

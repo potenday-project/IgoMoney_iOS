@@ -20,6 +20,7 @@ struct GenerateRoomCore: Reducer {
   enum Action: Equatable {
     case selectTargetAmount(TargetMoneyAmount)
     case selectCategory(ChallengeCategory)
+    case didChangeTitle(String)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -30,6 +31,10 @@ struct GenerateRoomCore: Reducer {
       
     case .selectCategory(let category):
       state.selectionCategory = category
+      return .none
+      
+    case .didChangeTitle(let title):
+      state.title = title
       return .none
       
     default:
