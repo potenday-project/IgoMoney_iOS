@@ -12,9 +12,9 @@ struct IGONavigationBar<C, L, R>: View where C: View, L: View, R: View {
   let rightView: (() -> R)?
   
   init(
-    centerView: (() -> C)? = nil,
-    leftView: (() -> L)? = nil,
-    rightView: (() -> R)? = nil
+    centerView: (() -> C)? = {  EmptyView() },
+    leftView: (() -> L)? = {  EmptyView() },
+    rightView: (() -> R)? = {  EmptyView() }
   ) {
     self.leftView = leftView
     self.centerView = centerView
