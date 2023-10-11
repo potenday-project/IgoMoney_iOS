@@ -15,6 +15,7 @@ struct Challenge: Decodable, Equatable, Identifiable {
   let title: String
   let content: String
   let targetAmount: TargetMoneyAmount
+  let category: ChallengeCategory
   let startDate: Date?
   let term: Int?
   let endDate: Date?
@@ -37,6 +38,7 @@ struct Challenge: Decodable, Equatable, Identifiable {
     case leaderID = "leaderId"
     case competitorID = "competitorId"
     case winnerID = "winnerId"
+    case category = "categoryId"
     case title, content, targetAmount, startDate, term, endDate
   }
 }
@@ -71,6 +73,44 @@ extension Challenge {
     term: nil,
     endDate: nil
   )
+}
+
+enum ChallengeCategory: Int, Decodable, CustomStringConvertible {
+  case living = 1
+  case food
+  case traffic
+  case shopping
+  case hobby
+  
+  var description: String {
+    switch self {
+    case .living:
+      return "생활비"
+    case .food:
+      return "식비"
+    case .traffic:
+      return "교통비"
+    case .shopping:
+      return "쇼핑"
+    case .hobby:
+      return "취미"
+    }
+  }
+  
+  var emoji: String {
+    switch self {
+    case .living:
+      return "💸"
+    case .food:
+      return "🍽"
+    case .traffic:
+      return "🚇"
+    case .shopping:
+      return "🛍"
+    case .hobby:
+      return "🎬"
+    }
+  }
 }
 
 struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
