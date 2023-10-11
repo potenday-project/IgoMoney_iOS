@@ -112,6 +112,9 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case .enterAction:
         return .none
+        
+      case .generateAction:
+        return .none
       }
     }
     .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {

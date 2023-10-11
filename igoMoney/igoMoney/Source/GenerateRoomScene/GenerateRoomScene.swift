@@ -10,6 +10,33 @@ import ComposableArchitecture
 
 struct GenerateRoomScene: View {
   let store: StoreOf<GenerateRoomCore>
+  
+  @ViewBuilder
+  func challengeTargetMoneyLabel(
+    to viewStore: ViewStore<GenerateRoomCore.State, GenerateRoomCore.Action>,
+    moneyAmount: TargetMoneyAmount
+  ) -> some View {
+    Text(moneyAmount.description)
+      .frame(maxWidth: .infinity)
+      .padding(.vertical, 8)
+      .background(
+        moneyAmount == viewStore.targetAmount ?
+        ColorConstants.primary7 : ColorConstants.gray5
+      )
+      .cornerRadius(4)
+      .overlay(
+        RoundedRectangle(cornerRadius: 4)
+          .stroke(
+            moneyAmount == viewStore.targetAmount ?
+            ColorConstants.primary : ColorConstants.gray5
+          )
+      )
+      .font(
+        moneyAmount == viewStore.targetAmount ?
+          .pretendard(size: 14, weight: .bold) : .pretendard(size: 14, weight: .medium)
+      )
+  }
+  
   var body: some View {
     VStack(spacing: 24) {
       // 네비게이션 바
@@ -37,20 +64,15 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 18, weight: .bold))
           } content: {
             HStack {
-              ForEach(1...5, id: \.self) { index in
-                Button {
-                  print("Tapped \(index)")
-                } label: {
-                  Text(index.description + "만원")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
+              WithViewStore(store, observe: { $0 }) { viewStore in
+                ForEach(TargetMoneyAmount.allCases, id: \.money) { moneyAmount in
+                  Button {
+                    viewStore.send(.selectTargetAmount(moneyAmount))
+                  } label: {
+                    challengeTargetMoneyLabel(to: viewStore, moneyAmount: moneyAmount)
+                  }
+                  .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
-                .background(ColorConstants.primary7)
-                .overlay(
-                  RoundedRectangle(cornerRadius: 4)
-                    .stroke(ColorConstants.primary, lineWidth: 1)
-                )
               }
             }
           }

@@ -87,6 +87,9 @@ struct ExploreChallengeCore: Reducer {
         // Child Action
       case .enterAction:
         return .none
+        
+      case .generateAction:
+        return .none
       }
     }
     .ifLet(\.selection, action: /Action.enterAction) {

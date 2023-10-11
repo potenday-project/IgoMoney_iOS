@@ -115,7 +115,7 @@ enum ChallengeCategory: Int, Decodable, CustomStringConvertible, CaseIterable {
   }
 }
 
-struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
+struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable, CaseIterable {
   let money: Int
   
   var description: String {
@@ -139,6 +139,14 @@ struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
       return "yellow"
     }
   }
+  
+  static var allCases: [TargetMoneyAmount] = [
+    .init(money: 10000),
+    .init(money: 20000),
+    .init(money: 30000),
+    .init(money: 40000),
+    .init(money: 50000),
+  ]
 }
 
 struct User: Decodable, Equatable {
