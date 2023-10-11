@@ -116,13 +116,21 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            TextField("제목을 입력해주세요.", text: $title)
-              .padding(.horizontal, 16)
-              .padding(.vertical, 12)
-              .background(
-                RoundedRectangle(cornerRadius: 4)
-                  .stroke(ColorConstants.gray3)
-              )
+            TextView(
+              configuration: .init(
+                maxHeight: 200,
+                textFont: .pretendard(size: 16, weight: .medium),
+                textLimit: 15,
+                cornerRadius: 4,
+                borderWidth: 1,
+                borderColor: UIColor(named: "gray4"),
+                textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
+                placeholder: "제목을 입력해주세요.",
+                placeholderColor: UIColor(named: "gray3") ?? .gray
+              ),
+              text: .constant(""),
+              height: .constant(.infinity)
+            )
           }
           
           // 챌린지 내용 섹션
