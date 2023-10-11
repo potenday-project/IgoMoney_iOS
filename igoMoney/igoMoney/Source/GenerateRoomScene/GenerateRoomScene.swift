@@ -35,6 +35,51 @@ struct GenerateRoomScene: View {
         moneyAmount == viewStore.targetAmount ?
           .pretendard(size: 14, weight: .bold) : .pretendard(size: 14, weight: .medium)
       )
+      .foregroundColor(
+        moneyAmount == viewStore.targetAmount ?
+        ColorConstants.primary : ColorConstants.gray4
+      )
+  }
+  
+  @ViewBuilder
+  func challengeCategoryInputView(to store: StoreOf<GenerateRoomCore>) -> some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      LazyVGrid(columns: Array(repeating: .init(spacing: 8), count: 3), spacing: 8) {
+        ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
+          Button {
+            viewStore.send(.selectCategory(category))
+          } label: {
+            VStack(spacing: 8) {
+              Text(category.emoji)
+                .font(.pretendard(size: 28, weight: .bold))
+                .frame(maxWidth: .infinity)
+              
+              Text(category.description)
+                .font(.pretendard(size: 14, weight: .bold))
+                .frame(maxWidth: .infinity)
+            }
+            .padding(.vertical, 12)
+            .background(
+              category == viewStore.selectionCategory ?
+              ColorConstants.primary7 : ColorConstants.gray5
+            )
+            .cornerRadius(4)
+            .overlay(
+              RoundedRectangle(cornerRadius: 4)
+                .stroke(
+                  category == viewStore.selectionCategory ?
+                  ColorConstants.primary : ColorConstants.gray5
+                )
+            )
+          }
+          .buttonStyle(.plain)
+          .foregroundColor(
+            category == viewStore.selectionCategory ?
+            ColorConstants.primary : ColorConstants.gray4
+          )
+        }
+      }
+    }
   }
   
   var body: some View {
@@ -81,25 +126,7 @@ struct GenerateRoomScene: View {
             Text("챌린지 주제")
               .font(.pretendard(size: 18, weight: .bold))
           } content: {
-            LazyVGrid(columns: Array(repeating: .init(), count: 3), spacing: 16) {
-              ForEach(1...5, id: \.self) { index in
-                VStack(spacing: 8) {
-                  Text("💸")
-                    .font(.pretendard(size: 28, weight: .bold))
-                    .frame(maxWidth: .infinity)
-                  
-                  Text("생활비")
-                    .font(.pretendard(size: 14, weight: .bold))
-                    .frame(maxWidth: .infinity)
-                }
-                .padding(.vertical, 12)
-                .background(ColorConstants.primary7)
-                .overlay(
-                  RoundedRectangle(cornerRadius: 4)
-                    .stroke(ColorConstants.primary, lineWidth: 1)
-                )
-              }
-            }
+            challengeCategoryInputView(to: store)
           }
           
           // 챌린지 시작일 섹션

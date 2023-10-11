@@ -19,12 +19,17 @@ struct GenerateRoomCore: Reducer {
   
   enum Action: Equatable {
     case selectTargetAmount(TargetMoneyAmount)
+    case selectCategory(ChallengeCategory)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .selectTargetAmount(let amount):
       state.targetAmount = amount
+      return .none
+      
+    case .selectCategory(let category):
+      state.selectionCategory = category
       return .none
       
     default:
