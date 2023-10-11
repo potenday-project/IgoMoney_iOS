@@ -133,6 +133,23 @@ struct GenerateRoomScene: View {
             Text("최대 50자")
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
+          } content: {
+            TextView(
+              configuration: .init(
+                maxHeight: 200,
+                textFont: .pretendard(size: 16, weight: .medium),
+                textLimit: 50,
+                cornerRadius: 4,
+                borderWidth: 1,
+                borderColor: UIColor(named: "gray4"),
+                textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
+                placeholder: "챌린지 내용을 입력해주세요.",
+                placeholderColor: UIColor(named: "gray3") ?? .gray
+              ),
+              text: .constant(""),
+              height: .constant(.infinity)
+            )
+            .frame(minHeight: 70, maxHeight: .infinity)
           }
         }
         .padding(.horizontal, 24)
@@ -150,6 +167,10 @@ struct GenerateRoomScene: View {
       .background(ColorConstants.gray5)
       .cornerRadius(8)
       .padding(.horizontal, 24)
+      .padding(.bottom, 8)
+    }
+    .onTapGesture {
+      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
   }
 }
