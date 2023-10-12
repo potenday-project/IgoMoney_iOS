@@ -20,33 +20,25 @@ struct GenerateRoomCore: Reducer {
   enum Action: Equatable {
     case selectTargetAmount(TargetMoneyAmount)
     case selectCategory(ChallengeCategory)
-    
-    case titleAction(TextFieldCore.Action)
-    case contentAction(TextFieldCore.Action)
+    case didChangeTitle(String)
   }
   
-  var body: some Reducer<State, Action> {
-    Scope(state: \.titleState, action: /Action.titleAction) {
-      TextFieldCore()
-    }
-    
-    Scope(state: \.contentState, action: /Action.contentAction) {
-      TextFieldCore()
-    }
-    
-    Reduce { state, action in
-      switch action {
-      case .selectTargetAmount(let amount):
-        state.targetAmount = amount
-        return .none
-        
-      case .selectCategory(let category):
-        state.selectionCategory = category
-        return .none
-        
-      default:
-        return .none
-      }
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .selectTargetAmount(let amount):
+      state.targetAmount = amount
+      return .none
+      
+    case .selectCategory(let category):
+      state.selectionCategory = category
+      return .none
+      
+    case .didChangeTitle(let title):
+      state.title = title
+      return .none
+      
+    default:
+      return .none
     }
   }
 }
