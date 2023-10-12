@@ -31,6 +31,12 @@ enum ColorConstants {
   static let warning = Color("alert")
 }
 
+extension Color {
+  var uiColor: UIColor {
+    return UIColor(self)
+  }
+}
+
 enum SystemConfigConstants {
   static let tokenService = "com.igo.igomoney"
   static let userIdentifierService = "userIdentifier"

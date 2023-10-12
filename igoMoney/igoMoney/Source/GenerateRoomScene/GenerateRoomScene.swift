@@ -9,14 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GenerateRoomScene: View {
-  private let textViewConfiguration = TextFieldConfiguration(
-    maxHeight: 200,
-    textFont: .pretendard(size: 16, weight: .medium), 
-    textColor: .label,
-    placeholder: "챌린지 내용을 입력해주세요.",
-    placeholderColor: UIColor(named: "gray3") ?? .gray
-  )
-  
   let store: StoreOf<GenerateRoomCore>
   
   @ViewBuilder
@@ -107,7 +99,6 @@ struct GenerateRoomScene: View {
       }
       .fixedSize(horizontal: false, vertical: true)
       .padding(.horizontal, 24)
-      .padding(.top, 16)
       
       ScrollView {
         VStack(spacing: 24) {
@@ -173,20 +164,17 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            IGOTextField(
-              store: store.scope(
-                state: \.titleState,
-                action: GenerateRoomCore.Action.titleAction
-              ),
-              configuration: self.textViewConfiguration
-            )
-            .frame(maxHeight: 23)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(
-              RoundedRectangle(cornerRadius: 4)
-                .stroke(ColorConstants.gray4)
-            )
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              IGOTextField(
+                height: .constant(.infinity),
+                text: viewStore.binding(
+                  get: \.title,
+                  send: GenerateRoomCore.Action.didChangeTitle
+                ),
+                configuration: .inputTitle
+              )
+              .frame(minHeight: 48, maxHeight: .infinity)
+            }
           }
           
           // 챌린지 내용 섹션
@@ -198,14 +186,17 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            TextView(
-              configuration: textViewConfiguration,
-              textLimit: 50,
-              text: .constant(""),
-              height: .constant(.infinity)
-            )
-            .frame(minHeight: 70, maxHeight: .infinity)
-            .background(Color.red)
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              IGOTextField(
+                height: .constant(.infinity),
+                text: viewStore.binding(
+                  get: \.content,
+                  send: GenerateRoomCore.Action.didChangeContent
+                ),
+                configuration: .inputContent
+              )
+              .frame(minHeight: 70, maxHeight: .infinity)
+            }
           }
         }
         .padding(.horizontal, 24)

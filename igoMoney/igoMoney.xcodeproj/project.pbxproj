@@ -36,7 +36,6 @@
 		182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */; };
 		182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */; };
 		182B1B632AD68C4200D01DBA /* IGOInputForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B622AD68C4200D01DBA /* IGOInputForm.swift */; };
-		182B1B652AD68D1800D01DBA /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B642AD68D1800D01DBA /* IGOTextField.swift */; };
 		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		183DF7CE2AD7C7120041FB69 /* IGOTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7CD2AD7C7120041FB69 /* IGOTextFieldView.swift */; };
 		183DF7D02AD7C7370041FB69 /* IGOTextFieldCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7CF2AD7C7370041FB69 /* IGOTextFieldCore.swift */; };
@@ -127,7 +126,6 @@
 		182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomScene.swift; sourceTree = "<group>"; };
 		182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomCore.swift; sourceTree = "<group>"; };
 		182B1B622AD68C4200D01DBA /* IGOInputForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOInputForm.swift; sourceTree = "<group>"; };
-		182B1B642AD68D1800D01DBA /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		183DF7CD2AD7C7120041FB69 /* IGOTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextFieldView.swift; sourceTree = "<group>"; };
 		183DF7CF2AD7C7370041FB69 /* IGOTextFieldCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextFieldCore.swift; sourceTree = "<group>"; };
@@ -385,7 +383,6 @@
 				18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */,
 				189440852ABED3C200BE1205 /* IGOBannerView.swift */,
 				182B1B622AD68C4200D01DBA /* IGOInputForm.swift */,
-				182B1B642AD68D1800D01DBA /* IGOTextField.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -685,7 +682,6 @@
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */,
-				182B1B652AD68D1800D01DBA /* IGOTextField.swift in Sources */,
 				183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
 				18A1522F2AC97F9E00B8B8A4 /* MyPageCore.swift in Sources */,

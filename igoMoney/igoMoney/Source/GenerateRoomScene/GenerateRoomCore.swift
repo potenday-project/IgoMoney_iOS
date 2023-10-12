@@ -13,14 +13,15 @@ struct GenerateRoomCore: Reducer {
     var targetAmount: TargetMoneyAmount = .init(money: 10000)
     var selectionCategory: ChallengeCategory = .living
     var startDate: Date? = nil
-    var titleState = TextFieldCore.State(textLimit: 15)
-    var contentState = TextFieldCore.State(textLimit: 50)
+    var title: String = ""
+    var content: String = ""
   }
   
   enum Action: Equatable {
     case selectTargetAmount(TargetMoneyAmount)
     case selectCategory(ChallengeCategory)
     case didChangeTitle(String)
+    case didChangeContent(String)
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -35,6 +36,10 @@ struct GenerateRoomCore: Reducer {
       
     case .didChangeTitle(let title):
       state.title = title
+      return .none
+      
+    case .didChangeContent(let content):
+      state.content = content
       return .none
       
     default:
