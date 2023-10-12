@@ -9,13 +9,10 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GenerateRoomScene: View {
-  private let textViewConfiguration = TextView.Configuration(
+  private let textViewConfiguration = TextFieldConfiguration(
     maxHeight: 200,
-    textFont: .pretendard(size: 16, weight: .medium),
-    cornerRadius: 4,
-    borderWidth: 1,
-    borderColor: UIColor(named: "gray4"),
-    textContainerInset: .init(top: 12, left: 16, bottom: 12, right: 16),
+    textFont: .pretendard(size: 16, weight: .medium), 
+    textColor: .label,
     placeholder: "챌린지 내용을 입력해주세요.",
     placeholderColor: UIColor(named: "gray3") ?? .gray
   )
@@ -176,17 +173,20 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-              TextView(
-                configuration: textViewConfiguration,
-                textLimit: 15,
-                text: viewStore.binding(
-                  get: \.title,
-                  send: GenerateRoomCore.Action.didChangeTitle
-                ),
-                height: .constant(.infinity)
-              )
-            }
+            IGOTextField(
+              store: store.scope(
+                state: \.titleState,
+                action: GenerateRoomCore.Action.titleAction
+              ),
+              configuration: self.textViewConfiguration
+            )
+            .frame(maxHeight: 23)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+              RoundedRectangle(cornerRadius: 4)
+                .stroke(ColorConstants.gray4)
+            )
           }
           
           // 챌린지 내용 섹션
@@ -198,18 +198,19 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-              TextView(
-                configuration: textViewConfiguration,
-                textLimit: 50,
-                text: viewStore.binding(
-                  get: \.content,
-                  send: GenerateRoomCore.Action.didChangeContent
-                ),
-                height: .constant(.infinity)
-              )
-              .frame(minHeight: 70, maxHeight: .infinity)
-            }
+            Text("Example")
+//            WithViewStore(store, observe: { $0 }) { viewStore in
+//              TextView(
+//                configuration: textViewConfiguration,
+//                textLimit: 50,
+//                text: viewStore.binding(
+//                  get: \.content,
+//                  send: GenerateRoomCore.Action.didChangeContent
+//                ),
+//                height: .constant(.infinity)
+//              )
+//              .frame(minHeight: 70, maxHeight: .infinity)
+//            }
           }
         }
         .padding(.horizontal, 24)
