@@ -187,11 +187,11 @@ extension GenerateRoomScene {
           .padding(.horizontal, 16)
           .padding(.vertical, 12)
         }
-        .foregroundColor(ColorConstants.gray3)
+        .foregroundColor(ColorConstants.gray4)
         .buttonStyle(.plain)
         .background(
           RoundedRectangle(cornerRadius: 4)
-            .stroke(ColorConstants.gray3, lineWidth: 1)
+            .stroke(ColorConstants.gray4, lineWidth: 1)
         )
       }
     }
