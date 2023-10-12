@@ -9,54 +9,77 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GenerateRoomScene: View {
+  @State var showSelectStartDate: Bool = true
   let store: StoreOf<GenerateRoomCore>
   
   var body: some View {
-    VStack(spacing: 24) {
-      // 네비게이션 바
-      IGONavigationBar {
-        Text("챌린지 만들기")
-          .font(.pretendard(size: 20, weight: .bold))
-      } leftView: {
-        Button {
-          print("Tapped Dismiss")
-        } label: {
-          Image(systemName: "xmark")
-            .resizable()
-            .frame(width: 14, height: 14)
-        }
-      }
-      .fixedSize(horizontal: false, vertical: true)
-      .padding(.horizontal, 24)
-      .padding(.top, 16)
-      
-      ScrollView(showsIndicators: false) {
-        VStack(spacing: 24) {
-          WithViewStore(store, observe: { $0 }) {
-            GenerateRoomChallengeMoneyInputView(viewStore: $0)
-            GenerateRoomChallengeCategoryInputSection(viewStore: $0)
-            GenerateRoomChallengeStartDateInputSection(viewStore: $0)
-            GenerateRoomChallengeTitleInputSection(viewStore: $0)
-            GenerateRoomChallengeContentInputSection(viewStore: $0)
+    ZStack {
+      VStack(spacing: 24) {
+        // 네비게이션 바
+        IGONavigationBar {
+          Text("챌린지 만들기")
+            .font(.pretendard(size: 20, weight: .bold))
+        } leftView: {
+          Button {
+            print("Tapped Dismiss")
+          } label: {
+            Image(systemName: "xmark")
+              .resizable()
+              .frame(width: 14, height: 14)
           }
         }
+        .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 24)
-        .padding(.bottom)
+        .padding(.top, 16)
+        
+        ScrollView(showsIndicators: false) {
+          VStack(spacing: 24) {
+            WithViewStore(store, observe: { $0 }) {
+              GenerateRoomChallengeMoneyInputView(viewStore: $0)
+              GenerateRoomChallengeCategoryInputSection(viewStore: $0)
+              GenerateRoomChallengeStartDateInputSection(
+                showSelectStartDate: $showSelectStartDate,
+                viewStore: $0
+              )
+              GenerateRoomChallengeTitleInputSection(viewStore: $0)
+              GenerateRoomChallengeContentInputSection(viewStore: $0)
+            }
+          }
+          .padding(.horizontal, 24)
+          .padding(.bottom)
+        }
+        
+        Button {
+          print("Tapped Complete Button")
+        } label: {
+          Text("완료")
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.plain)
+        .padding(16)
+        .foregroundColor(ColorConstants.gray3)
+        .background(ColorConstants.gray5)
+        .cornerRadius(8)
+        .padding(.horizontal, 24)
+        .padding(.bottom, 8)
       }
+      .disabled(showSelectStartDate)
       
-      Button {
-        print("Tapped Complete Button")
-      } label: {
-        Text("완료")
-          .frame(maxWidth: .infinity)
+      if showSelectStartDate {
+        Color.black.opacity(0.7)
+          .edgesIgnoringSafeArea(.all)
+        
+        GeometryReader { proxy in
+          IGOBottomSheetView(
+            isOpen: $showSelectStartDate,
+            maxHeight: proxy.size.height * 0.7
+          ) {
+            StartDateSelectView()
+          }
+          .edgesIgnoringSafeArea(.all)
+          .transition(.move(edge: .bottom))
+        }
       }
-      .buttonStyle(.plain)
-      .padding(16)
-      .foregroundColor(ColorConstants.gray3)
-      .background(ColorConstants.gray5)
-      .cornerRadius(8)
-      .padding(.horizontal, 24)
-      .padding(.bottom, 8)
     }
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
@@ -167,6 +190,7 @@ extension GenerateRoomScene {
   
   /// Challenge StartDate Input Section
   struct GenerateRoomChallengeStartDateInputSection: View {
+    @Binding var showSelectStartDate: Bool
     let viewStore: ViewStoreOf<GenerateRoomCore>
     
     var body: some View {
@@ -175,7 +199,7 @@ extension GenerateRoomScene {
           .font(.pretendard(size: 18, weight: .bold))
       } content: {
         Button {
-          
+          showSelectStartDate.toggle()
         } label: {
           HStack {
             Image(systemName: "calendar")
@@ -251,8 +275,8 @@ extension GenerateRoomScene {
       } content: {
         TextEditor(
           text: viewStore.binding(
-          get: \.content,
-          send: GenerateRoomCore.Action.didChangeContent
+            get: \.content,
+            send: GenerateRoomCore.Action.didChangeContent
           )
         )
         .font(.pretendard(size: 16, weight: .medium))

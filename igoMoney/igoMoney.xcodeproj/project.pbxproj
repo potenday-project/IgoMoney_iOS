@@ -39,6 +39,8 @@
 		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */; };
 		183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D32AD836560041FB69 /* View + Extensions.swift */; };
+		183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */; };
+		183DF7D92AD83EC70041FB69 /* StartDateSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
 		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
 		18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */; };
@@ -129,6 +131,8 @@
 		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183DF7D32AD836560041FB69 /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
+		183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBottomSheetView.swift; sourceTree = "<group>"; };
+		183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSelectView.swift; sourceTree = "<group>"; };
 		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		18497C1F2ABDFB320041C350 /* IGOAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertView.swift; sourceTree = "<group>"; };
 		18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertButton.swift; sourceTree = "<group>"; };
@@ -348,6 +352,7 @@
 		182B1B5D2AD678C700D01DBA /* GenerateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
+				183DF7D72AD83EBB0041FB69 /* Views */,
 				182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */,
 				182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */,
 			);
@@ -362,6 +367,14 @@
 			path = ChallengeStateScene;
 			sourceTree = "<group>";
 		};
+		183DF7D72AD83EBB0041FB69 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +387,7 @@
 				189440852ABED3C200BE1205 /* IGOBannerView.swift */,
 				182B1B622AD68C4200D01DBA /* IGOInputForm.swift */,
 				183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */,
+				183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -688,6 +702,7 @@
 				18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */,
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
+				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
@@ -703,6 +718,7 @@
 				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
 				18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
+				183DF7D92AD83EC70041FB69 /* StartDateSelectView.swift in Sources */,
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
