@@ -186,18 +186,22 @@ struct GenerateRoomScene: View {
               .font(.pretendard(size: 12, weight: .medium))
               .foregroundColor(ColorConstants.gray3)
           } content: {
-            WithViewStore(store, observe: { $0 }) { viewStore in
-              IGOTextField(
-                height: .constant(.infinity),
-                text: viewStore.binding(
-                  get: \.content,
-                  send: GenerateRoomCore.Action.didChangeContent
-                ),
-                configuration: .inputContent
+            TextEditor(text: ViewStore(store, observe: { $0 })
+              .binding(
+                get: \.content,
+                send: GenerateRoomCore.Action.didChangeContent
               )
-              .frame(minHeight: 70, maxHeight: .infinity)
-            }
+            )
+            .font(.pretendard(size: 16, weight: .medium))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .overlay(
+              RoundedRectangle(cornerRadius: 4)
+                .stroke(ColorConstants.gray4)
+            )
+            .frame(height: 100)
           }
+          .padding(.bottom)
         }
         .padding(.horizontal, 24)
       }
