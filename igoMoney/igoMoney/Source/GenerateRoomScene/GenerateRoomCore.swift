@@ -35,6 +35,7 @@ struct GenerateRoomCore: Reducer {
       return .none
       
     case .didChangeTitle(let title):
+      if title.count > 15 { return .none }
       state.title = title
       return .none
       

@@ -28,6 +28,7 @@ struct GenerateRoomScene: View {
       }
       .fixedSize(horizontal: false, vertical: true)
       .padding(.horizontal, 24)
+      .padding(.top, 16)
       
       ScrollView(showsIndicators: false) {
         VStack(spacing: 24) {
@@ -58,7 +59,7 @@ struct GenerateRoomScene: View {
       .padding(.bottom, 8)
     }
     .onTapGesture {
-      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+      UIApplication.shared.hideKeyboard()
     }
   }
 }
