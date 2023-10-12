@@ -224,7 +224,13 @@ extension GenerateRoomScene {
         .padding(.vertical, 12)
         .background(
           RoundedRectangle(cornerRadius: 4)
-            .stroke(ColorConstants.gray4, lineWidth: 1)
+            .stroke(
+              viewStore.isFillTitle ? ColorConstants.primary : ColorConstants.gray4,
+              lineWidth: 1
+            )
+            .background(
+              viewStore.isFillTitle ? ColorConstants.primary7 : .clear
+            )
         )
       }
     }
@@ -256,7 +262,7 @@ extension GenerateRoomScene {
           RoundedRectangle(cornerRadius: 4)
             .stroke(
               viewStore.isFillContent ? ColorConstants.primary : ColorConstants.gray4,
-              lineWidth: 1
+              lineWidth: 2
             )
             .background(
               viewStore.isFillContent ? ColorConstants.primary7 : .clear
