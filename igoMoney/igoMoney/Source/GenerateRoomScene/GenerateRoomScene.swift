@@ -243,19 +243,30 @@ extension GenerateRoomScene {
           .font(.pretendard(size: 12, weight: .medium))
           .foregroundColor(ColorConstants.gray3)
       } content: {
-        TextEditor(text: viewStore.binding(
+        TextEditor(
+          text: viewStore.binding(
           get: \.content,
           send: GenerateRoomCore.Action.didChangeContent
-        )
+          )
         )
         .font(.pretendard(size: 16, weight: .medium))
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(
+        .textEditorBackground {
           RoundedRectangle(cornerRadius: 4)
-            .stroke(ColorConstants.gray4)
-        )
+            .stroke(
+              viewStore.isFillContent ? ColorConstants.primary : ColorConstants.gray4,
+              lineWidth: 1
+            )
+            .background(
+              viewStore.isFillContent ? ColorConstants.primary7 : .clear
+            )
+            .cornerRadius(4)
+        }
         .frame(height: 100)
+      }
+      .onAppear {
+        UITextView.appearance().backgroundColor = .clear
       }
     }
   }

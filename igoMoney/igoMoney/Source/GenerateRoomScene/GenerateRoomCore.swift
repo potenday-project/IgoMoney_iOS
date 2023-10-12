@@ -15,6 +15,14 @@ struct GenerateRoomCore: Reducer {
     var startDate: Date? = nil
     var title: String = ""
     var content: String = ""
+    
+    var isFillTitle: Bool {
+      return (5...15) ~= title.count
+    }
+    
+    var isFillContent: Bool {
+      return content.count <= 50 && content.count != .zero
+    }
   }
   
   enum Action: Equatable {
