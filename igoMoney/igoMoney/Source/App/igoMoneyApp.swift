@@ -18,14 +18,12 @@ struct igoMoneyApp: App {
   
   var body: some Scene {
     WindowGroup {
-//      AppView(
-//        store: Store(
-//          initialState: AppCore.State(),
-//          reducer: { AppCore()._printChanges() }
-//        )
-//      )
-      
-      CalendarTemplate()
+      AppView(
+        store: Store(
+          initialState: AppCore.State(),
+          reducer: { AppCore()._printChanges() }
+        )
+      )
     }
   }
 }
