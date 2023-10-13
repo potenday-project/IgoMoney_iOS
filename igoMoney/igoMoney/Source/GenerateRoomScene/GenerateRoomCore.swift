@@ -28,6 +28,10 @@ struct GenerateRoomCore: Reducer {
     var isFillContent: Bool {
       return content.count <= 50 && content.count != .zero
     }
+    
+    var isSendable: Bool {
+      return isFillTitle && isFillContent && startDate != nil
+    }
   }
   
   enum Action: Equatable {

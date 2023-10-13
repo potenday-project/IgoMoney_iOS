@@ -44,19 +44,27 @@ struct GenerateRoomScene: View {
         .padding(.bottom)
       }
       
-      Button {
-        print("Tapped Complete Button")
-      } label: {
-        Text("완료")
-          .frame(maxWidth: .infinity)
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        Button {
+          print("Tapped Complete Button")
+        } label: {
+          Text("완료")
+            .font(.pretendard(size: 18, weight: .medium))
+        }
+        .frame(maxWidth: .infinity)
+        .disabled(viewStore.isSendable == false)
+        .buttonStyle(.plain)
+        .padding(16)
+        .foregroundColor(
+          viewStore.isSendable ? Color.black : ColorConstants.gray3
+        )
+        .background(
+          viewStore.isSendable ? ColorConstants.primary : ColorConstants.gray5
+        )
+        .cornerRadius(8)
+        .padding(.horizontal, 24)
+        .padding(.bottom, 8)
       }
-      .buttonStyle(.plain)
-      .padding(16)
-      .foregroundColor(ColorConstants.gray3)
-      .background(ColorConstants.gray5)
-      .cornerRadius(8)
-      .padding(.horizontal, 24)
-      .padding(.bottom, 8)
     }
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
