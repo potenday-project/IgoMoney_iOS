@@ -13,73 +13,50 @@ struct GenerateRoomScene: View {
   let store: StoreOf<GenerateRoomCore>
   
   var body: some View {
-    ZStack {
-      VStack(spacing: 24) {
-        // 네비게이션 바
-        IGONavigationBar {
-          Text("챌린지 만들기")
-            .font(.pretendard(size: 20, weight: .bold))
-        } leftView: {
-          Button {
-            print("Tapped Dismiss")
-          } label: {
-            Image(systemName: "xmark")
-              .resizable()
-              .frame(width: 14, height: 14)
-          }
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .padding(.horizontal, 24)
-        .padding(.top, 16)
-        
-        ScrollView(showsIndicators: false) {
-          VStack(spacing: 24) {
-            WithViewStore(store, observe: { $0 }) {
-              GenerateRoomChallengeMoneyInputView(viewStore: $0)
-              GenerateRoomChallengeCategoryInputSection(viewStore: $0)
-              GenerateRoomChallengeStartDateInputSection(
-                showSelectStartDate: $showSelectStartDate,
-                viewStore: $0
-              )
-              GenerateRoomChallengeTitleInputSection(viewStore: $0)
-              GenerateRoomChallengeContentInputSection(viewStore: $0)
-            }
-          }
-          .padding(.horizontal, 24)
-          .padding(.bottom)
-        }
-        
+    VStack(spacing: 24) {
+      // 네비게이션 바
+      IGONavigationBar {
+        Text("챌린지 만들기")
+          .font(.pretendard(size: 20, weight: .bold))
+      } leftView: {
         Button {
-          print("Tapped Complete Button")
+          print("Tapped Dismiss")
         } label: {
-          Text("완료")
-            .frame(maxWidth: .infinity)
+          Image(systemName: "xmark")
+            .resizable()
+            .frame(width: 14, height: 14)
         }
-        .buttonStyle(.plain)
-        .padding(16)
-        .foregroundColor(ColorConstants.gray3)
-        .background(ColorConstants.gray5)
-        .cornerRadius(8)
-        .padding(.horizontal, 24)
-        .padding(.bottom, 8)
       }
-      .disabled(showSelectStartDate)
+      .fixedSize(horizontal: false, vertical: true)
+      .padding(.horizontal, 24)
+      .padding(.top, 16)
       
-      if showSelectStartDate {
-        Color.black.opacity(0.7)
-          .edgesIgnoringSafeArea(.all)
-        
-        GeometryReader { proxy in
-          IGOBottomSheetView(
-            isOpen: $showSelectStartDate,
-            maxHeight: proxy.size.height * 0.7
-          ) {
-            StartDateSelectView()
+      ScrollView(showsIndicators: false) {
+        VStack(spacing: 24) {
+          WithViewStore(store, observe: { $0 }) {
+            GenerateRoomChallengeMoneyInputView(viewStore: $0)
+            GenerateRoomChallengeCategoryInputSection(viewStore: $0)
+            GenerateRoomChallengeStartDateInputSection(viewStore: $0)
+            GenerateRoomChallengeTitleInputSection(viewStore: $0)
+            GenerateRoomChallengeContentInputSection(viewStore: $0)
           }
-          .edgesIgnoringSafeArea(.all)
-          .transition(.move(edge: .bottom))
         }
+        .padding(.bottom)
       }
+      
+      Button {
+        print("Tapped Complete Button")
+      } label: {
+        Text("완료")
+          .frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.plain)
+      .padding(16)
+      .foregroundColor(ColorConstants.gray3)
+      .background(ColorConstants.gray5)
+      .cornerRadius(8)
+      .padding(.horizontal, 24)
+      .padding(.bottom, 8)
     }
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
@@ -129,6 +106,7 @@ extension GenerateRoomScene {
           }
         }
       }
+      .padding(.horizontal, 24)
     }
   }
   
@@ -185,39 +163,66 @@ extension GenerateRoomScene {
           }
         }
       }
+      .padding(.horizontal, 24)
     }
   }
   
   /// Challenge StartDate Input Section
   struct GenerateRoomChallengeStartDateInputSection: View {
-    @Binding var showSelectStartDate: Bool
     let viewStore: ViewStoreOf<GenerateRoomCore>
+    
+    private func getAvailableDate() -> [Date] {
+      var calendar = Calendar.current
+      calendar.locale = Locale(identifier: "ko-KR")
+      var dates: [Date] = []
+      let currentDate = Date()
+      
+      guard let startDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
+        return []
+      }
+      
+      guard let endDate = calendar.date(byAdding: .day, value: 7, to: startDate) else {
+        return []
+      }
+      
+      var tempDate = startDate
+      
+      while tempDate <= endDate {
+        dates.append(tempDate)
+        guard let newDate = calendar.date(byAdding: .day, value: 1, to: tempDate) else {
+          continue
+        }
+        
+        tempDate = newDate
+      }
+      
+      return dates
+    }
     
     var body: some View {
       IGOInputForm {
         Text("챌린지 시작일")
           .font(.pretendard(size: 18, weight: .bold))
+          .padding(.leading, 24)
       } content: {
-        Button {
-          showSelectStartDate.toggle()
-        } label: {
+        ScrollView(.horizontal, showsIndicators: false) {
           HStack {
-            Image(systemName: "calendar")
-            
-            Text("챌린지 시작일을 선택해주세요.")
-            
-            Spacer()
+            ForEach(getAvailableDate(), id: \.description) { date in
+              Button {
+                
+              } label: {
+                Text(date.toString(with: "MM/d (EE)"))
+                  .foregroundColor(ColorConstants.gray3)
+              }
+              .buttonStyle(.plain)
+              .padding(.vertical, 8)
+              .padding(.horizontal, 12)
+              .background(ColorConstants.gray5)
+              .cornerRadius(4)
+            }
           }
-          .font(.pretendard(size: 16, weight: .medium))
-          .padding(.horizontal, 16)
-          .padding(.vertical, 12)
+          .padding(.horizontal, 24)
         }
-        .foregroundColor(ColorConstants.gray4)
-        .buttonStyle(.plain)
-        .background(
-          RoundedRectangle(cornerRadius: 4)
-            .stroke(ColorConstants.gray4, lineWidth: 1)
-        )
       }
     }
   }
@@ -257,6 +262,7 @@ extension GenerateRoomScene {
             )
         )
       }
+      .padding(.horizontal, 24)
     }
   }
   
@@ -298,6 +304,7 @@ extension GenerateRoomScene {
       .onAppear {
         UITextView.appearance().backgroundColor = .clear
       }
+      .padding(.horizontal, 24)
     }
   }
 }
