@@ -40,7 +40,6 @@
 		183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */; };
 		183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D32AD836560041FB69 /* View + Extensions.swift */; };
 		183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */; };
-		183DF7D92AD83EC70041FB69 /* StartDateSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
 		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
 		18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */; };
@@ -83,9 +82,6 @@
 		18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152312AC97FDF00B8B8A4 /* SettingScene.swift */; };
 		18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152332AC9800900B8B8A4 /* SettingCore.swift */; };
 		18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152352AC9833C00B8B8A4 /* Setting.swift */; };
-		18A7DA132AD9470E001ACA00 /* CalendarCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7DA122AD9470E001ACA00 /* CalendarCore.swift */; };
-		18A7DA152AD9491D001ACA00 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7DA142AD9491D001ACA00 /* CalendarView.swift */; };
-		18A7DA172AD9495C001ACA00 /* StartDateSelectCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A7DA162AD9495C001ACA00 /* StartDateSelectCore.swift */; };
 		18B437772AC16E410026A71E /* UserClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437762AC16E410026A71E /* UserClient + live.swift */; };
 		18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437792AC170B30026A71E /* AuthAPI.swift */; };
 		18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B4377C2AC17ED10026A71E /* KeyChainClient.swift */; };
@@ -135,7 +131,6 @@
 		183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183DF7D32AD836560041FB69 /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
 		183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBottomSheetView.swift; sourceTree = "<group>"; };
-		183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSelectView.swift; sourceTree = "<group>"; };
 		18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		18497C1F2ABDFB320041C350 /* IGOAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertView.swift; sourceTree = "<group>"; };
 		18497C212ABDFBFC0041C350 /* IGOAlertButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertButton.swift; sourceTree = "<group>"; };
@@ -179,9 +174,6 @@
 		18A152312AC97FDF00B8B8A4 /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
 		18A152332AC9800900B8B8A4 /* SettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCore.swift; sourceTree = "<group>"; };
 		18A152352AC9833C00B8B8A4 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		18A7DA122AD9470E001ACA00 /* CalendarCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCore.swift; sourceTree = "<group>"; };
-		18A7DA142AD9491D001ACA00 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		18A7DA162AD9495C001ACA00 /* StartDateSelectCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDateSelectCore.swift; sourceTree = "<group>"; };
 		18B437762AC16E410026A71E /* UserClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserClient + live.swift"; sourceTree = "<group>"; };
 		18B437792AC170B30026A71E /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		18B4377C2AC17ED10026A71E /* KeyChainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainClient.swift; sourceTree = "<group>"; };
@@ -358,7 +350,6 @@
 		182B1B5D2AD678C700D01DBA /* GenerateRoomScene */ = {
 			isa = PBXGroup;
 			children = (
-				183DF7D72AD83EBB0041FB69 /* Views */,
 				182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */,
 				182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */,
 			);
@@ -371,17 +362,6 @@
 				183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */,
 			);
 			path = ChallengeStateScene;
-			sourceTree = "<group>";
-		};
-		183DF7D72AD83EBB0041FB69 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				183DF7D82AD83EC70041FB69 /* StartDateSelectView.swift */,
-				18A7DA122AD9470E001ACA00 /* CalendarCore.swift */,
-				18A7DA142AD9491D001ACA00 /* CalendarView.swift */,
-				18A7DA162AD9495C001ACA00 /* StartDateSelectCore.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
@@ -716,10 +696,8 @@
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
 				18497C222ABDFBFC0041C350 /* IGOAlertButton.swift in Sources */,
-				18A7DA152AD9491D001ACA00 /* CalendarView.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
-				18A7DA172AD9495C001ACA00 /* StartDateSelectCore.swift in Sources */,
 				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
 				1865C4182AC14662006B5B8A /* ChallengeAnalysisView.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
@@ -727,10 +705,8 @@
 				1865C4152AC13853006B5B8A /* ChallengeGraphView.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
-				18A7DA132AD9470E001ACA00 /* CalendarCore.swift in Sources */,
 				18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
-				183DF7D92AD83EC70041FB69 /* StartDateSelectView.swift in Sources */,
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,

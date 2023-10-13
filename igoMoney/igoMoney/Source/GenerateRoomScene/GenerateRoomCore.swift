@@ -13,8 +13,13 @@ struct GenerateRoomCore: Reducer {
     var targetAmount: TargetMoneyAmount = .init(money: 10000)
     var selectionCategory: ChallengeCategory = .living
     var startDate: Date? = nil
+    
     var title: String = ""
     var content: String = ""
+    
+    var endDate: Date {
+      return calculateEndDate() ?? Date()
+    }
     
     var isFillTitle: Bool {
       return (5...15) ~= title.count
@@ -28,6 +33,7 @@ struct GenerateRoomCore: Reducer {
   enum Action: Equatable {
     case selectTargetAmount(TargetMoneyAmount)
     case selectCategory(ChallengeCategory)
+    case selectDate(Date)
     case didChangeTitle(String)
     case didChangeContent(String)
   }
@@ -40,6 +46,14 @@ struct GenerateRoomCore: Reducer {
       
     case .selectCategory(let category):
       state.selectionCategory = category
+      return .none
+      
+    case .selectDate(let selectedDate):
+      state.startDate = selectedDate
+      
+      
+
+      
       return .none
       
     case .didChangeTitle(let title):
@@ -55,5 +69,14 @@ struct GenerateRoomCore: Reducer {
     default:
       return .none
     }
+  }
+}
+
+extension GenerateRoomCore.State {
+  func calculateEndDate() -> Date? {
+    var calendar = Calendar.current
+    calendar.locale = Locale(identifier: "ko-KR")
+    guard let startDate = startDate else { return nil }
+    return calendar.date(byAdding: .day, value: 7, to: startDate) ?? startDate
   }
 }

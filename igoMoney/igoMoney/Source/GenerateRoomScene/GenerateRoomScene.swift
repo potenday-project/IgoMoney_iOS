@@ -170,33 +170,47 @@ extension GenerateRoomScene {
   /// Challenge StartDate Input Section
   struct GenerateRoomChallengeStartDateInputSection: View {
     let viewStore: ViewStoreOf<GenerateRoomCore>
+    let allDates = getAvailableDate()
     
-    private func getAvailableDate() -> [Date] {
+    static func getAvailableDate() -> [Date] {
       var calendar = Calendar.current
       calendar.locale = Locale(identifier: "ko-KR")
       var dates: [Date] = []
       let currentDate = Date()
       
-      guard let startDate = calendar.date(byAdding: .day, value: 1, to: currentDate) else {
-        return []
-      }
+      var temp = currentDate
       
-      guard let endDate = calendar.date(byAdding: .day, value: 7, to: startDate) else {
-        return []
-      }
-      
-      var tempDate = startDate
-      
-      while tempDate <= endDate {
-        dates.append(tempDate)
-        guard let newDate = calendar.date(byAdding: .day, value: 1, to: tempDate) else {
-          continue
+      (calendar.shortWeekdaySymbols).forEach { m in
+        guard let newDate = calendar.date(byAdding: .day, value: 1, to: temp) else {
+          return
         }
         
-        tempDate = newDate
+        let components = calendar.dateComponents([.year, .month, .day], from: newDate)
+        guard let date = calendar.date(from: components) else {
+          return
+        }
+        
+        temp = date
+        dates.append(temp)
       }
       
       return dates
+    }
+    
+    @ViewBuilder
+    func ChallengeStartDateCell(isSelected: Bool, date: Date) -> some View {
+      Text(date.toString(with: "MM/d (EE)"))
+        .foregroundColor(isSelected ? ColorConstants.primary : ColorConstants.gray3)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(
+          ZStack {
+            isSelected ? ColorConstants.primary7 : ColorConstants.gray5
+            RoundedRectangle(cornerRadius: 4)
+              .stroke(isSelected ? ColorConstants.primary : ColorConstants.gray5)
+          }
+        )
+        .cornerRadius(4)
     }
     
     var body: some View {
@@ -205,23 +219,40 @@ extension GenerateRoomScene {
           .font(.pretendard(size: 18, weight: .bold))
           .padding(.leading, 24)
       } content: {
-        ScrollView(.horizontal, showsIndicators: false) {
-          HStack {
-            ForEach(getAvailableDate(), id: \.description) { date in
-              Button {
-                
-              } label: {
-                Text(date.toString(with: "MM/d (EE)"))
-                  .foregroundColor(ColorConstants.gray3)
+        VStack(spacing: 12) {
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+              ForEach(allDates, id: \.description) { date in
+                Button {
+                  viewStore.send(.selectDate(date))
+                } label: {
+                  ChallengeStartDateCell(
+                    isSelected: date == viewStore.startDate,
+                    date: date
+                  )
+                }
+                .buttonStyle(.plain)
               }
-              .buttonStyle(.plain)
-              .padding(.vertical, 8)
-              .padding(.horizontal, 12)
-              .background(ColorConstants.gray5)
-              .cornerRadius(4)
             }
+            .padding(.horizontal, 24)
           }
-          .padding(.horizontal, 24)
+          
+          if let startDate = viewStore.startDate {
+            HStack {
+              Image(systemName: "calendar")
+              
+              Text(
+                "\(startDate.toString(with: "MM/d (EE)")) ~ \(viewStore.endDate.toString(with: "MM/d (EE)"))"
+              )
+              
+              Spacer()
+            }
+            .font(.pretendard(size: 14, weight: .bold))
+            .padding(12)
+            .background(ColorConstants.gray5)
+            .cornerRadius(4)
+            .padding(.horizontal, 24)
+          }
         }
       }
     }
