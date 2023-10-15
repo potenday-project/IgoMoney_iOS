@@ -37,6 +37,11 @@
 		182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */; };
 		182B1B632AD68C4200D01DBA /* IGOInputForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B622AD68C4200D01DBA /* IGOInputForm.swift */; };
 		1831694B2ADBD6DE0098638E /* IGOAlertCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831694A2ADBD6DE0098638E /* IGOAlertCore.swift */; };
+		183169512ADBDAA20098638E /* EnterChallengeButtonCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */; };
+		183169532ADBDAC60098638E /* EnterChallengeInformationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169522ADBDAC60098638E /* EnterChallengeInformationCore.swift */; };
+		183169552ADBDAE40098638E /* EnterChallengeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169542ADBDAE40098638E /* EnterChallengeButton.swift */; };
+		183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169562ADBDB200098638E /* ChallengeInformationCardView.swift */; };
+		183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */; };
 		183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */; };
 		183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */; };
 		183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D32AD836560041FB69 /* View + Extensions.swift */; };
@@ -128,6 +133,11 @@
 		182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomCore.swift; sourceTree = "<group>"; };
 		182B1B622AD68C4200D01DBA /* IGOInputForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOInputForm.swift; sourceTree = "<group>"; };
 		1831694A2ADBD6DE0098638E /* IGOAlertCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertCore.swift; sourceTree = "<group>"; };
+		183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeButtonCore.swift; sourceTree = "<group>"; };
+		183169522ADBDAC60098638E /* EnterChallengeInformationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeInformationCore.swift; sourceTree = "<group>"; };
+		183169542ADBDAE40098638E /* EnterChallengeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeButton.swift; sourceTree = "<group>"; };
+		183169562ADBDB200098638E /* ChallengeInformationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformationCardView.swift; sourceTree = "<group>"; };
+		183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeNoticeView.swift; sourceTree = "<group>"; };
 		183B475F2ABF453E00976BFF /* ChallengeStateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStateScene.swift; sourceTree = "<group>"; };
 		183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183DF7D32AD836560041FB69 /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
@@ -208,8 +218,9 @@
 		1800BC922ABD6C6400938336 /* EnterChallengeScene */ = {
 			isa = PBXGroup;
 			children = (
-				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
-				18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */,
+				1831694F2ADBDA8E0098638E /* Views */,
+				1831694E2ADBDA8A0098638E /* Scene */,
+				1831694D2ADBDA880098638E /* Core */,
 			);
 			path = EnterChallengeScene;
 			sourceTree = "<group>";
@@ -363,6 +374,34 @@
 				18497C1F2ABDFB320041C350 /* IGOAlertView.swift */,
 			);
 			path = IGOAlertView;
+			sourceTree = "<group>";
+		};
+		1831694D2ADBDA880098638E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */,
+				183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */,
+				183169522ADBDAC60098638E /* EnterChallengeInformationCore.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1831694E2ADBDA8A0098638E /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		1831694F2ADBDA8E0098638E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				183169542ADBDAE40098638E /* EnterChallengeButton.swift */,
+				183169562ADBDB200098638E /* ChallengeInformationCardView.swift */,
+				183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		183B475E2ABF449900976BFF /* ChallengeStateScene */ = {
@@ -659,6 +698,8 @@
 				18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */,
 				18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */,
+				183169512ADBDAA20098638E /* EnterChallengeButtonCore.swift in Sources */,
+				183169532ADBDAC60098638E /* EnterChallengeInformationCore.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
 				18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */,
 				18599A4B2ABC321E0075DE76 /* MyChallengeSectionCore.swift in Sources */,
@@ -687,6 +728,7 @@
 				189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */,
 				183B47602ABF453E00976BFF /* ChallengeStateScene.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
+				183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */,
 				18A1522F2AC97F9E00B8B8A4 /* MyPageCore.swift in Sources */,
 				187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
@@ -694,6 +736,7 @@
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,
 				18CD8F2B2AB98249006FEA6F /* SignUpView.swift in Sources */,
 				18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */,
+				183169552ADBDAE40098638E /* EnterChallengeButton.swift in Sources */,
 				18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */,
 				18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */,
 				18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */,
@@ -705,6 +748,7 @@
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
+				183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */,
 				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
 				1865C4182AC14662006B5B8A /* ChallengeAnalysisView.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,

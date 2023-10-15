@@ -4,95 +4,9 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
-import ComposableArchitecture
 import Foundation
 
-struct EnterChallengeButtonCore: Reducer {
-  struct State: Equatable {
-    var canEnter: Bool = true
-  }
-  
-  @Dependency(\.challengeClient) var challengeClient
-  
-  enum Action: Equatable {
-    case onAppear
-    case didTapButton
-    
-    case _fetchCanEnterResponse(TaskResult<Challenge>)
-  }
-  
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .onAppear:
-      return .run { send in
-        await send(
-          ._fetchCanEnterResponse(
-            TaskResult {
-              try await challengeClient.getMyChallenge()
-            }
-          )
-        )
-      }
-      
-    case .didTapButton:
-      return .none
-      
-    case ._fetchCanEnterResponse(.success):
-      state.canEnter = false
-      return .none
-      
-    case ._fetchCanEnterResponse(.failure(let error)):
-      #if DEBUG
-      state.canEnter = true
-      #else
-      if case let .badRequest(statusCode) = error as? APIError {
-        state.canEnter = (statusCode == 409)
-        return .none
-      }
-      
-      state.canEnter = false
-      #endif
-      return .none
-    }
-  }
-}
-
-struct EnterChallengeInformationCore: Reducer {
-  struct State: Equatable {
-    let challenge: Challenge
-    
-    var leaderName: String?
-  }
-  
-  @Dependency(\.userClient) var userClient
-  
-  enum Action: Equatable {
-    case onAppear
-    case _fetchChallengeLeaderResponse(TaskResult<User>)
-  }
-  
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .onAppear:
-      return .run { [leaderID = state.challenge.leaderID] send in
-        await send(
-          ._fetchChallengeLeaderResponse(
-            TaskResult {
-              try await userClient.getUserInformation(leaderID.description)
-            }
-          )
-        )
-      }
-      
-    case ._fetchChallengeLeaderResponse(.success(let user)):
-      state.leaderName = user.nickName
-      return .none
-      
-    case ._fetchChallengeLeaderResponse(.failure):
-      return .none
-    }
-  }
-}
+import ComposableArchitecture
 
 struct EnterChallengeCore: Reducer {
   struct State: Equatable {
