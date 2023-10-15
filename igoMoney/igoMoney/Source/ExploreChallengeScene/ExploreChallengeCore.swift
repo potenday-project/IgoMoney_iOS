@@ -13,12 +13,17 @@ struct ExploreChallengeCore: Reducer {
     var challenges: IdentifiedArrayOf<Challenge> = []
     var selectedMoney: MoneyType = .all
     var selection: Identified<Challenge.ID, EnterChallengeCore.State?>?
+    
+    var showGenerate: Bool = false
     var isActivityIndicatorVisible: Bool = false
+    
+    var generateState = GenerateRoomCore.State()
   }
   
   enum Action: Equatable {
     // User Action
     case selectMoney(MoneyType)
+    case showGenerate(Bool)
     case dismiss
     
     // Inner Action
@@ -27,6 +32,7 @@ struct ExploreChallengeCore: Reducer {
     
     // Child Action
     case enterAction(EnterChallengeCore.Action)
+    case generateAction(GenerateRoomCore.Action)
   }
   
   private enum CancelID {
@@ -34,11 +40,23 @@ struct ExploreChallengeCore: Reducer {
   }
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.generateState, action: /Action.generateAction) {
+      GenerateRoomCore()
+    }
+    
     Reduce { state, action in
       switch action {
         // User Action
       case .selectMoney(let moneyType):
         state.selectedMoney = moneyType
+        return .none
+        
+      case .showGenerate(true):
+        state.showGenerate = true
+        return .none
+        
+      case .showGenerate(false):
+        state.showGenerate = false
         return .none
         
       case .dismiss:
@@ -68,6 +86,9 @@ struct ExploreChallengeCore: Reducer {
         
         // Child Action
       case .enterAction:
+        return .none
+        
+      case .generateAction:
         return .none
       }
     }

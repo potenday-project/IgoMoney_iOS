@@ -49,12 +49,14 @@ struct AppCore: Reducer {
     Reduce { state, action in
       switch action {
       case ._onAppear:
-//        if state.currentState == .onBoarding {
-//          return .run { send in
-//            let isSuccess = await autoSignIn()
-//            await send(._autoSignIn(isSuccess))
-//          }
-//        }
+        #if DEBUG
+        if state.currentState == .onBoarding {
+          return .run { send in
+            let isSuccess = await autoSignIn()
+            await send(._autoSignIn(isSuccess))
+          }
+        }
+        #endif
         
         state.currentState = .auth
         
@@ -105,6 +107,7 @@ private extension AppCore {
   
   func signInWithApple() async -> ASAuthorizationAppleIDProvider.CredentialState {
     @Dependency(\.keyChainClient) var keyChainClient
+    
     let provider = ASAuthorizationAppleIDProvider()
     
     guard let userIdentifier = try? await keyChainClient.read(

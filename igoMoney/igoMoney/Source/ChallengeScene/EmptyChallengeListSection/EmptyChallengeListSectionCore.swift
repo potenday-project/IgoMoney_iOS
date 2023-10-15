@@ -13,15 +13,19 @@ struct EmptyChallengeListSectionCore: Reducer {
     var challenges: [Challenge] = []
     
     var showExplore: Bool = false
+    var showGenerate: Bool = false
     
     var exploreChallengeState: ExploreChallengeCore.State?
     var enterSelection: EnterChallengeCore.State?
+    
+    var generateChallengeState = GenerateRoomCore.State()
   }
   
   enum Action: Equatable, Sendable {
     // User Action
     case showExplore(Bool)
     case showEnter(Challenge?)
+    case showGenerate(Bool)
     
     // Inner Action
     case _onAppear
@@ -33,12 +37,17 @@ struct EmptyChallengeListSectionCore: Reducer {
     // Child Action
     case exploreChallengeAction(ExploreChallengeCore.Action)
     case enterAction(EnterChallengeCore.Action)
+    case generateAction(GenerateRoomCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
   private enum CancelID { case load }
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.generateChallengeState, action: /Action.generateAction) {
+      GenerateRoomCore()
+    }
+    
     Reduce { state, action in
       switch action {
         // User Action
@@ -58,6 +67,14 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case .showEnter(.none):
         state.enterSelection = nil
+        return .none
+        
+      case .showGenerate(true):
+        state.showGenerate = true
+        return .none
+        
+      case .showGenerate(false):
+        state.showGenerate = false
         return .none
         
       case ._onAppear:
@@ -94,6 +111,13 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .none
         
       case .enterAction:
+        return .none
+        
+      case .generateAction(.alertAction(.dismiss)):
+        state.showGenerate = false
+        return .none
+        
+      case .generateAction:
         return .none
       }
     }

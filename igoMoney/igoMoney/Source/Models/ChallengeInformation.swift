@@ -15,6 +15,7 @@ struct Challenge: Decodable, Equatable, Identifiable {
   let title: String
   let content: String
   let targetAmount: TargetMoneyAmount
+  let category: ChallengeCategory
   let startDate: Date?
   let term: Int?
   let endDate: Date?
@@ -37,6 +38,7 @@ struct Challenge: Decodable, Equatable, Identifiable {
     case leaderID = "leaderId"
     case competitorID = "competitorId"
     case winnerID = "winnerId"
+    case category = "categoryId"
     case title, content, targetAmount, startDate, term, endDate
   }
 }
@@ -53,6 +55,7 @@ extension Challenge {
     content = try container.decode(String.self, forKey: .content)
     let moneyValue = try container.decode(Int.self, forKey: .targetAmount)
     targetAmount = TargetMoneyAmount(money: moneyValue)
+    category = try container.decode(ChallengeCategory.self, forKey: .category)
     term = try? container.decode(Int.self, forKey: .term)
     startDate = try? container.decode(Date.self, forKey: .startDate)
     endDate = try? container.decode(Date.self, forKey: .endDate)
@@ -66,14 +69,53 @@ extension Challenge {
     winnerID: nil,
     title: "만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요!",
     content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
-    targetAmount: .init(money: 30000),
+    targetAmount: .init(money: 30000), 
+    category: .living,
     startDate: nil,
     term: nil,
     endDate: nil
   )
 }
 
-struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
+enum ChallengeCategory: Int, Decodable, CustomStringConvertible, CaseIterable {
+  case living = 1
+  case food
+  case traffic
+  case shopping
+  case hobby
+  
+  var description: String {
+    switch self {
+    case .living:
+      return "생활비"
+    case .food:
+      return "식비"
+    case .traffic:
+      return "교통비"
+    case .shopping:
+      return "쇼핑"
+    case .hobby:
+      return "취미"
+    }
+  }
+  
+  var emoji: String {
+    switch self {
+    case .living:
+      return "💸"
+    case .food:
+      return "🍽"
+    case .traffic:
+      return "🚇"
+    case .shopping:
+      return "🛍"
+    case .hobby:
+      return "🎬"
+    }
+  }
+}
+
+struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable, CaseIterable {
   let money: Int
   
   var description: String {
@@ -97,6 +139,14 @@ struct TargetMoneyAmount: Decodable, CustomStringConvertible, Equatable {
       return "yellow"
     }
   }
+  
+  static var allCases: [TargetMoneyAmount] = [
+    .init(money: 10000),
+    .init(money: 20000),
+    .init(money: 30000),
+    .init(money: 40000),
+    .init(money: 50000),
+  ]
 }
 
 struct User: Decodable, Equatable {

@@ -20,8 +20,8 @@ enum PretendardWeight: String {
 
 extension Font {
   static func pretendard(size: CGFloat, weight: PretendardWeight) -> Font {
-    let fontName = "Pretendard-\(weight.rawValue)"
-    return custom(fontName, size: size)
+    let uiFont = UIFont.pretendard(size: size, weight: weight)
+    return Font(uiFont)
   }
 }
 
