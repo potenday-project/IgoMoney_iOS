@@ -42,13 +42,16 @@ struct EnterChallengeButtonCore: Reducer {
       return .none
       
     case ._fetchCanEnterResponse(.failure(let error)):
-      print(#fileID, #function, #line, "Fetch Can Enter Response \(error)")
+      #if DEBUG
+      state.canEnter = true
+      #else
       if case let .badRequest(statusCode) = error as? APIError {
         state.canEnter = (statusCode == 409)
         return .none
       }
       
       state.canEnter = false
+      #endif
       return .none
     }
   }
@@ -93,12 +96,14 @@ struct EnterChallengeInformationCore: Reducer {
 
 struct EnterChallengeCore: Reducer {
   struct State: Equatable {
-    var showAlert: Bool = false
     var showProgressView: Bool = false
     var dismissView: Bool = false
     
+    var alertTitle: String = ""
+    
     var enterChallengeButtonState = EnterChallengeButtonCore.State()
     var challengeInformationState: EnterChallengeInformationCore.State
+    var alertState = IGOAlertCore.State()
     
     init(challenge: Challenge) {
       self.challengeInformationState = EnterChallengeInformationCore.State(challenge: challenge)
@@ -106,7 +111,6 @@ struct EnterChallengeCore: Reducer {
   }
   
   enum Action: Equatable {
-    case showAlert(Bool)
     case enterChallenge
     case dismissView
     
@@ -114,6 +118,7 @@ struct EnterChallengeCore: Reducer {
     
     case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
     case enterChallengeButtonAction(EnterChallengeButtonCore.Action)
+    case alertAction(IGOAlertCore.Action)
   }
   
   @Dependency(\.userClient) var userClient
@@ -138,18 +143,13 @@ struct EnterChallengeCore: Reducer {
       #endif
     }
     
+    Scope(state: \.alertState, action: /Action.alertAction) {
+      IGOAlertCore()
+    }
+    
     Reduce { state, action in
       switch action {
-      case .showAlert(true):
-        state.showAlert = true
-        return .none
-        
-      case .showAlert(false):
-        state.showAlert = false
-        return .none
-        
       case .enterChallenge:
-        state.showAlert = false
         state.showProgressView = true
         return .run { [challengeID = state.challengeInformationState.challenge.id] send in
           await send(
@@ -166,7 +166,7 @@ struct EnterChallengeCore: Reducer {
         return .none
         
       case .enterChallengeButtonAction(.didTapButton):
-        return .send(.showAlert(true))
+        return .send(.alertAction(.present))
         
       case ._requestEnterChallenge(.success):
         state.showProgressView = false

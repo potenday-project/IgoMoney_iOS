@@ -74,41 +74,18 @@ struct EnterChallengeScene: View {
           presentationMode.wrappedValue.dismiss()
         }
       })
-      .alert(
-        isPresent: ViewStore(store, observe: { $0.showAlert })
-          .binding(send: EnterChallengeCore.Action.showAlert)
+      .igoAlert(
+        store.scope(
+          state: \.alertState,
+          action: EnterChallengeCore.Action.alertAction
+        )
       ) {
-        IGOAlertView {
-          Text("챌린지에 참가하시겠습니까?")
-            .font(.pretendard(size: 18, weight: .medium))
-        } primaryButton: {
-          IGOAlertButton(color: ColorConstants.primary) {
-            // TODO: - 사용자 참가 네트워크 메서드 구현
-            store.send(.enterChallenge)
-          } title: {
-            Text("네")
-              .font(.pretendard(size: 16, weight: .medium))
-              .foregroundColor(.black)
-          }
-        } secondaryButton: {
-          IGOAlertButton(color: ColorConstants.gray5) {
-            store.send(.showAlert(false))
-          } title: {
-            Text("아니요")
-              .font(.pretendard(size: 16, weight: .medium))
-              .foregroundColor(ColorConstants.gray3)
-          }
-        }
+        ChallengeEnterAlertView(store: store)
       }
-      
-//      WithViewStore(store, observe: { $0.showProgressView }) { showProgress in
-//        if showProgress.state {
-//          ProgressView()
-//        }
-//      }
     }
   }
 }
+
 struct EnterChallengeButton: View {
   let store: StoreOf<EnterChallengeButtonCore>
   
@@ -259,8 +236,60 @@ struct ChallengeNoticeView: View {
   }
 }
 
+struct ChallengeEnterAlertView: View {
+  let store: StoreOf<EnterChallengeCore>
+  
+  var body: some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      VStack(spacing: 16) {
+        Text(viewStore.alertTitle)
+          .font(.pretendard(size: 18, weight: .bold))
+        
+        HStack {
+          Button {
+            viewStore.send(.alertAction(.dismiss))
+          } label: {
+            Text("아니요")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.gray5)
+          .foregroundColor(ColorConstants.gray3)
+          .cornerRadius(8)
+          
+          Button {
+            viewStore.send(.alertAction(.dismiss))
+          } label: {
+            Text("네")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.primary)
+          .cornerRadius(8)
+        }
+      }
+      .foregroundColor(Color.black)
+      .padding()
+      .background(Color.white)
+      .cornerRadius(8)
+      .frame(width: 250)
+    }
+  }
+}
+
 #Preview {
-  EnterChallengeScene(
+  //  EnterChallengeScene(
+  //    store: Store(
+  //      initialState: EnterChallengeCore.State(challenge: .default),
+  //      reducer: { EnterChallengeCore() }
+  //    )
+  //  )
+  
+  ChallengeEnterAlertView(
     store: Store(
       initialState: EnterChallengeCore.State(challenge: .default),
       reducer: { EnterChallengeCore() }
