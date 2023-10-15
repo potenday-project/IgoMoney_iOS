@@ -78,29 +78,7 @@ struct GenerateRoomScene: View {
         action: GenerateRoomCore.Action.alertAction
       )
     ) {
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        VStack(spacing: 16) {
-          Text(viewStore.alertTitle)
-            .font(.pretendard(size: 18, weight: .bold))
-          
-          Button {
-            viewStore.send(.alertAction(.dismiss))
-          } label: {
-            Text("확인")
-              .frame(maxWidth: .infinity)
-              .font(.pretendard(size: 16, weight: .medium))
-          }
-          .padding(.vertical, 8)
-          .padding(.horizontal, 16)
-          .background(ColorConstants.primary)
-          .cornerRadius(8)
-        }
-        .foregroundColor(Color.black)
-        .padding()
-        .background(Color.white)
-        .cornerRadius(8)
-        .padding(.horizontal)
-      }
+      ChallengeGenerateResultAlertView(store: self.store)
     }
   }
 }
@@ -389,6 +367,7 @@ extension GenerateRoomScene {
         VStack(spacing: 16) {
           Text(viewStore.alertTitle)
             .font(.pretendard(size: 18, weight: .bold))
+            .multilineTextAlignment(.center)
           
           Button {
             viewStore.send(.alertAction(.dismiss))
