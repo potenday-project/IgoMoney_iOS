@@ -32,6 +32,8 @@ struct GenerateRoomCore: Reducer {
     var isSendable: Bool {
       return isFillTitle && isFillContent && startDate != nil
     }
+    
+    var showAlert: Bool = false
   }
   
   enum Action: Equatable {
@@ -40,7 +42,12 @@ struct GenerateRoomCore: Reducer {
     case selectDate(Date)
     case didChangeTitle(String)
     case didChangeContent(String)
+    case didEnterChallenge
+    
+    case _enterChallengeResponse(TaskResult<[String: Int]>)
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
@@ -54,10 +61,6 @@ struct GenerateRoomCore: Reducer {
       
     case .selectDate(let selectedDate):
       state.startDate = selectedDate
-      
-      
-
-      
       return .none
       
     case .didChangeTitle(let title):
@@ -70,6 +73,33 @@ struct GenerateRoomCore: Reducer {
       state.content = content
       return .none
       
+    case .didEnterChallenge:
+      guard let userID = APIClient.currentUser?.userID else {
+        return .none
+      }
+      
+      guard let startDate = state.startDate?.toString(with: "yyyy-MM-dd") else {
+        return .none
+      }
+      
+      let request = ChallengeGenerateRequest(
+        userID: userID,
+        title: state.title,
+        content: state.content,
+        targetAmount: state.targetAmount.money,
+        categoryID: state.selectionCategory.rawValue,
+        startDate: startDate
+      )
+      
+      return .run { send in
+        await send(
+          ._enterChallengeResponse(
+            TaskResult {
+              try await challengeClient.generateChallenge(request)
+            }
+          )
+        )
+      }
     default:
       return .none
     }

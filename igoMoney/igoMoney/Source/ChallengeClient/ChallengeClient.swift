@@ -18,7 +18,7 @@ struct ChallengeGenerateRequest {
   
   func toDictionary() -> [String: String] {
     return [
-      "userId": userID?.description ?? "",
+      "userId": userID.description,
       "title": title,
       "content": content,
       "targetAmount": targetAmount.description,

@@ -46,7 +46,7 @@ struct GenerateRoomScene: View {
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         Button {
-          print("Tapped Complete Button")
+          viewStore.send(.didEnterChallenge)
         } label: {
           Text("완료")
             .font(.pretendard(size: 18, weight: .medium))

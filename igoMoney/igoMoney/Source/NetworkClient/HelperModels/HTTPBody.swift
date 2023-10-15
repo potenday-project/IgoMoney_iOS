@@ -21,7 +21,7 @@ enum HTTPBody {
       
     case let .urlEncoded(values):
       let formDataString = values
-        .flatMap { "\($0)=\($1)" }
+        .map { "\($0)=\($1)" }
         .map { String($0) }
         .joined(separator: "&")
       return formDataString.data(using: .utf8)
