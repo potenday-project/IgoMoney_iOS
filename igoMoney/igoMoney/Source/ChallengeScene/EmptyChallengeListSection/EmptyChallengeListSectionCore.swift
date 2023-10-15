@@ -113,6 +113,10 @@ struct EmptyChallengeListSectionCore: Reducer {
       case .enterAction:
         return .none
         
+      case .generateAction(.alertAction(.dismiss)):
+        state.showGenerate = false
+        return .none
+        
       case .generateAction:
         return .none
       }
