@@ -645,11 +645,11 @@
 			};
 			buildConfigurationList = 180363A12AB82DCD00082F8A /* Build configuration list for PBXProject "igoMoney" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = 1803639D2AB82DCD00082F8A;
 			packageReferences = (
@@ -900,7 +900,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = igoMoney/igoMoney.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 999;
+				CURRENT_PROJECT_VERSION = 0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"igoMoney/Resource/Preview Content\"";
 				DEVELOPMENT_TEAM = BH7V49ZZ2G;
 				ENABLE_PREVIEWS = YES;
