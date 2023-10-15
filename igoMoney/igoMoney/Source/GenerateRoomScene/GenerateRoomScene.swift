@@ -9,29 +9,31 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GenerateRoomScene: View {
-  @State var showSelectStartDate: Bool = true
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<GenerateRoomCore>
   
   var body: some View {
     ZStack {
       VStack(spacing: 24) {
-        // 네비게이션 바
+        // Navigation Bar
         IGONavigationBar {
           Text("챌린지 만들기")
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
           Button {
-            print("Tapped Dismiss")
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "xmark")
               .resizable()
               .frame(width: 14, height: 14)
           }
+          .foregroundColor(.black)
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 24)
         .padding(.top, 16)
         
+        // Challenge Information Input Form
         ScrollView(showsIndicators: false) {
           VStack(spacing: 24) {
             WithViewStore(store, observe: { $0 }) {
@@ -45,6 +47,7 @@ struct GenerateRoomScene: View {
           .padding(.bottom)
         }
         
+        // Challenge Generate Button
         WithViewStore(store, observe: { $0 }) { viewStore in
           Button {
             UIApplication.shared.hideKeyboard()
