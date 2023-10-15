@@ -14,10 +14,7 @@ struct AuthScene: View {
   
   var body: some View {
     NavigationView {
-      ZStack(alignment: .top) {
-        Color("background_color")
-          .edgesIgnoringSafeArea(.all)
-        
+      ZStack {
         WithViewStore(store, observe: { $0 }) { viewStore in
           NavigationLink(
             destination: IfLetStore(
@@ -47,7 +44,7 @@ struct AuthScene: View {
                 Task {
                   if provider == .kakao {
                     let token = await AuthController.shared.authorizationWithKakao()
-//                    viewStore.send(._loginWithKakao)
+                    //                    viewStore.send(._loginWithKakao)
                   }
                   
                   if provider == .apple {
@@ -68,32 +65,29 @@ struct AuthScene: View {
           }
         }
         
-        IfLetStore(
-          store.scope(
-            state: \.signUpState,
-            action: AuthCore.Action.signUpAction
-          )
-        ) { store in
-          ZStack {
-            WithViewStore(self.store, observe: { $0 }) { viewStore in
-              Color.gray.opacity(0.2)
-                .onTapGesture {
-                  viewStore.send(.presentSignUp(false))
-                }
-                .edgesIgnoringSafeArea(.all)
-            }
-            
-            VStack {
-              Spacer()
-              
-              SignUpView(store: store)
-                .frame(height: UIScreen.main.bounds.height * 0.6)
-                .transition(.move(edge: .bottom))
-                .animation(.spring(), value: UUID())
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          if viewStore.showSignUp {
+            GeometryReader { proxy in
+              IGOBottomSheetView(
+                isOpen: viewStore.binding(
+                  get: \.showSignUp,
+                  send: AuthCore.Action.presentSignUp
+                ),
+                maxHeight: proxy.size.height * 0.6
+              ) {
+                SignUpView(
+                  store: store.scope(
+                    state: \.signUpState,
+                    action: AuthCore.Action.signUpAction
+                  )
+                )
+              }
+              .edgesIgnoringSafeArea(.all)
             }
           }
         }
       }
+      .background(Color("background_color").edgesIgnoringSafeArea(.all))
       .onAppear {
         store.send(._onAppear)
       }
@@ -101,6 +95,7 @@ struct AuthScene: View {
       .navigationBarHidden(true)
     }
     .navigationViewStyle(.stack)
+    
   }
 }
 

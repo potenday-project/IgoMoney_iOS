@@ -18,7 +18,7 @@ struct AuthCore: Reducer {
     var isNavigationBarHidden: Bool = true
     var showProfileSetting: Bool = false
     
-    var signUpState: SignUpCore.State?
+    var signUpState = SignUpCore.State()
     var profileSettingState: ProfileSettingCore.State?
   }
   
@@ -46,6 +46,10 @@ struct AuthCore: Reducer {
   private enum CancelID { case load }
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.signUpState, action: /Action.signUpAction) {
+      SignUpCore()
+    }
+    
     Reduce { state, action in
       switch action {
       // User Action
@@ -67,7 +71,6 @@ struct AuthCore: Reducer {
         
       case .presentSignUp(false):
         state.showSignUp = false
-        state.signUpState = nil
         return .none
         
       case .presentProfileSetting(true):
@@ -136,9 +139,6 @@ struct AuthCore: Reducer {
       default:
         return .none
       }
-    }
-    .ifLet(\.signUpState, action: /Action.signUpAction) {
-      SignUpCore()
     }
     .ifLet(\.profileSettingState, action: /Action.profileSettingAction) {
       ProfileSettingCore()
