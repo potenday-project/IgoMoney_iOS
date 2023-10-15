@@ -43,6 +43,7 @@ struct GenerateRoomCore: Reducer {
     case didChangeTitle(String)
     case didChangeContent(String)
     case didEnterChallenge
+    case showAlert(Bool)
     
     case _enterChallengeResponse(TaskResult<[String: Int]>)
   }
@@ -100,6 +101,19 @@ struct GenerateRoomCore: Reducer {
           )
         )
       }
+      
+    case .showAlert(let isShow):
+      state.showAlert = isShow
+      return .none
+      
+    case ._enterChallengeResponse(.success):
+      state.showAlert = true
+      return .none
+      
+    case ._enterChallengeResponse(.failure):
+      state.showAlert = true
+      return .none
+      
     default:
       return .none
     }

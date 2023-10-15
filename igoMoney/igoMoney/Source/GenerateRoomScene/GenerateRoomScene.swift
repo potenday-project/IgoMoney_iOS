@@ -46,6 +46,7 @@ struct GenerateRoomScene: View {
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         Button {
+          UIApplication.shared.hideKeyboard()
           viewStore.send(.didEnterChallenge)
         } label: {
           Text("완료")
@@ -68,6 +69,27 @@ struct GenerateRoomScene: View {
     }
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
+    }
+    .alert(
+      isPresent: ViewStore(store, observe: { $0 })
+        .binding(
+          get: \.showAlert,
+          send: GenerateRoomCore.Action.showAlert
+        )
+    ) {
+      IGOAlertView {
+        Text("챌린지가 만들어졌어요!\n상대를 기다려봐요.")
+          .font(.pretendard(size: 18, weight: .bold))
+          .multilineTextAlignment(.center)
+      } primaryButton: {
+        IGOAlertButton(color: ColorConstants.primary) {
+          store.send(.showAlert(false))
+        } title: {
+          Text("확인")
+            .font(.pretendard(size: 16, weight: .medium))
+            .foregroundColor(Color.black)
+        }
+      }
     }
   }
 }
@@ -351,7 +373,7 @@ extension GenerateRoomScene {
 #Preview {
   GenerateRoomScene(
     store: Store(
-      initialState: GenerateRoomCore.State(),
+      initialState: GenerateRoomCore.State(showAlert: true),
       reducer: { GenerateRoomCore() }
     )
   )
