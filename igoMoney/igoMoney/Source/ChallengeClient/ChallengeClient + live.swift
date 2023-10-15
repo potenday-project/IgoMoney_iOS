@@ -46,11 +46,21 @@ extension ChallengeClient {
         header: [:]
       )
       
-      print(requestGenerator)
-      
       let data = try await apiClient.execute(to: requestGenerator)
-      print(#fileID, #function, #line, "Challenge Apply Response", String(data: data, encoding: .utf8))
       return true
+    } generateChallenge: { request in
+      let requestGenerator = ChallengeAPI(
+        method: .post,
+        path: "/challenges/new",
+        query: [:],
+        header: [
+          "Content-Type": "application/x-www-form-urlencoded"
+        ],
+        body: .urlEncoded(value: request.toDictionary())
+      )
+      
+      let values: [String: Int] = try await apiClient.request(to: requestGenerator)
+      return values
     }
   }()
 }
