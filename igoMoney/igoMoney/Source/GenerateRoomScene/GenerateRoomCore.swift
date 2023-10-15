@@ -33,7 +33,8 @@ struct GenerateRoomCore: Reducer {
       return isFillTitle && isFillContent && startDate != nil
     }
     
-    var showAlert: Bool = false
+    var alertState: IGOAlertCore.State = .init()
+    var alertTitle: String = ""
   }
   
   enum Action: Equatable {
@@ -43,79 +44,96 @@ struct GenerateRoomCore: Reducer {
     case didChangeTitle(String)
     case didChangeContent(String)
     case didEnterChallenge
-    case showAlert(Bool)
     
     case _enterChallengeResponse(TaskResult<[String: Int]>)
+    
+    case alertAction(IGOAlertCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
   
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case .selectTargetAmount(let amount):
-      state.targetAmount = amount
-      return .none
-      
-    case .selectCategory(let category):
-      state.selectionCategory = category
-      return .none
-      
-    case .selectDate(let selectedDate):
-      state.startDate = selectedDate
-      return .none
-      
-    case .didChangeTitle(let title):
-      if title.count > 15 { return .none }
-      state.title = title
-      return .none
-      
-    case .didChangeContent(let content):
-      if content.count > 50 { return .none }
-      state.content = content
-      return .none
-      
-    case .didEnterChallenge:
-      guard let userID = APIClient.currentUser?.userID else {
+  var body: some Reducer<State, Action> {
+    Scope(state: \.alertState, action: /Action.alertAction) {
+      IGOAlertCore()
+    }
+    
+    Reduce { state, action in
+      switch action {
+      case .selectTargetAmount(let amount):
+        state.targetAmount = amount
         return .none
-      }
-      
-      guard let startDate = state.startDate?.toString(with: "yyyy-MM-dd") else {
+        
+      case .selectCategory(let category):
+        state.selectionCategory = category
         return .none
-      }
-      
-      let request = ChallengeGenerateRequest(
-        userID: userID,
-        title: state.title,
-        content: state.content,
-        targetAmount: state.targetAmount.money,
-        categoryID: state.selectionCategory.rawValue,
-        startDate: startDate
-      )
-      
-      return .run { send in
-        await send(
-          ._enterChallengeResponse(
-            TaskResult {
-              try await challengeClient.generateChallenge(request)
-            }
-          )
+        
+      case .selectDate(let selectedDate):
+        state.startDate = selectedDate
+        return .none
+        
+      case .didChangeTitle(let title):
+        if title.count > 15 { return .none }
+        state.title = title
+        return .none
+        
+      case .didChangeContent(let content):
+        if content.count > 50 { return .none }
+        state.content = content
+        return .none
+        
+      case .didEnterChallenge:
+        #if DEBUG
+        let userID = 2
+        #else
+        guard let userID = APIClient.currentUser?.userID else {
+          return .none
+        }
+        #endif
+        
+        guard let startDate = state.startDate?.toString(with: "yyyy-MM-dd") else {
+          return .none
+        }
+        
+        let request = ChallengeGenerateRequest(
+          userID: userID,
+          title: state.title,
+          content: state.content,
+          targetAmount: state.targetAmount.money,
+          categoryID: state.selectionCategory.rawValue,
+          startDate: startDate
         )
+        
+        return .run { send in
+          await send(
+            ._enterChallengeResponse(
+              TaskResult {
+                try await challengeClient.generateChallenge(request)
+              }
+            )
+          )
+        }
+        
+      case ._enterChallengeResponse(.success):
+        state.alertTitle = "챌린지가 만들어졌어요!\n상대를 기다려봐요."
+        return .send(.alertAction(.present))
+        
+      case ._enterChallengeResponse(.failure(let error)):
+        #if DEBUG
+        state.alertTitle = "에러가 발생했습니다. \(error)"
+        #else
+        if case let .badRequest(statusCode) = error as? APIError {
+          if statusCode == 409 {
+            state.alertTitle = "이미 참가 중인 챌린지가 존재합니다."
+          } else {
+            state.alertTitle = "오류가 발생하였습니다.\n 잠시 후 다시 시도해주세요."
+          }
+        }
+        #endif
+        return .send(.alertAction(.present))
+        
+      default:
+        return .none
       }
-      
-    case .showAlert(let isShow):
-      state.showAlert = isShow
-      return .none
-      
-    case ._enterChallengeResponse(.success):
-      state.showAlert = true
-      return .none
-      
-    case ._enterChallengeResponse(.failure):
-      state.showAlert = true
-      return .none
-      
-    default:
-      return .none
     }
   }
 }

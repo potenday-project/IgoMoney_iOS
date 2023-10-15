@@ -13,82 +13,93 @@ struct GenerateRoomScene: View {
   let store: StoreOf<GenerateRoomCore>
   
   var body: some View {
-    VStack(spacing: 24) {
-      // 네비게이션 바
-      IGONavigationBar {
-        Text("챌린지 만들기")
-          .font(.pretendard(size: 20, weight: .bold))
-      } leftView: {
-        Button {
-          print("Tapped Dismiss")
-        } label: {
-          Image(systemName: "xmark")
-            .resizable()
-            .frame(width: 14, height: 14)
-        }
-      }
-      .fixedSize(horizontal: false, vertical: true)
-      .padding(.horizontal, 24)
-      .padding(.top, 16)
-      
-      ScrollView(showsIndicators: false) {
-        VStack(spacing: 24) {
-          WithViewStore(store, observe: { $0 }) {
-            GenerateRoomChallengeMoneyInputView(viewStore: $0)
-            GenerateRoomChallengeCategoryInputSection(viewStore: $0)
-            GenerateRoomChallengeStartDateInputSection(viewStore: $0)
-            GenerateRoomChallengeTitleInputSection(viewStore: $0)
-            GenerateRoomChallengeContentInputSection(viewStore: $0)
+    ZStack {
+      VStack(spacing: 24) {
+        // 네비게이션 바
+        IGONavigationBar {
+          Text("챌린지 만들기")
+            .font(.pretendard(size: 20, weight: .bold))
+        } leftView: {
+          Button {
+            print("Tapped Dismiss")
+          } label: {
+            Image(systemName: "xmark")
+              .resizable()
+              .frame(width: 14, height: 14)
           }
         }
-        .padding(.bottom)
-      }
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        Button {
-          UIApplication.shared.hideKeyboard()
-          viewStore.send(.didEnterChallenge)
-        } label: {
-          Text("완료")
-            .font(.pretendard(size: 18, weight: .medium))
-        }
-        .frame(maxWidth: .infinity)
-        .disabled(viewStore.isSendable == false)
-        .buttonStyle(.plain)
-        .padding(16)
-        .foregroundColor(
-          viewStore.isSendable ? Color.black : ColorConstants.gray3
-        )
-        .background(
-          viewStore.isSendable ? ColorConstants.primary : ColorConstants.gray5
-        )
-        .cornerRadius(8)
+        .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 24)
-        .padding(.bottom, 8)
+        .padding(.top, 16)
+        
+        ScrollView(showsIndicators: false) {
+          VStack(spacing: 24) {
+            WithViewStore(store, observe: { $0 }) {
+              GenerateRoomChallengeMoneyInputView(viewStore: $0)
+              GenerateRoomChallengeCategoryInputSection(viewStore: $0)
+              GenerateRoomChallengeStartDateInputSection(viewStore: $0)
+              GenerateRoomChallengeTitleInputSection(viewStore: $0)
+              GenerateRoomChallengeContentInputSection(viewStore: $0)
+            }
+          }
+          .padding(.bottom)
+        }
+        
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          Button {
+            UIApplication.shared.hideKeyboard()
+            viewStore.send(.didEnterChallenge)
+          } label: {
+            Text("완료")
+              .font(.pretendard(size: 18, weight: .medium))
+          }
+          .frame(maxWidth: .infinity)
+          .disabled(viewStore.isSendable == false)
+          .buttonStyle(.plain)
+          .padding(16)
+          .foregroundColor(
+            viewStore.isSendable ? Color.black : ColorConstants.gray3
+          )
+          .background(
+            viewStore.isSendable ? ColorConstants.primary : ColorConstants.gray5
+          )
+          .cornerRadius(8)
+          .padding(.horizontal, 24)
+          .padding(.bottom, 8)
+        }
       }
     }
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
     }
-    .alert(
-      isPresent: ViewStore(store, observe: { $0 })
-        .binding(
-          get: \.showAlert,
-          send: GenerateRoomCore.Action.showAlert
-        )
+    .igoAlert(
+      self.store.scope(
+        state: \.alertState,
+        action: GenerateRoomCore.Action.alertAction
+      )
     ) {
-      IGOAlertView {
-        Text("챌린지가 만들어졌어요!\n상대를 기다려봐요.")
-          .font(.pretendard(size: 18, weight: .bold))
-          .multilineTextAlignment(.center)
-      } primaryButton: {
-        IGOAlertButton(color: ColorConstants.primary) {
-          store.send(.showAlert(false))
-        } title: {
-          Text("확인")
-            .font(.pretendard(size: 16, weight: .medium))
-            .foregroundColor(Color.black)
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        VStack(spacing: 16) {
+          Text(viewStore.alertTitle)
+            .font(.pretendard(size: 18, weight: .bold))
+          
+          Button {
+            viewStore.send(.alertAction(.dismiss))
+          } label: {
+            Text("확인")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.primary)
+          .cornerRadius(8)
         }
+        .foregroundColor(Color.black)
+        .padding()
+        .background(Color.white)
+        .cornerRadius(8)
+        .padding(.horizontal)
       }
     }
   }
@@ -368,13 +379,54 @@ extension GenerateRoomScene {
       .padding(.horizontal, 24)
     }
   }
+  
+  /// Challenge Generate Alert View
+  struct ChallengeGenerateResultAlertView: View {
+    let store: StoreOf<GenerateRoomCore>
+    
+    var body: some View {
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        VStack(spacing: 16) {
+          Text(viewStore.alertTitle)
+            .font(.pretendard(size: 18, weight: .bold))
+          
+          Button {
+            viewStore.send(.alertAction(.dismiss))
+          } label: {
+            Text("확인")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.primary)
+          .cornerRadius(8)
+        }
+        .foregroundColor(Color.black)
+        .padding()
+        .background(Color.white)
+        .cornerRadius(8)
+        .frame(width: 250)
+      }
+    }
+  }
 }
 
 #Preview {
   GenerateRoomScene(
     store: Store(
-      initialState: GenerateRoomCore.State(showAlert: true),
+      initialState: GenerateRoomCore.State(),
       reducer: { GenerateRoomCore() }
     )
   )
+}
+
+#Preview {
+  GenerateRoomScene.ChallengeGenerateResultAlertView(
+    store: Store(
+      initialState: GenerateRoomCore.State(alertTitle: "챌린지가 만들어졌어요!"),
+      reducer: { GenerateRoomCore() }
+    )
+  )
+  .shadow(radius: 10)
 }
