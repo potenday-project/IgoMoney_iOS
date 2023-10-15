@@ -15,7 +15,7 @@ struct Challenge: Decodable, Equatable, Identifiable {
   let title: String
   let content: String
   let targetAmount: TargetMoneyAmount
-  let category: ChallengeCategory
+  let category: ChallengeCategory?
   let startDate: Date?
   let term: Int?
   let endDate: Date?
@@ -55,7 +55,7 @@ extension Challenge {
     content = try container.decode(String.self, forKey: .content)
     let moneyValue = try container.decode(Int.self, forKey: .targetAmount)
     targetAmount = TargetMoneyAmount(money: moneyValue)
-    category = try container.decode(ChallengeCategory.self, forKey: .category)
+    category = try? container.decode(ChallengeCategory.self, forKey: .category)
     term = try? container.decode(Int.self, forKey: .term)
     startDate = try? container.decode(Date.self, forKey: .startDate)
     endDate = try? container.decode(Date.self, forKey: .endDate)
