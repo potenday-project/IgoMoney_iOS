@@ -42,7 +42,26 @@ struct ExploreChallengeScene: View {
   
   var body: some View {
     ZStack {
-      VStack {
+      VStack(spacing: 24) {
+        IGONavigationBar {
+          Text("챌린지 둘러보기")
+        } leftView: {
+          Button {
+            
+          } label: {
+            Image(systemName: "chevron.left")
+          }
+        } rightView: {
+          Button {
+            
+          } label: {
+            Image(systemName: "plus.circle")
+          }
+        }
+        .font(.pretendard(size: 20, weight: .bold))
+        .padding(.vertical, 16)
+        .accentColor(.black)
+        
         HStack(spacing: 8) {
           FilterButton(isSelected: true, isMenu: false, title: "전체") {
             print("Tapped All")
@@ -65,6 +84,7 @@ struct ExploreChallengeScene: View {
         
         Spacer()
       }
+      .padding(.horizontal, 24)
       
       if showBottomSheet {
         GeometryReader { proxy in
