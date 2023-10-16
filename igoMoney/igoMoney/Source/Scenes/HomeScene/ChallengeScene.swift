@@ -8,8 +8,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ChallengeScene: View {
-  let store: StoreOf<ChallengeCore>
+struct HomeScene: View {
+  let store: StoreOf<HomeCore>
   
   @ViewBuilder
   var titleHeader: some View {
@@ -33,14 +33,14 @@ struct ChallengeScene: View {
           MyChallengeSection(
             store: store.scope(
               state: \.myChallengeState,
-              action: ChallengeCore.Action.myChallengeAction
+              action: HomeCore.Action.myChallengeAction
             )
           )
           
           EmptyChallengeListSection(
             store: store.scope(
               state: \.emptyChallengeListState,
-              action: ChallengeCore.Action.emptyChallengeAction
+              action: HomeCore.Action.emptyChallengeAction
             )
           )
         }
@@ -58,7 +58,7 @@ struct ChallengeScene: View {
   }
 }
 
-extension ChallengeScene {
+extension HomeScene {
   enum Section {
     case myChallenge
     case emptyChallenge
@@ -88,7 +88,7 @@ extension ChallengeScene {
 }
 
 struct ChallengeSectionTitleView: View {
-  let sectionType: ChallengeScene.Section
+  let sectionType: HomeScene.Section
   let buttonAction: (() -> Void)?
   
   var body: some View {
@@ -124,10 +124,10 @@ struct ChallengeSectionTitleView: View {
 
 struct ChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    ChallengeScene(
+    HomeScene(
       store: Store(
-        initialState: ChallengeCore.State(),
-        reducer: { ChallengeCore() }
+        initialState: HomeCore.State(),
+        reducer: { HomeCore() }
       )
     )
   }

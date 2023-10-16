@@ -10,7 +10,7 @@ struct MainCore: Reducer {
   struct State: Equatable {
     var selectedTab: MainTab = .home
     
-    var challengeState = ChallengeCore.State()
+    var challengeState = HomeCore.State()
     var myPageState = MyPageCore.State()
   }
   
@@ -18,7 +18,7 @@ struct MainCore: Reducer {
     case selectedTabChange(MainTab)
     
     // Child Action
-    case challengeAction(ChallengeCore.Action)
+    case challengeAction(HomeCore.Action)
     case myPageAction(MyPageCore.Action)
   }
   
@@ -38,7 +38,7 @@ struct MainCore: Reducer {
     }
     
     Scope(state: \.challengeState, action: /Action.challengeAction) {
-      ChallengeCore()
+      HomeCore()
     }
     
     Scope(state: \.myPageState, action: /Action.myPageAction) {

@@ -35,7 +35,7 @@ struct MainScene: View {
             
             switch viewStore.selectedTab {
             case .home:
-              ChallengeScene(
+              HomeScene(
                 store: store.scope(
                   state: \.challengeState,
                   action: MainCore.Action.challengeAction

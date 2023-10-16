@@ -74,7 +74,7 @@
 		1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */; };
 		187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C62ABC07AE00DCF08C /* MainTab.swift */; };
 		187252C92ABC07C700DCF08C /* MainCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252C82ABC07C700DCF08C /* MainCore.swift */; };
-		187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */; };
+		187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */; };
 		187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */; };
 		187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252D02ABC0BA800DCF08C /* MyPageScene.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
@@ -101,6 +101,8 @@
 		18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */; };
 		18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C912ADD942800DE50C4 /* AuthClient.swift */; };
 		18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */; };
+		18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */; };
+		18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,7 +172,7 @@
 		1865C4192AC14AAF006B5B8A /* Date + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extensions.swift"; sourceTree = "<group>"; };
 		187252C62ABC07AE00DCF08C /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
 		187252C82ABC07C700DCF08C /* MainCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCore.swift; sourceTree = "<group>"; };
-		187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoundTabBar.swift; sourceTree = "<group>"; };
+		187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGORoundTabBar.swift; sourceTree = "<group>"; };
 		187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeScene.swift; sourceTree = "<group>"; };
 		187252D02ABC0BA800DCF08C /* MyPageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageScene.swift; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,8 @@
 		18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAuthButton.swift; sourceTree = "<group>"; };
 		18F55C912ADD942800DE50C4 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthClient + live.swift"; sourceTree = "<group>"; };
+		18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterSection.swift; sourceTree = "<group>"; };
+		18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,16 +217,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1800BC922ABD6C6400938336 /* EnterChallengeScene */ = {
-			isa = PBXGroup;
-			children = (
-				1831694F2ADBDA8E0098638E /* Views */,
-				1831694E2ADBDA8A0098638E /* Scene */,
-				1831694D2ADBDA880098638E /* Core */,
-			);
-			path = EnterChallengeScene;
-			sourceTree = "<group>";
-		};
 		1803639D2AB82DCD00082F8A = {
 			isa = PBXGroup;
 			children = (
@@ -275,33 +269,10 @@
 				180363A92AB82DCD00082F8A /* igoMoneyApp.swift */,
 				18F55C952ADDA12200DE50C4 /* Scenes */,
 				18F55C8F2ADD92D600DE50C4 /* Clients */,
-				182B1B5D2AD678C700D01DBA /* GenerateRoomScene */,
-				181988AA2ACE72200021214C /* ChallengeClient */,
-				1800BC922ABD6C6400938336 /* EnterChallengeScene */,
-				18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */,
-				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
-				187252CC2ABC0B6200DCF08C /* ChallengeScene */,
 				18CD8F2E2AB9A1D6006FEA6F /* Models */,
 				18D6236A2AB8BAC7006EAC39 /* Utility */,
-				18D623672AB8A90A006EAC39 /* AuthScene */,
-				180363B92AB8317100082F8A /* App */,
-				180363BA2AB8317700082F8A /* MainScene */,
 			);
 			path = Source;
-			sourceTree = "<group>";
-		};
-		180363B92AB8317100082F8A /* App */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		180363BA2AB8317700082F8A /* MainScene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MainScene;
 			sourceTree = "<group>";
 		};
 		180FC6922ABB337200DD8477 /* NetworkClient */ = {
@@ -345,16 +316,6 @@
 			path = ChallengeClient;
 			sourceTree = "<group>";
 		};
-		182B1B5D2AD678C700D01DBA /* GenerateRoomScene */ = {
-			isa = PBXGroup;
-			children = (
-				18A152302AC97FD100B8B8A4 /* SettingScene */,
-				182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */,
-				182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */,
-			);
-			path = GenerateRoomScene;
-			sourceTree = "<group>";
-		};
 		183169492ADBD6D10098638E /* IGOAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,87 +325,38 @@
 			path = IGOAlertView;
 			sourceTree = "<group>";
 		};
-		1831694D2ADBDA880098638E /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */,
-				183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */,
-				183169522ADBDAC60098638E /* EnterChallengeInformationCore.swift */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		1831694E2ADBDA8A0098638E /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
-		1831694F2ADBDA8E0098638E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				183169542ADBDAE40098638E /* EnterChallengeButton.swift */,
-				183169562ADBDB200098638E /* ChallengeInformationCardView.swift */,
-				183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */,
+				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
 				183169492ADBD6D10098638E /* IGOAlertView */,
-				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
-				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
-				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
 				18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */,
 				189440852ABED3C200BE1205 /* IGOBannerView.swift */,
+				183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */,
 				182B1B622AD68C4200D01DBA /* IGOInputForm.swift */,
 				183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */,
-				183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */,
+				187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */,
 			);
 			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		18599A472ABC32060075DE76 /* MyChallengeSection */ = {
-			isa = PBXGroup;
-			children = (
-				18599A482ABC32160075DE76 /* MyChallengeSection.swift */,
-				18599A4A2ABC321E0075DE76 /* MyChallengeSectionCore.swift */,
-			);
-			path = MyChallengeSection;
 			sourceTree = "<group>";
 		};
 		18599A4C2ABC325E0075DE76 /* EmptyChallengeListSection */ = {
 			isa = PBXGroup;
 			children = (
-				18599A552ABC35B40075DE76 /* EmptyChallengeDetail */,
+				18599A552ABC35B40075DE76 /* SubViews */,
 				18599A4D2ABC32790075DE76 /* EmptyChallengeListSection.swift */,
 				18599A4F2ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift */,
 			);
 			path = EmptyChallengeListSection;
 			sourceTree = "<group>";
 		};
-		18599A552ABC35B40075DE76 /* EmptyChallengeDetail */ = {
+		18599A552ABC35B40075DE76 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
 				18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */,
 				18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */,
 			);
-			path = EmptyChallengeDetail;
-			sourceTree = "<group>";
-		};
-		18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */ = {
-			isa = PBXGroup;
-			children = (
-				18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */,
-				18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */,
-				18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */,
-			);
-			path = ExploreChallengeScene;
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		18599A5D2ABC4DDA0075DE76 /* Fonts */ = {
@@ -461,35 +373,6 @@
 				18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		187252CC2ABC0B6200DCF08C /* ChallengeScene */ = {
-			isa = PBXGroup;
-			children = (
-				18599A4C2ABC325E0075DE76 /* EmptyChallengeListSection */,
-				18599A472ABC32060075DE76 /* MyChallengeSection */,
-				187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */,
-				18599A442ABC2A950075DE76 /* ChallengeCore.swift */,
-			);
-			path = ChallengeScene;
-			sourceTree = "<group>";
-		};
-		187252CF2ABC0B9C00DCF08C /* MyPageScene */ = {
-			isa = PBXGroup;
-			children = (
-				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
-				18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */,
-			);
-			path = MyPageScene;
-			sourceTree = "<group>";
-		};
-		18A152302AC97FD100B8B8A4 /* SettingScene */ = {
-			isa = PBXGroup;
-			children = (
-				18A152312AC97FDF00B8B8A4 /* SettingScene.swift */,
-				18A152332AC9800900B8B8A4 /* SettingCore.swift */,
-			);
-			path = SettingScene;
 			sourceTree = "<group>";
 		};
 		18B437782AC170AA0026A71E /* API */ = {
@@ -509,13 +392,6 @@
 			path = KeyChainClient;
 			sourceTree = "<group>";
 		};
-		18CD8F292AB9823B006FEA6F /* SignUpView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SignUpView;
-			sourceTree = "<group>";
-		};
 		18CD8F2E2AB9A1D6006FEA6F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,27 +404,10 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		18CD8F332AB9BC4F006FEA6F /* ProfileSettingView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ProfileSettingView;
-			sourceTree = "<group>";
-		};
-		18D623672AB8A90A006EAC39 /* AuthScene */ = {
-			isa = PBXGroup;
-			children = (
-				18CD8F332AB9BC4F006FEA6F /* ProfileSettingView */,
-				18CD8F292AB9823B006FEA6F /* SignUpView */,
-			);
-			path = AuthScene;
-			sourceTree = "<group>";
-		};
 		18D6236A2AB8BAC7006EAC39 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
 				18497C232ABDFC040041C350 /* DesignSystem */,
-				18CD8F312AB9A57D006FEA6F /* Constants.swift */,
 				180FC68C2ABB12FC00DD8477 /* UIApplication + Extensions.swift */,
 				180FC6902ABB157200DD8477 /* Bundle+Extensions.swift */,
 				18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */,
@@ -556,7 +415,10 @@
 				1803B9BC2ACA92A500D97495 /* Data + Extensions.swift */,
 				181988AF2ACE75CC0021214C /* DateFormatter + Extensions.swift */,
 				1809AC3E2AD4371100FB044A /* UINavigationController + Extensions.swift */,
+				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
+				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
 				183DF7D32AD836560041FB69 /* View + Extensions.swift */,
+				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -565,9 +427,10 @@
 			isa = PBXGroup;
 			children = (
 				18F55C902ADD942200DE50C4 /* AuthClient */,
-				180FC69C2ABB488700DD8477 /* UserClient */,
+				181988AA2ACE72200021214C /* ChallengeClient */,
 				18B4377B2AC17EC90026A71E /* KeyChainClient */,
 				180FC6922ABB337200DD8477 /* NetworkClient */,
+				180FC69C2ABB488700DD8477 /* UserClient */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -584,9 +447,14 @@
 		18F55C952ADDA12200DE50C4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				18F55C9A2ADDA28E00DE50C4 /* MainScene */,
-				18F55C972ADDA18E00DE50C4 /* AuthScene */,
 				18F55C962ADDA13A00DE50C4 /* AppScene */,
+				18F55C972ADDA18E00DE50C4 /* AuthScene */,
+				18F55CA22ADDAAC400DE50C4 /* EnterChallengeScene */,
+				18F55C9C2ADDA9E400DE50C4 /* ExploreChallengeScene */,
+				18F55CA72ADDAB9D00DE50C4 /* GenerateChallengeScene */,
+				18F55CA52ADDAB1D00DE50C4 /* HomeScene */,
+				18F55C9A2ADDA28E00DE50C4 /* MainScene */,
+				18F55C9B2ADDA9C300DE50C4 /* MyPageScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -637,6 +505,104 @@
 				187252C82ABC07C700DCF08C /* MainCore.swift */,
 			);
 			path = MainScene;
+			sourceTree = "<group>";
+		};
+		18F55C9B2ADDA9C300DE50C4 /* MyPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				18F55CA82ADDABAB00DE50C4 /* SubViews */,
+				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
+				18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */,
+			);
+			path = MyPageScene;
+			sourceTree = "<group>";
+		};
+		18F55C9C2ADDA9E400DE50C4 /* ExploreChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				18F55C9D2ADDAA2100DE50C4 /* SubViews */,
+				18599A722ABC8FA40075DE76 /* ExploreChallengeCore.swift */,
+				18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */,
+			);
+			path = ExploreChallengeScene;
+			sourceTree = "<group>";
+		};
+		18F55C9D2ADDAA2100DE50C4 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				18599A742ABC98780075DE76 /* ExploreChallengeDetail.swift */,
+				18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */,
+				18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		18F55CA22ADDAAC400DE50C4 /* EnterChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				18F55CA42ADDAAEC00DE50C4 /* SubCores */,
+				18F55CA32ADDAAE200DE50C4 /* SubViews */,
+				1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */,
+				18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */,
+			);
+			path = EnterChallengeScene;
+			sourceTree = "<group>";
+		};
+		18F55CA32ADDAAE200DE50C4 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				183169542ADBDAE40098638E /* EnterChallengeButton.swift */,
+				183169562ADBDB200098638E /* ChallengeInformationCardView.swift */,
+				183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
+		18F55CA42ADDAAEC00DE50C4 /* SubCores */ = {
+			isa = PBXGroup;
+			children = (
+				183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */,
+				183169522ADBDAC60098638E /* EnterChallengeInformationCore.swift */,
+			);
+			path = SubCores;
+			sourceTree = "<group>";
+		};
+		18F55CA52ADDAB1D00DE50C4 /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */,
+				18599A442ABC2A950075DE76 /* ChallengeCore.swift */,
+				18F55CA62ADDAB7E00DE50C4 /* MyChallengeSection */,
+				18599A4C2ABC325E0075DE76 /* EmptyChallengeListSection */,
+			);
+			path = HomeScene;
+			sourceTree = "<group>";
+		};
+		18F55CA62ADDAB7E00DE50C4 /* MyChallengeSection */ = {
+			isa = PBXGroup;
+			children = (
+				18599A482ABC32160075DE76 /* MyChallengeSection.swift */,
+				18599A4A2ABC321E0075DE76 /* MyChallengeSectionCore.swift */,
+			);
+			path = MyChallengeSection;
+			sourceTree = "<group>";
+		};
+		18F55CA72ADDAB9D00DE50C4 /* GenerateChallengeScene */ = {
+			isa = PBXGroup;
+			children = (
+				182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */,
+				182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */,
+			);
+			path = GenerateChallengeScene;
+			sourceTree = "<group>";
+		};
+		18F55CA82ADDABAB00DE50C4 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				18A152312AC97FDF00B8B8A4 /* SettingScene.swift */,
+				18A152332AC9800900B8B8A4 /* SettingCore.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -758,10 +724,11 @@
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */,
 				18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */,
-				187252CB2ABC081F00DCF08C /* MainRoundTabBar.swift in Sources */,
+				187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
+				18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */,
 				189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
 				183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */,
@@ -793,6 +760,7 @@
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,
 				18599A732ABC8FA40075DE76 /* ExploreChallengeCore.swift in Sources */,
 				18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */,
+				18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,

@@ -7,7 +7,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct ChallengeCore: Reducer {
+struct HomeCore: Reducer {
   struct State: Equatable {
     var myChallengeState = MyChallengeSectionCore.State()
     var emptyChallengeListState = EmptyChallengeListSectionCore.State()
