@@ -9,22 +9,35 @@ import Foundation
 struct AuthToken: Codable, Equatable {
   let userID: Int
   let accessToken: String
-  let expiresAt: String
-  let idToken: String
   let refreshToken: String
-  let tokenType: String
-  let createdAt: Date = Date()
+  let providerToken: String?
+  let expireTime: Date
+  var provider: Provider?
   
   var isExpired: Bool {
-    return createdAt.addingTimeInterval(TimeInterval(expiresAt) ?? 0) < Date().addingTimeInterval(86400)
+    return expireTime < Date().addingTimeInterval(-3000)
+  }
+  
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.userID = try container.decode(Int.self, forKey: .userID)
+    self.accessToken = try container.decode(String.self, forKey: .accessToken)
+    self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
+    self.providerToken = try container.decodeIfPresent(String.self, forKey: .providerToken)
+    self.provider = try container.decodeIfPresent(Provider.self, forKey: .provider)
+    
+    expireTime = Date().addingTimeInterval(TimeInterval(3600))
   }
   
   enum CodingKeys: String, CodingKey {
     case userID = "userId"
-    case accessToken = "access_token"
-    case expiresAt = "expires_in"
-    case idToken = "id_token"
-    case refreshToken = "refresh_token"
-    case tokenType = "token_type"
+    case accessToken = "accessToken"
+    case refreshToken = "refreshToken"
+    case providerToken = "provider_accessToken"
+    case provider = "provider"
+  }
+  
+  var encodeData: Data {
+    return (try? JSONEncoder().encode(self)) ?? Data()
   }
 }
