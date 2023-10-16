@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 enum APIError: Error {
+  case tokenExpired
   case didNotConvertRequest
   case invalidResponse
   

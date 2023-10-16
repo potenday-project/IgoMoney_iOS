@@ -22,6 +22,9 @@ extension Networking {
     let tokenData = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
     
     if let authToken: AuthToken = tokenData?.toDecodable() {
+      if authToken.isExpired {
+        throw APIError.tokenExpired
+      }
       request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
     }
     
