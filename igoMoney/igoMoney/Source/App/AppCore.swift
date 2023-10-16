@@ -102,8 +102,6 @@ private extension AppCore {
       return false
     }
     
-    print(#fileID, #function, #line, token)
-    
     switch token.provider {
     case .apple:
       return (await signInWithApple() == .authorized)

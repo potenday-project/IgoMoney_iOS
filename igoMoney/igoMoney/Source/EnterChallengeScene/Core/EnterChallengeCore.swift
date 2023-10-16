@@ -40,21 +40,11 @@ struct EnterChallengeCore: Reducer {
   
   var body: some Reducer<State, Action> {
     Scope(state: \.challengeInformationState, action: /Action.enterChallengeInformationAction) {
-      #if DEBUG
       EnterChallengeInformationCore()
-        ._printChanges()
-      #else
-      EnterChallengeInformationCore()
-      #endif
     }
     
     Scope(state: \.enterChallengeButtonState, action: /Action.enterChallengeButtonAction) {
-      #if DEBUG
       EnterChallengeButtonCore()
-        ._printChanges()
-      #else
-      EnterChallengeButtonCore()
-      #endif
     }
     
     Scope(state: \.alertState, action: /Action.alertAction) {

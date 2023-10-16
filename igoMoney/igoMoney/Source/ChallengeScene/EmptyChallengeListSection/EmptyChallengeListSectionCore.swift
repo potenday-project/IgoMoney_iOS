@@ -100,7 +100,6 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case ._notStartedChallengeListResponse(.success(let challenges)):
         state.challenges = challenges
-        print(state.challenges)
         return .none
         
       case ._notStartedChallengeListResponse(.failure):
