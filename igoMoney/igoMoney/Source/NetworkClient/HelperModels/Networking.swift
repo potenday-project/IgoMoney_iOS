@@ -27,11 +27,7 @@ extension Networking {
     
     let (data, response) = try await URLSession.shared.data(for: request)
     
-    guard let response = response as? HTTPURLResponse else {
-      throw APIError.invalidResponse
-    }
-    
-    try handleStatusCode(with: response.statusCode)
+    try handleResponse(response: response)
     
     return data
   }
@@ -43,6 +39,14 @@ extension Networking {
     }
     
     return decodeData
+  }
+  
+  private func handleResponse(response: URLResponse) throws {
+    guard let response = response as? HTTPURLResponse else {
+      throw APIError.invalidResponse
+    }
+    
+    try handleStatusCode(with: response.statusCode)
   }
   
   private func handleStatusCode(with code: Int) throws {
