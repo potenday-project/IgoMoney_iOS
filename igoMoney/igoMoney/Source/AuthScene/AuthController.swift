@@ -58,18 +58,42 @@ class AuthController: NSObject {
 }
 
 extension AuthController {
-  func authorizationWithKakao() async -> OAuthToken {
-    await withCheckedContinuation { continuation in
-      if UserApi.isKakaoTalkLoginAvailable() {
-        UserApi.shared.loginWithKakaoTalk { token, error in
-          guard let token = token else { return }
-          
-          continuation.resume(returning: token)
+  private func requestKakaoLogin(completion: @escaping (OAuthToken) -> Void) {
+    if UserApi.isKakaoTalkLoginAvailable() {
+      UserApi.shared.loginWithKakaoTalk { token, error in
+        guard let token = token else { return }
+        completion(token)
+      }
+    } else {
+      UserApi.shared.loginWithKakaoAccount { token, error in
+        guard let token = token else { return }
+        completion(token)
+      }
+    }
+  }
+  
+  func authorizationWithKakao() async throws -> OAuthToken {
+    try await withCheckedThrowingContinuation { continuation in
+      if AuthApi.hasToken() {
+        UserApi.shared.accessTokenInfo { tokenInformation, error in
+          if let error = error {
+            if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
+              self.requestKakaoLogin { token in
+                continuation.resume(returning: token)
+              }
+            } else {
+              continuation.resume(throwing: APIError.badRequest(400))
+            }
+          } else {
+            if let token = TokenManager.manager.getToken() {
+              continuation.resume(returning: token)
+            } else {
+              continuation.resume(throwing: APIError.badRequest(400))
+            }
+          }
         }
       } else {
-        UserApi.shared.loginWithKakaoAccount { token, error in
-          guard let token = token else { return }
-          
+        self.requestKakaoLogin { token in
           continuation.resume(returning: token)
         }
       }

@@ -43,8 +43,9 @@ struct AuthScene: View {
               IGOAuthButton(provider: provider) {
                 Task {
                   if provider == .kakao {
-                    let token = await AuthController.shared.authorizationWithKakao()
-                    viewStore.send(.didTapKakaoLogin(token: token.accessToken))
+                    if let token = try? await AuthController.shared.authorizationWithKakao() {
+                      viewStore.send(.didTapKakaoLogin(token: token.accessToken))
+                    }
                     return
                   }
                   
