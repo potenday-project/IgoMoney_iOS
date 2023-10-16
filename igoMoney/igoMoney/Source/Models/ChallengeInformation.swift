@@ -62,7 +62,7 @@ extension Challenge {
   }
   
   static let `default`: Challenge = .init(
-    id: 3,
+    id: Int.random(in: Int.min...Int.max),
     recordID: nil,
     leaderID: 2,
     competitorID: nil,

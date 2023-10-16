@@ -49,7 +49,24 @@ struct ExploreChallengeScene: View {
       }
     } label: {
       HStack {
-        Text(filterType.description)
+        switch filterType {
+        case .challenge:
+          if let category = viewStore.categorySelection {
+            Text(category.description)
+          } else {
+            Text(filterType.description)
+          }
+        case .money:
+          if let targetMoney = viewStore.moneySelection {
+            Text(targetMoney.description)
+          } else {
+            Text(filterType.description)
+          }
+          
+        default:
+          Text(filterType.description)
+        }
+        
         
         if filterType.isMenu {
           Image(systemName: "chevron.down")
@@ -190,10 +207,10 @@ struct ExploreChallengeFilterView: View {
       LazyVGrid(columns: Array(repeating: .init(), count: 3)) {
         ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
           Button {
-            
+            viewStore.send(.selectCategory(category))
           } label: {
             ChallengeCategoryView(
-              isSelection: category.rawValue == 1,
+              isSelection: category == viewStore.categorySelection,
               category: category
             )
           }
@@ -205,10 +222,14 @@ struct ExploreChallengeFilterView: View {
       
       HStack {
         ForEach(TargetMoneyAmount.allCases, id: \.money) { amount in
-          ChallengeTargetMoneyView(
-            isSelection: amount.money == 10000,
-            amount: amount
-          )
+          Button {
+            viewStore.send(.selectMoney(amount))
+          } label: {
+            ChallengeTargetMoneyView(
+              isSelection: amount == viewStore.moneySelection,
+              amount: amount
+            )
+          }
         }
       }
       

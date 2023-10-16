@@ -25,6 +25,9 @@ struct ExploreChallengeCore: Reducer {
     case removeFilter
     case confirmFilter
     
+    case selectCategory(ChallengeCategory)
+    case selectMoney(TargetMoneyAmount)
+    
     case _setCategorySelection(ChallengeCategory?)
     case _setMoneySelection(TargetMoneyAmount?)
   }
@@ -52,6 +55,12 @@ struct ExploreChallengeCore: Reducer {
       case .confirmFilter:
         state.showFilter = false
         return .none
+        
+      case .selectCategory(let category):
+        return .send(._setCategorySelection(category))
+        
+      case .selectMoney(let money):
+        return .send(._setMoneySelection(money))
         
       case ._setCategorySelection(let category):
         state.categorySelection = category
