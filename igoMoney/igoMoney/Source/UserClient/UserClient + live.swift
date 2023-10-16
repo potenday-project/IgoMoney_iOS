@@ -25,7 +25,9 @@ extension UserClient {
         header: ["Content-Type": "application/json"],
         body: .json(value: data)
       )
+      
       let response: AuthToken = try await apiClient.request(to: api)
+      
       guard let tokenData = try? JSONEncoder().encode(response) else { throw APIError.badRequest(400) }
       try await keyChainClient.save(tokenData, .token, SystemConfigConstants.tokenService)
       
@@ -48,6 +50,23 @@ extension UserClient {
             let userData = user.data(using: .utf8) else { throw APIError.badRequest(400) }
       try await keyChainClient.save(userData, .userIdentifier, SystemConfigConstants.userIdentifierService)
       try await keyChainClient.save(tokenData, .token, SystemConfigConstants.tokenService)
+      return response
+    } refreshToken: {
+      let data = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
+      guard let currentToken: AuthToken = data?.toDecodable(),
+            let bodyData = ["refreshToken": currentToken.refreshToken].toJsonString()?.data(using: .utf8) else {
+        throw APIError.badRequest(400)
+      }
+      
+      let api = AuthAPI(
+        method: .post,
+        path: "/auth/refresh_token",
+        query: [:],
+        header: ["Content-Type": "application/json"],
+        body: .json(value: bodyData)
+      )
+      
+      let response: AuthToken = try await apiClient.request(to: api)
       return response
     } checkNicknameDuplicate: { nickName in
       let api = AuthAPI(
@@ -79,7 +98,7 @@ extension UserClient {
       
       let response: User = try await apiClient.request(to: api)
       
-      if let tokenInformation: AuthToken = try await keyChainClient
+      if let tokenInformation: AuthToken = try keyChainClient
         .read(.token, SystemConfigConstants.tokenService).toDecodable(),
          tokenInformation.userID == response.userID {
         APIClient.currentUser = response
@@ -89,7 +108,7 @@ extension UserClient {
     } signOut: {
       return ()
     } withdraw: {
-      guard let token: AuthToken = try await keyChainClient.read(
+      guard let token: AuthToken = try keyChainClient.read(
         .token,
         SystemConfigConstants.tokenService
       ).toDecodable() else {

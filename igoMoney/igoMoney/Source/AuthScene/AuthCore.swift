@@ -28,6 +28,7 @@ struct AuthCore: Reducer {
     case presentProfileSetting(Bool)
     case didTapKakaoLogin(token: String)
     case didTapAppleLogin(user: String, identityCode: String, authCode: String)
+    case refreshToken
     
     // Inner Action
     case _onAppear
@@ -74,6 +75,17 @@ struct AuthCore: Reducer {
           )
         }
         
+      case .refreshToken:
+        return .run { send in
+            await send(
+              ._authTokenResponse(
+                TaskResult {
+                  try await userClient.refreshToken()
+                }
+              )
+            )
+        }
+        
       case .presentSignUp(true):
         state.showSignUp = true
         state.signUpState = SignUpCore.State()
@@ -113,7 +125,9 @@ struct AuthCore: Reducer {
         }
         
       case ._authTokenResponse(.failure(let error)):
-        print(error)
+        if case .tokenExpired = error as? APIError {
+          return .send(.refreshToken)
+        }
         return .none
         
       case ._userInformationResponse(.success(let user)):
