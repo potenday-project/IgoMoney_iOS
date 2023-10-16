@@ -7,6 +7,7 @@
 import Foundation
 
 import ComposableArchitecture
+import KakaoSDKUser
 import AuthenticationServices
 
 struct AppCore: Reducer {
@@ -49,18 +50,13 @@ struct AppCore: Reducer {
     Reduce { state, action in
       switch action {
       case ._onAppear:
-//        #if DEBUG
-//        if state.currentState == .onBoarding {
-//          return .run { send in
-//            let isSuccess = await autoSignIn()
-//            await send(._autoSignIn(isSuccess))
-//          }
-//        }
-//        #endif
-        
-        state.currentState = .auth
-        
-        return .none
+        return .run { send in
+          await send(
+            ._autoSignIn(
+              await autoSignIn()
+            )
+          )
+        }
         
       case ._autoSignIn(true):
         return .run { send in
@@ -100,9 +96,37 @@ struct AppCore: Reducer {
 
 private extension AppCore {
   func autoSignIn() async -> Bool {
-    // Provider를 가져온다.
-    // Provider에 따라서 함수를 호출한다.
-    return (await signInWithApple() == .authorized)
+    @Dependency(\.keyChainClient) var keyChainClient
+    guard let token: AuthToken = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
+      .toDecodable() else {
+      return false
+    }
+    
+    print(#fileID, #function, #line, token)
+    
+    switch token.provider {
+    case .apple:
+      return (await signInWithApple() == .authorized)
+      
+    case .kakao:
+      return await signInWithKakao()
+      
+    default:
+      return false
+    }
+  }
+  
+  func signInWithKakao() async -> Bool {
+    await withCheckedContinuation { continuation in
+      UserApi.shared.accessTokenInfo { token, error in
+        if let error = error {
+          continuation.resume(returning: false)
+          return
+        }
+        
+        continuation.resume(returning: true)
+      }
+    }
   }
   
   func signInWithApple() async -> ASAuthorizationAppleIDProvider.CredentialState {
@@ -110,7 +134,7 @@ private extension AppCore {
     
     let provider = ASAuthorizationAppleIDProvider()
     
-    guard let userIdentifier = try? await keyChainClient.read(
+    guard let userIdentifier = try? keyChainClient.read(
       .userIdentifier,
       SystemConfigConstants.userIdentifierService
     ) else {

@@ -12,6 +12,7 @@ struct AuthToken: Codable, Equatable {
   let refreshToken: String
   let providerToken: String?
   let expireTime: Date
+  var provider: Provider?
   
   var isExpired: Bool {
     return expireTime < Date().addingTimeInterval(-3000)
@@ -23,6 +24,7 @@ struct AuthToken: Codable, Equatable {
     self.accessToken = try container.decode(String.self, forKey: .accessToken)
     self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
     self.providerToken = try container.decodeIfPresent(String.self, forKey: .providerToken)
+    self.provider = try container.decodeIfPresent(Provider.self, forKey: .provider)
     
     expireTime = Date().addingTimeInterval(TimeInterval(3600))
   }
@@ -32,5 +34,6 @@ struct AuthToken: Codable, Equatable {
     case accessToken = "accessToken"
     case refreshToken = "refreshToken"
     case providerToken = "provider_accessToken"
+    case provider = "provider"
   }
 }

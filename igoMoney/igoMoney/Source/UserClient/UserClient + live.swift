@@ -26,7 +26,8 @@ extension UserClient {
         body: .json(value: data)
       )
       
-      let response: AuthToken = try await apiClient.request(to: api)
+      var response: AuthToken = try await apiClient.request(to: api)
+      response.provider = .kakao
       
       guard let tokenData = try? JSONEncoder().encode(response) else { throw APIError.badRequest(400) }
       try await keyChainClient.save(tokenData, .token, SystemConfigConstants.tokenService)
@@ -45,7 +46,9 @@ extension UserClient {
         body: .json(value: data)
       )
       
-      let response: AuthToken = try await apiClient.request(to: api)
+      var response: AuthToken = try await apiClient.request(to: api)
+      response.provider = .apple
+      
       guard let tokenData = try? JSONEncoder().encode(response),
             let userData = user.data(using: .utf8) else { throw APIError.badRequest(400) }
       try await keyChainClient.save(userData, .userIdentifier, SystemConfigConstants.userIdentifierService)
@@ -66,7 +69,9 @@ extension UserClient {
         body: .json(value: bodyData)
       )
       
-      let response: AuthToken = try await apiClient.request(to: api)
+      var response: AuthToken = try await apiClient.request(to: api)
+      response.provider = currentToken.provider
+      
       return response
     } checkNicknameDuplicate: { nickName in
       let api = AuthAPI(
