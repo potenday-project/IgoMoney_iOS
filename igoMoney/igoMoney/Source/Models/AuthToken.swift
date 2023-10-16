@@ -11,6 +11,21 @@ struct AuthToken: Codable, Equatable {
   let accessToken: String
   let refreshToken: String
   let providerToken: String?
+  let expireTime: Date
+  
+  var isExpired: Bool {
+    return expireTime < Date().addingTimeInterval(-3000)
+  }
+  
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.userID = try container.decode(Int.self, forKey: .userID)
+    self.accessToken = try container.decode(String.self, forKey: .accessToken)
+    self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
+    self.providerToken = try container.decodeIfPresent(String.self, forKey: .providerToken)
+    
+    self.expireTime = Date().addingTimeInterval(TimeInterval(3600))
+  }
   
   enum CodingKeys: String, CodingKey {
     case userID = "userId"
