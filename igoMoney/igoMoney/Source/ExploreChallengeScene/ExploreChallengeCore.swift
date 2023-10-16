@@ -8,119 +8,62 @@ import Foundation
 
 import ComposableArchitecture
 
-enum MoneyType: CaseIterable, Hashable, Equatable {
-  case all
-  case money(Int)
-  
-  var title: String {
-    switch self {
-    case .all:
-      return "전체"
-    case .money(let amount):
-      return "\(amount)만원"
-    }
-  }
-  
-  static var allCases: [MoneyType] = [
-    .all,
-    .money(1),
-    .money(2),
-    .money(3),
-    .money(4),
-    .money(5)
-  ]
-}
-
-
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<Challenge> = []
-    var selectedMoney: MoneyType = .all
-    var selection: Identified<Challenge.ID, EnterChallengeCore.State?>?
+    var categorySelection: ChallengeCategory?
+    var moneySelection: TargetMoneyAmount?
     
-    var showGenerate: Bool = false
-    var isActivityIndicatorVisible: Bool = false
+    var showFilter: Bool = false
     
-    var generateState = GenerateRoomCore.State()
+    var isSelectAll: Bool {
+      return (categorySelection == nil) && (moneySelection == nil)
+    }
   }
   
   enum Action: Equatable {
-    // User Action
-    case selectMoney(MoneyType)
-    case showGenerate(Bool)
-    case dismiss
+    case openFilter(Bool)
+    case removeFilter
+    case confirmFilter
     
-    // Inner Action
-    case _setNavigation(selection: Int?)
-    case _setNavigationSelection
-    
-    // Child Action
-    case enterAction(EnterChallengeCore.Action)
-    case generateAction(GenerateRoomCore.Action)
-  }
-  
-  private enum CancelID {
-    case load
+    case _setCategorySelection(ChallengeCategory?)
+    case _setMoneySelection(TargetMoneyAmount?)
   }
   
   var body: some Reducer<State, Action> {
-    Scope(state: \.generateState, action: /Action.generateAction) {
-      GenerateRoomCore()
-    }
-    
     Reduce { state, action in
       switch action {
-        // User Action
-      case .selectMoney(let moneyType):
-        state.selectedMoney = moneyType
+      case .openFilter(true):
+        state.showFilter = true
+        return .concatenate(
+          .send(._setCategorySelection(.living)),
+          .send(._setMoneySelection(.init(money: 10000)))
+        )
+        
+      case .openFilter(false):
+        state.showFilter = false
+        return .send(.removeFilter)
+        
+      case .removeFilter:
+        return .concatenate(
+          .send(._setMoneySelection(nil)),
+          .send(._setCategorySelection(nil))
+        )
+        
+      case .confirmFilter:
+        state.showFilter = false
         return .none
         
-      case .showGenerate(true):
-        state.showGenerate = true
+      case ._setCategorySelection(let category):
+        state.categorySelection = category
         return .none
         
-      case .showGenerate(false):
-        state.showGenerate = false
+      case ._setMoneySelection(let money):
+        state.moneySelection = money
         return .none
         
-      case .dismiss:
-        return .none
-        
-      // Inner Action
-      case let ._setNavigation(selection: .some(id)):
-        state.selection = Identified(nil, id: id)
-        return .run { send in
-          await send(._setNavigationSelection)
-        }.cancellable(id: CancelID.load, cancelInFlight: true)
-        
-      case ._setNavigation(selection: .none):
-        state.selection = nil
-        return .cancel(id: CancelID.load)
-        
-      case ._setNavigationSelection:
-//        guard let id = state.selection?.id,
-//              let enterChallenge = state.challenges[id: id] else {
-//          return .none
-//        }
-//        
-//        state.selection?.value = EnterChallengeCore.State(challenge: enterChallenge)
-//        return .none
-        
-        return .none
-        
-        // Child Action
-      case .enterAction:
-        return .none
-        
-      case .generateAction:
+      default:
         return .none
       }
-    }
-    .ifLet(\.selection, action: /Action.enterAction) {
-      EmptyReducer()
-        .ifLet(\Identified<Challenge.ID, EnterChallengeCore.State?>.value, action: .self) {
-          EnterChallengeCore()
-        }
     }
   }
 }

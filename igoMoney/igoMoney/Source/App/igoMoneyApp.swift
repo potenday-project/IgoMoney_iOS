@@ -25,7 +25,12 @@ struct igoMoneyApp: App {
 //        )
 //      )
       
-      ExploreChallengeScene()
+      ExploreChallengeScene(
+        store: Store(
+          initialState: ExploreChallengeCore.State(),
+          reducer: { ExploreChallengeCore() }
+        )
+      )
     }
   }
 }

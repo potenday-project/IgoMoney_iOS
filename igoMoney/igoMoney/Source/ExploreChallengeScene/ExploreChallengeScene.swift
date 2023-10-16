@@ -9,23 +9,49 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreChallengeScene: View {
-  @State private var showBottomSheet: Bool = true
-  private var challenges = Array(repeating: Challenge.default, count: 50)
+  let store: StoreOf<ExploreChallengeCore>
+  
+  private let challenges = Array(repeating: Challenge.default, count: 50)
+  
+  private enum FilterSectionItem: Int, CaseIterable {
+    case all
+    case challenge
+    case money
+    
+    var description: String {
+      switch self {
+      case .all:
+        return "전체"
+      case .challenge:
+        return "챌린지 주제"
+      case .money:
+        return "금액"
+      }
+    }
+    
+    var isMenu: Bool {
+      return (self == .all) == false
+    }
+  }
   
   @ViewBuilder
   private func FilterButton(
+    with viewStore: ViewStoreOf<ExploreChallengeCore>,
     isSelected: Bool,
-    isMenu: Bool,
-    title: String,
-    action: @escaping () -> Void
+    filterType: FilterSectionItem
   ) -> some View {
     Button {
-      action()
+      switch filterType {
+      case .all:
+        viewStore.send(.removeFilter)
+      case .challenge, .money:
+        viewStore.send(.openFilter(true))
+      }
     } label: {
       HStack {
-        Text(title)
+        Text(filterType.description)
         
-        if isMenu {
+        if filterType.isMenu {
           Image(systemName: "chevron.down")
         }
       }
@@ -66,19 +92,13 @@ struct ExploreChallengeScene: View {
         .padding(.horizontal, 24)
         
         HStack(spacing: 8) {
-          FilterButton(isSelected: true, isMenu: false, title: "전체") {
-            print("Tapped All")
-          }
-          
-          FilterButton(isSelected: false, isMenu: true, title: "챌린지 주제") {
-            withAnimation {
-              showBottomSheet = true
-            }
-          }
-          
-          FilterButton(isSelected: false, isMenu: true, title: "금액") {
-            withAnimation {
-              showBottomSheet = true
+          WithViewStore(store, observe: { $0 }) { viewStore in
+            ForEach(FilterSectionItem.allCases, id: \.rawValue) { filter in
+              FilterButton(
+                with: viewStore,
+                isSelected: filter == .all ? viewStore.isSelectAll : viewStore.isSelectAll == false,
+                filterType: filter
+              )
             }
           }
           
@@ -97,12 +117,20 @@ struct ExploreChallengeScene: View {
         }
       }
       
-      if showBottomSheet {
-        GeometryReader { proxy in
-          IGOBottomSheetView(isOpen: $showBottomSheet, maxHeight: proxy.size.height * 0.65) {
-            ExploreChallengeFilterView()
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        if viewStore.showFilter {
+          GeometryReader { proxy in
+            IGOBottomSheetView(
+              isOpen: viewStore.binding(
+                get: \.showFilter,
+                send: ExploreChallengeCore.Action.openFilter
+              ),
+              maxHeight: proxy.size.height * 0.65
+            ) {
+              ExploreChallengeFilterView(viewStore: viewStore)
+            }
+            .edgesIgnoringSafeArea(.all)
           }
-          .edgesIgnoringSafeArea(.all)
         }
       }
     }
@@ -152,6 +180,8 @@ struct ExploreChallengeCellView: View {
 }
 
 struct ExploreChallengeFilterView: View {
+  let viewStore: ViewStoreOf<ExploreChallengeCore>
+  
   var body: some View {
     VStack(alignment: .leading, spacing: 24) {
       Text("챌린지 주제")
@@ -185,7 +215,7 @@ struct ExploreChallengeFilterView: View {
       Spacer()
       
       Button("완료") {
-        
+        viewStore.send(.confirmFilter)
       }
       .font(.pretendard(size: 18, weight: .medium))
       .frame(maxWidth: .infinity)
@@ -201,6 +231,11 @@ struct ExploreChallengeFilterView: View {
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    ExploreChallengeScene()
+    ExploreChallengeScene(
+      store: Store(
+        initialState: ExploreChallengeCore.State(),
+        reducer: { ExploreChallengeCore() }
+      )
+    )
   }
 }
