@@ -85,47 +85,11 @@ struct ExploreChallengeScene: View {
           Spacer()
         }
         .padding(.horizontal, 24)
-        .padding(.top, 24)
         
         ScrollView(.vertical, showsIndicators: false) {
           VStack(spacing: 12) {
             ForEach(challenges, id: \.id) { challenge in
-              HStack(spacing: 12) {
-                VStack(alignment: .leading, spacing: 2) {
-                  // TODO: - Challenge User Information 가져오기
-                  Text("머니레터님")
-                    .font(.pretendard(size: 12, weight: .medium))
-                    .foregroundColor(ColorConstants.gray3)
-                  
-                  Text(challenge.title)
-                    .lineLimit(1)
-                    .font(.pretendard(size: 16, weight: .bold))
-                  
-                  HStack {
-                    Text(challenge.targetAmount.description)
-                      .padding(.horizontal, 4)
-                      .background(ColorConstants.yellow)
-                      .cornerRadius(4)
-                    
-                    Text("#" + (challenge.category?.description ?? ""))
-                      .padding(.horizontal, 4)
-                      .background(ColorConstants.red)
-                      .cornerRadius(4)
-                    
-                    Text(challenge.startDate?.toString(with: "⏰ MM월dd일 시작") ?? "")
-                      .padding(.horizontal, 4)
-                      .background(ColorConstants.primary7)
-                      .cornerRadius(4)
-                  }
-                  .font(.pretendard(size: 12, weight: .medium))
-                }
-                
-                Image("default_profile")
-              }
-              .padding(16)
-              .background(Color.white)
-              .cornerRadius(10)
-              .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 4, y: 2)
+              ExploreChallengeCellView(challenge: challenge)
               .padding(.horizontal, 24)
             }
           }
@@ -142,6 +106,48 @@ struct ExploreChallengeScene: View {
         }
       }
     }
+  }
+}
+
+struct ExploreChallengeCellView: View {
+  let challenge: Challenge
+  var body: some View {
+    HStack(spacing: 12) {
+      VStack(alignment: .leading, spacing: 2) {
+        // TODO: - Challenge User Information 가져오기
+        Text("머니레터님")
+          .font(.pretendard(size: 12, weight: .medium))
+          .foregroundColor(ColorConstants.gray3)
+        
+        Text(challenge.title)
+          .lineLimit(1)
+          .font(.pretendard(size: 16, weight: .bold))
+        
+        HStack {
+          Text(challenge.targetAmount.description)
+            .padding(.horizontal, 4)
+            .background(ColorConstants.yellow)
+            .cornerRadius(4)
+          
+          Text("#" + (challenge.category?.description ?? ""))
+            .padding(.horizontal, 4)
+            .background(ColorConstants.red)
+            .cornerRadius(4)
+          
+          Text(challenge.startDate?.toString(with: "⏰ MM월dd일 시작") ?? "")
+            .padding(.horizontal, 4)
+            .background(ColorConstants.primary7)
+            .cornerRadius(4)
+        }
+        .font(.pretendard(size: 12, weight: .medium))
+      }
+      
+      Image("default_profile")
+    }
+    .padding(16)
+    .background(Color.white)
+    .cornerRadius(10)
+    .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 4, y: 2)
   }
 }
 
