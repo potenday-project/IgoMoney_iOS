@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreChallengeScene: View {
-  @State private var showBottomSheet: Bool = false
+  @State private var showBottomSheet: Bool = true
   private var challenges = Array(repeating: Challenge.default, count: 50)
   
   @ViewBuilder
@@ -93,14 +93,14 @@ struct ExploreChallengeScene: View {
               .padding(.horizontal, 24)
             }
           }
-          .padding(.top, 6)
+          .padding(4)
         }
       }
       
       if showBottomSheet {
         GeometryReader { proxy in
           IGOBottomSheetView(isOpen: $showBottomSheet, maxHeight: proxy.size.height * 0.65) {
-            Text("Example")
+            ExploreChallengeFilterView()
           }
           .edgesIgnoringSafeArea(.all)
         }
@@ -148,6 +148,54 @@ struct ExploreChallengeCellView: View {
     .background(Color.white)
     .cornerRadius(10)
     .shadow(color: ColorConstants.gray2.opacity(0.2), radius: 4, y: 2)
+  }
+}
+
+struct ExploreChallengeFilterView: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: 24) {
+      Text("챌린지 주제")
+        .font(.pretendard(size: 18, weight: .bold))
+      
+      LazyVGrid(columns: Array(repeating: .init(), count: 3)) {
+        ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
+          Button {
+            
+          } label: {
+            ChallengeCategoryView(
+              isSelection: category.rawValue == 1,
+              category: category
+            )
+          }
+        }
+      }
+      
+      Text("챌린지 금액")
+        .font(.pretendard(size: 18, weight: .bold))
+      
+      HStack {
+        ForEach(TargetMoneyAmount.allCases, id: \.money) { amount in
+          ChallengeTargetMoneyView(
+            isSelection: amount.money == 10000,
+            amount: amount
+          )
+        }
+      }
+      
+      Spacer()
+      
+      Button("완료") {
+        
+      }
+      .font(.pretendard(size: 18, weight: .medium))
+      .frame(maxWidth: .infinity)
+      .buttonStyle(.plain)
+      .padding()
+      .background(ColorConstants.primary)
+      .cornerRadius(8)
+      .padding(.bottom, 32)
+    }
+    .padding(.horizontal, 24)
   }
 }
 
