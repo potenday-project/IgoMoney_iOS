@@ -7,7 +7,7 @@
 import ComposableArchitecture
 
 struct UserClient {
-  var signInKakao: @Sendable (_ token: String) async -> Bool
+  var signInKakao: @Sendable (_ token: String) async throws -> AuthToken
   var signInApple: @Sendable (_ user: String, _ idToken: String, _ authCode: String) async throws -> AuthToken
   // TODO: - Refresh Token Method 구현
   var checkNicknameDuplicate: @Sendable (_ nickName: String) async throws -> Bool

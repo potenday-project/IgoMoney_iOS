@@ -14,7 +14,22 @@ extension UserClient {
     @Dependency(\.keyChainClient) var keyChainClient
     
     return Self { token in
-      return true
+      guard let data = ["accessToken": token].toJsonString()?.data(using: .utf8) else {
+        throw APIError.badRequest(400)
+      }
+      
+      let api = AuthAPI(
+        method: .post,
+        path: "/auth/login/kakao",
+        query: [:],
+        header: ["Content-Type": "application/json"],
+        body: .json(value: data)
+      )
+      let response: AuthToken = try await apiClient.request(to: api)
+      guard let tokenData = try? JSONEncoder().encode(response) else { throw APIError.badRequest(400) }
+      try await keyChainClient.save(tokenData, .token, SystemConfigConstants.tokenService)
+      
+      return response
     } signInApple: { user, idToken, authCode in
       guard let data = ["id_token": idToken, "code": authCode].toJsonString()?.data(using: .utf8) else {
         throw APIError.badRequest(400)

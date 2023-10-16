@@ -26,7 +26,7 @@ struct AuthCore: Reducer {
     // User Action
     case presentSignUp(Bool)
     case presentProfileSetting(Bool)
-    case didTapKakaoLogin
+    case didTapKakaoLogin(token: String)
     case didTapAppleLogin(user: String, identityCode: String, authCode: String)
     
     // Inner Action
@@ -53,6 +53,16 @@ struct AuthCore: Reducer {
     Reduce { state, action in
       switch action {
       // User Action
+      case let .didTapKakaoLogin(token):
+        return .run { send in
+          await send(
+            ._authTokenResponse(
+              TaskResult {
+                try await userClient.signInKakao(token)
+              }
+            )
+          )
+        }
       case let .didTapAppleLogin(user, identityCode, authCode):
         return .run { send in
           await send(
