@@ -8,7 +8,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct AppView: View {
+struct AppScene: View {
   let store: StoreOf<AppCore>
   
   var body: some View {
@@ -46,9 +46,9 @@ struct AppView: View {
   }
 }
 
-#Preview ("App View") {
+#Preview ("AppScene") {
   Group {
-    AppView(
+    AppScene(
       store: Store(
         initialState: AppCore.State(currentState: .onBoarding),
         reducer: { AppCore() }

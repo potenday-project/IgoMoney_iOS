@@ -18,7 +18,7 @@ struct igoMoneyApp: App {
   
   var body: some Scene {
     WindowGroup {
-      AppView(
+      AppScene(
         store: Store(
           initialState: AppCore.State(),
           reducer: { AppCore()._printChanges() }
