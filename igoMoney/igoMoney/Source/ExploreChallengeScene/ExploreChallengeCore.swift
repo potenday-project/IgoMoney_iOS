@@ -8,6 +8,30 @@ import Foundation
 
 import ComposableArchitecture
 
+enum MoneyType: CaseIterable, Hashable, Equatable {
+  case all
+  case money(Int)
+  
+  var title: String {
+    switch self {
+    case .all:
+      return "전체"
+    case .money(let amount):
+      return "\(amount)만원"
+    }
+  }
+  
+  static var allCases: [MoneyType] = [
+    .all,
+    .money(1),
+    .money(2),
+    .money(3),
+    .money(4),
+    .money(5)
+  ]
+}
+
+
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
     var challenges: IdentifiedArrayOf<Challenge> = []

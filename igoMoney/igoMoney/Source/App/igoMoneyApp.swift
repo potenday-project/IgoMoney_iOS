@@ -18,12 +18,14 @@ struct igoMoneyApp: App {
   
   var body: some Scene {
     WindowGroup {
-      AppView(
-        store: Store(
-          initialState: AppCore.State(),
-          reducer: { AppCore()._printChanges() }
-        )
-      )
+//      AppView(
+//        store: Store(
+//          initialState: AppCore.State(),
+//          reducer: { AppCore()._printChanges() }
+//        )
+//      )
+      
+      ExploreChallengeScene()
     }
   }
 }
