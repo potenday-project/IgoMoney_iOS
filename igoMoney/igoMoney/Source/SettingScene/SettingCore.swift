@@ -11,7 +11,6 @@ struct SettingCore: Reducer {
     let settings = Setting.allCases
   }
   
-  @Dependency(\.userClient) var userClient
   
   enum Action {
     case signOut
@@ -19,10 +18,10 @@ struct SettingCore: Reducer {
     
     case _removeTokenResponse(TaskResult<Void>)
     case _removeUserIdentifierResponse(TaskResult<Void>)
-    case _withdrawResponse(TaskResult<Bool>)
+    case _withdrawResponse(TaskResult<Void>)
   }
   
-  @Dependency(\.keyChainClient) var keyChainClient
+  @Dependency(\.authClient) var authClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
@@ -31,7 +30,7 @@ struct SettingCore: Reducer {
         await send(
           ._removeTokenResponse(
             TaskResult {
-              try await keyChainClient.delete(.token, SystemConfigConstants.tokenService)
+              try KeyChainClient.delete(.token, SystemConfigConstants.tokenService)
             }
           )
         )
@@ -42,7 +41,7 @@ struct SettingCore: Reducer {
         await send(
           ._withdrawResponse(
             TaskResult {
-              try await userClient.withdraw()
+              try await authClient.withdraw()
             }
           )
         )
@@ -54,7 +53,7 @@ struct SettingCore: Reducer {
           await send(
             ._removeTokenResponse(
               TaskResult {
-                try await keyChainClient.delete(.token, SystemConfigConstants.tokenService)
+                try KeyChainClient.delete(.token, SystemConfigConstants.tokenService)
               }
             )
           )
@@ -63,7 +62,7 @@ struct SettingCore: Reducer {
           await send(
             ._removeUserIdentifierResponse(
               TaskResult {
-                try await keyChainClient.delete(.userIdentifier, SystemConfigConstants.userIdentifierService)
+                try KeyChainClient.delete(.userIdentifier, SystemConfigConstants.userIdentifierService)
               }
             )
           )

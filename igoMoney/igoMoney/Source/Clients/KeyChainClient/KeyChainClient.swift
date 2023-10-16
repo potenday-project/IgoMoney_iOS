@@ -15,10 +15,10 @@ enum ServiceKeys: NSString {
 }
 
 protocol KeyChain {
-  @Sendable func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws
-  @Sendable func update(_ data: Data, _ services: ServiceKeys, _ account: String) async throws
-  @Sendable func delete(_ services: ServiceKeys, _ account: String) async throws
-  @Sendable func read(_ service: ServiceKeys, _ account: String) async throws -> Data
+  @Sendable static func save(_ data: Data?, _ services: ServiceKeys, _ account: String) throws
+  @Sendable static func update(_ data: Data, _ services: ServiceKeys, _ account: String) throws
+  @Sendable static func delete(_ services: ServiceKeys, _ account: String) throws
+  @Sendable static func read(_ service: ServiceKeys, _ account: String) throws -> Data
 }
 
 struct KeyChainClient: KeyChain {
@@ -50,14 +50,22 @@ struct KeyChainClient: KeyChain {
     ] as [String: Any]
   }
   
-  func save(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
+  static func save(
+    _ data: Data?,
+    _ services: ServiceKeys = .token,
+    _ account: String = SystemConfigConstants.tokenService
+  ) throws {
+    guard let data = data else {
+      throw KeyChainError.itemNotFound
+    }
+    
     var query = Self.generateQuery(serviceKey: services.rawValue, account: account)
     query[kSecValueData as String] = data
     
     let status = SecItemAdd(query as CFDictionary, nil)
     
     if status == errSecDuplicateItem {
-      try await update(data, services, account)
+      try update(data, services, account)
       return
     }
     
@@ -66,7 +74,7 @@ struct KeyChainClient: KeyChain {
     }
   }
   
-  func update(_ data: Data, _ services: ServiceKeys, _ account: String) async throws {
+  static func update(_ data: Data, _ services: ServiceKeys, _ account: String) throws {
     let query = Self.generateQuery(serviceKey: services.rawValue, account: account)
     
     let attributes: [String: Any] = [
@@ -84,7 +92,7 @@ struct KeyChainClient: KeyChain {
     }
   }
   
-  func delete(_ services: ServiceKeys, _ account: String) async throws {
+  static func delete(_ services: ServiceKeys, _ account: String) throws {
     let query = Self.generateQuery(serviceKey: services.rawValue, account: account)
     
     let status = SecItemDelete(query as CFDictionary)
@@ -94,7 +102,7 @@ struct KeyChainClient: KeyChain {
     }
   }
   
-  func read(_ service: ServiceKeys, _ account: String) throws -> Data {
+  static func read(_ service: ServiceKeys, _ account: String) throws -> Data {
     var query = Self.generateQuery(serviceKey: service.rawValue, account: account)
     query[kSecMatchLimit as String] = kSecMatchLimitOne
     query[kSecReturnData as String] = true

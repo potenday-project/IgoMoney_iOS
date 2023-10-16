@@ -99,6 +99,8 @@
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */; };
+		18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C912ADD942800DE50C4 /* AuthClient.swift */; };
+		18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,6 +194,8 @@
 		18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAuthButton.swift; sourceTree = "<group>"; };
+		18F55C912ADD942800DE50C4 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
+		18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthClient + live.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,16 +272,14 @@
 		180363B82AB8316C00082F8A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				18F55C8F2ADD92D600DE50C4 /* Clients */,
 				182B1B5D2AD678C700D01DBA /* GenerateRoomScene */,
 				181988AA2ACE72200021214C /* ChallengeClient */,
 				18A152302AC97FD100B8B8A4 /* SettingScene */,
-				18B4377B2AC17EC90026A71E /* KeyChainClient */,
 				1800BC922ABD6C6400938336 /* EnterChallengeScene */,
 				18599A5A2ABC46A20075DE76 /* ExploreChallengeScene */,
 				187252CF2ABC0B9C00DCF08C /* MyPageScene */,
 				187252CC2ABC0B6200DCF08C /* ChallengeScene */,
-				180FC69C2ABB488700DD8477 /* UserClient */,
-				180FC6922ABB337200DD8477 /* NetworkClient */,
 				18CD8F2E2AB9A1D6006FEA6F /* Models */,
 				18D6236A2AB8BAC7006EAC39 /* Utility */,
 				18D623672AB8A90A006EAC39 /* AuthScene */,
@@ -322,10 +324,10 @@
 		180FC6952ABB359F00DD8477 /* HelperModels */ = {
 			isa = PBXGroup;
 			children = (
+				180FC6A12ABB48DC00DD8477 /* Networking.swift */,
 				180FC6962ABB35A800DD8477 /* HTTPMethod.swift */,
 				180FC6982ABB35C000DD8477 /* HTTPBody.swift */,
 				180FC69A2ABB35D200DD8477 /* APIError.swift */,
-				180FC6A12ABB48DC00DD8477 /* Networking.swift */,
 				18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */,
 			);
 			path = HelperModels;
@@ -569,6 +571,26 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		18F55C8F2ADD92D600DE50C4 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				18F55C902ADD942200DE50C4 /* AuthClient */,
+				180FC69C2ABB488700DD8477 /* UserClient */,
+				18B4377B2AC17EC90026A71E /* KeyChainClient */,
+				180FC6922ABB337200DD8477 /* NetworkClient */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		18F55C902ADD942200DE50C4 /* AuthClient */ = {
+			isa = PBXGroup;
+			children = (
+				18F55C912ADD942800DE50C4 /* AuthClient.swift */,
+				18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */,
+			);
+			path = AuthClient;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -710,6 +732,7 @@
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
 				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
+				18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
@@ -728,6 +751,7 @@
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
+				18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */,
 				18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,

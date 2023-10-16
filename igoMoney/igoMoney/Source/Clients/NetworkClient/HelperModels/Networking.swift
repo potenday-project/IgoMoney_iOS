@@ -9,17 +9,15 @@ import Foundation
 import Dependencies
 
 protocol Networking {
-  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T
-  func execute(to generator: RequestGenerator) async throws -> Data
+  static func request<T: Decodable>(to generator: RequestGenerator) async throws -> T
+  static func execute(to generator: RequestGenerator) async throws -> Data
 }
 
 extension Networking {
-  func execute(to generator: RequestGenerator) async throws -> Data {
-    @Dependency(\.keyChainClient) var keyChainClient
-    
+  static func execute(to generator: RequestGenerator) async throws -> Data {
     var request = try generator.generate()
     
-    let tokenData = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
+    let tokenData = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     
     if let authToken: AuthToken = tokenData?.toDecodable() {
       if authToken.isExpired {
@@ -35,7 +33,7 @@ extension Networking {
     return data
   }
   
-  func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
+  static func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
     let data = try await execute(to: generator)
     guard let decodeData = try? JSONDecoder().decode(T.self, from: data) else {
       throw APIError.couldNotConvertJson
@@ -44,7 +42,7 @@ extension Networking {
     return decodeData
   }
   
-  private func handleResponse(response: URLResponse) throws {
+  private static func handleResponse(response: URLResponse) throws {
     guard let response = response as? HTTPURLResponse else {
       throw APIError.invalidResponse
     }
@@ -52,7 +50,7 @@ extension Networking {
     try handleStatusCode(with: response.statusCode)
   }
   
-  private func handleStatusCode(with code: Int) throws {
+  private static func handleStatusCode(with code: Int) throws {
     switch code {
     case (100..<200):
       throw APIError.informationResponse

@@ -96,8 +96,7 @@ struct AppCore: Reducer {
 
 private extension AppCore {
   func autoSignIn() async -> Bool {
-    @Dependency(\.keyChainClient) var keyChainClient
-    guard let token: AuthToken = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
+    guard let token: AuthToken = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
       .toDecodable() else {
       return false
     }
@@ -132,7 +131,7 @@ private extension AppCore {
     
     let provider = ASAuthorizationAppleIDProvider()
     
-    guard let userIdentifier = try? keyChainClient.read(
+    guard let userIdentifier = try? KeyChainClient.read(
       .userIdentifier,
       SystemConfigConstants.userIdentifierService
     ) else {

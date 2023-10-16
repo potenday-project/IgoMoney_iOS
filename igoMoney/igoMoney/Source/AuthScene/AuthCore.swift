@@ -42,6 +42,7 @@ struct AuthCore: Reducer {
     case profileSettingAction(ProfileSettingCore.Action)
   }
   
+  @Dependency(\.authClient) var authClient
   @Dependency(\.userClient) var userClient
   
   private enum CancelID { case load }
@@ -59,7 +60,7 @@ struct AuthCore: Reducer {
           await send(
             ._authTokenResponse(
               TaskResult {
-                try await userClient.signInKakao(token)
+                try await authClient.signInWithKakao(token)
               }
             )
           )
@@ -69,7 +70,7 @@ struct AuthCore: Reducer {
           await send(
             ._authTokenResponse(
               TaskResult {
-                try await userClient.signInApple(user, identityCode, authCode)
+                try await authClient.signInWithApple(user, identityCode, authCode)
               }
             )
           )
@@ -80,7 +81,7 @@ struct AuthCore: Reducer {
             await send(
               ._authTokenResponse(
                 TaskResult {
-                  try await userClient.refreshToken()
+                  try await authClient.refreshToken()
                 }
               )
             )

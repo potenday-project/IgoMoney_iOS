@@ -36,4 +36,8 @@ struct AuthToken: Codable, Equatable {
     case providerToken = "provider_accessToken"
     case provider = "provider"
   }
+  
+  var encodeData: Data {
+    return (try? JSONEncoder().encode(self)) ?? Data()
+  }
 }
