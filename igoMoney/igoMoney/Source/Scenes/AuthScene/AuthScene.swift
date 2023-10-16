@@ -78,7 +78,7 @@ struct AuthScene: View {
                 ),
                 maxHeight: proxy.size.height * 0.6
               ) {
-                SignUpView(
+                AgreeTermsView(
                   store: store.scope(
                     state: \.signUpState,
                     action: AuthCore.Action.signUpAction
@@ -139,7 +139,7 @@ struct OnBoarding_Preview: PreviewProvider {
   static var previews: some View {
     AuthScene(
       store: Store(
-        initialState: AuthCore.State(signUpState: SignUpCore.State()),
+        initialState: AuthCore.State(signUpState: AgreeTermsCore.State()),
         reducer: { AuthCore() }
       )
     )

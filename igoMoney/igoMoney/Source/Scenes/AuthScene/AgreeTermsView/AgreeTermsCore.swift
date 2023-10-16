@@ -8,7 +8,7 @@ import Foundation
 
 import ComposableArchitecture
 
-struct SignUpCore: Reducer {
+struct AgreeTermsCore: Reducer {
   struct State: Equatable {
     var isAgreePrivacy: Bool = false
     var isAgreeTerms: Bool = false

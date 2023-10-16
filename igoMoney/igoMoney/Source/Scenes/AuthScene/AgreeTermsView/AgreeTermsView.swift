@@ -8,8 +8,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct SignUpView: View {
-  let store: StoreOf<SignUpCore>
+struct AgreeTermsView: View {
+  let store: StoreOf<AgreeTermsCore>
   @Environment(\.openURL) var openURLAction
   
   @ViewBuilder
@@ -211,16 +211,16 @@ struct CheckButton<Content: View>: View {
 
 struct SignUpView_Previews: PreviewProvider {
   static var previews: some View {
-    SignUpView(
+    AgreeTermsView(
       store: Store(
-        initialState: SignUpCore.State(),
-        reducer: { SignUpCore() }
+        initialState: AgreeTermsCore.State(),
+        reducer: { AgreeTermsCore() }
       )
     )
   }
 }
 
-private extension SignUpView {
+private extension AgreeTermsView {
   enum TextConstants {
     static let title = "약관에 동의해주세요."
     static let subTitle = "필수항목에 대한 약관에 동의해주세요."

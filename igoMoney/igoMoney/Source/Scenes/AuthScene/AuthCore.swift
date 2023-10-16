@@ -18,7 +18,7 @@ struct AuthCore: Reducer {
     var isNavigationBarHidden: Bool = true
     var showProfileSetting: Bool = false
     
-    var signUpState = SignUpCore.State()
+    var signUpState = AgreeTermsCore.State()
     var profileSettingState: ProfileSettingCore.State?
   }
   
@@ -38,7 +38,7 @@ struct AuthCore: Reducer {
     case _presentMainScene
     
     // Child Action
-    case signUpAction(SignUpCore.Action)
+    case signUpAction(AgreeTermsCore.Action)
     case profileSettingAction(ProfileSettingCore.Action)
   }
   
@@ -49,7 +49,7 @@ struct AuthCore: Reducer {
   
   var body: some Reducer<State, Action> {
     Scope(state: \.signUpState, action: /Action.signUpAction) {
-      SignUpCore()
+      AgreeTermsCore()
     }
     
     Reduce { state, action in
@@ -89,7 +89,7 @@ struct AuthCore: Reducer {
         
       case .presentSignUp(true):
         state.showSignUp = true
-        state.signUpState = SignUpCore.State()
+        state.signUpState = AgreeTermsCore.State()
         return .none
         
       case .presentSignUp(false):
