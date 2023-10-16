@@ -300,10 +300,6 @@
 		180363BA2AB8317700082F8A /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
-				180363AB2AB82DCD00082F8A /* MainScene.swift */,
-				187252C62ABC07AE00DCF08C /* MainTab.swift */,
-				187252C82ABC07C700DCF08C /* MainCore.swift */,
-				187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */,
 			);
 			path = MainScene;
 			sourceTree = "<group>";
@@ -399,6 +395,7 @@
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				187252CA2ABC081F00DCF08C /* MainRoundTabBar.swift */,
 				183169492ADBD6D10098638E /* IGOAlertView */,
 				185CF48A2ABF40E500B72237 /* LineHeight.swift */,
 				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
@@ -522,6 +519,7 @@
 		18CD8F2E2AB9A1D6006FEA6F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				187252C62ABC07AE00DCF08C /* MainTab.swift */,
 				18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */,
 				18599A522ABC34640075DE76 /* ChallengeInformation.swift */,
 				18A152262AC96E3A00B8B8A4 /* AuthToken.swift */,
@@ -542,7 +540,6 @@
 			children = (
 				18CD8F332AB9BC4F006FEA6F /* ProfileSettingView */,
 				18CD8F292AB9823B006FEA6F /* SignUpView */,
-				180FC67C2ABAF62500DD8477 /* AuthController.swift */,
 			);
 			path = AuthScene;
 			sourceTree = "<group>";
@@ -587,6 +584,7 @@
 		18F55C952ADDA12200DE50C4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				18F55C9A2ADDA28E00DE50C4 /* MainScene */,
 				18F55C972ADDA18E00DE50C4 /* AuthScene */,
 				18F55C962ADDA13A00DE50C4 /* AppScene */,
 			);
@@ -607,6 +605,7 @@
 			children = (
 				18D623682AB8A919006EAC39 /* AuthScene.swift */,
 				18CD8F262AB970C3006FEA6F /* AuthCore.swift */,
+				180FC67C2ABAF62500DD8477 /* AuthController.swift */,
 				18F55C992ADDA19C00DE50C4 /* AgreeTermsView */,
 				18F55C982ADDA19300DE50C4 /* ProfileSettingView */,
 			);
@@ -629,6 +628,15 @@
 				18CD8F2C2AB995F5006FEA6F /* AgreeTermsCore.swift */,
 			);
 			path = AgreeTermsView;
+			sourceTree = "<group>";
+		};
+		18F55C9A2ADDA28E00DE50C4 /* MainScene */ = {
+			isa = PBXGroup;
+			children = (
+				180363AB2AB82DCD00082F8A /* MainScene.swift */,
+				187252C82ABC07C700DCF08C /* MainCore.swift */,
+			);
+			path = MainScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

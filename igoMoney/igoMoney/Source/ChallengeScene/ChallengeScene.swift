@@ -47,7 +47,7 @@ struct ChallengeScene: View {
         .padding(24)
         .background(Color.white)
       }
-      .background(Color.white)
+      .background(Color.white.edgesIgnoringSafeArea(.all))
       .cornerRadius(20, corner: .topLeft)
       .cornerRadius(20, corner: .topRight)
     }

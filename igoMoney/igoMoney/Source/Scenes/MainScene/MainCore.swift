@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct MainCore: Reducer {
   struct State: Equatable {
-    var selectedTab: MainTab = .challenge
+    var selectedTab: MainTab = .home
     
     var challengeState = ChallengeCore.State()
     var myPageState = MyPageCore.State()

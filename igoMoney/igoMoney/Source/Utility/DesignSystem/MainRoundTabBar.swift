@@ -32,7 +32,7 @@ public struct TabConfiguration {
   )
 }
 
-struct RoundTabBar<Content: View>: View {
+struct IGORoundTabBar<Content: View>: View {
   @Binding var selectedTab: MainTab
   let tabSetting: TabConfiguration
   let shadowSetting: ShadowConfiguration
@@ -51,7 +51,7 @@ struct RoundTabBar<Content: View>: View {
   }
   
   var body: some View {
-    VStack {
+    ZStack(alignment: .bottom) {
       content()
       
       HStack {
@@ -81,11 +81,11 @@ struct RoundTabBar<Content: View>: View {
       )
     }
     .edgesIgnoringSafeArea(.bottom)
-    .background(selectedTab == .challenge ? Color("background_color") : .white)
+    .background(selectedTab == .home ? Color("background_color") : .white)
   }
 }
 
-extension RoundTabBar {
+extension IGORoundTabBar {
   func TabItem(
     tab: MainTab,
     tabSetting: TabConfiguration,
@@ -106,6 +106,6 @@ extension RoundTabBar {
           isActive ? tabSetting.accentColor : tabSetting.defaultColor
         )
     }
-    .animation(.easeIn, value: UUID())
+    .animation(.spring, value: UUID())
   }
 }
