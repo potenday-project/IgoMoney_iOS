@@ -94,7 +94,7 @@ struct KeyChainClient: KeyChain {
     }
   }
   
-  func read(_ service: ServiceKeys, _ account: String) async throws -> Data {
+  func read(_ service: ServiceKeys, _ account: String) throws -> Data {
     var query = Self.generateQuery(serviceKey: service.rawValue, account: account)
     query[kSecMatchLimit as String] = kSecMatchLimitOne
     query[kSecReturnData as String] = true

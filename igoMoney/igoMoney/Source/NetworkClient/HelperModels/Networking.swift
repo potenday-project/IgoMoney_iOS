@@ -6,6 +6,8 @@
 
 import Foundation
 
+import Dependencies
+
 protocol Networking {
   func request<T: Decodable>(to generator: RequestGenerator) async throws -> T
   func execute(to generator: RequestGenerator) async throws -> Data
@@ -13,8 +15,14 @@ protocol Networking {
 
 extension Networking {
   func execute(to generator: RequestGenerator) async throws -> Data {
-    guard let request = try? generator.generate() else {
-      throw APIError.didNotConvertRequest
+    @Dependency(\.keyChainClient) var keyChainClient
+    
+    var request = try generator.generate()
+    
+    let tokenData = try? keyChainClient.read(.token, SystemConfigConstants.tokenService)
+    
+    if let authToken: AuthToken = tokenData?.toDecodable() {
+      request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
     }
     
     let (data, response) = try await URLSession.shared.data(for: request)
