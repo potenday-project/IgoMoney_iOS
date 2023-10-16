@@ -71,7 +71,7 @@ extension Challenge {
     content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
     targetAmount: .init(money: 30000), 
     category: .living,
-    startDate: nil,
+    startDate: Date().addingTimeInterval(86400),
     term: nil,
     endDate: nil
   )

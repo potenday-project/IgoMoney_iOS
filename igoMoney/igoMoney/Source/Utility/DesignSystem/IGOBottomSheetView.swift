@@ -39,6 +39,7 @@ struct IGOBottomSheetView<Content: View>: View {
   var body: some View {
     ZStack {
       Color.gray.opacity(0.9).edgesIgnoringSafeArea(.all)
+      
       GeometryReader { proxy in
         VStack(spacing: .zero) {
           self.indicator.padding()
