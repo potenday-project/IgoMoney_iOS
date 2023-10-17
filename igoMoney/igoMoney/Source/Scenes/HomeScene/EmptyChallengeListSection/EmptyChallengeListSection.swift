@@ -32,12 +32,7 @@ struct EmptyChallengeListSection: View {
                 action: EmptyChallengeListSectionCore.Action.exploreChallengeAction
               )
             ) { store in
-              ExploreChallengeScene(
-                store: Store(
-                  initialState: ExploreChallengeCore.State(),
-                  reducer: { ExploreChallengeCore() }
-                )
-              )
+              ExploreChallengeScene(store: store)
             }
           } label: {
             EmptyView()
