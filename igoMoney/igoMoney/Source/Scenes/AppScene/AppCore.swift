@@ -50,13 +50,7 @@ struct AppCore: Reducer {
     Reduce { state, action in
       switch action {
       case ._onAppear:
-        return .run { send in
-          await send(
-            ._autoSignIn(
-              await autoSignIn()
-            )
-          )
-        }
+        return .send(.authAction(.autoSignIn))
         
       case ._autoSignIn(true):
         return .run { send in
@@ -87,6 +81,10 @@ struct AppCore: Reducer {
         state.currentState = .main
         return .none.animation()
         
+      case .authAction(._authTokenResponse(.failure)):
+        state.currentState = .auth
+        return .none
+        
       default:
         return .none
       }
@@ -94,62 +92,3 @@ struct AppCore: Reducer {
   }
 }
 
-private extension AppCore {
-  func autoSignIn() async -> Bool {
-    guard let token: AuthToken = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
-      .toDecodable() else {
-      return false
-    }
-    
-    switch token.provider {
-    case .apple:
-      return (await signInWithApple() == .authorized)
-      
-    case .kakao:
-      return await signInWithKakao()
-      
-    default:
-      return false
-    }
-  }
-  
-  func signInWithKakao() async -> Bool {
-    await withCheckedContinuation { continuation in
-      UserApi.shared.accessTokenInfo { token, error in
-        if let error = error {
-          continuation.resume(returning: false)
-          return
-        }
-        
-        continuation.resume(returning: true)
-      }
-    }
-  }
-  
-  func signInWithApple() async -> ASAuthorizationAppleIDProvider.CredentialState {
-    @Dependency(\.keyChainClient) var keyChainClient
-    
-    let provider = ASAuthorizationAppleIDProvider()
-    
-    guard let userIdentifier = try? KeyChainClient.read(
-      .userIdentifier,
-      SystemConfigConstants.userIdentifierService
-    ) else {
-      return .notFound
-    }
-    
-    let state = await withCheckedContinuation { continuation in
-      provider.getCredentialState(forUserID: userIdentifier.toString()) { state, error in
-        if let _ = error {
-          continuation.resume(
-            returning: ASAuthorizationAppleIDProvider.CredentialState.notFound
-          )
-        }
-        
-        continuation.resume(returning: state)
-      }
-    }
-    
-    return state
-  }
-}

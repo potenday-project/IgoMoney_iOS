@@ -23,6 +23,7 @@ extension Networking {
       if authToken.isExpired {
         throw APIError.tokenExpired
       }
+      print(#fileID, #function, #line, "💵 \(authToken.accessToken)")
       request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
     }
     

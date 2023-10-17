@@ -37,29 +37,33 @@ struct IGOBottomSheetView<Content: View>: View {
   }
   
   var body: some View {
-    GeometryReader { proxy in
-      VStack(spacing: .zero) {
-        self.indicator.padding()
-        self.content
-      }
-      .frame(width: proxy.size.width, height: self.maxHeight, alignment: .top)
-      .background(Color.white)
-      .cornerRadius(20)
-      .frame(height: proxy.size.height, alignment: .bottom)
-      .offset(y: max(self.offset, self.transition, 0))
-      .animation(.interactiveSpring(), value: isOpen)
-      .animation(.interactiveSpring(), value: transition)
-      .gesture(
-        DragGesture().updating(self.$transition) { value, state, _ in
-          state = value.translation.height
+    ZStack {
+      Color.gray.opacity(0.9).edgesIgnoringSafeArea(.all)
+      
+      GeometryReader { proxy in
+        VStack(spacing: .zero) {
+          self.indicator.padding()
+          self.content
         }
-          .onEnded { value in
-            let snapDistance = self.maxHeight * 0.5
-            guard abs(value.translation.height) > snapDistance else { return }
-            
-            self.isOpen = value.translation.height < 0
+        .frame(width: proxy.size.width, height: self.maxHeight, alignment: .top)
+        .background(Color.white)
+        .cornerRadius(20)
+        .frame(height: proxy.size.height, alignment: .bottom)
+        .offset(y: max(self.offset, self.transition, 0))
+        .animation(.interactiveSpring(), value: isOpen)
+        .animation(.interactiveSpring(), value: transition)
+        .gesture(
+          DragGesture().updating(self.$transition) { value, state, _ in
+            state = value.translation.height
           }
-      )
+            .onEnded { value in
+              let snapDistance = self.maxHeight * 0.5
+              guard abs(value.translation.height) > snapDistance else { return }
+              
+              self.isOpen = value.translation.height < 0
+            }
+        )
+      }
     }
   }
 }

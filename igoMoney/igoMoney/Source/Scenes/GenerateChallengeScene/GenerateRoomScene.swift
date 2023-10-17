@@ -91,24 +91,6 @@ extension GenerateRoomScene {
   struct GenerateRoomChallengeMoneyInputView: View {
     let viewStore: ViewStoreOf<GenerateRoomCore>
     
-    @ViewBuilder
-    func challengeTargetMoneyLabel(isSelection: Bool, moneyAmount: TargetMoneyAmount) -> some View {
-      Text(moneyAmount.description)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(isSelection ? ColorConstants.primary7 : ColorConstants.gray5)
-        .cornerRadius(4)
-        .overlay(
-          RoundedRectangle(cornerRadius: 4)
-            .stroke(isSelection ? ColorConstants.primary : ColorConstants.gray5)
-        )
-        .font(
-          isSelection ?
-            .pretendard(size: 14, weight: .bold) : .pretendard(size: 14, weight: .medium)
-        )
-        .foregroundColor(isSelection ? ColorConstants.primary : ColorConstants.gray4)
-    }
-    
     var body: some View {
       IGOInputForm {
         Text("챌린지 금액")
@@ -119,9 +101,9 @@ extension GenerateRoomScene {
             Button {
               viewStore.send(.selectTargetAmount(moneyAmount))
             } label: {
-              challengeTargetMoneyLabel(
+              ChallengeTargetMoneyView(
                 isSelection: moneyAmount == viewStore.targetAmount,
-                moneyAmount: moneyAmount
+                amount: moneyAmount
               )
             }
             .buttonStyle(.plain)
@@ -136,32 +118,6 @@ extension GenerateRoomScene {
   struct GenerateRoomChallengeCategoryInputSection: View {
     let viewStore: ViewStoreOf<GenerateRoomCore>
     
-    @ViewBuilder
-    func challengeCategoryCell(
-      isSelection: Bool,
-      with category: ChallengeCategory
-    ) -> some View {
-      VStack(spacing: 8) {
-        Text(category.emoji)
-          .font(.pretendard(size: 28, weight: .bold))
-        
-        Text(category.description)
-          .font(.pretendard(size: 14, weight: .bold))
-      }
-      .frame(maxWidth: .infinity)
-      .padding(.vertical, 12)
-      .background(
-        isSelection ? ColorConstants.primary7 : ColorConstants.gray5
-      )
-      .cornerRadius(4)
-      .overlay(
-        RoundedRectangle(cornerRadius: 4)
-          .stroke(
-            isSelection ? ColorConstants.primary : ColorConstants.gray5
-          )
-      )
-    }
-    
     var body: some View {
       IGOInputForm {
         Text("챌린지 주제")
@@ -172,16 +128,12 @@ extension GenerateRoomScene {
             Button {
               viewStore.send(.selectCategory(category))
             } label: {
-              challengeCategoryCell(
+              ChallengeCategoryView(
                 isSelection: category == viewStore.selectionCategory,
-                with: category
+                category: category
               )
             }
             .buttonStyle(.plain)
-            .foregroundColor(
-              category == viewStore.selectionCategory ?
-              ColorConstants.primary : ColorConstants.gray4
-            )
           }
         }
       }
@@ -401,6 +353,58 @@ extension GenerateRoomScene {
       reducer: { GenerateRoomCore() }
     )
   )
+}
+
+struct ChallengeTargetMoneyView: View {
+  var isSelection: Bool
+  let amount: TargetMoneyAmount
+  
+  var body: some View {
+    Text(amount.description)
+      .frame(maxWidth: .infinity)
+      .padding(.vertical, 8)
+      .background(isSelection ? ColorConstants.primary7 : ColorConstants.gray5)
+      .cornerRadius(4)
+      .overlay(
+        RoundedRectangle(cornerRadius: 4)
+          .stroke(isSelection ? ColorConstants.primary : ColorConstants.gray5)
+      )
+      .font(
+        isSelection ?
+          .pretendard(size: 14, weight: .bold) : .pretendard(size: 14, weight: .medium)
+      )
+      .foregroundColor(isSelection ? ColorConstants.primary : ColorConstants.gray4)
+  }
+}
+
+struct ChallengeCategoryView: View {
+  var isSelection: Bool
+  let category: ChallengeCategory
+  
+  var body: some View {
+    VStack(spacing: 8) {
+      Text(category.emoji)
+        .font(.pretendard(size: 28, weight: .bold))
+      
+      Text(category.description)
+        .font(.pretendard(size: 14, weight: .bold))
+    }
+    .frame(maxWidth: .infinity)
+    .padding(.vertical, 12)
+    .background(
+      isSelection ? ColorConstants.primary7 : ColorConstants.gray5
+    )
+    .cornerRadius(4)
+    .overlay(
+      RoundedRectangle(cornerRadius: 4)
+        .stroke(
+          isSelection ? ColorConstants.primary : ColorConstants.gray5
+        )
+    )
+    .foregroundColor(
+      isSelection ? ColorConstants.primary : ColorConstants.gray4
+    )
+  }
 }
 
 #Preview {

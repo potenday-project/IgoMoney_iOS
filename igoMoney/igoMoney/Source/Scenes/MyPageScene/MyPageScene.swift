@@ -26,8 +26,7 @@ struct MyPageScene: View {
                 state: \.settingState,
                 action: MyPageCore.Action.settingAction
               )
-            )
-            .navigationBarHidden(true),
+            ),
             label: {
               Image("icon_gear")
             }

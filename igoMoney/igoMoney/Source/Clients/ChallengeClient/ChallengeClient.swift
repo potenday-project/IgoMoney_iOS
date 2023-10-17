@@ -21,6 +21,7 @@ struct ChallengeGenerateRequest {
       "userId": userID.description,
       "title": title,
       "content": content,
+      "categoryId": categoryID.description,
       "targetAmount": targetAmount.description,
       "startDate": startDate
     ]

@@ -8,105 +8,185 @@ import SwiftUI
 
 import ComposableArchitecture
 
-enum MoneyType: CaseIterable, Hashable, Equatable {
-  case all
-  case money(Int)
-  
-  var title: String {
-    switch self {
-    case .all:
-      return "전체"
-    case .money(let amount):
-      return "\(amount)만원"
+struct ExploreChallengeScene: View {
+  let store: StoreOf<ExploreChallengeCore>
+  private enum FilterSectionItem: Int, CaseIterable {
+    case all
+    case challenge
+    case money
+    
+    var description: String {
+      switch self {
+      case .all:
+        return "전체"
+      case .challenge:
+        return "챌린지 주제"
+      case .money:
+        return "금액"
+      }
+    }
+    
+    var isMenu: Bool {
+      return (self == .all) == false
     }
   }
   
-  static var allCases: [MoneyType] = [
-    .all,
-    .money(1),
-    .money(2),
-    .money(3),
-    .money(4),
-    .money(5)
-  ]
-}
-
-struct ExploreChallengeScene: View {
-  let store: StoreOf<ExploreChallengeCore>
+  @ViewBuilder
+  private func FilterButton(
+    with viewStore: ViewStoreOf<ExploreChallengeCore>,
+    isSelected: Bool,
+    filterType: FilterSectionItem
+  ) -> some View {
+    Button {
+      switch filterType {
+      case .all:
+        viewStore.send(.removeFilter)
+      case .challenge, .money:
+        viewStore.send(.openFilter(true))
+      }
+    } label: {
+      HStack {
+        switch filterType {
+        case .challenge:
+          if let category = viewStore.categorySelection {
+            Text(category.description)
+          } else {
+            Text(filterType.description)
+          }
+        case .money:
+          if let targetMoney = viewStore.moneySelection {
+            Text(targetMoney.description)
+          } else {
+            Text(filterType.description)
+          }
+          
+        default:
+          Text(filterType.description)
+        }
+        
+        
+        if filterType.isMenu {
+          Image(systemName: "chevron.down")
+        }
+      }
+    }
+    .buttonStyle(.plain)
+    .padding(.horizontal, 12)
+    .padding(.vertical, 8)
+    .foregroundColor(isSelected ? .black : ColorConstants.gray2)
+    .background(
+      RoundedRectangle(cornerRadius: 4)
+        .stroke(
+          isSelected ? ColorConstants.primary : ColorConstants.gray5
+        )
+    )
+  }
   
   var body: some View {
-    VStack(spacing: .zero) {
-      VStack(spacing: 12) {
+    ZStack {
+      VStack(spacing: 16) {
         IGONavigationBar {
           Text("챌린지 둘러보기")
-            .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
-          Button(action: { store.send(.dismiss) }) {
+          Button {
+            
+          } label: {
             Image(systemName: "chevron.left")
-              .font(.pretendard(size: 18, weight: .bold))
           }
-          .accentColor(.black)
         } rightView: {
-          Button{
-            store.send(.showGenerate(true))
+          Button {
+            
           } label: {
             Image(systemName: "plus.circle")
           }
-          .font(.pretendard(size: 18, weight: .bold))
         }
-        .padding(.horizontal, 24)
+        .font(.pretendard(size: 20, weight: .bold))
         .padding(.vertical, 16)
         .accentColor(.black)
-
+        .padding(.horizontal, 24)
         
-        // Filtering Section
+        HStack(spacing: 8) {
+          WithViewStore(store, observe: { $0 }) { viewStore in
+            ForEach(FilterSectionItem.allCases, id: \.rawValue) { filter in
+              FilterButton(
+                with: viewStore,
+                isSelected: filter == .all ? viewStore.isSelectAll == false : viewStore.isSelectAll,
+                filterType: filter
+              )
+            }
+          }
+          
+          Spacer()
+        }
+        .padding(.horizontal, 24)
+        
         WithViewStore(store, observe: { $0 }) { viewStore in
-          ExploreChallengeFilterSection(viewStore: viewStore)
-            .padding(.horizontal, 24)
+          ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 12) {
+              ForEach(viewStore.challenges, id: \.id) { challenge in
+                ExploreChallengeCellView(challenge: challenge)
+                  .onTapGesture {
+                    viewStore.send(.selectChallenge(challenge))
+                  }
+              }
+            }
+            .padding(.top)
+          }
+          .background(
+            NavigationLink(
+              isActive: viewStore.binding(
+                get: { $0.challengeSelection != nil },
+                send: ExploreChallengeCore.Action.selectChallenge(nil)
+              ),
+              destination: {
+                IfLetStore(
+                  store.scope(
+                    state: { $0.challengeSelection },
+                    action: ExploreChallengeCore.Action.enterChallengeAction
+                  )
+                ) { store in
+                  EnterChallengeScene(store: store)
+                }
+              }, label: {
+                EmptyView()
+              })
+          )
+        }
+        .onAppear {
+          store.send(.requestFetchChallenges)
         }
       }
       
-      ScrollView(.vertical, showsIndicators: false) {
-        VStack(spacing: 12) {
-          WithViewStore(store, observe: { $0.challenges }) { viewStore in
-            ForEach(viewStore.state, id: \.id) { challenge in
-//              ExploreChallengeNavigationView(
-//                challenge: challenge,
-//                store: self.store
-//              )
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        if viewStore.showFilter {
+          GeometryReader { proxy in
+            IGOBottomSheetView(
+              isOpen: viewStore.binding(
+                get: \.showFilter,
+                send: ExploreChallengeCore.Action.openFilter
+              ),
+              maxHeight: proxy.size.height * 0.65
+            ) {
+              ExploreChallengeFilterView(viewStore: viewStore)
             }
+            .edgesIgnoringSafeArea(.all)
           }
         }
-        .padding(.horizontal, 24)
-        .padding(.top, 24)
       }
     }
-    .background(Color.white)
-    .fullScreenCover(
-      isPresented: ViewStore(store, observe: { $0 })
-        .binding(
-          get: \.showGenerate,
-          send: ExploreChallengeCore.Action.showGenerate
-        )
-      ) {
-        GenerateRoomScene(
-          store: self.store.scope(
-            state: \.generateState,
-            action: ExploreChallengeCore.Action.generateAction
-          )
-        )
-      }
-      .navigationBarHidden(true)
+    .navigationBarHidden(true)
   }
 }
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    ExploreChallengeScene(
-      store: Store(
-        initialState: ExploreChallengeCore.State(),
-        reducer: { ExploreChallengeCore() }
+    NavigationView {
+      ExploreChallengeScene(
+        store: Store(
+          initialState: ExploreChallengeCore.State(),
+          reducer: { ExploreChallengeCore() }
+        )
       )
-    )
+    }
   }
 }

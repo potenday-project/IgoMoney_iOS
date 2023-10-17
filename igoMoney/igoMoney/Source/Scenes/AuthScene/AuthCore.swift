@@ -7,7 +7,8 @@
 import AuthenticationServices
 
 import ComposableArchitecture
-import SwiftUI
+import KakaoSDKAuth
+import KakaoSDKUser
 
 struct AuthCore: Reducer {
   struct State: Equatable {
@@ -24,6 +25,7 @@ struct AuthCore: Reducer {
   
   enum Action: Equatable {
     // User Action
+    case autoSignIn
     case presentSignUp(Bool)
     case presentProfileSetting(Bool)
     case didTapKakaoLogin(token: String)
@@ -31,7 +33,6 @@ struct AuthCore: Reducer {
     case refreshToken
     
     // Inner Action
-    case _onAppear
     case _setNavigationIsActive
     case _authTokenResponse(TaskResult<AuthToken>)
     case _userInformationResponse(TaskResult<User>)
@@ -54,7 +55,18 @@ struct AuthCore: Reducer {
     
     Reduce { state, action in
       switch action {
-      // User Action
+        // User Action
+      case .autoSignIn:
+        return .run { send in
+          await send(
+            ._authTokenResponse(
+              TaskResult {
+                try await autoSignIn()
+              }
+            )
+          )
+        }
+        
       case let .didTapKakaoLogin(token):
         return .run { send in
           await send(
@@ -78,13 +90,13 @@ struct AuthCore: Reducer {
         
       case .refreshToken:
         return .run { send in
-            await send(
-              ._authTokenResponse(
-                TaskResult {
-                  try await authClient.refreshToken()
-                }
-              )
+          await send(
+            ._authTokenResponse(
+              TaskResult {
+                try await authClient.refreshToken()
+              }
             )
+          )
         }
         
       case .presentSignUp(true):
@@ -108,7 +120,8 @@ struct AuthCore: Reducer {
         state.profileSettingState = nil
         return .cancel(id: CancelID.load)
         
-      // Inner Action
+        // Inner Action
+        
       case ._setNavigationIsActive:
         guard let userID = state.currentUser?.userID else { return .none }
         state.profileSettingState = ProfileSettingCore.State(userID: userID.description)
@@ -167,6 +180,61 @@ struct AuthCore: Reducer {
     }
     .ifLet(\.profileSettingState, action: /Action.profileSettingAction) {
       ProfileSettingCore()
+    }
+  }
+}
+
+private extension AuthCore {
+  func autoSignIn() async throws -> AuthToken {
+    guard let token: AuthToken = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+      .toDecodable() else {
+      throw APIError.tokenExpired
+    }
+    
+    switch token.provider {
+    case .apple:
+      try await signInWithApple()
+      return token
+      
+    case .kakao:
+      try await signInWithKakao()
+      return token
+      
+    default:
+      throw APIError.tokenExpired
+    }
+  }
+  
+  func signInWithKakao() async throws {
+    return try await withCheckedThrowingContinuation { continuation in
+      UserApi.shared.accessTokenInfo { token, error in
+        if let error = error {
+          continuation.resume(throwing: APIError.badRequest(400))
+          return
+        }
+        continuation.resume()
+      }
+    }
+  }
+  
+  func signInWithApple() async throws {
+    let provider = ASAuthorizationAppleIDProvider()
+    
+    guard let userIdentifier = try? KeyChainClient.read(
+      .userIdentifier,
+      SystemConfigConstants.userIdentifierService
+    ) else {
+      throw APIError.badRequest(400)
+    }
+    
+    return try await withCheckedThrowingContinuation { continuation in
+      provider.getCredentialState(forUserID: userIdentifier.toString()) { state, error in
+        if let error = error {
+          continuation.resume(throwing: error)
+        }
+        
+        continuation.resume()
+      }
     }
   }
 }

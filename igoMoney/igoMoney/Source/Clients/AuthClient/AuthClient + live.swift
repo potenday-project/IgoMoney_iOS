@@ -11,7 +11,7 @@ extension AuthClient {
       path: "/auth/login/kakao",
       query: [:],
       header: ["Content-Type": "application/json"],
-      body: .json(value: ["Authorization": "Bearer \(token)"])
+      body: .json(value: ["accessToken": token])
     )
     
     var response: AuthToken = try await APIClient.request(to: api)

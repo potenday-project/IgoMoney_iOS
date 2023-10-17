@@ -21,7 +21,7 @@ struct igoMoneyApp: App {
       AppScene(
         store: Store(
           initialState: AppCore.State(),
-          reducer: { AppCore()._printChanges() }
+          reducer: { AppCore() }
         )
       )
     }

@@ -43,16 +43,12 @@ struct EnterChallengeButtonCore: Reducer {
       return .none
       
     case ._fetchCanEnterResponse(.failure(let error)):
-      #if DEBUG
-      state.canEnter = true
-      #else
       if case let .badRequest(statusCode) = error as? APIError {
         state.canEnter = (statusCode == 409)
         return .none
       }
       
       state.canEnter = false
-      #endif
       return .none
     }
   }

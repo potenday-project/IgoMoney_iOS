@@ -57,12 +57,14 @@ extension Challenge {
     targetAmount = TargetMoneyAmount(money: moneyValue)
     category = try? container.decode(ChallengeCategory.self, forKey: .category)
     term = try? container.decode(Int.self, forKey: .term)
-    startDate = try? container.decode(Date.self, forKey: .startDate)
-    endDate = try? container.decode(Date.self, forKey: .endDate)
+    let startDateString = try? container.decode(String.self, forKey: .startDate)
+    startDate = startDateString?.toDate(with: "yyyy-MM-dd")
+    let endDateString = try? container.decode(String.self, forKey: .endDate)
+    endDate = endDateString?.toDate(with: "yyyy-MM-dd")
   }
   
   static let `default`: Challenge = .init(
-    id: 3,
+    id: Int.random(in: Int.min...Int.max),
     recordID: nil,
     leaderID: 2,
     competitorID: nil,
@@ -71,7 +73,7 @@ extension Challenge {
     content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
     targetAmount: .init(money: 30000), 
     category: .living,
-    startDate: nil,
+    startDate: Date().addingTimeInterval(86400),
     term: nil,
     endDate: nil
   )
