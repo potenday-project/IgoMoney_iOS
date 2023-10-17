@@ -29,10 +29,8 @@ struct MainScene: View {
             selectedTab: viewStore.binding(
               get: \.selectedTab,
               send: MainCore.Action.selectedTabChange
-            ),
-            shadowSetting: shadowConfiguration
+            )
           ) {
-            
             switch viewStore.selectedTab {
             case .home:
               HomeScene(
@@ -41,6 +39,8 @@ struct MainScene: View {
                   action: MainCore.Action.challengeAction
                 )
               )
+              .navigationBarTitle("")
+              .navigationBarHidden(true)
               
             case .myPage:
               MyPageScene(
@@ -49,11 +49,12 @@ struct MainScene: View {
                   action: MainCore.Action.myPageAction
                 )
               )
+              .navigationBarTitle("")
+              .navigationBarHidden(true)
             }
           }
         }
       }
-      .navigationBarHidden(true)
     }
     .navigationViewStyle(.stack)
   }

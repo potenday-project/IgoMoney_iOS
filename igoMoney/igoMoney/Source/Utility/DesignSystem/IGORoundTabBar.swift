@@ -53,33 +53,41 @@ struct IGORoundTabBar<Content: View>: View {
   var body: some View {
     ZStack(alignment: .bottom) {
       content()
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
       
-      HStack {
+      VStack {
         Spacer()
         
-        ForEach(MainTab.allCases, id: \.title) { tab in
-          TabItem(
-            tab: tab,
-            tabSetting: tabSetting,
-            isActive: selectedTab == tab
-          )
-          .onTapGesture {
-            selectedTab = tab
-          }
-          
+        HStack {
           Spacer()
+          
+          ForEach(MainTab.allCases, id: \.title) { tab in
+            TabItem(
+              tab: tab,
+              tabSetting: tabSetting,
+              isActive: selectedTab == tab
+            )
+            .onTapGesture {
+              selectedTab = tab
+            }
+            
+            Spacer()
+          }
         }
-      }
-      .padding(.top, 8)
-      .padding(.bottom, 32)
-      .background(Color.white)
-      .cornerRadius(20)
-      .shadow(
-        color: shadowSetting.color,
-        radius: shadowSetting.radius,
-        y: shadowSetting.y
-      )
+        .padding(.top, 8)
+        .padding(.bottom, 32)
+        .background(Color.white)
+        .cornerRadius(20)
+        .shadow(
+          color: shadowSetting.color,
+          radius: shadowSetting.radius,
+          y: shadowSetting.y
+        )
+      } // Tab Section
     }
+    .navigationBarTitle("")
+    .navigationBarHidden(true)
     .edgesIgnoringSafeArea(.bottom)
     .background(selectedTab == .home ? Color("background_color") : .white)
   }
@@ -107,5 +115,11 @@ extension IGORoundTabBar {
         )
     }
     .animation(.spring, value: UUID())
+  }
+}
+
+#Preview {
+  IGORoundTabBar(selectedTab: .constant(.home), tabSetting: .default, shadowSetting: .default) {
+    Text("Example")
   }
 }

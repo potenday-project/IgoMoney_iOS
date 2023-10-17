@@ -55,6 +55,8 @@ struct HomeScene: View {
       Color("background_color")
         .edgesIgnoringSafeArea(.top)
     )
+    .navigationBarTitle("")
+    .navigationBarHidden(true)
   }
 }
 

@@ -151,16 +151,19 @@ struct ExploreChallengeScene: View {
         }
       }
     }
+    .navigationBarHidden(true)
   }
 }
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {
-    ExploreChallengeScene(
-      store: Store(
-        initialState: ExploreChallengeCore.State(),
-        reducer: { ExploreChallengeCore() }
+    NavigationView {
+      ExploreChallengeScene(
+        store: Store(
+          initialState: ExploreChallengeCore.State(),
+          reducer: { ExploreChallengeCore() }
+        )
       )
-    )
+    }
   }
 }
