@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreChallengeScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<ExploreChallengeCore>
   private enum FilterSectionItem: Int, CaseIterable {
     case all
@@ -89,13 +90,13 @@ struct ExploreChallengeScene: View {
           Text("챌린지 둘러보기")
         } leftView: {
           Button {
-            
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "chevron.left")
           }
         } rightView: {
           Button {
-            
+            store.send(.showGenerate(true))
           } label: {
             Image(systemName: "plus.circle")
           }
@@ -173,6 +174,20 @@ struct ExploreChallengeScene: View {
           }
         }
       }
+    }
+    .fullScreenCover(
+      isPresented: ViewStore(store, observe: { $0 })
+        .binding(
+          get: \.showGenerate,
+          send: ExploreChallengeCore.Action.showGenerate
+        )
+    ) {
+      GenerateRoomScene(
+        store: self.store.scope(
+          state: \.generateState,
+          action: ExploreChallengeCore.Action.generateChallengeAction
+        )
+      )
     }
     .navigationBarHidden(true)
   }

@@ -11,10 +11,14 @@ import ComposableArchitecture
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
     var challenges: [Challenge] = []
+    
+    
+    var generateState = GenerateRoomCore.State()
     var challengeSelection: EnterChallengeCore.State?
     var categorySelection: ChallengeCategory?
     var moneySelection: TargetMoneyAmount?
     
+    var showGenerate: Bool = false
     var showFilter: Bool = false
     
     var isSelectAll: Bool {
@@ -29,6 +33,7 @@ struct ExploreChallengeCore: Reducer {
     
     case requestFetchChallenges
     
+    case showGenerate(Bool)
     case selectChallenge(Challenge?)
     case selectCategory(ChallengeCategory)
     case selectMoney(TargetMoneyAmount)
@@ -38,11 +43,16 @@ struct ExploreChallengeCore: Reducer {
     case _setMoneySelection(TargetMoneyAmount?)
     
     case enterChallengeAction(EnterChallengeCore.Action)
+    case generateChallengeAction(GenerateRoomCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.generateState, action: /Action.generateChallengeAction) {
+      GenerateRoomCore()
+    }
+    
     Reduce { state, action in
       switch action {
       case .openFilter(true):
@@ -64,6 +74,14 @@ struct ExploreChallengeCore: Reducer {
         
       case .confirmFilter:
         state.showFilter = false
+        return .none
+        
+      case .showGenerate(true):
+        state.showGenerate = true
+        return .none
+        
+      case .showGenerate(false):
+        state.showGenerate = false
         return .none
         
       case .selectChallenge(.some(let challenge)):
