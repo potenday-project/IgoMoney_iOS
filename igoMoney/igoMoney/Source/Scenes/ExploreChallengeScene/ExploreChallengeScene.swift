@@ -10,9 +10,6 @@ import ComposableArchitecture
 
 struct ExploreChallengeScene: View {
   let store: StoreOf<ExploreChallengeCore>
-  
-  private let challenges = Array(repeating: Challenge.default, count: 50)
-  
   private enum FilterSectionItem: Int, CaseIterable {
     case all
     case challenge
@@ -123,16 +120,18 @@ struct ExploreChallengeScene: View {
         }
         .padding(.horizontal, 24)
         
-        ScrollView(.vertical, showsIndicators: false) {
-          VStack(spacing: 12) {
-            ForEach(challenges, id: \.id) { challenge in
-              ExploreChallengeCellView(challenge: challenge)
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 12) {
+              ForEach(viewStore.challenges, id: \.id) { challenge in
+                ExploreChallengeCellView(challenge: challenge)
+              }
             }
+            .padding(.top)
           }
-          .padding(.top)
         }
         .onAppear {
-          store.send(._onAppar)
+          store.send(.requestFetchChallenges)
         }
       }
       

@@ -43,6 +43,8 @@ struct ExploreChallengeCellView: View {
         .font(.pretendard(size: 12, weight: .medium))
       }
       
+      Spacer()
+      
       Image("default_profile")
     }
     .padding(.horizontal, 16)

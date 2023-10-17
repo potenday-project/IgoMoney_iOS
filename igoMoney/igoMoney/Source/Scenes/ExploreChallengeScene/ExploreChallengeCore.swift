@@ -26,13 +26,17 @@ struct ExploreChallengeCore: Reducer {
     case removeFilter
     case confirmFilter
     
+    case requestFetchChallenges
+    
     case selectCategory(ChallengeCategory)
     case selectMoney(TargetMoneyAmount)
-    
-    case _onAppar
+
+    case _filterChallengeResponse(TaskResult<[Challenge]>)
     case _setCategorySelection(ChallengeCategory?)
     case _setMoneySelection(TargetMoneyAmount?)
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
@@ -64,9 +68,16 @@ struct ExploreChallengeCore: Reducer {
       case .selectMoney(let money):
         return .send(._setMoneySelection(money))
         
-      case ._onAppar:
-        state.challenges = Array(repeating: Challenge.default, count: 50)
-        return .none
+      case .requestFetchChallenges:
+        return .run { send in
+          await send(
+            ._filterChallengeResponse(
+              TaskResult {
+                try await challengeClient.fetchNotStartedChallenge()
+              }
+            )
+          )
+        }
         
       case ._setCategorySelection(let category):
         state.categorySelection = category
@@ -74,6 +85,15 @@ struct ExploreChallengeCore: Reducer {
         
       case ._setMoneySelection(let money):
         state.moneySelection = money
+        return .none
+        
+      case ._filterChallengeResponse(.success(let challenges)):
+        print(challenges)
+        state.challenges = challenges
+        return .none
+        
+      case ._filterChallengeResponse(.failure):
+        state.challenges = []
         return .none
         
       default:
