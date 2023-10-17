@@ -29,7 +29,8 @@ struct MainScene: View {
             selectedTab: viewStore.binding(
               get: \.selectedTab,
               send: MainCore.Action.selectedTabChange
-            )
+            ),
+            shadowSetting: shadowConfiguration
           ) {
             switch viewStore.selectedTab {
             case .home:
