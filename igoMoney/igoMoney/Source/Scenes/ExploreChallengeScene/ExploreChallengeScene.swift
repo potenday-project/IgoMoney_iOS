@@ -113,7 +113,7 @@ struct ExploreChallengeScene: View {
             ForEach(FilterSectionItem.allCases, id: \.rawValue) { filter in
               FilterButton(
                 with: viewStore,
-                isSelected: filter == .all ? viewStore.isSelectAll : viewStore.isSelectAll == false,
+                isSelected: filter == .all ? viewStore.isSelectAll == false : viewStore.isSelectAll,
                 filterType: filter
               )
             }
@@ -127,7 +127,6 @@ struct ExploreChallengeScene: View {
           VStack(spacing: 12) {
             ForEach(challenges, id: \.id) { challenge in
 //              ExploreChallengeCellView(challenge: challenge)
-//              .padding(.horizontal, 24)
             }
           }
           .padding(4)
@@ -144,7 +143,7 @@ struct ExploreChallengeScene: View {
               ),
               maxHeight: proxy.size.height * 0.65
             ) {
-//              ExploreChallengeFilterView(viewStore: viewStore)
+              ExploreChallengeFilterView(viewStore: viewStore)
             }
             .edgesIgnoringSafeArea(.all)
           }

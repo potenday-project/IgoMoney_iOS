@@ -16,7 +16,7 @@ struct ExploreChallengeCore: Reducer {
     var showFilter: Bool = false
     
     var isSelectAll: Bool {
-      return (categorySelection == nil) && (moneySelection == nil)
+      return (categorySelection != nil) && (moneySelection != nil)
     }
   }
   

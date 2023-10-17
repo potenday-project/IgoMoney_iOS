@@ -8,34 +8,114 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ExploreChallengeFilterSection: View {
+struct ExploreChallengeFilterView: View {
   let viewStore: ViewStoreOf<ExploreChallengeCore>
   
+  @ViewBuilder
+  private func SectionHeaderView(title: String) -> some View {
+    HStack {
+      Text(title)
+      
+      Spacer()
+    }
+    .font(.pretendard(size: 18, weight: .bold))
+  }
+  
   var body: some View {
-    HStack(spacing: 8) {
-//      ForEach(TargetMoneyAmount.allCases, id: \.rawValue) { money in
-//        HStack(alignment: .center) {
-//          Spacer()
-//          
-//          Text(money.title)
-//            .lineLimit(1)
-//            .multilineTextAlignment(.center)
-//            .font(.pretendard(size: 14, weight: .medium))
-//            .minimumScaleFactor(0.8)
-//          
-//          Spacer()
-//        }
-//        .padding(.vertical, 8)
-//        .foregroundColor(money == viewStore.selectedMoney ? .black : ColorConstants.gray3)
-//        .background(
-//          money == viewStore.selectedMoney ?
-//          ColorConstants.primary : ColorConstants.gray5
-//        )
-//        .cornerRadius(4)
-//        .onTapGesture {
-//          viewStore.send(.selectMoney(money))
-//        }
-//      }
+    VStack {
+      FilterChallengeCategorySection(viewStore: viewStore) {
+        SectionHeaderView(title: "챌린지 주제")
+      }
+      
+      FilterTargetMoneySection(viewStore: viewStore) {
+        SectionHeaderView(title: "챌린지 금액")
+      }
+      
+      Spacer()
+      
+      Button("완료") {
+        viewStore.send(.confirmFilter)
+      }
+      .font(.pretendard(size: 18, weight: .medium))
+      .buttonStyle(.plain)
+      .frame(maxWidth: .infinity)
+      .padding()
+      .background(
+        viewStore.isSelectAll ? ColorConstants.primary : ColorConstants.gray3
+      )
+      .cornerRadius(8)
+      .padding(.bottom, 32)
+    }
+    .padding(.horizontal, 24)
+  }
+}
+
+struct FilterChallengeCategorySection<Header: View>: View {
+  let viewStore: ViewStoreOf<ExploreChallengeCore>
+  let header: () -> Header
+  
+  init(viewStore: ViewStoreOf<ExploreChallengeCore>, @ViewBuilder header: @escaping () -> Header) {
+    self.viewStore = viewStore
+    self.header = header
+  }
+  
+  var body: some View {
+    Section {
+      header()
+      
+      LazyVGrid(columns: Array(repeating: .init(), count: 3)) {
+        ForEach(ChallengeCategory.allCases, id: \.rawValue) { category in
+          Button {
+            viewStore.send(.selectCategory(category))
+          } label: {
+            ChallengeCategoryView(
+              isSelection: category == viewStore.categorySelection,
+              category: category
+            )
+          }
+        }
+      }
     }
   }
+}
+
+struct FilterTargetMoneySection<Header: View>: View {
+  let viewStore: ViewStoreOf<ExploreChallengeCore>
+  let header: () -> Header
+  
+  init(viewStore: ViewStoreOf<ExploreChallengeCore>, @ViewBuilder header: @escaping () -> Header) {
+    self.viewStore = viewStore
+    self.header = header
+  }
+  
+  var body: some View {
+    Section {
+      header()
+      
+      HStack {
+        ForEach(TargetMoneyAmount.allCases, id: \.description) { moneyAmount in
+          Button {
+            viewStore.send(.selectMoney(moneyAmount))
+          } label: {
+            ChallengeTargetMoneyView(
+              isSelection: moneyAmount == viewStore.moneySelection,
+              amount: moneyAmount
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
+#Preview {
+  ExploreChallengeFilterView(
+    viewStore: ViewStore(
+      Store(
+        initialState: ExploreChallengeCore.State(),
+        reducer: { ExploreChallengeCore() }
+      ),
+      observe: { $0 }
+    )
+  )
 }
