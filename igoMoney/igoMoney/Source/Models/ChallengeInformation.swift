@@ -57,8 +57,10 @@ extension Challenge {
     targetAmount = TargetMoneyAmount(money: moneyValue)
     category = try? container.decode(ChallengeCategory.self, forKey: .category)
     term = try? container.decode(Int.self, forKey: .term)
-    startDate = try? container.decode(Date.self, forKey: .startDate)
-    endDate = try? container.decode(Date.self, forKey: .endDate)
+    let startDateString = try? container.decode(String.self, forKey: .startDate)
+    startDate = startDateString?.toDate(with: "yyyy-MM-dd")
+    let endDateString = try? container.decode(String.self, forKey: .endDate)
+    endDate = endDateString?.toDate(with: "yyyy-MM-dd")
   }
   
   static let `default`: Challenge = .init(

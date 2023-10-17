@@ -17,3 +17,11 @@ extension Date {
     return formatter.string(from: self)
   }
 }
+
+extension String {
+  func toDate(with format: String) -> Date? {
+    let formatter = Date.formatter
+    formatter.dateFormat = format
+    return formatter.date(from: self)
+  }
+}
