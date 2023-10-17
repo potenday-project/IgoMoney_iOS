@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
     var challenges: [Challenge] = []
+    var challengeSelection: EnterChallengeCore.State?
     var categorySelection: ChallengeCategory?
     var moneySelection: TargetMoneyAmount?
     
@@ -28,12 +29,15 @@ struct ExploreChallengeCore: Reducer {
     
     case requestFetchChallenges
     
+    case selectChallenge(Challenge?)
     case selectCategory(ChallengeCategory)
     case selectMoney(TargetMoneyAmount)
 
     case _filterChallengeResponse(TaskResult<[Challenge]>)
     case _setCategorySelection(ChallengeCategory?)
     case _setMoneySelection(TargetMoneyAmount?)
+    
+    case enterChallengeAction(EnterChallengeCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
@@ -60,6 +64,14 @@ struct ExploreChallengeCore: Reducer {
         
       case .confirmFilter:
         state.showFilter = false
+        return .none
+        
+      case .selectChallenge(.some(let challenge)):
+        state.challengeSelection = EnterChallengeCore.State(challenge: challenge)
+        return .none
+        
+      case .selectChallenge(.none):
+        state.challengeSelection = nil
         return .none
         
       case .selectCategory(let category):
@@ -99,6 +111,9 @@ struct ExploreChallengeCore: Reducer {
       default:
         return .none
       }
+    }
+    .ifLet(\.challengeSelection, action: /Action.enterChallengeAction) {
+      EnterChallengeCore()
     }
   }
 }

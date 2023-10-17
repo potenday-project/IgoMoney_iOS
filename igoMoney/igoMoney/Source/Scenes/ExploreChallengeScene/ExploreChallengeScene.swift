@@ -125,10 +125,32 @@ struct ExploreChallengeScene: View {
             VStack(spacing: 12) {
               ForEach(viewStore.challenges, id: \.id) { challenge in
                 ExploreChallengeCellView(challenge: challenge)
+                  .onTapGesture {
+                    viewStore.send(.selectChallenge(challenge))
+                  }
               }
             }
             .padding(.top)
           }
+          .background(
+            NavigationLink(
+              isActive: viewStore.binding(
+                get: { $0.challengeSelection != nil },
+                send: ExploreChallengeCore.Action.selectChallenge(nil)
+              ),
+              destination: {
+                IfLetStore(
+                  store.scope(
+                    state: { $0.challengeSelection },
+                    action: ExploreChallengeCore.Action.enterChallengeAction
+                  )
+                ) { store in
+                  EnterChallengeScene(store: store)
+                }
+              }, label: {
+                EmptyView()
+              })
+          )
         }
         .onAppear {
           store.send(.requestFetchChallenges)
