@@ -87,7 +87,7 @@ struct ExploreChallengeScene: View {
   
   var body: some View {
     ZStack {
-      VStack(spacing: 24) {
+      VStack(spacing: 16) {
         IGONavigationBar {
           Text("챌린지 둘러보기")
         } leftView: {
@@ -126,10 +126,13 @@ struct ExploreChallengeScene: View {
         ScrollView(.vertical, showsIndicators: false) {
           VStack(spacing: 12) {
             ForEach(challenges, id: \.id) { challenge in
-//              ExploreChallengeCellView(challenge: challenge)
+              ExploreChallengeCellView(challenge: challenge)
             }
           }
-          .padding(4)
+          .padding(.top)
+        }
+        .onAppear {
+          store.send(._onAppar)
         }
       }
       

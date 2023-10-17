@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
+    var challenges: [Challenge] = []
     var categorySelection: ChallengeCategory?
     var moneySelection: TargetMoneyAmount?
     
@@ -28,6 +29,7 @@ struct ExploreChallengeCore: Reducer {
     case selectCategory(ChallengeCategory)
     case selectMoney(TargetMoneyAmount)
     
+    case _onAppar
     case _setCategorySelection(ChallengeCategory?)
     case _setMoneySelection(TargetMoneyAmount?)
   }
@@ -61,6 +63,10 @@ struct ExploreChallengeCore: Reducer {
         
       case .selectMoney(let money):
         return .send(._setMoneySelection(money))
+        
+      case ._onAppar:
+        state.challenges = Array(repeating: Challenge.default, count: 50)
+        return .none
         
       case ._setCategorySelection(let category):
         state.categorySelection = category
