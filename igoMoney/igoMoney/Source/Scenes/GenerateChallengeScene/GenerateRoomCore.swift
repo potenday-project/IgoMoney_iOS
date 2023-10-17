@@ -82,13 +82,9 @@ struct GenerateRoomCore: Reducer {
         return .none
         
       case .didEnterChallenge:
-        #if DEBUG
-        let userID = 2
-        #else
         guard let userID = APIClient.currentUser?.userID else {
           return .none
         }
-        #endif
         
         guard let startDate = state.startDate?.toString(with: "yyyy-MM-dd") else {
           return .none

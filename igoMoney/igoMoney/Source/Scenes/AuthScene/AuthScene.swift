@@ -92,7 +92,7 @@ struct AuthScene: View {
       }
       .background(Color("background_color").edgesIgnoringSafeArea(.all))
       .onAppear {
-        store.send(._onAppear)
+        store.send(.autoSignIn)
       }
       .navigationTitle("")
       .navigationBarHidden(true)
