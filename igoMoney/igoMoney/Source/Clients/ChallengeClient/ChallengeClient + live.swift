@@ -14,7 +14,7 @@ extension ChallengeClient {
     
     let api = ChallengeAPI(
       method: .get,
-      path: "challenges/my-active-challenge/\(user.userID.description)",
+      path: "/challenges/my-active-challenge/\(user.userID.description)",
       query: [:],
       header: [:]
     )
@@ -46,7 +46,7 @@ extension ChallengeClient {
   } generateChallenge: { challenge in
     let api = ChallengeAPI(
       method: .post,
-      path: "challenges/new",
+      path: "/challenges/new",
       query: [:],
       header: [
         "Content-Type": "application/x-www-form-urlencoded"

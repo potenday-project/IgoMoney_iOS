@@ -114,17 +114,14 @@ struct GenerateRoomCore: Reducer {
         return .send(.alertAction(.present))
         
       case ._enterChallengeResponse(.failure(let error)):
-        #if DEBUG
-        state.alertTitle = "에러가 발생했습니다. \(error)"
-        #else
         if case let .badRequest(statusCode) = error as? APIError {
           if statusCode == 409 {
             state.alertTitle = "이미 참가 중인 챌린지가 존재합니다."
-          } else {
-            state.alertTitle = "오류가 발생하였습니다.\n 잠시 후 다시 시도해주세요."
+            return .send(.alertAction(.present))
           }
         }
-        #endif
+        
+        state.alertTitle = "오류가 발생하였습니다.\n 잠시 후 다시 시도해주세요."
         return .send(.alertAction(.present))
         
       default:
