@@ -46,6 +46,7 @@ struct HomeScene: View {
         }
         .padding(24)
         .background(Color.white)
+        .padding(.bottom, 80)
       }
       .background(Color.white.edgesIgnoringSafeArea(.all))
       .cornerRadius(20, corner: .topLeft)
