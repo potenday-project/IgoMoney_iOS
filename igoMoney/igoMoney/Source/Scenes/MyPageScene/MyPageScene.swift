@@ -22,7 +22,7 @@ struct MyPageScene: View {
   }
   
   var body: some View {
-    VStack(spacing: 24) {
+    VStack(spacing: .zero) {
       WithViewStore(store, observe: { $0 }) { viewStore in
         IGONavigationBar {
           EmptyView()
@@ -43,43 +43,74 @@ struct MyPageScene: View {
           )
         }
       }
+      .padding(.horizontal, 24)
+      .padding(.top, 16)
       
-      UserProfileSection(
-        store: store.scope(
-          state: \.profileState,
-          action: MyPageCore.Action.userProfileAction
-        )
-      )
-      
-      Section(header: sectionHeaderView(title: "챌린지 현황")) {
-        RoundedRectangle(cornerRadius: 20)
-          .frame(height: 76 + 110)
-      }
-      
-      Section(header: sectionHeaderView(title: "고객 지원")) {
-        VStack(spacing: .zero) {
-          ForEach(1...4, id: \.self) { _ in
-            VStack {
-              HStack {
-                Image(systemName: "pencil")
-                
-                Text("앱 공유하기")
-                
-                Spacer()
-              }
-              .font(.pretendard(size: 16, weight: .semiBold))
-              .padding(16)
-              
-              Divider()
+      ScrollView(.vertical, showsIndicators: false) {
+        VStack(spacing: 24) {
+          UserProfileSection(
+            store: store.scope(
+              state: \.profileState,
+              action: MyPageCore.Action.userProfileAction
+            )
+          )
+          
+          VStack(spacing: 12) {
+            Section(header: sectionHeaderView(title: "챌린지 현황")) {
+              RoundedRectangle(cornerRadius: 20)
+                .frame(height: 76 + 110)
             }
           }
+          
+          VStack(spacing: 12) {
+            Section(header: sectionHeaderView(title: "고객 지원")) {
+              WithViewStore(store, observe: { $0 }) { viewStore in
+                CustomServiceSection(viewStore: viewStore)
+              }
+            }
+          }
+          
+          Spacer()
         }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
       }
+    }
+    
+  }
+}
+
+struct CustomServiceSection: View {
+  let viewStore: ViewStoreOf<MyPageCore>
+  
+  @ViewBuilder
+  private func customServiceCell(to service: CustomerServiceType) -> some View {
+    HStack(spacing: 12) {
+      Image(service.iconName)
+      
+      Text(service.description)
       
       Spacer()
     }
-    .padding(.horizontal, 24)
-    .padding(.vertical, 16)
+    .font(.pretendard(size: 16, weight: .semiBold))
+    .padding(16)
+  }
+  
+  var body: some View {
+    VStack(spacing: .zero) {
+      ForEach(viewStore.customServices, id: \.rawValue) { service in
+        VStack(spacing: .zero) {
+          Button {
+            print(service)
+          } label: {
+            customServiceCell(to: service)
+          }
+          .buttonStyle(.plain)
+          
+          Divider()
+        }
+      }
+    }
   }
 }
 
