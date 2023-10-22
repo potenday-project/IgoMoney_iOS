@@ -16,15 +16,6 @@ struct MyChallengeSectionCore: Reducer {
   enum Action {
     case _onAppear
     case _myChallengeResponse(TaskResult<Challenge>)
-    
-    // Child Action
-  }
-  
-  enum ChallengeStatus: Equatable {
-    case processingChallenge(Challenge)
-    case waitingUser(Challenge)
-    case waitingStart(Challenge)
-    case notInChallenge
   }
   
   @Dependency(\.challengeClient) var challengeClient

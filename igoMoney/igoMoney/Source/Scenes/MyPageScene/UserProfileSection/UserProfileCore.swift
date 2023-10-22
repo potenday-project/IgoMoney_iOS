@@ -8,7 +8,9 @@ import ComposableArchitecture
 
 struct UserProfileCore: Reducer {
   struct State: Equatable {
-    
+    var profilePath: String = ""
+    var userName: String = ""
+    var challengeState: ChallengeStatus = .notInChallenge
   }
   
   enum Action: Equatable {

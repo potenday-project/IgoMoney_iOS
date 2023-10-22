@@ -43,8 +43,13 @@ struct UserProfileSection: View {
 }
 
 #Preview {
-  UserProfileSection()
-    .previewLayout(.sizeThatFits)
-    .padding()
-    .background(Color.red)
+  UserProfileSection(
+    store: Store(
+      initialState: UserProfileCore.State(),
+      reducer: { UserProfileCore() }
+    )
+  )
+  .previewLayout(.sizeThatFits)
+  .padding()
+  .background(Color.red)
 }
