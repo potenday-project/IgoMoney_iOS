@@ -31,5 +31,9 @@ struct MyPageCore: Reducer {
     Scope(state: \.settingState, action: /Action.settingAction) {
       SettingCore()
     }
+    
+    Scope(state: \.profileState, action: /Action.userProfileAction) {
+      UserProfileCore()
+    }
   }
 }

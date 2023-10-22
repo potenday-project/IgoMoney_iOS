@@ -80,6 +80,7 @@
 		188103992AE4FD50003EBE95 /* UserProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103982AE4FD50003EBE95 /* UserProfileSection.swift */; };
 		1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */; };
 		1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039C2AE4FEEE003EBE95 /* ChallengeStatus.swift */; };
+		1881039F2AE507B3003EBE95 /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039E2AE507B3003EBE95 /* URLImage.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152262AC96E3A00B8B8A4 /* AuthToken.swift */; };
 		18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */; };
@@ -181,6 +182,7 @@
 		188103982AE4FD50003EBE95 /* UserProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSection.swift; sourceTree = "<group>"; };
 		1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCore.swift; sourceTree = "<group>"; };
 		1881039C2AE4FEEE003EBE95 /* ChallengeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStatus.swift; sourceTree = "<group>"; };
+		1881039E2AE507B3003EBE95 /* URLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
 		18A152262AC96E3A00B8B8A4 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartForm.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				182B1B622AD68C4200D01DBA /* IGOInputForm.swift */,
 				183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */,
 				187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */,
+				1881039E2AE507B3003EBE95 /* URLImage.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */,
 				18A1522F2AC97F9E00B8B8A4 /* MyPageCore.swift in Sources */,
 				187252C72ABC07AE00DCF08C /* MainTab.swift in Sources */,
+				1881039F2AE507B3003EBE95 /* URLImage.swift in Sources */,
 				180FC67D2ABAF62500DD8477 /* AuthController.swift in Sources */,
 				18B437772AC16E410026A71E /* UserClient + live.swift in Sources */,
 				18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */,

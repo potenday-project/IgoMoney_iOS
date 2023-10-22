@@ -15,11 +15,15 @@ struct UserProfileSection: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       HStack(spacing: 8) {
         
-        if let profilePath = viewStore.profilePath {
-          // TODO: - 사용자 프로필 이미지 구현
-          Text(profilePath)
-        } else {
-          Image("default_profile")
+        IfLetStore(
+          store.scope(
+            state: \.profileImageState,
+            action: UserProfileCore.Action.profileImageAction
+          )
+        ) { store in
+          URLImage(store: store)
+        } else: {
+          EmptyView()
         }
         
         VStack(alignment: .leading) {

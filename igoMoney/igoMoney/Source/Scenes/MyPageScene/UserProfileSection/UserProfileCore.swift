@@ -8,8 +8,8 @@ import ComposableArchitecture
 
 struct UserProfileCore: Reducer {
   struct State: Equatable {
-    var profilePath: String?
     var userName: String = ""
+    var profileImageState: URLImageCore.State?
     var myChallengeState = MyChallengeSectionCore.State()
   }
   
@@ -22,6 +22,7 @@ struct UserProfileCore: Reducer {
     case _fetchProfileResponse(TaskResult<User>)
     
     // Child Action
+    case profileImageAction(URLImageCore.Action)
     case myChallengeSectionAction(MyChallengeSectionCore.Action)
   }
   
@@ -36,8 +37,7 @@ struct UserProfileCore: Reducer {
       switch action {
       case .onAppear:
         return .concatenate(
-          .send(.fetchProfile),
-          .send(.myChallengeSectionAction(._onAppear))
+          .send(.fetchProfile)
         )
         
       case .fetchProfile:
@@ -52,7 +52,7 @@ struct UserProfileCore: Reducer {
         }
         
       case ._fetchProfileResponse(.success(let user)):
-        state.profilePath = user.profileImagePath
+        state.profileImageState = URLImageCore.State(urlPath: user.profileImagePath)
         state.userName = user.nickName ?? ""
         return .none
         
@@ -61,7 +61,13 @@ struct UserProfileCore: Reducer {
         
       case .myChallengeSectionAction:
         return .none
+        
+      case .profileImageAction:
+        return .none
       }
+    }
+    .ifLet(\.profileImageState, action: /Action.profileImageAction) {
+      URLImageCore()
     }
   }
 }

@@ -43,6 +43,7 @@ struct MainCore: Reducer {
     
     Scope(state: \.myPageState, action: /Action.myPageAction) {
       MyPageCore()
+        ._printChanges()
     }
   }
 }
