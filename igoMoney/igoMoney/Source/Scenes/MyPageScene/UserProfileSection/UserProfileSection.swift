@@ -15,16 +15,12 @@ struct UserProfileSection: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       HStack(spacing: 8) {
         
-        IfLetStore(
-          store.scope(
+        URLImage(
+          store: store.scope(
             state: \.profileImageState,
             action: UserProfileCore.Action.profileImageAction
           )
-        ) { store in
-          URLImage(store: store)
-        } else: {
-          EmptyView()
-        }
+        )
         
         VStack(alignment: .leading) {
           Text(viewStore.userName)

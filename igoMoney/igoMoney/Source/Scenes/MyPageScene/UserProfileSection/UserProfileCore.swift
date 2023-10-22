@@ -9,7 +9,7 @@ import ComposableArchitecture
 struct UserProfileCore: Reducer {
   struct State: Equatable {
     var userName: String = ""
-    var profileImageState: URLImageCore.State?
+    var profileImageState = URLImageCore.State()
     var myChallengeState = MyChallengeSectionCore.State()
   }
   
@@ -31,6 +31,10 @@ struct UserProfileCore: Reducer {
   var body: some Reducer<State, Action> {
     Scope(state: \.myChallengeState, action: /Action.myChallengeSectionAction) {
       MyChallengeSectionCore()
+    }
+    
+    Scope(state: \.profileImageState, action: /Action.profileImageAction) {
+      URLImageCore()
     }
     
     Reduce { state, action in
@@ -65,9 +69,6 @@ struct UserProfileCore: Reducer {
       case .profileImageAction:
         return .none
       }
-    }
-    .ifLet(\.profileImageState, action: /Action.profileImageAction) {
-      URLImageCore()
     }
   }
 }

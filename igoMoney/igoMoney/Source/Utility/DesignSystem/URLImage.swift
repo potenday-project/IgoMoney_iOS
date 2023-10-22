@@ -70,7 +70,11 @@ struct URLImageCore: Reducer {
 }
 
 struct URLImage: View {
-  let store: StoreOf<URLImageCore>
+  var store: StoreOf<URLImageCore> {
+    didSet {
+      store.send(.onAppear)
+    }
+  }
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
@@ -83,13 +87,18 @@ struct URLImage: View {
             .progressViewStyle(.circular)
         case .success(let image):
           image
+            .resizable()
         case .failure:
           Image("default_profile")
+            .resizable()
         }
       }
-    }
-    .onAppear {
-      store.send(.onAppear)
+      .scaledToFit()
+      .frame(width: 65, height: 65)
+      .clipShape(Circle())
+      .onChange(of: viewStore.state) { _ in
+        viewStore.send(.onAppear)
+      }
     }
   }
 }
