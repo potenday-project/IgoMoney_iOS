@@ -14,14 +14,23 @@ struct UserProfileSection: View {
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       HStack(spacing: 8) {
-        Image("default_profile")
+        
+        if let profilePath = viewStore.profilePath {
+          // TODO: - 사용자 프로필 이미지 구현
+          Text(profilePath)
+        } else {
+          Image("default_profile")
+        }
         
         VStack(alignment: .leading) {
-          Text("오마이머니")
+          Text(viewStore.userName)
             .foregroundColor(ColorConstants.primary)
           + Text("님")
           
-          Text("현재 챌린지 진행 중!")
+          Text(
+            viewStore.myChallengeState.userChallenge == .notInChallenge ?
+            "챌린지에 참여해보세요!" : "현재 챌린지 진행 중!"
+          )
         }
         .font(.pretendard(size: 18, weight: .semiBold))
         
@@ -39,6 +48,9 @@ struct UserProfileSection: View {
       radius: 4,
       y: 2
     )
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
 }
 
