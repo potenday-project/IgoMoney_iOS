@@ -63,6 +63,8 @@ struct MyPageCore: Reducer {
     case _presentShare([Any]?)
   }
   
+  @Dependency(\.openURL) var openURL
+  
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {

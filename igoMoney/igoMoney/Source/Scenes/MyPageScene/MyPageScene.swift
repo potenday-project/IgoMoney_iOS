@@ -84,6 +84,7 @@ struct MyPageScene: View {
 }
 
 struct CustomServiceSection: View {
+  @Environment(\.openURL) var openURL
   let viewStore: ViewStoreOf<MyPageCore>
   
   @ViewBuilder
@@ -104,6 +105,14 @@ struct CustomServiceSection: View {
       ForEach(viewStore.customServices, id: \.rawValue) { service in
         VStack(spacing: .zero) {
           Button {
+            if service == .review {
+              guard let url = URL(string: "https://apps.apple.com/us/app/igomoney/id6467229873") else {
+                return
+              }
+              openURL.callAsFunction(url)
+              return
+            }
+            
             viewStore.send(.tapService(service))
           } label: {
             customServiceCell(to: service)
