@@ -79,6 +79,7 @@ struct ProfileSettingCore: Reducer {
       return .none
       
     case ._checkNickNameResponse(.failure):
+      state.nickNameState = .duplicateNickName
       return .none
       
     case ._updateNickNameResponse:

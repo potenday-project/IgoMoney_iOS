@@ -50,7 +50,8 @@ struct AppCore: Reducer {
     Reduce { state, action in
       switch action {
       case ._onAppear:
-        return .send(.authAction(.autoSignIn))
+        state.currentState = .auth
+        return .none
         
       case ._autoSignIn(true):
         return .run { send in

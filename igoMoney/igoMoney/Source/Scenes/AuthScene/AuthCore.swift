@@ -128,6 +128,7 @@ struct AuthCore: Reducer {
         return .none
         
       case let ._authTokenResponse(.success(token)):
+        print(token)
         return .run { send in
           await send(
             ._userInformationResponse(
@@ -142,7 +143,7 @@ struct AuthCore: Reducer {
         if case .tokenExpired = error as? APIError {
           return .send(.refreshToken)
         }
-        return .none
+        return .send(._userInformationResponse(.failure(error)))
         
       case ._userInformationResponse(.success(let user)):
         state.currentUser = user
@@ -208,6 +209,7 @@ private extension AuthCore {
   func signInWithKakao() async throws {
     return try await withCheckedThrowingContinuation { continuation in
       UserApi.shared.accessTokenInfo { token, error in
+        print(token)
         if let error = error {
           continuation.resume(throwing: APIError.badRequest(400))
           return
