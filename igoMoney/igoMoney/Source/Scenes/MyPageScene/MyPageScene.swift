@@ -76,7 +76,10 @@ struct MyPageScene: View {
         .padding(.vertical, 16)
       }
     }
-    
+    .shareSheet(
+      ViewStore(store, observe: { $0 })
+        .binding(get: \.shareItem, send: MyPageCore.Action._presentShare)
+    )
   }
 }
 
@@ -101,7 +104,7 @@ struct CustomServiceSection: View {
       ForEach(viewStore.customServices, id: \.rawValue) { service in
         VStack(spacing: .zero) {
           Button {
-            print(service)
+            viewStore.send(.tapService(service))
           } label: {
             customServiceCell(to: service)
           }

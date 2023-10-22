@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import ComposableArchitecture
+import Foundation
 
 enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
   case share
@@ -41,20 +42,46 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
 
 struct MyPageCore: Reducer {
   struct State: Equatable {
+    static func == (lhs: MyPageCore.State, rhs: MyPageCore.State) -> Bool {
+      return (lhs.profileState == rhs.profileState) &&
+      (lhs.settingState == rhs.settingState) &&
+      (lhs.shareItem?.count == rhs.shareItem?.count)
+    }
+    
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
     var settingState = SettingCore.State()
     var profileState = UserProfileCore.State()
+    
+    var shareItem: [Any]?
   }
   
   enum Action {
     case settingAction(SettingCore.Action)
     case userProfileAction(UserProfileCore.Action)
+    case tapService(CustomerServiceType)
+    
+    case _presentShare([Any]?)
   }
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
       case .userProfileAction:
+        return .none
+        
+      case .tapService(let service):
+        switch service {
+        case .share:
+          guard let appStoreURL = URL(string: "https://apps.apple.com/us/app/igomoney/id6467229873") else {
+            return .send(._presentShare(nil))
+          }
+          return .send(._presentShare([appStoreURL]))
+        default:
+          return .none
+        }
+        
+      case ._presentShare(let item):
+        state.shareItem = item
         return .none
         
       default:
