@@ -11,6 +11,16 @@ import ComposableArchitecture
 struct MyPageScene: View {
   let store: StoreOf<MyPageCore>
   
+  @ViewBuilder
+  private func sectionHeaderView(title: String) -> some View {
+    HStack {
+      Text(title)
+      
+      Spacer()
+    }
+    .font(.pretendard(size: 18, weight: .bold))
+  }
+  
   var body: some View {
     VStack(spacing: 24) {
       WithViewStore(store, observe: { $0 }) { viewStore in
@@ -40,6 +50,31 @@ struct MyPageScene: View {
           action: MyPageCore.Action.userProfileAction
         )
       )
+      
+      Section(header: sectionHeaderView(title: "챌린지 현황")) {
+        RoundedRectangle(cornerRadius: 20)
+          .frame(height: 76 + 110)
+      }
+      
+      Section(header: sectionHeaderView(title: "고객 지원")) {
+        VStack(spacing: .zero) {
+          ForEach(1...4, id: \.self) { _ in
+            VStack {
+              HStack {
+                Image(systemName: "pencil")
+                
+                Text("앱 공유하기")
+                
+                Spacer()
+              }
+              .font(.pretendard(size: 16, weight: .semiBold))
+              .padding(16)
+              
+              Divider()
+            }
+          }
+        }
+      }
       
       Spacer()
     }
