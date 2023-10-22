@@ -34,9 +34,11 @@ extension UserClient {
     
     return try await APIClient.execute(to: api).isEmpty
   } getUserInformation: { userID in
+    let fetchUserID = try Self.fetchUserID(to: userID)
+    
     let api = AuthAPI(
       method: .get,
-      path: "/users/\(userID)",
+      path: "/users/\(fetchUserID)",
       query: [:],
       header: [:]
     )
@@ -45,6 +47,19 @@ extension UserClient {
     saveToken(with: response)
     
     return response
+  }
+  
+  private static func fetchUserID(to userID: String?) throws -> String {
+    guard let userID = userID else {
+      let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+      if let token: AuthToken = tokenData.toDecodable() {
+        return token.userID.description
+      }
+      
+      throw KeyChainClient.KeyChainError.itemNotFound
+    }
+    
+    return userID
   }
 
   private static func saveToken(with response: User) {
