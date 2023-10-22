@@ -77,6 +77,8 @@
 		187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */; };
 		187252CE2ABC0B7B00DCF08C /* ChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */; };
 		187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187252D02ABC0BA800DCF08C /* MyPageScene.swift */; };
+		188103992AE4FD50003EBE95 /* UserProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103982AE4FD50003EBE95 /* UserProfileSection.swift */; };
+		1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152262AC96E3A00B8B8A4 /* AuthToken.swift */; };
 		18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */; };
@@ -175,6 +177,8 @@
 		187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGORoundTabBar.swift; sourceTree = "<group>"; };
 		187252CD2ABC0B7B00DCF08C /* ChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeScene.swift; sourceTree = "<group>"; };
 		187252D02ABC0BA800DCF08C /* MyPageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageScene.swift; sourceTree = "<group>"; };
+		188103982AE4FD50003EBE95 /* UserProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSection.swift; sourceTree = "<group>"; };
+		1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCore.swift; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
 		18A152262AC96E3A00B8B8A4 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartForm.swift; sourceTree = "<group>"; };
@@ -375,6 +379,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		188103972AE4FD42003EBE95 /* UserProfileSection */ = {
+			isa = PBXGroup;
+			children = (
+				188103982AE4FD50003EBE95 /* UserProfileSection.swift */,
+				1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */,
+			);
+			path = UserProfileSection;
+			sourceTree = "<group>";
+		};
 		18B437782AC170AA0026A71E /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +523,7 @@
 		18F55C9B2ADDA9C300DE50C4 /* MyPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				188103972AE4FD42003EBE95 /* UserProfileSection */,
 				18F55CA82ADDABAB00DE50C4 /* SubViews */,
 				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
 				18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */,
@@ -720,6 +734,7 @@
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				182B1B632AD68C4200D01DBA /* IGOInputForm.swift in Sources */,
 				181988AC2ACE72310021214C /* ChallengeClient.swift in Sources */,
+				188103992AE4FD50003EBE95 /* UserProfileSection.swift in Sources */,
 				1865C41A2AC14AAF006B5B8A /* Date + Extensions.swift in Sources */,
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */,
@@ -771,6 +786,7 @@
 				18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
+				1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */,
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
 				18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */,
 				187252C92ABC07C700DCF08C /* MainCore.swift in Sources */,

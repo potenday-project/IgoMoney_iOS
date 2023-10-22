@@ -12,7 +12,7 @@ struct MyPageScene: View {
   let store: StoreOf<MyPageCore>
   
   var body: some View {
-    VStack {
+    VStack(spacing: 24) {
       WithViewStore(store, observe: { $0 }) { viewStore in
         IGONavigationBar {
           EmptyView()
@@ -34,8 +34,7 @@ struct MyPageScene: View {
         }
       }
       
-      // TODO: - 사용자 상세 정보 화면 구현
-      Spacer()
+      UserProfileSection()
     }
     .padding(.horizontal, 24)
     .padding(.vertical, 16)
