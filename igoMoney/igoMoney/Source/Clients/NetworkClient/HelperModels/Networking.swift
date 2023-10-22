@@ -16,6 +16,24 @@ protocol Networking {
 extension Networking {
   static func execute(to generator: RequestGenerator) async throws -> Data {
     var request = try generator.generate()
+    return try await requestNetwork(request: request)
+  }
+  
+  static func execute(to request: URLRequest) async throws -> Data {
+    return try await requestNetwork(request: request)
+  }
+  
+  static func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
+    let data = try await execute(to: generator)
+    guard let decodeData = try? JSONDecoder().decode(T.self, from: data) else {
+      throw APIError.couldNotConvertJson
+    }
+    
+    return decodeData
+  }
+  
+  private static func requestNetwork(request: URLRequest) async throws -> Data {
+    var request = request
     
     let tokenData = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     
@@ -32,15 +50,6 @@ extension Networking {
     try handleResponse(response: response)
     
     return data
-  }
-  
-  static func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
-    let data = try await execute(to: generator)
-    guard let decodeData = try? JSONDecoder().decode(T.self, from: data) else {
-      throw APIError.couldNotConvertJson
-    }
-    
-    return decodeData
   }
   
   private static func handleResponse(response: URLResponse) throws {

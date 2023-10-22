@@ -81,6 +81,9 @@
 		1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */; };
 		1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039C2AE4FEEE003EBE95 /* ChallengeStatus.swift */; };
 		1881039F2AE507B3003EBE95 /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881039E2AE507B3003EBE95 /* URLImage.swift */; };
+		188103A62AE539FD003EBE95 /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A52AE539FD003EBE95 /* ImageClient.swift */; };
+		188103A82AE53A65003EBE95 /* ImageClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A72AE53A65003EBE95 /* ImageClient + live.swift */; };
+		188103AA2AE53ABD003EBE95 /* ImageLoadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152262AC96E3A00B8B8A4 /* AuthToken.swift */; };
 		18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */; };
@@ -183,6 +186,9 @@
 		1881039A2AE4FD59003EBE95 /* UserProfileCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileCore.swift; sourceTree = "<group>"; };
 		1881039C2AE4FEEE003EBE95 /* ChallengeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStatus.swift; sourceTree = "<group>"; };
 		1881039E2AE507B3003EBE95 /* URLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
+		188103A52AE539FD003EBE95 /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
+		188103A72AE53A65003EBE95 /* ImageClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageClient + live.swift"; sourceTree = "<group>"; };
+		188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadAPI.swift; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
 		18A152262AC96E3A00B8B8A4 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartForm.swift; sourceTree = "<group>"; };
@@ -393,11 +399,21 @@
 			path = UserProfileSection;
 			sourceTree = "<group>";
 		};
+		188103A42AE539F5003EBE95 /* ImageClient */ = {
+			isa = PBXGroup;
+			children = (
+				188103A52AE539FD003EBE95 /* ImageClient.swift */,
+				188103A72AE53A65003EBE95 /* ImageClient + live.swift */,
+			);
+			path = ImageClient;
+			sourceTree = "<group>";
+		};
 		18B437782AC170AA0026A71E /* API */ = {
 			isa = PBXGroup;
 			children = (
 				18B437792AC170B30026A71E /* AuthAPI.swift */,
 				181988B12ACE80840021214C /* ChallengeAPI.swift */,
+				188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -445,6 +461,7 @@
 		18F55C8F2ADD92D600DE50C4 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				188103A42AE539F5003EBE95 /* ImageClient */,
 				18F55C902ADD942200DE50C4 /* AuthClient */,
 				181988AA2ACE72200021214C /* ChallengeClient */,
 				18B4377B2AC17EC90026A71E /* KeyChainClient */,
@@ -722,6 +739,7 @@
 				1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */,
 				18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */,
 				18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */,
+				188103A62AE539FD003EBE95 /* ImageClient.swift in Sources */,
 				183169512ADBDAA20098638E /* EnterChallengeButtonCore.swift in Sources */,
 				183169532ADBDAC60098638E /* EnterChallengeInformationCore.swift in Sources */,
 				180FC68D2ABB12FC00DD8477 /* UIApplication + Extensions.swift in Sources */,
@@ -752,6 +770,7 @@
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */,
 				189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */,
+				188103A82AE53A65003EBE95 /* ImageClient + live.swift in Sources */,
 				18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */,
 				183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */,
 				18A1522F2AC97F9E00B8B8A4 /* MyPageCore.swift in Sources */,
@@ -778,6 +797,7 @@
 				183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */,
 				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
+				188103AA2AE53ABD003EBE95 /* ImageLoadAPI.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				1831694B2ADBD6DE0098638E /* IGOAlertCore.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,

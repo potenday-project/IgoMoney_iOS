@@ -29,6 +29,8 @@ struct URLImageCore: Reducer {
     case _fetchURLImageResponse(TaskResult<Image>)
   }
   
+  @Dependency(\.imageClient) var imageClient
+  
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .onAppear:
@@ -37,22 +39,19 @@ struct URLImageCore: Reducer {
       
     case .fetchURLImage:
       guard let path = state.urlPath, let url = URL(string: path) else {
-        state.loadingStatus = .failure
-        return .none
+        return .send(._fetchURLImageResponse(.failure(APIError.badRequest(400))))
       }
-      
+      print(#fileID, #function, #line, path)
       return .run { send in
         await send(
           ._fetchURLImageResponse(
             TaskResult {
-              let (imageData, _) = try await URLSession.shared.data(from: url)
-              
+              let imageData = try await imageClient.getImageData(url)
               guard let uiImage = UIImage(data: imageData) else {
                 throw APIError.badRequest(400)
               }
               
-              let image = Image(uiImage: uiImage)
-              return image
+              return Image(uiImage: uiImage)
             }
           )
         )
@@ -70,11 +69,7 @@ struct URLImageCore: Reducer {
 }
 
 struct URLImage: View {
-  var store: StoreOf<URLImageCore> {
-    didSet {
-      store.send(.onAppear)
-    }
-  }
+  var store: StoreOf<URLImageCore>
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
