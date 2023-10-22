@@ -13,7 +13,7 @@ struct MyChallengeSectionCore: Reducer {
     var userChallenge: ChallengeStatus = .notInChallenge
   }
   
-  enum Action {
+  enum Action: Equatable {
     case _onAppear
     case _myChallengeResponse(TaskResult<Challenge>)
   }

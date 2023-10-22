@@ -40,6 +40,8 @@ struct MyPageScene: View {
           action: MyPageCore.Action.userProfileAction
         )
       )
+      
+      Spacer()
     }
     .padding(.horizontal, 24)
     .padding(.vertical, 16)
