@@ -34,7 +34,12 @@ struct MyPageScene: View {
         }
       }
       
-      UserProfileSection()
+      UserProfileSection(
+        store: store.scope(
+          state: \.profileState,
+          action: MyPageCore.Action.userProfileAction
+        )
+      )
     }
     .padding(.horizontal, 24)
     .padding(.vertical, 16)
