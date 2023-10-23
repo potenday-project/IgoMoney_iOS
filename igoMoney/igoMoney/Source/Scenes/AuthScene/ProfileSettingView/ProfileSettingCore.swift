@@ -8,7 +8,8 @@ import ComposableArchitecture
 
 struct ProfileSettingCore: Reducer {
   struct State: Equatable {
-    var nickNameState = NickNameCheckDuplicateCore.State()
+    var profileImageState: URLImageCore.State
+    var nickNameState: NickNameCheckDuplicateCore.State
     var buttonEnable: Bool = false
   }
   
@@ -16,6 +17,7 @@ struct ProfileSettingCore: Reducer {
     case startChallenge
     // Child Action
     case nickNameDuplicateAction(NickNameCheckDuplicateCore.Action)
+    case profileImageAction(URLImageCore.Action)
   }
   
   @Dependency(\.userClient) var userClient
@@ -35,6 +37,9 @@ struct ProfileSettingCore: Reducer {
         return .none
         
       case .nickNameDuplicateAction:
+        return .none
+        
+      case .profileImageAction:
         return .none
       }
     }

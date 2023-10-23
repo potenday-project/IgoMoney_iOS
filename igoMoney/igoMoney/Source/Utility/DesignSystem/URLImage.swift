@@ -88,9 +88,6 @@ struct URLImage: View {
             .resizable()
         }
       }
-      .scaledToFit()
-      .frame(width: 65, height: 65)
-      .clipShape(Circle())
       .onChange(of: viewStore.state) { _ in
         viewStore.send(.onAppear)
       }

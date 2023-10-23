@@ -14,13 +14,15 @@ struct UserProfileSection: View {
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       HStack(spacing: 8) {
-        
         URLImage(
           store: store.scope(
             state: \.profileImageState,
             action: UserProfileCore.Action.profileImageAction
           )
         )
+        .scaledToFit()
+        .frame(width: 65, height: 65)
+        .clipShape(Circle())
         
         VStack(alignment: .leading) {
           Text(viewStore.userName)

@@ -9,16 +9,16 @@ import SwiftUI
 import ComposableArchitecture
 
 extension View {
-  func shareSheet(_ item: Binding<[Any]?>, onComplete: UIActivityViewController.CompletionWithItemsHandler? = nil) -> some View {
+  func shareSheet(_ item: Binding<[URL]?>, onComplete: UIActivityViewController.CompletionWithItemsHandler? = nil) -> some View {
     background(ShareSheet(item: item, completion: onComplete))
   }
 }
 
 private struct ShareSheet: UIViewControllerRepresentable {
-  @Binding var item: [Any]?
+  @Binding var item: [URL]?
   private var completion: UIActivityViewController.CompletionWithItemsHandler?
   
-  init(item: Binding<[Any]?>, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
+  init(item: Binding<[URL]?>, completion: UIActivityViewController.CompletionWithItemsHandler? = nil) {
     self._item = item
     self.completion = completion
   }
@@ -34,10 +34,10 @@ private struct ShareSheet: UIViewControllerRepresentable {
   }
   
   fileprivate final class ActivityViewController: UIViewController {
-    var item: Binding<[Any]?>
+    var item: Binding<[URL]?>
     var completion: UIActivityViewController.CompletionWithItemsHandler?
     
-    init(item: Binding<[Any]?>, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+    init(item: Binding<[URL]?>, completion: UIActivityViewController.CompletionWithItemsHandler?) {
       self.item = item
       self.completion = completion
       super.init(nibName: nil, bundle: nil)

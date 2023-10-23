@@ -35,20 +35,26 @@ struct ProfileSettingScene: View {
       Button {
         print("Tapped image Button")
       } label: {
-        Image("default_profile")
-          .resizable()
-          .frame(maxWidth: 90, maxHeight: 90)
-          .overlay(
-            Image("icon_camera")
-              .padding(6)
-              .foregroundColor(.white)
-              .background(
-                Circle()
-                  .fill(ColorConstants.primary)
-              )
-            ,
-            alignment: .bottomTrailing
+        URLImage(
+          store: self.store.scope(
+            state: \.profileImageState,
+            action: ProfileSettingCore.Action.profileImageAction
           )
+        )
+        .scaledToFit()
+        .frame(width: 90, height: 90)
+        .clipShape(Circle())
+        .overlay(
+          Image("icon_camera")
+            .padding(6)
+            .foregroundColor(.white)
+            .background(
+              Circle()
+                .fill(ColorConstants.primary)
+            )
+          ,
+          alignment: .bottomTrailing
+        )
       }
       .buttonStyle(.plain)
       
@@ -72,7 +78,7 @@ struct ProfileSettingScene: View {
 #Preview {
   ProfileSettingScene(
     store: Store(
-      initialState: ProfileSettingCore.State(),
+      initialState: ProfileSettingCore.State(profileImageState: .init(), nickNameState: .init()),
       reducer: { ProfileSettingCore() }
     )
   )

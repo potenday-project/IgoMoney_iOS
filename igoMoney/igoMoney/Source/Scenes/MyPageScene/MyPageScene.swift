@@ -49,19 +49,30 @@ struct MyPageScene: View {
       
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 24) {
-          NavigationLink {
-            ProfileSettingScene(
-              store: self.store.scope(
-                state: \.profileEditState,
-                action: MyPageCore.Action.profileEditAction
-              )
-            )
-          } label: {
-            UserProfileSection(
-              store: store.scope(
-                state: \.profileState,
-                action: MyPageCore.Action.userProfileAction
-              )
+          WithViewStore(store, observe: { $0 }) { viewStore in
+            NavigationLink(
+              destination: IfLetStore(
+                store.scope(
+                  state: \.profileEditState,
+                  action: MyPageCore.Action.profileEditAction
+                )
+              ) { store in
+                ProfileSettingScene(store: store)
+              } else: {
+                Text("no destination")
+              },
+              isActive: viewStore.binding(
+                get: \.presentProfileEdit,
+                send: MyPageCore.Action._presentProfileEdit
+              ),
+              label: {
+                UserProfileSection(
+                  store: store.scope(
+                    state: \.profileState,
+                    action: MyPageCore.Action.userProfileAction
+                  )
+                )
+              }
             )
           }
           .buttonStyle(.plain)

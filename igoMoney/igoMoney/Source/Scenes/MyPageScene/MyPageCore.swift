@@ -42,20 +42,13 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
 
 struct MyPageCore: Reducer {
   struct State: Equatable {
-    static func == (lhs: MyPageCore.State, rhs: MyPageCore.State) -> Bool {
-      return (lhs.profileState == rhs.profileState) &&
-      (lhs.settingState == rhs.settingState) &&
-      (lhs.shareItem?.count == rhs.shareItem?.count) &&
-      (lhs.showMail == rhs.showMail)
-    }
-    
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
     var settingState = SettingCore.State()
     var profileState = UserProfileCore.State()
-    var profileEditState = ProfileSettingCore.State()
+    var profileEditState: ProfileSettingCore.State?
     
     var presentProfileEdit: Bool = false
-    var shareItem: [Any]?
+    var shareItem: [URL]?
     var showMail: Bool = false
   }
   
@@ -63,7 +56,7 @@ struct MyPageCore: Reducer {
     case tapService(CustomerServiceType)
     case tapProfileEdit
     
-    case _presentShare([Any]?)
+    case _presentShare([URL]?)
     case _presentMail(Bool)
     case _presentProfileEdit(Bool)
     
@@ -107,13 +100,33 @@ struct MyPageCore: Reducer {
         state.showMail = isPresent
         return .none
         
-      case let ._presentProfileEdit(isPresent):
-        state.presentProfileEdit = isPresent
+      case ._presentProfileEdit(true):
+        let nickNameState = NickNameCheckDuplicateCore.State(
+          nickName: state.profileState.userName,
+          nickNameState: .completeConfirm
+        )
+        
+        let profileImageState = state.profileState.profileImageState
+        
+        state.profileEditState = ProfileSettingCore.State(
+          profileImageState: profileImageState,
+          nickNameState: nickNameState
+        )
+        
+        state.presentProfileEdit = true
+        return .none
+        
+      case ._presentProfileEdit(false):
+        state.profileEditState = nil
+        state.presentProfileEdit = false
         return .none
         
       default:
         return .none
       }
+    }
+    .ifLet(\.profileEditState, action: /Action.profileEditAction) {
+      ProfileSettingCore()
     }
     
     Scope(state: \.settingState, action: /Action.settingAction) {
@@ -122,10 +135,6 @@ struct MyPageCore: Reducer {
     
     Scope(state: \.profileState, action: /Action.userProfileAction) {
       UserProfileCore()
-    }
-    
-    Scope(state: \.profileEditState, action: /Action.profileEditAction) {
-      ProfileSettingCore()
     }
   }
 }

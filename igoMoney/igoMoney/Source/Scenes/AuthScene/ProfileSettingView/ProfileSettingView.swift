@@ -100,7 +100,10 @@ struct ProfileSettingView_Previews: PreviewProvider {
     NavigationView {
       ProfileInitialSettingScene(
         store: Store(
-          initialState: ProfileSettingCore.State(),
+          initialState: ProfileSettingCore.State(
+            profileImageState: .init(),
+            nickNameState: .init()
+          ),
           reducer: { ProfileSettingCore() }
         )
       )

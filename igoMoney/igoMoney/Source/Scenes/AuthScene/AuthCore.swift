@@ -127,7 +127,10 @@ struct AuthCore: Reducer {
           return .none
         }
         
-        state.profileSettingState = ProfileSettingCore.State()
+        state.profileSettingState = ProfileSettingCore.State(
+          profileImageState: .init(),
+          nickNameState: .init()
+        )
         return .none
         
       case let ._authTokenResponse(.success(token)):
