@@ -54,31 +54,17 @@ struct ProfileSettingScene: View {
       
       InputHeaderView(title: "닉네임", detail: "최소 3자 / 최대 8자")
       
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        InputFormView(
-          placeholder: "",
-          viewStore: viewStore
+      NickNameInputView(
+        placeholder: "",
+        store: self.store.scope(
+          state: \.nickNameState,
+          action: ProfileSettingCore.Action.nickNameDuplicateAction
         )
-      }
-      
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        HStack {
-          Text(viewStore.nickNameState.description)
-            .font(.system(size: 12, weight: .medium))
-            .foregroundColor(
-              viewStore.nickNameState == .duplicateNickName ? Color.red : .black
-            )
-          
-          Spacer()
-        }
-      }
+      )
       
       Spacer()
     }
     .padding(.horizontal, 24)
-    .onTapGesture {
-      UIApplication.shared.hideKeyboard()
-    }
     .navigationBarHidden(true)
   }
 }
