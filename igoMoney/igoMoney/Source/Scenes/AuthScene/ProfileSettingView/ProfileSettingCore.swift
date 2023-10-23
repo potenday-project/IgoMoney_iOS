@@ -8,7 +8,6 @@ import ComposableArchitecture
 
 struct ProfileSettingCore: Reducer {
   struct State: Equatable {
-//    var userID: String
     var nickName: String = ""
     var nickNameState: ConfirmState = .disableConfirm
   }

@@ -8,7 +8,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct ProfileSettingView: View {
+struct ProfileInitialSettingScene: View {
   let store: StoreOf<ProfileSettingCore>
   
   var body: some View {
@@ -143,6 +143,13 @@ struct InputFormView: View {
     .padding(12)
     .background(ColorConstants.primary7)
     .cornerRadius(8)
+    .overlay(
+      RoundedRectangle(cornerRadius: 8)
+        .stroke(
+          viewStore.nickNameState == .disableConfirm ?
+          ColorConstants.gray5 : ColorConstants.primary
+        )
+    )
   }
   
 }
@@ -150,9 +157,9 @@ struct InputFormView: View {
 struct ProfileSettingView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      ProfileSettingView(
+      ProfileInitialSettingScene(
         store: Store(
-          initialState: ProfileSettingCore.State(userID: "1"),
+          initialState: ProfileSettingCore.State(),
           reducer: { ProfileSettingCore() }
         )
       )
@@ -160,7 +167,7 @@ struct ProfileSettingView_Previews: PreviewProvider {
   }
 }
 
-private extension ProfileSettingView {
+private extension ProfileInitialSettingScene {
   enum TextConstants {
     static let nickNameTitle = "반가워요!\n닉네임을 설정해주세요."
     static let nickName = "닉네임"

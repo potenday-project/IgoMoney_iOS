@@ -123,8 +123,11 @@ struct AuthCore: Reducer {
         // Inner Action
         
       case ._setNavigationIsActive:
-        guard let userID = state.currentUser?.userID else { return .none }
-        state.profileSettingState = ProfileSettingCore.State(userID: userID.description)
+        if state.currentUser?.userID == nil {
+          return .none
+        }
+        
+        state.profileSettingState = ProfileSettingCore.State()
         return .none
         
       case let ._authTokenResponse(.success(token)):

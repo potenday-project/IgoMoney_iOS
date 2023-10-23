@@ -9,6 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProfileSettingScene: View {
+  let store: StoreOf<ProfileSettingCore>
+  
   var body: some View {
     VStack(alignment: .center) {
       IGONavigationBar {
@@ -28,7 +30,7 @@ struct ProfileSettingScene: View {
         .font(.pretendard(size: 16, weight: .bold))
       }
       .buttonStyle(.plain)
-      .padding(24)
+      .padding(.vertical, 24)
       
       Button {
         print("Tapped image Button")
@@ -50,16 +52,41 @@ struct ProfileSettingScene: View {
       }
       .buttonStyle(.plain)
       
-//      InputFormView(
-//        placeholder: "",
-//        viewStore: <#T##ViewStoreOf<ProfileSettingCore>#>
-//      )
+      InputHeaderView(title: "닉네임", detail: "최소 3자 / 최대 8자")
+      
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        InputFormView(
+          placeholder: "",
+          viewStore: viewStore
+        )
+      }
+      
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        HStack {
+          Text(viewStore.nickNameState.description)
+            .font(.system(size: 12, weight: .medium))
+            .foregroundColor(
+              viewStore.nickNameState == .duplicateNickName ? Color.red : .black
+            )
+          
+          Spacer()
+        }
+      }
       
       Spacer()
+    }
+    .padding(.horizontal, 24)
+    .onTapGesture {
+      UIApplication.shared.hideKeyboard()
     }
   }
 }
 
 #Preview {
-  ProfileSettingScene()
+  ProfileSettingScene(
+    store: Store(
+      initialState: ProfileSettingCore.State(),
+      reducer: { ProfileSettingCore() }
+    )
+  )
 }

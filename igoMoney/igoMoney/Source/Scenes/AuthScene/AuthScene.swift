@@ -23,7 +23,7 @@ struct AuthScene: View {
                 action: AuthCore.Action.profileSettingAction
               )
             ) { store in
-              ProfileSettingView(store: store)
+              ProfileInitialSettingScene(store: store)
             },
             isActive: viewStore.binding(
               get: \.showProfileSetting,
