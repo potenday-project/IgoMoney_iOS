@@ -43,6 +43,7 @@
 		183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169562ADBDB200098638E /* ChallengeInformationCardView.swift */; };
 		183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */; };
 		183C7EB02AE569FC0054F9D3 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */; };
+		183C7EB22AE578700054F9D3 /* EmailSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C7EB12AE578700054F9D3 /* EmailSendView.swift */; };
 		183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */; };
 		183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D32AD836560041FB69 /* View + Extensions.swift */; };
 		183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */; };
@@ -148,6 +149,7 @@
 		183169562ADBDB200098638E /* ChallengeInformationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformationCardView.swift; sourceTree = "<group>"; };
 		183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeNoticeView.swift; sourceTree = "<group>"; };
 		183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		183C7EB12AE578700054F9D3 /* EmailSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendView.swift; sourceTree = "<group>"; };
 		183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183DF7D32AD836560041FB69 /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
 		183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBottomSheetView.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				187252CA2ABC081F00DCF08C /* IGORoundTabBar.swift */,
 				1881039E2AE507B3003EBE95 /* URLImage.swift */,
 				183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */,
+				183C7EB12AE578700054F9D3 /* EmailSendView.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
 				185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */,
+				183C7EB22AE578700054F9D3 /* EmailSendView.swift in Sources */,
 				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
 				18CD8F2D2AB995F5006FEA6F /* AgreeTermsCore.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,

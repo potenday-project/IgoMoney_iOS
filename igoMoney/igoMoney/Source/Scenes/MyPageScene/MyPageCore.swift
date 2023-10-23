@@ -45,7 +45,8 @@ struct MyPageCore: Reducer {
     static func == (lhs: MyPageCore.State, rhs: MyPageCore.State) -> Bool {
       return (lhs.profileState == rhs.profileState) &&
       (lhs.settingState == rhs.settingState) &&
-      (lhs.shareItem?.count == rhs.shareItem?.count)
+      (lhs.shareItem?.count == rhs.shareItem?.count) &&
+      (lhs.showMail == rhs.showMail)
     }
     
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
@@ -53,6 +54,7 @@ struct MyPageCore: Reducer {
     var profileState = UserProfileCore.State()
     
     var shareItem: [Any]?
+    var showMail: Bool = false
   }
   
   enum Action {
@@ -61,6 +63,7 @@ struct MyPageCore: Reducer {
     case tapService(CustomerServiceType)
     
     case _presentShare([Any]?)
+    case _presentMail(Bool)
   }
   
   @Dependency(\.openURL) var openURL
@@ -78,12 +81,21 @@ struct MyPageCore: Reducer {
             return .send(._presentShare(nil))
           }
           return .send(._presentShare([appStoreURL]))
+          
+        case .inquiry:
+          state.showMail = true
+          return .none
+          
         default:
           return .none
         }
         
       case ._presentShare(let item):
         state.shareItem = item
+        return .none
+        
+      case let ._presentMail(isPresent):
+        state.showMail = isPresent
         return .none
         
       default:

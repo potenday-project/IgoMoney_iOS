@@ -7,6 +7,7 @@
 import SwiftUI
 
 import ComposableArchitecture
+import MessageUI
 
 struct MyPageScene: View {
   let store: StoreOf<MyPageCore>
@@ -80,6 +81,15 @@ struct MyPageScene: View {
       ViewStore(store, observe: { $0 })
         .binding(get: \.shareItem, send: MyPageCore.Action._presentShare)
     )
+    .sheet(
+      isPresented: ViewStore(store, observe: { $0 })
+        .binding(
+          get: \.showMail,
+          send: MyPageCore.Action._presentMail
+        )
+    ) {
+      EmailSendView()
+    }
   }
 }
 
@@ -110,6 +120,11 @@ struct CustomServiceSection: View {
                 return
               }
               openURL.callAsFunction(url)
+              return
+            }
+            
+            if service == .inquiry && MFMailComposeViewController.canSendMail() {
+              viewStore.send(.tapService(service))
               return
             }
             
