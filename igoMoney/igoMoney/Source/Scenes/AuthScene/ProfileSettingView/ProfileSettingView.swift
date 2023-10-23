@@ -42,7 +42,7 @@ struct ProfileInitialSettingScene: View {
       // Start Challenge Button
       WithViewStore(store, observe: { $0 }) { viewStore in
         Button {
-          viewStore.send(.startChallenge)
+          viewStore.send(.complete)
         } label: {
           HStack {
             Spacer()

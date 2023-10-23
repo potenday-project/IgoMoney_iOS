@@ -25,7 +25,7 @@ struct ProfileSettingScene: View {
         .font(.pretendard(size: 16, weight: .bold))
       } rightView: {
         Button("수정") {
-          
+          store.send(.complete)
         }
         .font(.pretendard(size: 16, weight: .bold))
       }

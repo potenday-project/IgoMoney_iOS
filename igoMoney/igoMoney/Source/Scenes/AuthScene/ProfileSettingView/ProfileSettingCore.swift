@@ -19,11 +19,16 @@ struct ProfileSettingCore: Reducer {
   }
   
   enum Action: Equatable {
-    case startChallenge
+    case complete
     case presentPhotoPicker(Bool)
     case selectImage(UIImage?)
     
     case _updateProfileImageState(Image)
+    
+    case _uploadProfileImage
+    case _uploadNickName
+    case _uploadProfileImageResponse(TaskResult<[String: String]>)
+    case _uploadNickNameResponse(TaskResult<Bool>)
     
     // Child Action
     case nickNameDuplicateAction(NickNameCheckDuplicateCore.Action)
@@ -31,6 +36,7 @@ struct ProfileSettingCore: Reducer {
   }
   
   @Dependency(\.userClient) var userClient
+  @Dependency(\.imageClient) var imageClient
   
   var body: some Reducer<State, Action> {
     Scope(state: \.nickNameState, action: /Action.nickNameDuplicateAction) {
@@ -39,8 +45,8 @@ struct ProfileSettingCore: Reducer {
     
     Reduce { state, action in
       switch action {
-      case .startChallenge:
-        return .none
+      case .complete:
+        return .send(._uploadProfileImage)
         
       case .presentPhotoPicker(let isPresent):
         state.presentPhotoPicker = isPresent
@@ -51,12 +57,57 @@ struct ProfileSettingCore: Reducer {
           return .none
         }
         
+        state.selectedImage = image
         let image = Image(uiImage: uiImage)
         return .send(._updateProfileImageState(image))
         
       case ._updateProfileImageState(let image):
         state.profileImageState.loadingStatus = .success(image)
         return .none
+        
+      case ._uploadProfileImage:
+        guard let selectedImageData = state.selectedImage?.pngData() else {
+          return .send(._uploadNickName)
+        }
+        return .run { send in
+          await send(
+            ._uploadProfileImageResponse(
+              TaskResult {
+                try await imageClient.updateImageData(selectedImageData)
+              }
+            )
+          )
+        }
+        
+      case ._uploadNickName:
+        if state.nickNameState.nickName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+          return .none
+        }
+        
+        return .run { [state] send in
+          await send(
+            ._uploadNickNameResponse(
+              TaskResult {
+                try await userClient.updateUserInformation(state.nickNameState.nickName)
+              }
+            )
+          )
+        }
+        
+      case ._uploadProfileImageResponse(.success(let data)):
+        print(data)
+        return .none
+        
+      case ._uploadProfileImageResponse(.failure):
+        return .none
+        
+      case ._uploadNickNameResponse(.success):
+        print("Upload NickName Success")
+        return .none
+        
+      case ._uploadNickNameResponse(.failure):
+        print("Upload NickName failure")
+        return .none        
         
       case .nickNameDuplicateAction(._checkNickNameResponse(.success)):
         state.buttonEnable = true

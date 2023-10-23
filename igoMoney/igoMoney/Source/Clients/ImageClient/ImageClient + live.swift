@@ -14,12 +14,29 @@ extension ImageClient {
     let response = try await APIClient.execute(to: api)
     return response
   } updateImageData: { data in
+    
+    guard let tokenInformation: AuthToken = try KeyChainClient.read(
+      .token,
+      SystemConfigConstants.tokenService
+    ).toDecodable() else {
+      throw APIError.badRequest(400)
+    }
+    
+    let boundary = "Boundary_\(UUID().uuidString)"
+    
     let api = ImageLoadAPI(
-      method: .post,
+      method: .patch,
       path: "/users",
+      header: [
+        "Content-Type": "multipart/form-data; boundary=\(boundary)"
+      ],
       body: .multipart(
-        boundary: UUID().uuidString,
-        values: ["profile": .image(data)]
+        boundary: boundary,
+        values: [
+          "id": .text(tokenInformation.userID.description),
+          "image": .image(data),
+          "imageChanged": .text("1")
+        ]
       )
     )
     
