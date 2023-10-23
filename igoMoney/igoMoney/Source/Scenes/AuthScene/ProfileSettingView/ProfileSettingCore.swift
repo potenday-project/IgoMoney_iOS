@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct ProfileSettingCore: Reducer {
   struct State: Equatable {
-    var userID: String
+//    var userID: String
     var nickName: String = ""
     var nickNameState: ConfirmState = .disableConfirm
   }
@@ -47,7 +47,7 @@ struct ProfileSettingCore: Reducer {
         await send(
           ._updateNickNameResponse(
             TaskResult {
-              try await userClient.updateUserInformation(state.userID, state.nickName)
+              try await userClient.updateUserInformation(state.nickName)
             }
           )
         )

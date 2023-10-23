@@ -17,7 +17,11 @@ extension UserClient {
       header: [:]
     )
     return try await APIClient.execute(to: api).isEmpty
-  } updateUserInformation: { userID, nickName in
+  } updateUserInformation: { nickName in
+    guard let userID = APIClient.currentUser?.userID.description else {
+      throw APIError.badRequest(400)
+    }
+    
     let boundary = "Boundary_\(UUID().uuidString)"
     let api = AuthAPI(
       method: .patch,

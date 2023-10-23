@@ -52,18 +52,23 @@ struct MyPageCore: Reducer {
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
     var settingState = SettingCore.State()
     var profileState = UserProfileCore.State()
+    var profileEditState = ProfileSettingCore.State()
     
+    var presentProfileEdit: Bool = false
     var shareItem: [Any]?
     var showMail: Bool = false
   }
   
   enum Action {
-    case settingAction(SettingCore.Action)
-    case userProfileAction(UserProfileCore.Action)
     case tapService(CustomerServiceType)
+    case tapProfileEdit
     
     case _presentShare([Any]?)
     case _presentMail(Bool)
+    case _presentProfileEdit(Bool)
+    
+    case settingAction(SettingCore.Action)
+    case userProfileAction(UserProfileCore.Action)
   }
   
   @Dependency(\.openURL) var openURL
@@ -73,6 +78,9 @@ struct MyPageCore: Reducer {
       switch action {
       case .userProfileAction:
         return .none
+        
+      case .tapProfileEdit:
+        return .send(._presentProfileEdit(true))
         
       case .tapService(let service):
         switch service {
@@ -96,6 +104,10 @@ struct MyPageCore: Reducer {
         
       case let ._presentMail(isPresent):
         state.showMail = isPresent
+        return .none
+        
+      case let ._presentProfileEdit(isPresent):
+        state.presentProfileEdit = isPresent
         return .none
         
       default:
