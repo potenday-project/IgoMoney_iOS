@@ -7,7 +7,7 @@
 import Foundation
 
 struct ImageLoadAPI: RequestGenerator {
-  var baseURL: String
+  var baseURL: String = "http://223.130.133.71:8080"
   var method: HTTPMethod
   var path: String = ""
   var query: [String : Any] = [:]

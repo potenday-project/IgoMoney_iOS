@@ -7,8 +7,13 @@
 import Foundation
 
 struct MultipartForm {
+  enum FormData {
+    case text(String)
+    case image(Data)
+  }
+  
   let boundary: String
-  var values: [String: String]
+  var values: [String: FormData]
 }
 
 extension MultipartForm {
@@ -16,21 +21,29 @@ extension MultipartForm {
     var data = Data()
     
     values.forEach { (key, value) in
-      guard let boundaryData = "--\(boundary)\r\n".data(using: .utf8),
-            let contentType = "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8),
-            let contentData = (value + "\r\n").data(using: .utf8) else {
-        return
-      }
+      data.appendString(to: "--\(boundary)\r\n")
       
-      data.append(boundaryData)
-      data.append(contentType)
-      data.append(contentData)
+      switch value {
+      case .text(let text):
+        data.appendString(to: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+        data.appendString(to: "\(text)\r\n")
+      case .image(let imageData):
+        data.appendString(to: "Content-Disposition: form-data; name=\"file\"; filename=\"\(key)\"\r\n")
+        data.appendString(to: "Content-Type: image/png\r\n\r\n")
+        data.append(imageData)
+        data.appendString(to: "\r\n")
+      }
     }
     
-    guard let endData = "--\(boundary)--\r\n".data(using: .utf8) else {
-      return Data()
-    }
-    data.append(endData)
+    data.appendString(to: "--\(boundary)--\r\n")
     return data
+  }
+}
+
+extension Data {
+  mutating func appendString(to value: String) {
+    if let data = value.data(using: .utf8) {
+      self.append(data)
+    }
   }
 }

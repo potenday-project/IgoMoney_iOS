@@ -13,5 +13,17 @@ extension ImageClient {
     let api = URLRequest(url: url)
     let response = try await APIClient.execute(to: api)
     return response
+  } updateImageData: { data in
+    let api = ImageLoadAPI(
+      method: .post,
+      path: "/users",
+      body: .multipart(
+        boundary: UUID().uuidString,
+        values: ["profile": .image(data)]
+      )
+    )
+    
+    let response: [String: String] = try await APIClient.request(to: api)
+    return response
   }
 }
