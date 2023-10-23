@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import SwiftUI
+import PhotosUI
 
 import ComposableArchitecture
 
@@ -31,16 +32,14 @@ struct ProfileSettingScene: View {
       .buttonStyle(.plain)
       .padding(.vertical, 24)
       
-      Button {
-        print("Tapped image Button")
-      } label: {
+      WithViewStore(store, observe: { $0 }) { viewStore in
         URLImage(
           store: self.store.scope(
             state: \.profileImageState,
             action: ProfileSettingCore.Action.profileImageAction
           )
         )
-        .scaledToFit()
+        .scaledToFill()
         .frame(width: 90, height: 90)
         .clipShape(Circle())
         .overlay(
@@ -54,8 +53,24 @@ struct ProfileSettingScene: View {
           ,
           alignment: .bottomTrailing
         )
+        .onTapGesture {
+          viewStore.send(.presentPhotoPicker(true))
+        }
+        .sheet(
+          isPresented: viewStore.binding(
+            get: \.presentPhotoPicker,
+            send: ProfileSettingCore.Action.presentPhotoPicker
+          )
+        ) {
+          IGOPhotoPicker(
+            selectedImage: viewStore.binding(
+              get: \.selectedImage,
+              send: ProfileSettingCore.Action.selectImage
+            ),
+            configuration: .init(photoLibrary: .shared())
+          )
+        }
       }
-      .buttonStyle(.plain)
       
       InputHeaderView(title: "닉네임", detail: "최소 3자 / 최대 8자")
       

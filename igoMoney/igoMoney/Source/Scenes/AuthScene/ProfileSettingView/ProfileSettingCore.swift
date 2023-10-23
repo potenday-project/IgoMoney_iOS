@@ -4,6 +4,8 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import SwiftUI
+
 import ComposableArchitecture
 
 struct ProfileSettingCore: Reducer {
@@ -11,10 +13,18 @@ struct ProfileSettingCore: Reducer {
     var profileImageState: URLImageCore.State
     var nickNameState: NickNameCheckDuplicateCore.State
     var buttonEnable: Bool = false
+    
+    var presentPhotoPicker: Bool = false
+    var selectedImage: UIImage?
   }
   
   enum Action: Equatable {
     case startChallenge
+    case presentPhotoPicker(Bool)
+    case selectImage(UIImage?)
+    
+    case _updateProfileImageState(Image)
+    
     // Child Action
     case nickNameDuplicateAction(NickNameCheckDuplicateCore.Action)
     case profileImageAction(URLImageCore.Action)
@@ -30,6 +40,22 @@ struct ProfileSettingCore: Reducer {
     Reduce { state, action in
       switch action {
       case .startChallenge:
+        return .none
+        
+      case .presentPhotoPicker(let isPresent):
+        state.presentPhotoPicker = isPresent
+        return .none
+        
+      case .selectImage(let image):
+        guard let uiImage = image else {
+          return .none
+        }
+        
+        let image = Image(uiImage: uiImage)
+        return .send(._updateProfileImageState(image))
+        
+      case ._updateProfileImageState(let image):
+        state.profileImageState.loadingStatus = .success(image)
         return .none
         
       case .nickNameDuplicateAction(._checkNickNameResponse(.success)):

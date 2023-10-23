@@ -112,6 +112,7 @@
 		18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332192AE69F6E008C415E /* NickNameInputView.swift */; };
 		18F3321C2AE69F99008C415E /* NickNameCheckDuplicateCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */; };
 		18F3321E2AE6A1F5008C415E /* ProfileEditCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321D2AE6A1F5008C415E /* ProfileEditCore.swift */; };
+		18F332202AE6ABD0008C415E /* IGOPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321F2AE6ABD0008C415E /* IGOPhotoPicker.swift */; };
 		18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C912ADD942800DE50C4 /* AuthClient.swift */; };
 		18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */; };
 		18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */; };
@@ -222,6 +223,7 @@
 		18F332192AE69F6E008C415E /* NickNameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameInputView.swift; sourceTree = "<group>"; };
 		18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameCheckDuplicateCore.swift; sourceTree = "<group>"; };
 		18F3321D2AE6A1F5008C415E /* ProfileEditCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCore.swift; sourceTree = "<group>"; };
+		18F3321F2AE6ABD0008C415E /* IGOPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOPhotoPicker.swift; sourceTree = "<group>"; };
 		18F55C912ADD942800DE50C4 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthClient + live.swift"; sourceTree = "<group>"; };
 		18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterSection.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				1881039E2AE507B3003EBE95 /* URLImage.swift */,
 				183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */,
 				183C7EB12AE578700054F9D3 /* EmailSendView.swift */,
+				18F3321F2AE6ABD0008C415E /* IGOPhotoPicker.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -786,6 +789,7 @@
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
+				18F332202AE6ABD0008C415E /* IGOPhotoPicker.swift in Sources */,
 				185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */,
 				183C7EB22AE578700054F9D3 /* EmailSendView.swift in Sources */,
 				1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */,
