@@ -18,7 +18,6 @@ struct ProfileSettingScene: View {
           .font(.pretendard(size: 20, weight: .bold))
       } leftView: {
         Button {
-          
         } label: {
           Image(systemName: "chevron.backward")
         }
@@ -70,8 +69,12 @@ struct ProfileSettingScene: View {
       
       Spacer()
     }
-    .padding(.horizontal, 24)
     .navigationBarHidden(true)
+    .padding(.horizontal, 24)
+    .contentShape(Rectangle())
+    .onTapGesture {
+      UIApplication.shared.hideKeyboard()
+    }
   }
 }
 
