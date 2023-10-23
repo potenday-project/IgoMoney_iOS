@@ -79,6 +79,7 @@ struct ProfileSettingScene: View {
     .onTapGesture {
       UIApplication.shared.hideKeyboard()
     }
+    .navigationBarHidden(true)
   }
 }
 

@@ -69,6 +69,7 @@ struct MyPageCore: Reducer {
     
     case settingAction(SettingCore.Action)
     case userProfileAction(UserProfileCore.Action)
+    case profileEditAction(ProfileSettingCore.Action)
   }
   
   @Dependency(\.openURL) var openURL
@@ -121,6 +122,10 @@ struct MyPageCore: Reducer {
     
     Scope(state: \.profileState, action: /Action.userProfileAction) {
       UserProfileCore()
+    }
+    
+    Scope(state: \.profileEditState, action: /Action.profileEditAction) {
+      ProfileSettingCore()
     }
   }
 }

@@ -49,12 +49,22 @@ struct MyPageScene: View {
       
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 24) {
-          UserProfileSection(
-            store: store.scope(
-              state: \.profileState,
-              action: MyPageCore.Action.userProfileAction
+          NavigationLink {
+            ProfileSettingScene(
+              store: self.store.scope(
+                state: \.profileEditState,
+                action: MyPageCore.Action.profileEditAction
+              )
             )
-          )
+          } label: {
+            UserProfileSection(
+              store: store.scope(
+                state: \.profileState,
+                action: MyPageCore.Action.userProfileAction
+              )
+            )
+          }
+          .buttonStyle(.plain)
           
           VStack(spacing: 12) {
             Section(header: sectionHeaderView(title: "챌린지 현황")) {
