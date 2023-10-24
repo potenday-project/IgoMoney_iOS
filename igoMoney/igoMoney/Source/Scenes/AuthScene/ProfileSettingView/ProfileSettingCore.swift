@@ -69,11 +69,13 @@ struct ProfileSettingCore: Reducer {
         guard let selectedImageData = state.selectedImage?.pngData() else {
           return .send(._uploadNickName)
         }
+        let nickName = state.nickNameState.nickName
+        
         return .run { send in
           await send(
             ._uploadProfileImageResponse(
               TaskResult {
-                try await imageClient.updateImageData(selectedImageData)
+                try await imageClient.updateImageData(nickName, selectedImageData)
               }
             )
           )

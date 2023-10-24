@@ -13,8 +13,7 @@ extension ImageClient {
     let api = URLRequest(url: url)
     let response = try await APIClient.execute(to: api)
     return response
-  } updateImageData: { data in
-    
+  } updateImageData: { nickName, data in
     guard let tokenInformation: AuthToken = try KeyChainClient.read(
       .token,
       SystemConfigConstants.tokenService
@@ -34,6 +33,7 @@ extension ImageClient {
         boundary: boundary,
         values: [
           "id": .text(tokenInformation.userID.description),
+          "nickname": .text(nickName),
           "image": .image(data),
           "imageChanged": .text("1")
         ]
