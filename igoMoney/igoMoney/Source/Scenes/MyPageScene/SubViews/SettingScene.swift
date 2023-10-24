@@ -11,6 +11,18 @@ import ComposableArchitecture
 struct SettingScene: View {
   let store: StoreOf<SettingCore>
   
+  @ViewBuilder
+  private func SettingButton(with settingType: SettingButtonType) -> some View {
+    switch settingType {
+    case .general:
+      <#code#>
+    case .toggle:
+      <#code#>
+    case .text:
+      <#code#>
+    }
+  }
+  
   var body: some View {
     VStack {
       IGONavigationBar {
@@ -24,45 +36,53 @@ struct SettingScene: View {
             .resizable()
             .frame(width: 12, height: 20)
         }
-        .foregroundColor(ColorConstants.gray4)
       } rightView: {
         EmptyView()
       }
+      .buttonStyle(.plain)
       
-      WithViewStore(store, observe: \.settings) { viewStore in
-        ScrollView {
-          ForEach(viewStore.state, id: \.rawValue) { setting in
+      ScrollView(.vertical, showsIndicators: false) {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          ForEach(viewStore.settings, id: \.rawValue) { setting in
             Button {
-              doingAction(to: viewStore, for: setting)
+              
             } label: {
-              HStack {
-                Text(setting.description)
-                
-                Spacer()
+              GeneralSettingCell(setting: setting) {
+                Image(systemName: "chevron.right")
               }
-              .foregroundColor(setting.color)
             }
-            .padding()
-            .font(.pretendard(size: 16, weight: .semiBold))
+            .padding(.vertical, 16)
+            .buttonStyle(.plain)
           }
         }
       }
     }
+    .navigationBarHidden(true)
     .padding(.horizontal, 24)
     .padding(.vertical, 16)
   }
+}
+
+struct GeneralSettingCell<Content: View>: View {
+  let setting: Setting
+  let content: () -> Content
   
-  private func doingAction(
-    to viewStore: ViewStore<[Setting], SettingCore.Action>,
-    for actionType: Setting
-  ) {
-    switch actionType {
-    case .logOut:
-      viewStore.send(.signOut)
-    case .withdraw:
-      viewStore.send(.withdraw)
-    default:
-      return
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      HStack {
+        Text(setting.title)
+          .font(.pretendard(size: 18, weight: .bold))
+        
+        Spacer()
+        
+        content()
+      }
+      
+      if let subTitle = setting.subTitle {
+        Text(subTitle)
+          .font(.pretendard(size: 12, weight: .medium))
+          .foregroundColor(ColorConstants.gray3)
+      }
     }
   }
 }
