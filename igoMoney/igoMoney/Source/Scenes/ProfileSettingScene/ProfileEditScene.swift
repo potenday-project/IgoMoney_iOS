@@ -12,6 +12,13 @@ import ComposableArchitecture
 struct ProfileSettingScene: View {
   let store: StoreOf<ProfileSettingCore>
   
+  private let imagePickerConfiguration: PHPickerConfiguration = {
+    var configuration = PHPickerConfiguration(photoLibrary: .shared())
+    configuration.filter = .images
+    configuration.preferredAssetRepresentationMode = .compatible
+    return configuration
+  }()
+  
   var body: some View {
     VStack(alignment: .center) {
       IGONavigationBar {
@@ -67,7 +74,7 @@ struct ProfileSettingScene: View {
               get: \.selectedImage,
               send: ProfileSettingCore.Action.selectImage
             ),
-            configuration: .init(photoLibrary: .shared())
+            configuration: imagePickerConfiguration
           )
         }
       }

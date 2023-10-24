@@ -11,18 +11,6 @@ import ComposableArchitecture
 struct SettingScene: View {
   let store: StoreOf<SettingCore>
   
-  @ViewBuilder
-  private func SettingButton(with settingType: SettingButtonType) -> some View {
-    switch settingType {
-    case .general:
-      <#code#>
-    case .toggle:
-      <#code#>
-    case .text:
-      <#code#>
-    }
-  }
-  
   var body: some View {
     VStack {
       IGONavigationBar {
@@ -47,9 +35,18 @@ struct SettingScene: View {
             Button {
               
             } label: {
-              GeneralSettingCell(setting: setting) {
-                Image(systemName: "chevron.right")
-              }
+//              GeneralSettingCell(setting: setting) {
+//                switch setting.buttonType {
+//                case .general:
+//                  Image(systemName: "chevron.right")
+//                  
+//                case .toggle:
+//                  Text("토글 구현하기")
+//                  
+//                case .text:
+//                  Text("")
+//                }
+//              }
             }
             .padding(.vertical, 16)
             .buttonStyle(.plain)

@@ -32,6 +32,7 @@ struct IGOPhotoPicker: UIViewControllerRepresentable {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
       picker.dismiss(animated: true)
+      
       guard let imageAsset = results.first else { return }
       
       if imageAsset.itemProvider.canLoadObject(ofClass: UIImage.self) {
@@ -43,7 +44,7 @@ struct IGOPhotoPicker: UIViewControllerRepresentable {
           guard let image = image as? UIImage else { return }
           
           DispatchQueue.main.async {
-            self?.parent.$selectedImage.wrappedValue = image
+            self?.parent.$selectedImage.wrappedValue = image.resize(to: 100)
           }
         }
       }

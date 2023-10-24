@@ -86,6 +86,7 @@
 		188103A62AE539FD003EBE95 /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A52AE539FD003EBE95 /* ImageClient.swift */; };
 		188103A82AE53A65003EBE95 /* ImageClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A72AE53A65003EBE95 /* ImageClient + live.swift */; };
 		188103AA2AE53ABD003EBE95 /* ImageLoadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */; };
+		1882632A2AE7BD6000100D53 /* UIImage + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188263292AE7BD6000100D53 /* UIImage + Extensions.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152262AC96E3A00B8B8A4 /* AuthToken.swift */; };
 		18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */; };
@@ -198,6 +199,7 @@
 		188103A52AE539FD003EBE95 /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
 		188103A72AE53A65003EBE95 /* ImageClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageClient + live.swift"; sourceTree = "<group>"; };
 		188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadAPI.swift; sourceTree = "<group>"; };
+		188263292AE7BD6000100D53 /* UIImage + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extensions.swift"; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
 		18A152262AC96E3A00B8B8A4 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartForm.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				18599A422ABC12FF0075DE76 /* RoundedCorner.swift */,
 				183DF7D32AD836560041FB69 /* View + Extensions.swift */,
 				18599A702ABC505A0075DE76 /* Font + Extensions.swift */,
+				188263292AE7BD6000100D53 /* UIImage + Extensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -789,6 +792,7 @@
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
+				1882632A2AE7BD6000100D53 /* UIImage + Extensions.swift in Sources */,
 				18F332202AE6ABD0008C415E /* IGOPhotoPicker.swift in Sources */,
 				185CF48B2ABF40E500B72237 /* LineHeight.swift in Sources */,
 				183C7EB22AE578700054F9D3 /* EmailSendView.swift in Sources */,
