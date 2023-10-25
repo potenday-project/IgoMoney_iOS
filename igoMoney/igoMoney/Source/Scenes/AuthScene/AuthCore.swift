@@ -129,7 +129,8 @@ struct AuthCore: Reducer {
         
         state.profileSettingState = ProfileSettingCore.State(
           profileImageState: .init(),
-          nickNameState: .init()
+          nickNameState: .init(), 
+          originNickName: ""
         )
         return .none
         

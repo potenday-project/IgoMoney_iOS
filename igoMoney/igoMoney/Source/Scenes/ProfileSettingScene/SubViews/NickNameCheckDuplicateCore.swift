@@ -46,7 +46,7 @@ struct NickNameCheckDuplicateCore: Reducer {
         await send(
           ._updateNickNameResponse(
             TaskResult {
-              try await userClient.updateUserInformation(state.nickName)
+              try await userClient.updateUserInformation(state.nickName, nil)
             }
           )
         )

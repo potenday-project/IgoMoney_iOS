@@ -10,7 +10,6 @@ import Dependencies
 
 struct ImageClient {
   var getImageData: @Sendable (_ url: URL) async throws -> Data
-  var updateImageData: @Sendable (_ data: Data) async throws -> [String: String]
 }
 
 extension ImageClient: DependencyKey { }

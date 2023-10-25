@@ -42,7 +42,7 @@ struct ProfileInitialSettingScene: View {
       // Start Challenge Button
       WithViewStore(store, observe: { $0 }) { viewStore in
         Button {
-          viewStore.send(.complete)
+          viewStore.send(.updateProfile)
         } label: {
           HStack {
             Spacer()
@@ -102,7 +102,8 @@ struct ProfileSettingView_Previews: PreviewProvider {
         store: Store(
           initialState: ProfileSettingCore.State(
             profileImageState: .init(),
-            nickNameState: .init()
+            nickNameState: .init(),
+            originNickName: ""
           ),
           reducer: { ProfileSettingCore() }
         )

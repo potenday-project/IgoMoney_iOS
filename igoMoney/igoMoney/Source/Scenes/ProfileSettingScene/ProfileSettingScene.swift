@@ -32,7 +32,7 @@ struct ProfileSettingScene: View {
         .font(.pretendard(size: 16, weight: .bold))
       } rightView: {
         Button("수정") {
-          store.send(.complete)
+          store.send(.updateProfile)
         }
         .font(.pretendard(size: 16, weight: .bold))
       }
@@ -103,7 +103,7 @@ struct ProfileSettingScene: View {
 #Preview {
   ProfileSettingScene(
     store: Store(
-      initialState: ProfileSettingCore.State(profileImageState: .init(), nickNameState: .init()),
+      initialState: ProfileSettingCore.State(profileImageState: .init(), nickNameState: .init(), originNickName: ""),
       reducer: { ProfileSettingCore() }
     )
   )

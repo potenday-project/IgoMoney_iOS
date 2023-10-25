@@ -105,14 +105,13 @@
 		18CD8F2D2AB995F5006FEA6F /* AgreeTermsCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2C2AB995F5006FEA6F /* AgreeTermsCore.swift */; };
 		18CD8F302AB9A1EF006FEA6F /* Provier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */; };
 		18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F312AB9A57D006FEA6F /* Constants.swift */; };
-		18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */; };
+		18CD8F352AB9BC58006FEA6F /* ProfileInitialSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F342AB9BC58006FEA6F /* ProfileInitialSettingScene.swift */; };
 		18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 18D623652AB8A8AA006EAC39 /* ComposableArchitecture */; };
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */; };
-		18F332172AE6590A008C415E /* ProfileEditScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332162AE6590A008C415E /* ProfileEditScene.swift */; };
+		18F332172AE6590A008C415E /* ProfileSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332162AE6590A008C415E /* ProfileSettingScene.swift */; };
 		18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332192AE69F6E008C415E /* NickNameInputView.swift */; };
 		18F3321C2AE69F99008C415E /* NickNameCheckDuplicateCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */; };
-		18F3321E2AE6A1F5008C415E /* ProfileEditCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321D2AE6A1F5008C415E /* ProfileEditCore.swift */; };
 		18F332202AE6ABD0008C415E /* IGOPhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321F2AE6ABD0008C415E /* IGOPhotoPicker.swift */; };
 		18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C912ADD942800DE50C4 /* AuthClient.swift */; };
 		18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */; };
@@ -218,13 +217,12 @@
 		18CD8F2C2AB995F5006FEA6F /* AgreeTermsCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsCore.swift; sourceTree = "<group>"; };
 		18CD8F2F2AB9A1EF006FEA6F /* Provier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provier.swift; sourceTree = "<group>"; };
 		18CD8F312AB9A57D006FEA6F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingView.swift; sourceTree = "<group>"; };
+		18CD8F342AB9BC58006FEA6F /* ProfileInitialSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInitialSettingScene.swift; sourceTree = "<group>"; };
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAuthButton.swift; sourceTree = "<group>"; };
-		18F332162AE6590A008C415E /* ProfileEditScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScene.swift; sourceTree = "<group>"; };
+		18F332162AE6590A008C415E /* ProfileSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingScene.swift; sourceTree = "<group>"; };
 		18F332192AE69F6E008C415E /* NickNameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameInputView.swift; sourceTree = "<group>"; };
 		18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameCheckDuplicateCore.swift; sourceTree = "<group>"; };
-		18F3321D2AE6A1F5008C415E /* ProfileEditCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditCore.swift; sourceTree = "<group>"; };
 		18F3321F2AE6ABD0008C415E /* IGOPhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOPhotoPicker.swift; sourceTree = "<group>"; };
 		18F55C912ADD942800DE50C4 /* AuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthClient.swift; sourceTree = "<group>"; };
 		18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthClient + live.swift"; sourceTree = "<group>"; };
@@ -482,8 +480,8 @@
 			isa = PBXGroup;
 			children = (
 				18F332182AE69F5E008C415E /* SubViews */,
-				18F332162AE6590A008C415E /* ProfileEditScene.swift */,
-				18F3321D2AE6A1F5008C415E /* ProfileEditCore.swift */,
+				18F332162AE6590A008C415E /* ProfileSettingScene.swift */,
+				18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */,
 			);
 			path = ProfileSettingScene;
 			sourceTree = "<group>";
@@ -559,8 +557,7 @@
 		18F55C982ADDA19300DE50C4 /* ProfileSettingView */ = {
 			isa = PBXGroup;
 			children = (
-				18CD8F342AB9BC58006FEA6F /* ProfileSettingView.swift */,
-				18606F482AB9D20A00025C37 /* ProfileSettingCore.swift */,
+				18CD8F342AB9BC58006FEA6F /* ProfileInitialSettingScene.swift */,
 			);
 			path = ProfileSettingView;
 			sourceTree = "<group>";
@@ -801,7 +798,7 @@
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
-				18F332172AE6590A008C415E /* ProfileEditScene.swift in Sources */,
+				18F332172AE6590A008C415E /* ProfileSettingScene.swift in Sources */,
 				182B1B632AD68C4200D01DBA /* IGOInputForm.swift in Sources */,
 				181988AC2ACE72310021214C /* ChallengeClient.swift in Sources */,
 				188103992AE4FD50003EBE95 /* UserProfileSection.swift in Sources */,
@@ -851,7 +848,6 @@
 				18B4377D2AC17ED10026A71E /* KeyChainClient.swift in Sources */,
 				18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */,
 				180FC6992ABB35C000DD8477 /* HTTPBody.swift in Sources */,
-				18F3321E2AE6A1F5008C415E /* ProfileEditCore.swift in Sources */,
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
@@ -860,7 +856,7 @@
 				18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */,
 				18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */,
 				18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */,
-				18CD8F352AB9BC58006FEA6F /* ProfileSettingView.swift in Sources */,
+				18CD8F352AB9BC58006FEA6F /* ProfileInitialSettingScene.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
 				1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */,
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
