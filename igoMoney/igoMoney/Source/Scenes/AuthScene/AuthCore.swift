@@ -67,7 +67,7 @@ struct AuthCore: Reducer {
           )
         }
         
-      case let .didTapKakaoLogin(token):
+      case let .didTapKakaoLogin(token):        
         return .run { send in
           await send(
             ._authTokenResponse(

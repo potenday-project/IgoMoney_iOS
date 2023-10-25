@@ -12,7 +12,7 @@ struct AuthSettingCore: Reducer {
     var userEmail: String?
   }
   
-  enum Action: Equatable {
+  enum Action {
     case onAppear
     case signOut
     case withdraw
@@ -24,6 +24,8 @@ struct AuthSettingCore: Reducer {
     case _fetchUserInformationResponse(TaskResult<User>)
     case _signOutResponse(TaskResult<Bool>)
     case _withdrawResponse(TaskResult<Bool>)
+    case _removeTokenResult(TaskResult<Void>)
+    case _removeUserIdentifierResult(TaskResult<Void>)
   }
   
   @Dependency(\.authClient) var authClient
@@ -48,18 +50,15 @@ struct AuthSettingCore: Reducer {
         )
       }
     case .withdraw:
-      return .concatenate(
-        .send(.signOut),
-        .run { send in
-          await send(
-            ._withdrawResponse(
-              TaskResult {
-                try await authClient.withdraw()
-              }
-            )
+      return .run { send in
+        await send(
+          ._withdrawResponse(
+            TaskResult {
+              try await authClient.withdraw()
+            }
           )
-        }
-      )
+        )
+      }
       
     case ._fetchToken:
       return .run { send in
@@ -92,6 +91,31 @@ struct AuthSettingCore: Reducer {
       return .none
       
     case ._fetchTokenResponse(.failure), ._fetchUserInformationResponse(.failure):
+      return .none
+      
+    case ._withdrawResponse(.success):
+      return .concatenate(
+        .run { send in
+          await send(
+            ._removeTokenResult(
+              TaskResult {
+                try KeyChainClient.delete(.token, SystemConfigConstants.tokenService)
+              }
+            )
+          )
+        },
+        .run { send in
+          await send(
+            ._removeUserIdentifierResult(
+              TaskResult {
+                try KeyChainClient.delete(.userIdentifier, SystemConfigConstants.userIdentifierService)
+              }
+            )
+          )
+        }
+      )
+      
+    case ._removeTokenResult, ._removeUserIdentifierResult:
       return .none
       
     case ._signOutResponse, ._withdrawResponse:

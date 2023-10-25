@@ -70,6 +70,10 @@ struct GeneralSettingCore: Reducer {
         
       case .marketingAlertAction:
         return .none
+        
+      case .authSettingAction(._withdrawResponse(.success)), .authSettingAction(._signOutResponse(.success)):
+        state.showAuthSetting = false
+        return .none
       }
     }
   }

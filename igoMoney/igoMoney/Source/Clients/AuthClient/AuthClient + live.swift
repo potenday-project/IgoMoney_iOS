@@ -85,7 +85,7 @@ private func generateWithdrawAPI(with token: AuthToken) -> AuthAPI {
   switch token.provider {
   case .apple:
     let api = AuthAPI(
-      method: .delete,
+      method: .post,
       path: "/auth/signout/apple/",
       query: [:],
       header: ["Content-Type": "application/json"],
@@ -100,7 +100,7 @@ private func generateWithdrawAPI(with token: AuthToken) -> AuthAPI {
     
   case .kakao:
     let api = AuthAPI(
-      method: .delete,
+      method: .post,
       path: "/auth/signout/kakao/\(token.userID.description)",
       query: [:],
       header: [:]

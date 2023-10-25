@@ -57,13 +57,13 @@ struct AuthSettingScene: View {
       Divider()
       
       Button {
-        
+        store.send(.signOut)
       } label: {
         AuthSettingCell(title: "로그아웃")
       }
       
       Button {
-        
+        store.send(.withdraw)
       } label: {
         AuthSettingCell(title: "회원 탈퇴")
       }

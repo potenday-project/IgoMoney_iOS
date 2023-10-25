@@ -47,14 +47,14 @@ extension Networking {
     try handleStatusCode(with: response.statusCode)
   }
   
-  private static func attachAuthHeaderField(to request: URLRequest) throws -> URLRequest {
+  private static func attachAuthHeaderField(to request: URLRequest, isAuth: Bool = false) throws -> URLRequest {
     var request = request
-
-    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     
-    if request.description.hasPrefix("https://igomoney") == true {
+    if request.description.hasPrefix("https://igomoney") == true || request.description.contains("auth") {
       return request
     }
+    
+    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     
     if let authToken: AuthToken = tokenData.toDecodable() {
       if authToken.isExpired {
