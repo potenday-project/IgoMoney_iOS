@@ -26,9 +26,10 @@ extension MultipartForm {
       switch value {
       case .text(let text):
         data.appendString(to: "Content-Disposition: form-data; name=\"\(key)\"\r\n")
+        data.appendString(to: "Content-Type: text/plain; charset=utf-8\r\n\r\n")
         data.appendString(to: "\(text)\r\n")
       case .image(let imageData):
-        data.appendString(to: "Content-Disposition: form-data; name=\"\(key)\"; filename=\"profile_image.png\"\r\n")
+        data.appendString(to: "Content-Disposition: form-data; name=\"\(key)\"; filename=\"profile.jpg\"\r\n")
         data.appendString(to: "Content-Type: image/png\r\n\r\n")
         data.append(imageData)
         data.appendString(to: "\r\n")

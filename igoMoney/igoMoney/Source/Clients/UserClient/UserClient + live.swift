@@ -25,7 +25,7 @@ extension UserClient {
     let boundary = "Boundary_\(UUID().uuidString)"
     let api = AuthAPI(
       method: .patch,
-      path: "/users",
+      path: "/users/nickname",
       query: [:],
       header: [
         "Content-Type": "multipart/form-data; boundary=\(boundary)"
