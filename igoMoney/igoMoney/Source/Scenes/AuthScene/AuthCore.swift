@@ -67,7 +67,7 @@ struct AuthCore: Reducer {
           )
         }
         
-      case let .didTapKakaoLogin(token):
+      case let .didTapKakaoLogin(token):        
         return .run { send in
           await send(
             ._authTokenResponse(
@@ -123,12 +123,18 @@ struct AuthCore: Reducer {
         // Inner Action
         
       case ._setNavigationIsActive:
-        guard let userID = state.currentUser?.userID else { return .none }
-        state.profileSettingState = ProfileSettingCore.State(userID: userID.description)
+        if state.currentUser?.userID == nil {
+          return .none
+        }
+        
+        state.profileSettingState = ProfileSettingCore.State(
+          profileImageState: .init(),
+          nickNameState: .init()
+        )
         return .none
         
       case let ._authTokenResponse(.success(token)):
-        print(token)
+        print(#fileID, #function, #line, "🐯", token)
         return .run { send in
           await send(
             ._userInformationResponse(
@@ -170,7 +176,7 @@ struct AuthCore: Reducer {
           await send(.presentProfileSetting(true))
         }
         
-      case .profileSettingAction(._updateNickNameResponse(.success)):
+      case .profileSettingAction(._updateProfileResponse(.success)):
         return .run {
           await $0(._presentMainScene)
         }

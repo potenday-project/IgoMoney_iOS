@@ -15,23 +15,12 @@ protocol Networking {
 
 extension Networking {
   static func execute(to generator: RequestGenerator) async throws -> Data {
-    var request = try generator.generate()
-    
-    let tokenData = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
-    
-    if let authToken: AuthToken = tokenData?.toDecodable() {
-      if authToken.isExpired {
-        throw APIError.tokenExpired
-      }
-      print(#fileID, #function, #line, "💵 \(authToken.accessToken)")
-      request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
-    }
-    
-    let (data, response) = try await URLSession.shared.data(for: request)
-    
-    try handleResponse(response: response)
-    
-    return data
+    let request = try generator.generate()
+    return try await requestNetwork(request: request)
+  }
+  
+  static func execute(to request: URLRequest) async throws -> Data {
+    return try await requestNetwork(request: request)
   }
   
   static func request<T: Decodable>(to generator: RequestGenerator) async throws -> T {
@@ -43,12 +32,39 @@ extension Networking {
     return decodeData
   }
   
+  private static func requestNetwork(request: URLRequest) async throws -> Data {
+    let networkingRequest = try attachAuthHeaderField(to: request)
+    let (data, response) = try await URLSession.shared.data(for: networkingRequest)
+    try handleResponse(response: response)
+    return data
+  }
+  
   private static func handleResponse(response: URLResponse) throws {
     guard let response = response as? HTTPURLResponse else {
       throw APIError.invalidResponse
     }
     
     try handleStatusCode(with: response.statusCode)
+  }
+  
+  private static func attachAuthHeaderField(to request: URLRequest, isAuth: Bool = false) throws -> URLRequest {
+    var request = request
+    
+    if request.description.hasPrefix("https://igomoney") == true || request.description.contains("auth") {
+      return request
+    }
+    
+    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+    
+    if let authToken: AuthToken = tokenData.toDecodable() {
+      if authToken.isExpired {
+        throw APIError.tokenExpired
+      }
+      
+      request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
+    }
+    
+    return request
   }
   
   private static func handleStatusCode(with code: Int) throws {

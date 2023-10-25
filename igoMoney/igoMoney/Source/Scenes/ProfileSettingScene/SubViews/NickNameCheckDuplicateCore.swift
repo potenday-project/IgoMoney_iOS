@@ -1,16 +1,20 @@
 //
-//  ProfileSettingCore.swift
+//  NickNameCheckDuplicateCore.swift
 //  igoMoney
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import ComposableArchitecture
 
-struct ProfileSettingCore: Reducer {
+struct NickNameCheckDuplicateCore: Reducer {
   struct State: Equatable {
-    var userID: String
     var nickName: String = ""
     var nickNameState: ConfirmState = .disableConfirm
+    var originNickName: String = ""
+    
+    var equalOrigin: Bool {
+      return originNickName == nickName
+    }
   }
   
   enum Action: Equatable {
@@ -21,6 +25,7 @@ struct ProfileSettingCore: Reducer {
     // Inner Action
     case _changeText(String)
     case _setShowNickNameConfirm
+    case _updateOriginNickName
     case _checkNickNameResponse(TaskResult<Bool>)
     case _updateNickNameResponse(TaskResult<Bool>)
   }
@@ -47,7 +52,7 @@ struct ProfileSettingCore: Reducer {
         await send(
           ._updateNickNameResponse(
             TaskResult {
-              try await userClient.updateUserInformation(state.userID, state.nickName)
+              try await userClient.updateUserInformation(state.nickName, nil)
             }
           )
         )
@@ -64,6 +69,11 @@ struct ProfileSettingCore: Reducer {
       }
       
     case ._setShowNickNameConfirm:
+      if state.equalOrigin {
+        state.nickNameState = .disableConfirm
+        return .none
+      }
+      
       let count = state.nickName.count
       let status: ConfirmState = ((3...8) ~= count) ? .readyConfirm : .disableConfirm
       state.nickNameState = status
@@ -82,36 +92,15 @@ struct ProfileSettingCore: Reducer {
       state.nickNameState = .duplicateNickName
       return .none
       
+    case ._updateNickNameResponse(.success):
+      return .send(._updateOriginNickName)
+      
     case ._updateNickNameResponse:
       return .none
+      
+    case ._updateOriginNickName:
+      state.originNickName = state.nickName
+      return .none
     }
-  }
-}
-
-enum ConfirmState: CustomStringConvertible {
-  case disableConfirm
-  case readyConfirm
-  case duplicateNickName
-  case completeConfirm
-  
-  var description: String {
-    switch self {
-    case .disableConfirm:
-      return TextConstants.baseHelpText
-    case .readyConfirm:
-      return TextConstants.confirmHelpText
-    case .duplicateNickName:
-      return TextConstants.duplicateNickName
-    case .completeConfirm:
-      return ""
-    }
-  }
-}
-
-private extension ConfirmState {
-  enum TextConstants {
-    static let baseHelpText = "최소 3자 이상의 영문, 한글 숫자만 입력해주세요."
-    static let confirmHelpText = "중복확인 버튼을 눌러주세요."
-    static let duplicateNickName = "중복된 닉네임입니다. 다른 닉네임을 사용해주세요."
   }
 }

@@ -68,14 +68,9 @@ struct AppCore: Reducer {
         return .none
         
       case ._presentAuth:
+        state.mainState = MainCore.State()
         state.currentState = .auth
         return .none
-        
-      case .mainAction(.myPageAction(.settingAction(._removeTokenResponse(.success)))),
-          .mainAction(.myPageAction(.settingAction(._removeUserIdentifierResponse(.success)))):
-        return .run { send in
-          await send(._presentAuth)
-        }
         
       case .authAction(._presentMainScene):
         state.authState = AuthCore.State()
@@ -85,6 +80,15 @@ struct AppCore: Reducer {
       case .authAction(._authTokenResponse(.failure)):
         state.currentState = .auth
         return .none
+        
+      case .mainAction(.myPageAction(.settingAction(.authSettingAction(._signOutResponse)))):
+        return .send(._presentAuth)
+        
+      case .mainAction(.myPageAction(.settingAction(.authSettingAction(._removeTokenResult)))):
+        return .send(._presentAuth)
+        
+      case .mainAction(.myPageAction(.settingAction(.authSettingAction(._removeUserIdentifierResult)))):
+        return .send(._presentAuth)
         
       default:
         return .none

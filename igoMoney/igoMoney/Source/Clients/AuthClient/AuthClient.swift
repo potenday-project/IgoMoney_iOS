@@ -10,8 +10,8 @@ struct AuthClient {
   var signInWithKakao: @Sendable (_ token: String) async throws -> AuthToken
   var signInWithApple: @Sendable (_ user: String, _ idToken: String, _ authCode: String) async throws -> AuthToken
   var refreshToken: @Sendable () async throws -> AuthToken
-  var signOut: @Sendable () throws -> Void
-  var withdraw: @Sendable () async throws -> Void
+  var signOut: @Sendable () throws -> Bool
+  var withdraw: @Sendable () async throws -> Bool
 }
 
 extension AuthClient: DependencyKey { }
