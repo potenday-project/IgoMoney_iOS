@@ -35,17 +35,33 @@ struct GeneralSettingScene: View {
             Button {
               
             } label: {
-              GeneralSettingCell(setting: setting) {
-                switch setting.buttonType {
-                case .general:
-                  Image(systemName: "chevron.right")
-                  
-                case .toggle:
-                  Toggle("", isOn: $isToggle)
-                    .toggleStyle(IGOToggleStyle())
-                  
-                case .text:
-                  Text("")
+              if setting == .authInformation || setting == .information {
+                GeneralSettingCell(setting: .authInformation) {
+                  Image(systemName: "chevron.forward")
+                }
+              }
+              
+              if setting == .serviceAlert {
+                GeneralToggleCell(
+                  store: self.store.scope(
+                    state: \.serviceAlertState,
+                    action: GeneralSettingCore.Action.serviceAlertAction
+                  )
+                )
+              }
+              
+              if setting == .marketingAlert {
+                GeneralToggleCell(
+                  store: self.store.scope(
+                    state: \.marketingAlertState,
+                    action: GeneralSettingCore.Action.marketingAlertAction
+                  )
+                )
+              }
+              
+              if setting == .appVersion {
+                GeneralSettingCell(setting: .appVersion) {
+                  Text(viewStore.appVersion)
                 }
               }
             }
@@ -54,6 +70,9 @@ struct GeneralSettingScene: View {
           }
         }
       }
+    }
+    .onAppear {
+      store.send(.onAppear)
     }
     .navigationBarHidden(true)
     .padding(.horizontal, 24)

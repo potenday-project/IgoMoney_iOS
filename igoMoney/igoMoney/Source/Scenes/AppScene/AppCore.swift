@@ -71,11 +71,11 @@ struct AppCore: Reducer {
         state.currentState = .auth
         return .none
         
-      case .mainAction(.myPageAction(.settingAction(._removeTokenResponse(.success)))),
-          .mainAction(.myPageAction(.settingAction(._removeUserIdentifierResponse(.success)))):
-        return .run { send in
-          await send(._presentAuth)
-        }
+//      case .mainAction(.myPageAction(.settingAction(._removeTokenResponse(.success)))),
+//          .mainAction(.myPageAction(.settingAction(._removeUserIdentifierResponse(.success)))):
+//        return .run { send in
+//          await send(._presentAuth)
+//        }
         
       case .authAction(._presentMainScene):
         state.authState = AuthCore.State()
