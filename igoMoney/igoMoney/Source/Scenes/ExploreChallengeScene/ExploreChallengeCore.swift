@@ -13,12 +13,14 @@ struct ExploreChallengeCore: Reducer {
     var challenges: IdentifiedArrayOf<EnterChallengeInformationCore.State> = []
     
     var generateState = GenerateRoomCore.State()
-    var challengeSelection: EnterChallengeCore.State?
+    var selectedChallengeID: Int?
     var categorySelection: ChallengeCategory?
     var moneySelection: TargetMoneyAmount?
     
     var showGenerate: Bool = false
     var showFilter: Bool = false
+    
+    var selectedChallenge: EnterChallengeCore.State?
     
     var isSelectAll: Bool {
       return (categorySelection != nil) && (moneySelection != nil)
@@ -33,7 +35,7 @@ struct ExploreChallengeCore: Reducer {
     case requestFetchChallenges
     
     case showGenerate(Bool)
-    case selectChallenge(Challenge?)
+    case selectChallenge(Int?)
     case selectCategory(ChallengeCategory)
     case selectMoney(TargetMoneyAmount)
 
@@ -84,12 +86,18 @@ struct ExploreChallengeCore: Reducer {
         state.showGenerate = false
         return .none
         
-      case .selectChallenge(.some(let challenge)):
-        state.challengeSelection = EnterChallengeCore.State(challenge: challenge)
+      case .selectChallenge(let id):
+        guard let selectedItem = state.challenges.filter({ $0.id == id }).first?.challenge else {
+          return .none
+        }
+        
+        state.selectedChallengeID = id
+        state.selectedChallenge = EnterChallengeCore.State(challenge: selectedItem)
         return .none
         
       case .selectChallenge(.none):
-        state.challengeSelection = nil
+        state.selectedChallenge = nil
+        state.selectedChallengeID = nil
         return .none
         
       case .selectCategory(let category):
@@ -130,7 +138,7 @@ struct ExploreChallengeCore: Reducer {
         return .none
       }
     }
-    .ifLet(\.challengeSelection, action: /Action.enterChallengeAction) {
+    .ifLet(\.selectedChallenge, action: /Action.enterChallengeAction) {
       EnterChallengeCore()
     }
     .forEach(\.challenges, action: /Action.challengeInformationAction) {

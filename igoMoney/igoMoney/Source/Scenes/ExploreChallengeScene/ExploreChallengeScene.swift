@@ -131,34 +131,30 @@ struct ExploreChallengeScene: View {
                 )
               ) { store in
                 WithViewStore(store, observe: { $0 }) { informationViewStore in
-                  ExploreChallengeCellView(store: store)
-                    .onTapGesture {
-                      viewStore.send(.selectChallenge(informationViewStore.challenge))
+                  NavigationLink(
+                    tag: informationViewStore.id,
+                    selection: viewStore.binding(
+                      get: \.selectedChallengeID,
+                      send: ExploreChallengeCore.Action.selectChallenge
+                    )
+                  ) {
+                    IfLetStore(
+                      self.store.scope(
+                        state: \.selectedChallenge,
+                        action: ExploreChallengeCore.Action.enterChallengeAction
+                      )
+                    ) { enterStore in
+                      EnterChallengeScene(store: enterStore)
                     }
+                  } label: {
+                    ExploreChallengeCellView(store: store)
+                  }
+                  .buttonStyle(.plain)
                 }
               }
             }
             .padding(.top)
           }
-          .background(
-            NavigationLink(
-              isActive: viewStore.binding(
-                get: { $0.challengeSelection != nil },
-                send: ExploreChallengeCore.Action.selectChallenge(nil)
-              ),
-              destination: {
-                IfLetStore(
-                  store.scope(
-                    state: { $0.challengeSelection },
-                    action: ExploreChallengeCore.Action.enterChallengeAction
-                  )
-                ) { store in
-                  EnterChallengeScene(store: store)
-                }
-              }, label: {
-                EmptyView()
-              })
-          )
         }
         .onAppear {
           store.send(.requestFetchChallenges)

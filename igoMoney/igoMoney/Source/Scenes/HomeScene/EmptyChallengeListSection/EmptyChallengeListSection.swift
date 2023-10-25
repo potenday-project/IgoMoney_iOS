@@ -67,15 +67,17 @@ struct EmptyChallengeListSection: View {
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
-          ForEach(viewStore.challenges, id: \.id) { challenge in
-            EmptyChallengeDetail(
-              store: Store(
-                initialState: ChallengeDetailCore.State(challenge: challenge),
-                reducer: { ChallengeDetailCore() }
-              )
+          ForEachStore(
+            self.store.scope(
+              state: \.challenges,
+              action: EmptyChallengeListSectionCore.Action.challengeInformationAction
             )
-            .onTapGesture {
-              viewStore.send(.showEnter(challenge))
+          ) { store in
+            WithViewStore(store, observe: { $0 }) { informationViewStore in
+              EmptyChallengeDetail(store: store)
+                .onTapGesture {
+                  viewStore.send(.showEnter(informationViewStore.challenge))
+                }
             }
           }
           

@@ -19,6 +19,8 @@ struct ChallengeDetailCore: Reducer {
     
     var challenge: Challenge
     
+    var imageState = URLImageCore.State()
+    
     init(challenge: Challenge) {
       self.id = UUID()
       self.title = challenge.title
@@ -34,29 +36,40 @@ struct ChallengeDetailCore: Reducer {
     // Inner Action
     case _onAppear
     case _challengeUserFetchResponse(TaskResult<User>)
+    
+    case urlImageAction(URLImageCore.Action)
   }
   
   @Dependency(\.userClient) var userClient
   
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    switch action {
-    case ._onAppear:
-      return .run { [state] send in
-        await send(
-          ._challengeUserFetchResponse(
-            TaskResult {
-              try await userClient.getUserInformation(state.leader.userID.description)
-            }
+  var body: some Reducer<State, Action> {
+    Scope(state: \.imageState, action: /Action.urlImageAction) {
+      URLImageCore()
+    }
+    
+    Reduce { state, action in
+      switch action {
+      case ._onAppear:
+        return .run { [state] send in
+          await send(
+            ._challengeUserFetchResponse(
+              TaskResult {
+                try await userClient.getUserInformation(state.leader.userID.description)
+              }
+            )
           )
-        )
+        }
+        
+      case ._challengeUserFetchResponse(.success(let user)):
+        state.leader = user
+        return .send(.urlImageAction(._setURLPath(user.profileImagePath)))
+        
+      case ._challengeUserFetchResponse(.failure):
+        return .none
+        
+      case .urlImageAction:
+        return .none
       }
-      
-    case ._challengeUserFetchResponse(.success(let user)):
-      state.leader = user
-      return .none
-      
-    case ._challengeUserFetchResponse(.failure):
-      return .none
     }
   }
 }

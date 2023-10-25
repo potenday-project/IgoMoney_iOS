@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct EmptyChallengeListSectionCore: Reducer {
   struct State: Equatable {
-    var challenges: [Challenge] = []
+    var challenges: IdentifiedArrayOf<EnterChallengeInformationCore.State> = []
     
     var showExplore: Bool = false
     var showGenerate: Bool = false
@@ -35,6 +35,7 @@ struct EmptyChallengeListSectionCore: Reducer {
     case _notStartedChallengeListResponse(TaskResult<[Challenge]>)
     
     // Child Action
+    case challengeInformationAction(Int, EnterChallengeInformationCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
     case enterAction(EnterChallengeCore.Action)
     case generateAction(GenerateRoomCore.Action)
@@ -99,7 +100,8 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .none
         
       case ._notStartedChallengeListResponse(.success(let challenges)):
-        state.challenges = challenges
+        let emptyChallenges = challenges.map { EnterChallengeInformationCore.State(challenge: $0) }
+        state.challenges = IdentifiedArray(uniqueElements: emptyChallenges)
         return .none
         
       case ._notStartedChallengeListResponse(.failure):
@@ -118,6 +120,9 @@ struct EmptyChallengeListSectionCore: Reducer {
         
       case .generateAction:
         return .none
+        
+      case .challengeInformationAction:
+        return .none
       }
     }
     .ifLet(\.exploreChallengeState, action: /Action.exploreChallengeAction) {
@@ -125,6 +130,9 @@ struct EmptyChallengeListSectionCore: Reducer {
     }
     .ifLet(\.enterSelection, action: /Action.enterAction) {
       EnterChallengeCore()
+    }
+    .forEach(\.challenges, action: /Action.challengeInformationAction) {
+      EnterChallengeInformationCore()
     }
    }
 }
