@@ -11,6 +11,44 @@ import ComposableArchitecture
 struct GeneralSettingScene: View {
   let store: StoreOf<GeneralSettingCore>
   
+  @ViewBuilder
+  private func GeneralSettingCellWithContent(
+    to setting: Setting,
+    with viewStore: ViewStore<GeneralSettingCore.State, GeneralSettingCore.Action>
+  ) -> some View {
+    if setting == .authInformation || setting == .information {
+      GeneralSettingCell(setting: setting) {
+        Image(systemName: "chevron.forward")
+      }
+    }
+    
+    if setting == .serviceAlert {
+      GeneralToggleCell(
+        store: self.store.scope(
+          state: \.serviceAlertState,
+          action: GeneralSettingCore.Action.serviceAlertAction
+        )
+      )
+    }
+    
+    if setting == .marketingAlert {
+      GeneralToggleCell(
+        store: self.store.scope(
+          state: \.marketingAlertState,
+          action: GeneralSettingCore.Action.marketingAlertAction
+        )
+      )
+    }
+    
+    if setting == .appVersion {
+      GeneralSettingCell(setting: .appVersion) {
+        Text(viewStore.appVersion)
+          .font(.pretendard(size: 14, weight: .bold))
+          .foregroundColor(ColorConstants.primary3)
+      }
+    }
+  }
+  
   var body: some View {
     VStack {
       IGONavigationBar {
@@ -33,37 +71,11 @@ struct GeneralSettingScene: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
           ForEach(viewStore.settings, id: \.rawValue) { setting in
             Button {
-              
-            } label: {
               if setting == .authInformation || setting == .information {
-                GeneralSettingCell(setting: .authInformation) {
-                  Image(systemName: "chevron.forward")
-                }
+                
               }
-              
-              if setting == .serviceAlert {
-                GeneralToggleCell(
-                  store: self.store.scope(
-                    state: \.serviceAlertState,
-                    action: GeneralSettingCore.Action.serviceAlertAction
-                  )
-                )
-              }
-              
-              if setting == .marketingAlert {
-                GeneralToggleCell(
-                  store: self.store.scope(
-                    state: \.marketingAlertState,
-                    action: GeneralSettingCore.Action.marketingAlertAction
-                  )
-                )
-              }
-              
-              if setting == .appVersion {
-                GeneralSettingCell(setting: .appVersion) {
-                  Text(viewStore.appVersion)
-                }
-              }
+            } label: {
+              GeneralSettingCellWithContent(to: setting, with: viewStore)
             }
             .padding(.vertical, 16)
             .buttonStyle(.plain)
