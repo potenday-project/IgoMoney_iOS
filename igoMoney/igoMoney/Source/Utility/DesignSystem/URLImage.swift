@@ -41,7 +41,7 @@ struct URLImageCore: Reducer {
       guard let path = state.urlPath, let url = URL(string: path) else {
         return .send(._fetchURLImageResponse(.failure(APIError.badRequest(400))))
       }
-      
+      print(path)
       return .run { send in
         await send(
           ._fetchURLImageResponse(

@@ -15,7 +15,7 @@ protocol Networking {
 
 extension Networking {
   static func execute(to generator: RequestGenerator) async throws -> Data {
-    var request = try generator.generate()
+    let request = try generator.generate()
     return try await requestNetwork(request: request)
   }
   
@@ -33,22 +33,9 @@ extension Networking {
   }
   
   private static func requestNetwork(request: URLRequest) async throws -> Data {
-    var request = request
-    
-    let tokenData = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
-    
-    if let authToken: AuthToken = tokenData?.toDecodable() {
-      if authToken.isExpired {
-        throw APIError.tokenExpired
-      }
-      print(#fileID, #function, #line, "💵 \(authToken.accessToken)")
-      request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
-    }
-    
-    let (data, response) = try await URLSession.shared.data(for: request)
-    
+    let networkingRequest = try attachAuthHeaderField(to: request)
+    let (data, response) = try await URLSession.shared.data(for: networkingRequest)
     try handleResponse(response: response)
-    
     return data
   }
   
@@ -58,6 +45,26 @@ extension Networking {
     }
     
     try handleStatusCode(with: response.statusCode)
+  }
+  
+  private static func attachAuthHeaderField(to request: URLRequest) throws -> URLRequest {
+    var request = request
+
+    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+    
+    if request.description.hasPrefix("https://igomoney") == true {
+      return request
+    }
+    
+    if let authToken: AuthToken = tokenData.toDecodable() {
+      if authToken.isExpired {
+        throw APIError.tokenExpired
+      }
+      
+      request.addValue("Bearer \(authToken.accessToken)", forHTTPHeaderField: "Authorization")
+    }
+    
+    return request
   }
   
   private static func handleStatusCode(with code: Int) throws {
