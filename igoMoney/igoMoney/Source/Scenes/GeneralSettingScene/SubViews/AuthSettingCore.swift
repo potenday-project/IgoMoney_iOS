@@ -14,14 +14,19 @@ struct AuthSettingCore: Reducer {
   
   enum Action: Equatable {
     case onAppear
+    case signOut
+    case withdraw
     
     case _fetchToken
     case _fetchUserInformation
     
     case _fetchTokenResponse(TaskResult<AuthToken>)
     case _fetchUserInformationResponse(TaskResult<User>)
+    case _signOutResponse(TaskResult<Bool>)
+    case _withdrawResponse(TaskResult<Bool>)
   }
   
+  @Dependency(\.authClient) var authClient
   @Dependency(\.userClient) var userClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -30,6 +35,30 @@ struct AuthSettingCore: Reducer {
       return .concatenate(
         .send(._fetchToken),
         .send(._fetchUserInformation)
+      )
+      
+    case .signOut:
+      return .run { send in
+        await send(
+          ._signOutResponse(
+            TaskResult {
+              try authClient.signOut()
+            }
+          )
+        )
+      }
+    case .withdraw:
+      return .concatenate(
+        .send(.signOut),
+        .run { send in
+          await send(
+            ._withdrawResponse(
+              TaskResult {
+                try await authClient.withdraw()
+              }
+            )
+          )
+        }
       )
       
     case ._fetchToken:
@@ -63,6 +92,9 @@ struct AuthSettingCore: Reducer {
       return .none
       
     case ._fetchTokenResponse(.failure), ._fetchUserInformationResponse(.failure):
+      return .none
+      
+    case ._signOutResponse, ._withdrawResponse:
       return .none
     }
   }

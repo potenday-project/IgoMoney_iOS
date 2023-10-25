@@ -51,28 +51,7 @@ struct AuthSettingScene: View {
       .padding(.vertical, 16)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
-        if let provider = viewStore.token?.provider,
-           let userEmail = viewStore.userEmail {
-          HStack {
-            VStack(alignment: .leading, spacing: 4) {
-              Text(provider.description)
-                .foregroundColor(ColorConstants.gray)
-              
-              Text(userEmail)
-                .foregroundColor(ColorConstants.gray2)
-            }
-            .font(.pretendard(size: 14, weight: .medium))
-            
-            Spacer()
-            
-            Image(provider.iconName)
-              .padding(8)
-              .background(
-                Circle()
-                  .fill(provider == .kakao ? Color(provider.colorName) : ColorConstants.gray4)
-              )
-          }
-        }
+        AuthInformationCard(viewStore: viewStore)
       }
       
       Divider()
@@ -95,6 +74,43 @@ struct AuthSettingScene: View {
     .padding(.horizontal, 24)
     .onAppear {
       store.send(.onAppear)
+    }
+  }
+}
+
+struct AuthInformationCard: View {
+  let viewStore: ViewStoreOf<AuthSettingCore>
+  
+  var body: some View {
+    if let provider = viewStore.token?.provider,
+       let userEmail = viewStore.userEmail {
+      HStack {
+        VStack(alignment: .leading, spacing: 4) {
+          Text(provider.description)
+            .foregroundColor(ColorConstants.gray)
+          
+          Text(userEmail)
+            .foregroundColor(ColorConstants.gray2)
+        }
+        .font(.pretendard(size: 14, weight: .medium))
+        
+        Spacer()
+        
+        Image(provider.iconName)
+          .padding(8)
+          .background(
+            Circle()
+              .fill(provider == .kakao ? Color(provider.colorName) : ColorConstants.gray4)
+          )
+      }
+    } else {
+      HStack {
+        Text("계정 정보를 불러오는데 오류가 발생하였습니다.")
+        
+        Spacer()
+      }
+      .font(.pretendard(size: 14, weight: .medium))
+      .foregroundColor(ColorConstants.gray2)
     }
   }
 }

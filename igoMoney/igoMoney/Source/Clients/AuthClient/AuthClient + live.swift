@@ -67,7 +67,7 @@ extension AuthClient {
     try KeyChainClient.delete(.token, SystemConfigConstants.tokenService)
     try KeyChainClient.delete(.userIdentifier, SystemConfigConstants.userIdentifierService)
     
-    return ()
+    return true
   } withdraw: {
     let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     guard let token: AuthToken = tokenData.toDecodable() else {
@@ -77,7 +77,7 @@ extension AuthClient {
     let api = generateWithdrawAPI(with: token)
     let response = try await APIClient.execute(to: api)
     
-    return ()
+    return true
   }
 }
 
