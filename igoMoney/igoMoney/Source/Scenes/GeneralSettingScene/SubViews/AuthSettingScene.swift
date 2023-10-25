@@ -9,6 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AuthSettingScene: View {
+  let store: StoreOf<AuthSettingCore>
+  
   @ViewBuilder
   private func AuthSettingCell(title: String) -> some View {
     HStack {
@@ -48,22 +50,30 @@ struct AuthSettingScene: View {
       .font(.pretendard(size: 16, weight: .bold))
       .padding(.vertical, 16)
       
-      
-      HStack {
-        VStack {
-          Text(Provider.kakao.description)
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        if let provider = viewStore.token?.provider,
+           let userEmail = viewStore.userEmail {
+          HStack {
+            VStack(alignment: .leading, spacing: 4) {
+              Text(provider.description)
+                .foregroundColor(ColorConstants.gray)
+              
+              Text(userEmail)
+                .foregroundColor(ColorConstants.gray2)
+            }
+            .font(.pretendard(size: 14, weight: .medium))
+            
+            Spacer()
+            
+            Image(provider.iconName)
+              .padding(8)
+              .background(
+                Circle()
+                  .fill(provider == .kakao ? Color(provider.colorName) : ColorConstants.gray4)
+              )
+          }
         }
-        
-        Spacer()
-        
-        Image("icon_kakao")
-          .padding(8)
-          .background(
-            Circle()
-              .fill(Color("kakao_color"))
-          )
       }
-      
       
       Divider()
       
@@ -82,9 +92,17 @@ struct AuthSettingScene: View {
       Spacer()
     }
     .padding(.horizontal, 24)
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
 }
 
 #Preview {
-  AuthSettingScene()
+  AuthSettingScene(
+    store: Store(
+      initialState: AuthSettingCore.State(),
+      reducer: { AuthSettingCore() }
+    )
+  )
 }
