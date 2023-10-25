@@ -134,7 +134,6 @@ struct AuthCore: Reducer {
         return .none
         
       case let ._authTokenResponse(.success(token)):
-        print(token)
         return .run { send in
           await send(
             ._userInformationResponse(
@@ -176,7 +175,7 @@ struct AuthCore: Reducer {
           await send(.presentProfileSetting(true))
         }
         
-      case .profileSettingAction(.nickNameDuplicateAction(._updateNickNameResponse)):
+      case .profileSettingAction(._updateProfileResponse(.success)):
         return .run {
           await $0(._presentMainScene)
         }
