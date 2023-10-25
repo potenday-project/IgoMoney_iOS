@@ -21,20 +21,23 @@ struct ProfileSettingScene: View {
   
   var body: some View {
     VStack(alignment: .center) {
-      IGONavigationBar {
-        Text("프로필 수정")
-          .font(.pretendard(size: 20, weight: .bold))
-      } leftView: {
-        Button {
-        } label: {
-          Image(systemName: "chevron.backward")
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        IGONavigationBar {
+          Text("프로필 수정")
+            .font(.pretendard(size: 20, weight: .bold))
+        } leftView: {
+          Button {
+          } label: {
+            Image(systemName: "chevron.backward")
+          }
+          .font(.pretendard(size: 16, weight: .bold))
+        } rightView: {
+          Button("수정") {
+            store.send(.updateProfile)
+          }
+          .disabled(viewStore.buttonEnable == false)
+          .font(.pretendard(size: 16, weight: .bold))
         }
-        .font(.pretendard(size: 16, weight: .bold))
-      } rightView: {
-        Button("수정") {
-          store.send(.updateProfile)
-        }
-        .font(.pretendard(size: 16, weight: .bold))
       }
       .buttonStyle(.plain)
       .padding(.vertical, 24)
@@ -103,7 +106,7 @@ struct ProfileSettingScene: View {
 #Preview {
   ProfileSettingScene(
     store: Store(
-      initialState: ProfileSettingCore.State(profileImageState: .init(), nickNameState: .init(), originNickName: ""),
+      initialState: ProfileSettingCore.State(profileImageState: .init(), nickNameState: .init()),
       reducer: { ProfileSettingCore() }
     )
   )

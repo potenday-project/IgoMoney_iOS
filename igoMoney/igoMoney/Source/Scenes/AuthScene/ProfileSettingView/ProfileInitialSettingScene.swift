@@ -102,8 +102,7 @@ struct ProfileSettingView_Previews: PreviewProvider {
         store: Store(
           initialState: ProfileSettingCore.State(
             profileImageState: .init(),
-            nickNameState: .init(),
-            originNickName: ""
+            nickNameState: .init()
           ),
           reducer: { ProfileSettingCore() }
         )

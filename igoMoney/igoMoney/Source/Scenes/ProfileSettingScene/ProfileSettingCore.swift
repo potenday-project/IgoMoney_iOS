@@ -12,11 +12,12 @@ struct ProfileSettingCore: Reducer {
   struct State: Equatable {
     var profileImageState: URLImageCore.State
     var nickNameState: NickNameCheckDuplicateCore.State
-    var originNickName: String
-    var buttonEnable: Bool = false
-    
     var presentPhotoPicker: Bool = false
     var selectedImage: UIImage?
+    
+    var buttonEnable: Bool {
+      return selectedImage != nil || nickNameState.nickNameState == .completeConfirm
+    }
   }
   
   enum Action: Equatable {
@@ -56,7 +57,7 @@ struct ProfileSettingCore: Reducer {
         return .send(._updateProfileImageState(image))
         
       case .updateProfile:
-        let userNickName = (state.originNickName == state.nickNameState.nickName) ? nil : state.nickNameState.nickName
+        let userNickName = (state.nickNameState.equalOrigin) ? nil : state.nickNameState.nickName
         let imageData = state.selectedImage?.pngData()
         
         return .run { send in
@@ -74,13 +75,9 @@ struct ProfileSettingCore: Reducer {
         return .none
         
       case ._updateProfileResponse(.success):
-        return .none
+        return .send(.nickNameDuplicateAction(._updateOriginNickName))
         
       case ._updateProfileResponse(.failure):
-        return .none
-        
-      case .nickNameDuplicateAction(._checkNickNameResponse(.success)):
-        state.buttonEnable = true
         return .none
         
       case .nickNameDuplicateAction:

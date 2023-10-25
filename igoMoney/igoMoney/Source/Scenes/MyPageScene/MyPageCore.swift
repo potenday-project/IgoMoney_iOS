@@ -102,16 +102,16 @@ struct MyPageCore: Reducer {
         
       case ._presentProfileEdit(true):
         let nickNameState = NickNameCheckDuplicateCore.State(
-          nickName: state.profileState.userName,
-          nickNameState: .disableConfirm
+          nickName: state.profileState.userName, 
+          nickNameState: .disableConfirm, 
+          originNickName: state.profileState.userName
         )
         
         let profileImageState = state.profileState.profileImageState
         
         state.profileEditState = ProfileSettingCore.State(
           profileImageState: profileImageState,
-          nickNameState: nickNameState, 
-          originNickName: state.profileState.userName
+          nickNameState: nickNameState
         )
         
         state.presentProfileEdit = true

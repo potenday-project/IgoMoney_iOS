@@ -10,6 +10,11 @@ struct NickNameCheckDuplicateCore: Reducer {
   struct State: Equatable {
     var nickName: String = ""
     var nickNameState: ConfirmState = .disableConfirm
+    var originNickName: String = ""
+    
+    var equalOrigin: Bool {
+      return originNickName == nickName
+    }
   }
   
   enum Action: Equatable {
@@ -20,6 +25,7 @@ struct NickNameCheckDuplicateCore: Reducer {
     // Inner Action
     case _changeText(String)
     case _setShowNickNameConfirm
+    case _updateOriginNickName
     case _checkNickNameResponse(TaskResult<Bool>)
     case _updateNickNameResponse(TaskResult<Bool>)
   }
@@ -63,6 +69,11 @@ struct NickNameCheckDuplicateCore: Reducer {
       }
       
     case ._setShowNickNameConfirm:
+      if state.equalOrigin {
+        state.nickNameState = .disableConfirm
+        return .none
+      }
+      
       let count = state.nickName.count
       let status: ConfirmState = ((3...8) ~= count) ? .readyConfirm : .disableConfirm
       state.nickNameState = status
@@ -81,7 +92,14 @@ struct NickNameCheckDuplicateCore: Reducer {
       state.nickNameState = .duplicateNickName
       return .none
       
+    case ._updateNickNameResponse(.success):
+      return .send(._updateOriginNickName)
+      
     case ._updateNickNameResponse:
+      return .none
+      
+    case ._updateOriginNickName:
+      state.originNickName = state.nickName
       return .none
     }
   }
