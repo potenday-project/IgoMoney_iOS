@@ -32,7 +32,7 @@ struct MyPageScene: View {
             .font(.pretendard(size: 20, weight: .bold))
         } rightView: {
           NavigationLink(
-            destination: SettingScene(
+            destination: GeneralSettingScene(
               store: store.scope(
                 state: \.settingState,
                 action: MyPageCore.Action.settingAction

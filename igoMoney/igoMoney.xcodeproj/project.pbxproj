@@ -110,6 +110,7 @@
 		18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D623682AB8A919006EAC39 /* AuthScene.swift */; };
 		18D6236C2AB8BACD006EAC39 /* IGOAuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */; };
 		18EF46C62AE8FD7900EA949E /* IGOToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF46C52AE8FD7900EA949E /* IGOToggleStyle.swift */; };
+		18EF46CA2AE8FEA700EA949E /* GeneralToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF46C92AE8FEA700EA949E /* GeneralToggleCell.swift */; };
 		18F332172AE6590A008C415E /* ProfileSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332162AE6590A008C415E /* ProfileSettingScene.swift */; };
 		18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F332192AE69F6E008C415E /* NickNameInputView.swift */; };
 		18F3321C2AE69F99008C415E /* NickNameCheckDuplicateCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */; };
@@ -222,6 +223,7 @@
 		18D623682AB8A919006EAC39 /* AuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthScene.swift; sourceTree = "<group>"; };
 		18D6236B2AB8BACD006EAC39 /* IGOAuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAuthButton.swift; sourceTree = "<group>"; };
 		18EF46C52AE8FD7900EA949E /* IGOToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOToggleStyle.swift; sourceTree = "<group>"; };
+		18EF46C92AE8FEA700EA949E /* GeneralToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralToggleCell.swift; sourceTree = "<group>"; };
 		18F332162AE6590A008C415E /* ProfileSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingScene.swift; sourceTree = "<group>"; };
 		18F332192AE69F6E008C415E /* NickNameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameInputView.swift; sourceTree = "<group>"; };
 		18F3321B2AE69F99008C415E /* NickNameCheckDuplicateCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameCheckDuplicateCore.swift; sourceTree = "<group>"; };
@@ -482,10 +484,19 @@
 		18EF46C72AE8FE4900EA949E /* GeneralSettingScene */ = {
 			isa = PBXGroup;
 			children = (
+				18EF46C82AE8FE9300EA949E /* SubViews */,
 				18A152312AC97FDF00B8B8A4 /* GeneralSettingScene.swift */,
 				18A152332AC9800900B8B8A4 /* GeneralSettingCore.swift */,
 			);
 			path = GeneralSettingScene;
+			sourceTree = "<group>";
+		};
+		18EF46C82AE8FE9300EA949E /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				18EF46C92AE8FEA700EA949E /* GeneralToggleCell.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		18F332152AE658F9008C415E /* ProfileSettingScene */ = {
@@ -777,6 +788,7 @@
 				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
 				18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */,
 				1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */,
+				18EF46CA2AE8FEA700EA949E /* GeneralToggleCell.swift in Sources */,
 				18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */,
 				18EF46C62AE8FD7900EA949E /* IGOToggleStyle.swift in Sources */,
 				18F3321C2AE69F99008C415E /* NickNameCheckDuplicateCore.swift in Sources */,

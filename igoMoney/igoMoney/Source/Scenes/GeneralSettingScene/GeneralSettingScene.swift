@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 struct GeneralSettingScene: View {
   let store: StoreOf<GeneralSettingCore>
-  @State private var isToggle: Bool = true
   
   var body: some View {
     VStack {
@@ -92,7 +91,7 @@ struct GeneralSettingCell<Content: View>: View {
 }
 
 #Preview {
-  SettingScene(
+  GeneralSettingScene(
     store: Store(
       initialState: GeneralSettingCore.State(),
       reducer: { GeneralSettingCore() }
