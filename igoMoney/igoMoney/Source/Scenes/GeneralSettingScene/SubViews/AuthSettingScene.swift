@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AuthSettingScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<AuthSettingCore>
   
   @ViewBuilder
@@ -32,7 +33,7 @@ struct AuthSettingScene: View {
           Text("로그인 정보")
         } leftView: {
           Button {
-            
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "chevron.backward")
           }
@@ -53,6 +54,11 @@ struct AuthSettingScene: View {
         
         WithViewStore(store, observe: { $0 }) { viewStore in
           AuthInformationCard(viewStore: viewStore)
+            .onChange(of: viewStore.isPresentation) { newValue in
+              if newValue == false {
+                presentationMode.wrappedValue.dismiss()
+              }
+            }
         }
         
         Divider()

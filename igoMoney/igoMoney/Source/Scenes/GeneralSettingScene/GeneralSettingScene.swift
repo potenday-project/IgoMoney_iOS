@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GeneralSettingScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<GeneralSettingCore>
   
   @ViewBuilder
@@ -56,7 +57,7 @@ struct GeneralSettingScene: View {
           .font(.pretendard(size: 20, weight: .bold))
       } leftView: {
         Button {
-          
+          presentationMode.wrappedValue.dismiss()
         } label: {
           Image(systemName: "chevron.backward")
             .resizable()
@@ -67,22 +68,7 @@ struct GeneralSettingScene: View {
       }
       .buttonStyle(.plain)
       
-      ScrollView(.vertical, showsIndicators: false) {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-          ForEach(viewStore.settings, id: \.rawValue) { setting in
-            Button {
-              if setting == .authInformation {
-                viewStore.send(.presentAuthSetting(true))
-              }
-            } label: {
-              GeneralSettingCellWithContent(to: setting, with: viewStore)
-            }
-            .padding(.vertical, 16)
-            .buttonStyle(.plain)
-          }
-        }
-      }
-      .background(
+      ZStack {
         WithViewStore(store, observe: { $0 }) { viewStore in
           NavigationLink(
             isActive: viewStore.binding(
@@ -100,7 +86,23 @@ struct GeneralSettingScene: View {
             EmptyView()
           }
         }
-      )
+        
+        ScrollView(.vertical, showsIndicators: false) {
+          WithViewStore(store, observe: { $0 }) { viewStore in
+            ForEach(viewStore.settings, id: \.rawValue) { setting in
+              Button {
+                if setting == .authInformation {
+                  viewStore.send(.presentAuthSetting(true))
+                }
+              } label: {
+                GeneralSettingCellWithContent(to: setting, with: viewStore)
+              }
+              .padding(.vertical, 16)
+              .buttonStyle(.plain)
+            }
+          }
+        }
+      }
     }
     .onAppear {
       store.send(.onAppear)

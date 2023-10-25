@@ -11,6 +11,7 @@ struct AuthSettingCore: Reducer {
     var token: AuthToken?
     var userEmail: String?
     
+    var isPresentation: Bool = true
     var showSignOutSheet: Bool = false
     var showWithdrawSheet: Bool = false
   }
