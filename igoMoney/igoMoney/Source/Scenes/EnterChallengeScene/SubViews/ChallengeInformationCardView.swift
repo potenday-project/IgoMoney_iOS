@@ -16,7 +16,7 @@ struct ChallengeInformationCardView: View {
       VStack(alignment: .leading, spacing: 8) {
         HStack {
           VStack(alignment: .leading, spacing: 4) {
-            Text("\(viewStore.leaderName ?? "")님과 챌린지")
+            Text("\(viewStore.leader?.nickName ?? "")님과 챌린지")
               .font(.pretendard(size: 14, weight: .bold))
               .foregroundColor(ColorConstants.gray2)
             

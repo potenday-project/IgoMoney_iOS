@@ -124,11 +124,18 @@ struct ExploreChallengeScene: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
           ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 12) {
-              ForEach(viewStore.challenges, id: \.id) { challenge in
-                ExploreChallengeCellView(challenge: challenge)
-                  .onTapGesture {
-                    viewStore.send(.selectChallenge(challenge))
-                  }
+              ForEachStore(
+                store.scope(
+                  state: \.challenges,
+                  action: ExploreChallengeCore.Action.challengeInformationAction
+                )
+              ) { store in
+                WithViewStore(store, observe: { $0 }) { informationViewStore in
+                  ExploreChallengeCellView(store: store)
+                    .onTapGesture {
+                      viewStore.send(.selectChallenge(informationViewStore.challenge))
+                    }
+                }
               }
             }
             .padding(.top)

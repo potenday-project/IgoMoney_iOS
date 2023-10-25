@@ -9,12 +9,14 @@ import Foundation
 import ComposableArchitecture
 
 struct EnterChallengeInformationCore: Reducer {
-  struct State: Equatable {
+  struct State: Equatable, Identifiable {
     let challenge: Challenge
-    
-    var leaderName: String?
-    
+    var leader: User?
     var urlImageState = URLImageCore.State()
+    
+    var id: Int {
+      return challenge.id
+    }
   }
   
   @Dependency(\.userClient) var userClient
@@ -46,7 +48,7 @@ struct EnterChallengeInformationCore: Reducer {
         }
         
       case ._fetchChallengeLeaderResponse(.success(let user)):
-        state.leaderName = user.nickName
+        state.leader = user
         return .send(.urlImageAction(._setURLPath(user.profileImagePath)))
         
       case ._fetchChallengeLeaderResponse(.failure):

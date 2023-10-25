@@ -9,7 +9,8 @@ import Foundation
 import ComposableArchitecture
 
 struct EnterChallengeCore: Reducer {
-  struct State: Equatable {
+  struct State: Equatable, Identifiable {
+    var id: Int
     var showProgressView: Bool = false
     var dismissView: Bool = false
     
@@ -20,6 +21,7 @@ struct EnterChallengeCore: Reducer {
     var alertState = IGOAlertCore.State()
     
     init(challenge: Challenge) {
+      self.id = challenge.id
       self.challengeInformationState = EnterChallengeInformationCore.State(challenge: challenge)
     }
   }
