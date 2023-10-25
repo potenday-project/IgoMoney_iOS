@@ -134,6 +134,7 @@ struct AuthCore: Reducer {
         return .none
         
       case let ._authTokenResponse(.success(token)):
+        print(#fileID, #function, #line, "🐯", token)
         return .run { send in
           await send(
             ._userInformationResponse(
