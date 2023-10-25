@@ -14,6 +14,7 @@ struct ProfileSettingCore: Reducer {
     var nickNameState: NickNameCheckDuplicateCore.State
     var presentPhotoPicker: Bool = false
     var selectedImage: UIImage?
+    var isPresented: Bool = true
     
     var buttonEnable: Bool {
       return selectedImage != nil || nickNameState.nickNameState == .completeConfirm
@@ -75,7 +76,8 @@ struct ProfileSettingCore: Reducer {
         return .none
         
       case ._updateProfileResponse(.success):
-        return .send(.nickNameDuplicateAction(._updateOriginNickName))
+        state.isPresented = false
+        return .none
         
       case ._updateProfileResponse(.failure):
         return .none

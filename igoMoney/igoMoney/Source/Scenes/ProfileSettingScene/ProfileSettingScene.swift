@@ -10,6 +10,7 @@ import PhotosUI
 import ComposableArchitecture
 
 struct ProfileSettingScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<ProfileSettingCore>
   
   private let imagePickerConfiguration: PHPickerConfiguration = {
@@ -20,13 +21,14 @@ struct ProfileSettingScene: View {
   }()
   
   var body: some View {
-    VStack(alignment: .center) {
-      WithViewStore(store, observe: { $0 }) { viewStore in
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      VStack(alignment: .center) {
         IGONavigationBar {
           Text("프로필 수정")
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
           Button {
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "chevron.backward")
           }
@@ -42,44 +44,43 @@ struct ProfileSettingScene: View {
       .buttonStyle(.plain)
       .padding(.vertical, 24)
       
-      WithViewStore(store, observe: { $0 }) { viewStore in
-        URLImage(
-          store: self.store.scope(
-            state: \.profileImageState,
-            action: ProfileSettingCore.Action.profileImageAction
-          )
+      URLImage(
+        store: self.store.scope(
+          state: \.profileImageState,
+          action: ProfileSettingCore.Action.profileImageAction
         )
-        .scaledToFill()
-        .frame(width: 90, height: 90)
-        .clipShape(Circle())
-        .overlay(
-          Image("icon_camera")
-            .padding(6)
-            .foregroundColor(.white)
-            .background(
-              Circle()
-                .fill(ColorConstants.primary)
-            )
-          ,
-          alignment: .bottomTrailing
+      )
+      .scaledToFill()
+      .frame(width: 90, height: 90)
+      .clipShape(Circle())
+      .overlay(
+        Image("icon_camera")
+          .padding(6)
+          .foregroundColor(.white)
+          .background(
+            Circle()
+              .fill(ColorConstants.primary)
+          )
+        ,
+        alignment: .bottomTrailing
+      )
+      .onTapGesture {
+        viewStore.send(.presentPhotoPicker(true))
+      }
+      .sheet(
+        isPresented: viewStore.binding(
+          get: \.presentPhotoPicker,
+          send: ProfileSettingCore.Action.presentPhotoPicker
         )
-        .onTapGesture {
-          viewStore.send(.presentPhotoPicker(true))
-        }
-        .sheet(
-          isPresented: viewStore.binding(
-            get: \.presentPhotoPicker,
-            send: ProfileSettingCore.Action.presentPhotoPicker
-          )
-        ) {
-          IGOPhotoPicker(
-            selectedImage: viewStore.binding(
-              get: \.selectedImage,
-              send: ProfileSettingCore.Action.selectImage
-            ),
-            configuration: imagePickerConfiguration
-          )
-        }
+      ) {
+        IGOPhotoPicker(
+          selectedImage: viewStore.binding(
+            get: \.selectedImage,
+            send: ProfileSettingCore.Action.selectImage
+          ),
+          configuration: imagePickerConfiguration
+        )
+        
       }
       
       InputHeaderView(title: "닉네임", detail: "최소 3자 / 최대 8자")
@@ -93,6 +94,11 @@ struct ProfileSettingScene: View {
       )
       
       Spacer()
+        .onChange(of: viewStore.isPresented) { newValue in
+          if newValue == false {
+            presentationMode.wrappedValue.dismiss()
+          }
+        }
     }
     .navigationBarHidden(true)
     .padding(.horizontal, 24)
