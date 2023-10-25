@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct SettingScene: View {
   let store: StoreOf<SettingCore>
+  @State private var isToggle: Bool = true
   
   var body: some View {
     VStack {
@@ -41,7 +42,8 @@ struct SettingScene: View {
                   Image(systemName: "chevron.right")
                   
                 case .toggle:
-                  Text("토글 구현하기")
+                  Toggle("", isOn: $isToggle)
+                    .toggleStyle(IGOToggleStyle())
                   
                 case .text:
                   Text("")
