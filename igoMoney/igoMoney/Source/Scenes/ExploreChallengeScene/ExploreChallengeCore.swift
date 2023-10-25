@@ -86,7 +86,7 @@ struct ExploreChallengeCore: Reducer {
         state.showGenerate = false
         return .none
         
-      case .selectChallenge(let id):
+      case .selectChallenge(.some(let id)):
         guard let selectedItem = state.challenges.filter({ $0.id == id }).first?.challenge else {
           return .none
         }
