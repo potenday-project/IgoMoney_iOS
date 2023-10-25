@@ -35,18 +35,18 @@ struct SettingScene: View {
             Button {
               
             } label: {
-//              GeneralSettingCell(setting: setting) {
-//                switch setting.buttonType {
-//                case .general:
-//                  Image(systemName: "chevron.right")
-//                  
-//                case .toggle:
-//                  Text("토글 구현하기")
-//                  
-//                case .text:
-//                  Text("")
-//                }
-//              }
+              GeneralSettingCell(setting: setting) {
+                switch setting.buttonType {
+                case .general:
+                  Image(systemName: "chevron.right")
+                  
+                case .toggle:
+                  Text("토글 구현하기")
+                  
+                case .text:
+                  Text("")
+                }
+              }
             }
             .padding(.vertical, 16)
             .buttonStyle(.plain)
@@ -63,6 +63,11 @@ struct SettingScene: View {
 struct GeneralSettingCell<Content: View>: View {
   let setting: Setting
   let content: () -> Content
+  
+  init(setting: Setting, @ViewBuilder content: @escaping () -> Content) {
+    self.setting = setting
+    self.content = content
+  }
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
