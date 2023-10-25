@@ -71,8 +71,8 @@ struct GeneralSettingScene: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
           ForEach(viewStore.settings, id: \.rawValue) { setting in
             Button {
-              if setting == .authInformation || setting == .information {
-                
+              if setting == .authInformation {
+                viewStore.send(.presentAuthSetting(true))
               }
             } label: {
               GeneralSettingCellWithContent(to: setting, with: viewStore)
@@ -82,6 +82,25 @@ struct GeneralSettingScene: View {
           }
         }
       }
+      .background(
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          NavigationLink(
+            isActive: viewStore.binding(
+              get: \.showAuthSetting,
+              send: GeneralSettingCore.Action.presentAuthSetting
+            )
+          ) {
+            AuthSettingScene(
+              store: self.store.scope(
+                state: \.authSettingState,
+                action: GeneralSettingCore.Action.authSettingAction
+              )
+            )
+          } label: {
+            EmptyView()
+          }
+        }
+      )
     }
     .onAppear {
       store.send(.onAppear)

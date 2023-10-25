@@ -91,6 +91,7 @@ struct AuthSettingScene: View {
       
       Spacer()
     }
+    .navigationBarHidden(true)
     .padding(.horizontal, 24)
     .onAppear {
       store.send(.onAppear)
