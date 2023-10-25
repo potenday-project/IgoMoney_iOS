@@ -43,7 +43,7 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
 struct MyPageCore: Reducer {
   struct State: Equatable {
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
-    var settingState = SettingCore.State()
+    var settingState = GeneralSettingCore.State()
     var profileState = UserProfileCore.State()
     var profileEditState: ProfileSettingCore.State?
     
@@ -60,7 +60,7 @@ struct MyPageCore: Reducer {
     case _presentMail(Bool)
     case _presentProfileEdit(Bool)
     
-    case settingAction(SettingCore.Action)
+    case settingAction(GeneralSettingCore.Action)
     case userProfileAction(UserProfileCore.Action)
     case profileEditAction(ProfileSettingCore.Action)
   }
@@ -131,7 +131,7 @@ struct MyPageCore: Reducer {
     }
     
     Scope(state: \.settingState, action: /Action.settingAction) {
-      SettingCore()
+      GeneralSettingCore()
     }
     
     Scope(state: \.profileState, action: /Action.userProfileAction) {

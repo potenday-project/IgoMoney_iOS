@@ -8,8 +8,8 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct SettingScene: View {
-  let store: StoreOf<SettingCore>
+struct GeneralSettingScene: View {
+  let store: StoreOf<GeneralSettingCore>
   @State private var isToggle: Bool = true
   
   var body: some View {
@@ -94,8 +94,8 @@ struct GeneralSettingCell<Content: View>: View {
 #Preview {
   SettingScene(
     store: Store(
-      initialState: SettingCore.State(),
-      reducer: { SettingCore() }
+      initialState: GeneralSettingCore.State(),
+      reducer: { GeneralSettingCore() }
     )
   )
 }

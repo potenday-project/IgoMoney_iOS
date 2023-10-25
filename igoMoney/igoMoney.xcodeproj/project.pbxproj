@@ -91,8 +91,8 @@
 		18A152272AC96E3A00B8B8A4 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152262AC96E3A00B8B8A4 /* AuthToken.swift */; };
 		18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */; };
 		18A1522F2AC97F9E00B8B8A4 /* MyPageCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */; };
-		18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152312AC97FDF00B8B8A4 /* SettingScene.swift */; };
-		18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152332AC9800900B8B8A4 /* SettingCore.swift */; };
+		18A152322AC97FDF00B8B8A4 /* GeneralSettingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152312AC97FDF00B8B8A4 /* GeneralSettingScene.swift */; };
+		18A152342AC9800900B8B8A4 /* GeneralSettingCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152332AC9800900B8B8A4 /* GeneralSettingCore.swift */; };
 		18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A152352AC9833C00B8B8A4 /* Setting.swift */; };
 		18B437772AC16E410026A71E /* UserClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437762AC16E410026A71E /* UserClient + live.swift */; };
 		18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B437792AC170B30026A71E /* AuthAPI.swift */; };
@@ -204,8 +204,8 @@
 		18A152262AC96E3A00B8B8A4 /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartForm.swift; sourceTree = "<group>"; };
 		18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageCore.swift; sourceTree = "<group>"; };
-		18A152312AC97FDF00B8B8A4 /* SettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingScene.swift; sourceTree = "<group>"; };
-		18A152332AC9800900B8B8A4 /* SettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCore.swift; sourceTree = "<group>"; };
+		18A152312AC97FDF00B8B8A4 /* GeneralSettingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingScene.swift; sourceTree = "<group>"; };
+		18A152332AC9800900B8B8A4 /* GeneralSettingCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingCore.swift; sourceTree = "<group>"; };
 		18A152352AC9833C00B8B8A4 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		18B437762AC16E410026A71E /* UserClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserClient + live.swift"; sourceTree = "<group>"; };
 		18B437792AC170B30026A71E /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
@@ -479,6 +479,15 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		18EF46C72AE8FE4900EA949E /* GeneralSettingScene */ = {
+			isa = PBXGroup;
+			children = (
+				18A152312AC97FDF00B8B8A4 /* GeneralSettingScene.swift */,
+				18A152332AC9800900B8B8A4 /* GeneralSettingCore.swift */,
+			);
+			path = GeneralSettingScene;
+			sourceTree = "<group>";
+		};
 		18F332152AE658F9008C415E /* ProfileSettingScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +536,7 @@
 				18F55C972ADDA18E00DE50C4 /* AuthScene */,
 				18F55CA22ADDAAC400DE50C4 /* EnterChallengeScene */,
 				18F55C9C2ADDA9E400DE50C4 /* ExploreChallengeScene */,
+				18EF46C72AE8FE4900EA949E /* GeneralSettingScene */,
 				18F55CA72ADDAB9D00DE50C4 /* GenerateChallengeScene */,
 				18F55CA52ADDAB1D00DE50C4 /* HomeScene */,
 				18F55C9A2ADDA28E00DE50C4 /* MainScene */,
@@ -587,7 +597,6 @@
 			isa = PBXGroup;
 			children = (
 				188103972AE4FD42003EBE95 /* UserProfileSection */,
-				18F55CA82ADDABAB00DE50C4 /* SubViews */,
 				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
 				18A1522E2AC97F9E00B8B8A4 /* MyPageCore.swift */,
 			);
@@ -671,15 +680,6 @@
 				182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */,
 			);
 			path = GenerateChallengeScene;
-			sourceTree = "<group>";
-		};
-		18F55CA82ADDABAB00DE50C4 /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-				18A152312AC97FDF00B8B8A4 /* SettingScene.swift */,
-				18A152332AC9800900B8B8A4 /* SettingCore.swift */,
-			);
-			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -830,7 +830,7 @@
 				183169552ADBDAE40098638E /* EnterChallengeButton.swift in Sources */,
 				18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */,
 				18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */,
-				18A152342AC9800900B8B8A4 /* SettingCore.swift in Sources */,
+				18A152342AC9800900B8B8A4 /* GeneralSettingCore.swift in Sources */,
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
 				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
@@ -859,7 +859,7 @@
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
 				18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */,
 				18F55C922ADD942800DE50C4 /* AuthClient.swift in Sources */,
-				18A152322AC97FDF00B8B8A4 /* SettingScene.swift in Sources */,
+				18A152322AC97FDF00B8B8A4 /* GeneralSettingScene.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileInitialSettingScene.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
 				1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */,
