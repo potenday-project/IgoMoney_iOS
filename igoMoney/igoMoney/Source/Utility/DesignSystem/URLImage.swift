@@ -23,9 +23,9 @@ struct URLImageCore: Reducer {
   }
   
   enum Action: Equatable {
-    case onAppear
-    
     case fetchURLImage
+    
+    case _setURLPath(String?)
     case _fetchURLImageResponse(TaskResult<Image>)
   }
   
@@ -33,15 +33,11 @@ struct URLImageCore: Reducer {
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
-    case .onAppear:
-      state.loadingStatus = .inProgress
-      return .send(.fetchURLImage)
-      
     case .fetchURLImage:
       guard let path = state.urlPath, let url = URL(string: path) else {
         return .send(._fetchURLImageResponse(.failure(APIError.badRequest(400))))
       }
-      print(path)
+      
       return .run { send in
         await send(
           ._fetchURLImageResponse(
@@ -56,6 +52,10 @@ struct URLImageCore: Reducer {
           )
         )
       }
+      
+    case ._setURLPath(let path):
+      state.urlPath = path
+      return .send(.fetchURLImage)
       
     case ._fetchURLImageResponse(.success(let image)):
       state.loadingStatus = .success(image)
@@ -87,9 +87,6 @@ struct URLImage: View {
           Image("default_profile")
             .resizable()
         }
-      }
-      .onChange(of: viewStore.state) { _ in
-        viewStore.send(.onAppear)
       }
     }
   }

@@ -18,7 +18,6 @@ extension UIImage {
     let renderImage = renderer.image { context in
       self.draw(in: CGRect(origin: .zero, size: size))
     }
-    print(#fileID, #function, #line, "newImage Data ", renderImage.pngData())
     return renderImage
   }
 }

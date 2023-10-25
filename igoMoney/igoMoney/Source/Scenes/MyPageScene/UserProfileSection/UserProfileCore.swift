@@ -20,6 +20,8 @@ struct UserProfileCore: Reducer {
     
     // Inner Action
     case _fetchProfileResponse(TaskResult<User>)
+    case _setProfileImagePath(String?)
+    case _setUserName(String?)
     
     // Child Action
     case profileImageAction(URLImageCore.Action)
@@ -56,12 +58,20 @@ struct UserProfileCore: Reducer {
         }
         
       case ._fetchProfileResponse(.success(let user)):
-        state.profileImageState = URLImageCore.State(urlPath: user.profileImagePath)
-        state.userName = user.nickName ?? ""
-        return .none
+        return .concatenate(
+          .send(._setUserName(user.nickName)),
+          .send(._setProfileImagePath(user.profileImagePath))
+        )
         
       case ._fetchProfileResponse(.failure):
         return .none
+        
+      case ._setUserName(let userName):
+        state.userName = userName ?? ""
+        return .none
+        
+      case ._setProfileImagePath(let profilePath):
+        return .send(.profileImageAction(._setURLPath(profilePath)))
         
       case .myChallengeSectionAction:
         return .none
