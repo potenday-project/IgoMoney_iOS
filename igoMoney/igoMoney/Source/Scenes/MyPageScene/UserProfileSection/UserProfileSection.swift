@@ -20,7 +20,7 @@ struct UserProfileSection: View {
             action: UserProfileCore.Action.profileImageAction
           )
         )
-        .scaledToFit()
+        .scaledToFill()
         .frame(width: 65, height: 65)
         .clipShape(Circle())
         
