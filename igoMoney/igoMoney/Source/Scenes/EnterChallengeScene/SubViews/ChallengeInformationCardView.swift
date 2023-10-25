@@ -41,10 +41,15 @@ struct ChallengeInformationCardView: View {
           
           Spacer()
           
-          Image("default_profile")
-            .resizable()
-            .scaledToFill()
-            .frame(width: 50, height: 50)
+          URLImage(
+            store: self.store.scope(
+              state: \.urlImageState,
+              action: EnterChallengeInformationCore.Action.urlImageAction
+            )
+          )
+          .scaledToFill()
+          .frame(width: 50, height: 50)
+          .clipShape(Circle())
         }
         
         Text(viewStore.challenge.content)
