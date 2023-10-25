@@ -32,7 +32,7 @@ extension UserClient {
       ],
       body: .multipart(
         boundary: boundary,
-        values: ["id": .text(userID), "nickname": .text(nickName)]
+        values: ["userId": .text(userID), "nickname": .text(nickName)]
       )
     )
     
