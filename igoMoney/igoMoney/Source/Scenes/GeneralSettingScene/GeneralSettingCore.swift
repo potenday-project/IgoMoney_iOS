@@ -62,9 +62,6 @@ struct GeneralSettingCore: Reducer {
         }
         return .none
         
-      case .authSettingAction:
-        return .none
-        
       case .serviceAlertAction:
         return .none
         
@@ -73,6 +70,9 @@ struct GeneralSettingCore: Reducer {
         
       case .authSettingAction(._withdrawResponse(.success)), .authSettingAction(._signOutResponse(.success)):
         state.showAuthSetting = false
+        return .none
+        
+      case .authSettingAction:
         return .none
       }
     }

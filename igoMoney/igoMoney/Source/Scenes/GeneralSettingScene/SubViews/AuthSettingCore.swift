@@ -10,10 +10,15 @@ struct AuthSettingCore: Reducer {
   struct State: Equatable {
     var token: AuthToken?
     var userEmail: String?
+    
+    var showSignOutSheet: Bool = false
+    var showWithdrawSheet: Bool = false
   }
   
   enum Action {
     case onAppear
+    case showSignOut(Bool)
+    case showWithdraw(Bool)
     case signOut
     case withdraw
     
@@ -38,6 +43,22 @@ struct AuthSettingCore: Reducer {
         .send(._fetchToken),
         .send(._fetchUserInformation)
       )
+      
+    case .showSignOut(true):
+      state.showSignOutSheet = true
+      return .none
+      
+    case .showSignOut(false):
+      state.showSignOutSheet = false
+      return .none
+      
+    case .showWithdraw(true):
+      state.showWithdrawSheet = true
+      return .none
+      
+    case .showWithdraw(false):
+      state.showWithdrawSheet = false
+      return .none
       
     case .signOut:
       return .run { send in
