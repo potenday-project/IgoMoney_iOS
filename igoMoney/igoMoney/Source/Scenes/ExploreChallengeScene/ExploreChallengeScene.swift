@@ -35,10 +35,12 @@ struct ExploreChallengeScene: View {
         .accentColor(.black)
         .padding(.horizontal, 24)
         
-//        WithViewStore(store, observe: { $0 }) { viewStore in
-//          ExploreChallengeFilterHeaderView(viewStore: viewStore)
-//        }
-//        .padding(.horizontal, 24)
+        ExploreChallengeFilterHeaderSection(
+          store: self.store.scope(
+            state: \.filterState,
+            action: ExploreChallengeCore.Action.filterChallengeAction
+          )
+        )
         
         WithViewStore(store, observe: { $0 }) { viewStore in
           ScrollView(.vertical, showsIndicators: false) {
@@ -90,7 +92,12 @@ struct ExploreChallengeScene: View {
               ),
               maxHeight: proxy.size.height * 0.65
             ) {
-              ExploreChallengeFilterView(viewStore: viewStore)
+              ExploreChallengeFilterView(
+                store: self.store.scope(
+                  state: \.filterState,
+                  action: ExploreChallengeCore.Action.filterChallengeAction
+                )
+              )
             }
             .edgesIgnoringSafeArea(.all)
           }
