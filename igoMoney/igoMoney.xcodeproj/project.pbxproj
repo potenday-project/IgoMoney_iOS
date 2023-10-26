@@ -59,7 +59,6 @@
 		18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A4F2ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift */; };
 		18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A522ABC34640075DE76 /* ChallengeInformation.swift */; };
 		18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */; };
-		18599A592ABC43D80075DE76 /* EmptyChallengeDetailCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */; };
 		18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */; };
 		18599A672ABC4E1B0075DE76 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A662ABC4DE30075DE76 /* Pretendard-Regular.otf */; };
 		18599A682ABC4E1B0075DE76 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18599A632ABC4DE30075DE76 /* Pretendard-Light.otf */; };
@@ -177,7 +176,6 @@
 		18599A4F2ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChallengeListSectionCore.swift; sourceTree = "<group>"; };
 		18599A522ABC34640075DE76 /* ChallengeInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformation.swift; sourceTree = "<group>"; };
 		18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChallengeDetail.swift; sourceTree = "<group>"; };
-		18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyChallengeDetailCore.swift; sourceTree = "<group>"; };
 		18599A5B2ABC46AF0075DE76 /* ExploreChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeScene.swift; sourceTree = "<group>"; };
 		18599A5E2ABC4DE30075DE76 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		18599A5F2ABC4DE30075DE76 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-SemiBold.otf"; path = "../../../../../../../Downloads/Pretendard-1/public/static/Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 			isa = PBXGroup;
 			children = (
 				18599A562ABC35C70075DE76 /* EmptyChallengeDetail.swift */,
-				18599A582ABC43D80075DE76 /* EmptyChallengeDetailCore.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -902,7 +899,6 @@
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
 				18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */,
 				187252C92ABC07C700DCF08C /* MainCore.swift in Sources */,
-				18599A592ABC43D80075DE76 /* EmptyChallengeDetailCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
