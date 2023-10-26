@@ -12,19 +12,20 @@ struct EmptyChallengeListSectionCore: Reducer {
   struct State: Equatable {
     var challenges: IdentifiedArrayOf<ChallengeInformationCore.State> = []
     
-    var showExplore: Bool = false
-    var showGenerate: Bool = false
-    
-    var exploreChallengeState: ExploreChallengeCore.State?
+    var enterSelectionID: Int?
     var enterSelection: EnterChallengeCore.State?
     
+    var showExplore: Bool = false
+    var exploreChallengeState: ExploreChallengeCore.State?
+    
+    var showGenerate: Bool = false
     var generateChallengeState = GenerateRoomCore.State()
   }
   
   enum Action: Equatable, Sendable {
     // User Action
     case showExplore(Bool)
-    case showEnter(Challenge?)
+    case showEnter(Int?)
     case showGenerate(Bool)
     
     // Inner Action
@@ -62,12 +63,18 @@ struct EmptyChallengeListSectionCore: Reducer {
           await send(._removeExploreState)
         }
         
-      case let .showEnter(.some(challenge)):
-        state.enterSelection = EnterChallengeCore.State(challenge: challenge)
+      case let .showEnter(.some(id)):
+        guard let selectedChallenge = state.challenges[id: id]?.challenge else {
+          return .none
+        }
+        
+        state.enterSelectionID = id
+        state.enterSelection = EnterChallengeCore.State(challenge: selectedChallenge)
         return .none
         
       case .showEnter(.none):
         state.enterSelection = nil
+        state.enterSelectionID = nil
         return .none
         
       case .showGenerate(true):

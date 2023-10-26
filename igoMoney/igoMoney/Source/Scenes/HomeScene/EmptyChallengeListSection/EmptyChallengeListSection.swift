@@ -38,27 +38,6 @@ struct EmptyChallengeListSection: View {
             EmptyView()
           }
           
-          NavigationLink(
-            isActive: viewStore.binding(
-              get: { $0.enterSelection != nil },
-              send: { newValue in
-                let challengeValue = (newValue ? viewStore.enterSelection?.challengeInformationState.challenge : nil)
-                return .showEnter(challengeValue)
-              }
-            )
-          ) {
-            IfLetStore(
-              self.store.scope(
-                state: \.enterSelection,
-                action: EmptyChallengeListSectionCore.Action.enterAction
-              )
-            ) { store in
-              EnterChallengeScene(store: store)
-            }
-          } label: {
-            EmptyView()
-          }
-          
           ChallengeSectionTitleView(sectionType: .emptyChallenge) {
             store.send(.showExplore(true))
           }
@@ -74,11 +53,26 @@ struct EmptyChallengeListSection: View {
             )
           ) { store in
             WithViewStore(store, observe: { $0 }) { informationViewStore in
-              EmptyChallengeDetail(store: store)
-                .onTapGesture {
-                  viewStore.send(.showEnter(informationViewStore.challenge))
+              NavigationLink(
+                tag: informationViewStore.challenge.id,
+                selection: viewStore.binding(
+                  get: \.enterSelectionID,
+                  send: EmptyChallengeListSectionCore.Action.showEnter
+                )
+              ) {
+                IfLetStore(
+                  self.store.scope(
+                    state: \.enterSelection,
+                    action: EmptyChallengeListSectionCore.Action.enterAction
+                  )
+                ) { itemStore in
+                    EnterChallengeScene(store: itemStore)
+                  }
+                } label: {
+                  EmptyChallengeDetail(store: store)
                 }
             }
+            .buttonStyle(.plain)
           }
           
           CreateChallengeButton()
