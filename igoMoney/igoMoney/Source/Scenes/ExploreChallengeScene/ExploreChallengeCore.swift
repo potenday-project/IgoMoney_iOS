@@ -10,39 +10,29 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: [Challenge] = []
-    
-    
+    var challenges: IdentifiedArrayOf<ChallengeInformationCore.State> = []
     var generateState = GenerateRoomCore.State()
-    var challengeSelection: EnterChallengeCore.State?
-    var categorySelection: ChallengeCategory?
-    var moneySelection: TargetMoneyAmount?
+    var filterState = ExploreChallengeFilterCore.State()
+    var selectedChallenge: EnterChallengeCore.State?
     
+    var selectedChallengeID: Int?
     var showGenerate: Bool = false
     var showFilter: Bool = false
-    
-    var isSelectAll: Bool {
-      return (categorySelection != nil) && (moneySelection != nil)
-    }
   }
   
   enum Action: Equatable {
     case openFilter(Bool)
-    case removeFilter
-    case confirmFilter
     
     case requestFetchChallenges
     
     case showGenerate(Bool)
-    case selectChallenge(Challenge?)
-    case selectCategory(ChallengeCategory)
-    case selectMoney(TargetMoneyAmount)
+    case selectChallenge(Int?)
 
     case _filterChallengeResponse(TaskResult<[Challenge]>)
-    case _setCategorySelection(ChallengeCategory?)
-    case _setMoneySelection(TargetMoneyAmount?)
-    
+
+    case challengeInformationAction(Int, ChallengeInformationCore.Action)
     case enterChallengeAction(EnterChallengeCore.Action)
+    case filterChallengeAction(ExploreChallengeFilterCore.Action)
     case generateChallengeAction(GenerateRoomCore.Action)
   }
   
@@ -53,28 +43,19 @@ struct ExploreChallengeCore: Reducer {
       GenerateRoomCore()
     }
     
+    Scope(state: \.filterState, action: /Action.filterChallengeAction) {
+      ExploreChallengeFilterCore()
+    }
+    
     Reduce { state, action in
       switch action {
       case .openFilter(true):
         state.showFilter = true
-        return .concatenate(
-          .send(._setCategorySelection(.living)),
-          .send(._setMoneySelection(.init(money: 10000)))
-        )
+        return .none
         
       case .openFilter(false):
         state.showFilter = false
-        return .send(.removeFilter)
-        
-      case .removeFilter:
-        return .concatenate(
-          .send(._setMoneySelection(nil)),
-          .send(._setCategorySelection(nil))
-        )
-        
-      case .confirmFilter:
-        state.showFilter = false
-        return .none
+        return .send(.filterChallengeAction(.selectAll(true)))
         
       case .showGenerate(true):
         state.showGenerate = true
@@ -84,19 +65,19 @@ struct ExploreChallengeCore: Reducer {
         state.showGenerate = false
         return .none
         
-      case .selectChallenge(.some(let challenge)):
-        state.challengeSelection = EnterChallengeCore.State(challenge: challenge)
+      case .selectChallenge(.some(let id)):
+        guard let selectedItem = state.challenges[id: id]?.challenge else {
+          return .none
+        }
+        
+        state.selectedChallengeID = id
+        state.selectedChallenge = EnterChallengeCore.State(challenge: selectedItem)
         return .none
         
       case .selectChallenge(.none):
-        state.challengeSelection = nil
+        state.selectedChallenge = nil
+        state.selectedChallengeID = nil
         return .none
-        
-      case .selectCategory(let category):
-        return .send(._setCategorySelection(category))
-        
-      case .selectMoney(let money):
-        return .send(._setMoneySelection(money))
         
       case .requestFetchChallenges:
         return .run { send in
@@ -109,29 +90,30 @@ struct ExploreChallengeCore: Reducer {
           )
         }
         
-      case ._setCategorySelection(let category):
-        state.categorySelection = category
-        return .none
-        
-      case ._setMoneySelection(let money):
-        state.moneySelection = money
-        return .none
-        
       case ._filterChallengeResponse(.success(let challenges)):
-        print(challenges)
-        state.challenges = challenges
+        let informations = challenges.map { ChallengeInformationCore.State(challenge: $0) }
+        state.challenges = IdentifiedArray(uniqueElements: informations)
         return .none
         
       case ._filterChallengeResponse(.failure):
         state.challenges = []
         return .none
         
+      case .filterChallengeAction(.selectCategory), .filterChallengeAction(.selectMoney):
+        return .send(.openFilter(true))
+        
+      case .filterChallengeAction(.confirm):
+        return .none
+        
       default:
         return .none
       }
     }
-    .ifLet(\.challengeSelection, action: /Action.enterChallengeAction) {
+    .ifLet(\.selectedChallenge, action: /Action.enterChallengeAction) {
       EnterChallengeCore()
+    }
+    .forEach(\.challenges, action: /Action.challengeInformationAction) {
+      ChallengeInformationCore()
     }
   }
 }

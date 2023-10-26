@@ -37,3 +37,31 @@ struct IGOToggleStyle: ToggleStyle {
     }
   }
 }
+
+struct IGOMenuButtonStyle: ToggleStyle {
+  let isMenu: Bool
+  
+  func makeBody(configuration: Configuration) -> some View {
+    Button {
+      withAnimation {
+        configuration.isOn.toggle()
+      }
+    } label: {
+      HStack {
+        configuration.label
+        
+        if isMenu {
+          Image(systemName: "chevron.down")
+        }
+      }
+    }
+    .padding(.horizontal, 12)
+    .padding(.vertical, 8)
+    .background(
+      RoundedRectangle(cornerRadius: 4)
+        .stroke(configuration.isOn ? ColorConstants.primary : ColorConstants.gray5)
+    )
+    .foregroundColor(configuration.isOn ? .black : ColorConstants.gray2)
+    .buttonStyle(.plain)
+  }
+}

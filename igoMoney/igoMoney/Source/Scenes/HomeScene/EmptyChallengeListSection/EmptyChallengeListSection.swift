@@ -38,27 +38,6 @@ struct EmptyChallengeListSection: View {
             EmptyView()
           }
           
-          NavigationLink(
-            isActive: viewStore.binding(
-              get: { $0.enterSelection != nil },
-              send: { newValue in
-                let challengeValue = (newValue ? viewStore.enterSelection?.challengeInformationState.challenge : nil)
-                return .showEnter(challengeValue)
-              }
-            )
-          ) {
-            IfLetStore(
-              self.store.scope(
-                state: \.enterSelection,
-                action: EmptyChallengeListSectionCore.Action.enterAction
-              )
-            ) { store in
-              EnterChallengeScene(store: store)
-            }
-          } label: {
-            EmptyView()
-          }
-          
           ChallengeSectionTitleView(sectionType: .emptyChallenge) {
             store.send(.showExplore(true))
           }
@@ -67,16 +46,33 @@ struct EmptyChallengeListSection: View {
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         LazyVGrid(columns: generateGridItem(count: 2, spacing: 16), spacing: 16) {
-          ForEach(viewStore.challenges, id: \.id) { challenge in
-            EmptyChallengeDetail(
-              store: Store(
-                initialState: ChallengeDetailCore.State(challenge: challenge),
-                reducer: { ChallengeDetailCore() }
-              )
+          ForEachStore(
+            self.store.scope(
+              state: \.challenges,
+              action: EmptyChallengeListSectionCore.Action.challengeInformationAction
             )
-            .onTapGesture {
-              viewStore.send(.showEnter(challenge))
+          ) { store in
+            WithViewStore(store, observe: { $0 }) { informationViewStore in
+              NavigationLink(
+                tag: informationViewStore.challenge.id,
+                selection: viewStore.binding(
+                  get: \.enterSelectionID,
+                  send: EmptyChallengeListSectionCore.Action.showEnter
+                )
+              ) {
+                IfLetStore(
+                  self.store.scope(
+                    state: \.enterSelection,
+                    action: EmptyChallengeListSectionCore.Action.enterAction
+                  )
+                ) { itemStore in
+                    EnterChallengeScene(store: itemStore)
+                  }
+                } label: {
+                  EmptyChallengeDetail(store: store)
+                }
             }
+            .buttonStyle(.plain)
           }
           
           CreateChallengeButton()

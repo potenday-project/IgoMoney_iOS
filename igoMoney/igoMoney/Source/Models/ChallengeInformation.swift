@@ -66,7 +66,7 @@ extension Challenge {
   static let `default`: Challenge = .init(
     id: Int.random(in: Int.min...Int.max),
     recordID: nil,
-    leaderID: 2,
+    leaderID: 10,
     competitorID: nil,
     winnerID: nil,
     title: "만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요!",

@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChallengeInformationCardView: View {
-  let store: StoreOf<EnterChallengeInformationCore>
+  let store: StoreOf<ChallengeInformationCore>
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       VStack(alignment: .leading, spacing: 8) {
         HStack {
           VStack(alignment: .leading, spacing: 4) {
-            Text("\(viewStore.leaderName ?? "")님과 챌린지")
+            Text("\(viewStore.leader?.nickName ?? "")님과 챌린지")
               .font(.pretendard(size: 14, weight: .bold))
               .foregroundColor(ColorConstants.gray2)
             
@@ -41,10 +41,15 @@ struct ChallengeInformationCardView: View {
           
           Spacer()
           
-          Image("default_profile")
-            .resizable()
-            .scaledToFill()
-            .frame(width: 50, height: 50)
+          URLImage(
+            store: self.store.scope(
+              state: \.urlImageState,
+              action: ChallengeInformationCore.Action.urlImageAction
+            )
+          )
+          .scaledToFill()
+          .frame(width: 50, height: 50)
+          .clipShape(Circle())
         }
         
         Text(viewStore.challenge.content)
