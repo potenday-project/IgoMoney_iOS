@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ExploreChallengeCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<EnterChallengeInformationCore.State> = []
+    var challenges: IdentifiedArrayOf<ChallengeInformationCore.State> = []
     
     var generateState = GenerateRoomCore.State()
     var selectedChallengeID: Int?
@@ -43,7 +43,7 @@ struct ExploreChallengeCore: Reducer {
     case _setCategorySelection(ChallengeCategory?)
     case _setMoneySelection(TargetMoneyAmount?)
 
-    case challengeInformationAction(Int, EnterChallengeInformationCore.Action)
+    case challengeInformationAction(Int, ChallengeInformationCore.Action)
     case enterChallengeAction(EnterChallengeCore.Action)
     case generateChallengeAction(GenerateRoomCore.Action)
   }
@@ -126,7 +126,7 @@ struct ExploreChallengeCore: Reducer {
         return .none
         
       case ._filterChallengeResponse(.success(let challenges)):
-        let informations = challenges.map { EnterChallengeInformationCore.State(challenge: $0) }
+        let informations = challenges.map { ChallengeInformationCore.State(challenge: $0) }
         state.challenges = IdentifiedArray(uniqueElements: informations)
         return .none
         
@@ -142,7 +142,7 @@ struct ExploreChallengeCore: Reducer {
       EnterChallengeCore()
     }
     .forEach(\.challenges, action: /Action.challengeInformationAction) {
-      EnterChallengeInformationCore()
+      ChallengeInformationCore()
     }
   }
 }

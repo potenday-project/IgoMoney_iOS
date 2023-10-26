@@ -11,77 +11,6 @@ import ComposableArchitecture
 struct ExploreChallengeScene: View {
   @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<ExploreChallengeCore>
-  private enum FilterSectionItem: Int, CaseIterable {
-    case all
-    case challenge
-    case money
-    
-    var description: String {
-      switch self {
-      case .all:
-        return "전체"
-      case .challenge:
-        return "챌린지 주제"
-      case .money:
-        return "금액"
-      }
-    }
-    
-    var isMenu: Bool {
-      return (self == .all) == false
-    }
-  }
-  
-  @ViewBuilder
-  private func FilterButton(
-    with viewStore: ViewStoreOf<ExploreChallengeCore>,
-    isSelected: Bool,
-    filterType: FilterSectionItem
-  ) -> some View {
-    Button {
-      switch filterType {
-      case .all:
-        viewStore.send(.removeFilter)
-      case .challenge, .money:
-        viewStore.send(.openFilter(true))
-      }
-    } label: {
-      HStack {
-        switch filterType {
-        case .challenge:
-          if let category = viewStore.categorySelection {
-            Text(category.description)
-          } else {
-            Text(filterType.description)
-          }
-        case .money:
-          if let targetMoney = viewStore.moneySelection {
-            Text(targetMoney.description)
-          } else {
-            Text(filterType.description)
-          }
-          
-        default:
-          Text(filterType.description)
-        }
-        
-        
-        if filterType.isMenu {
-          Image(systemName: "chevron.down")
-        }
-      }
-    }
-    .buttonStyle(.plain)
-    .padding(.horizontal, 12)
-    .padding(.vertical, 8)
-    .foregroundColor(isSelected ? .black : ColorConstants.gray2)
-    .background(
-      RoundedRectangle(cornerRadius: 4)
-        .stroke(
-          isSelected ? ColorConstants.primary : ColorConstants.gray5
-        )
-    )
-  }
   
   var body: some View {
     ZStack {
@@ -106,20 +35,10 @@ struct ExploreChallengeScene: View {
         .accentColor(.black)
         .padding(.horizontal, 24)
         
-        HStack(spacing: 8) {
-          WithViewStore(store, observe: { $0 }) { viewStore in
-            ForEach(FilterSectionItem.allCases, id: \.rawValue) { filter in
-              FilterButton(
-                with: viewStore,
-                isSelected: filter == .all ? viewStore.isSelectAll == false : viewStore.isSelectAll,
-                filterType: filter
-              )
-            }
-          }
-          
-          Spacer()
-        }
-        .padding(.horizontal, 24)
+//        WithViewStore(store, observe: { $0 }) { viewStore in
+//          ExploreChallengeFilterHeaderView(viewStore: viewStore)
+//        }
+//        .padding(.horizontal, 24)
         
         WithViewStore(store, observe: { $0 }) { viewStore in
           ScrollView(.vertical, showsIndicators: false) {
@@ -195,6 +114,29 @@ struct ExploreChallengeScene: View {
     .navigationBarHidden(true)
   }
 }
+
+enum FilterSectionItem: Int, CaseIterable {
+  case all
+  case challenge
+  case money
+  
+  var description: String {
+    switch self {
+    case .all:
+      return "전체"
+    case .challenge:
+      return "챌린지 주제"
+    case .money:
+      return "금액"
+    }
+  }
+  
+  var isMenu: Bool {
+    return (self == .all) == false
+  }
+}
+
+
 
 struct ExploreChallengeScene_Previews: PreviewProvider {
   static var previews: some View {

@@ -8,7 +8,7 @@ import Foundation
 
 import ComposableArchitecture
 
-struct EnterChallengeInformationCore: Reducer {
+struct ChallengeInformationCore: Reducer {
   struct State: Equatable, Identifiable {
     let challenge: Challenge
     var leader: User?

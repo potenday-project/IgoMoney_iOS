@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ExploreChallengeCellView: View {
-  let store: StoreOf<EnterChallengeInformationCore>
+  let store: StoreOf<ChallengeInformationCore>
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
@@ -47,7 +47,7 @@ struct ExploreChallengeCellView: View {
         URLImage(
           store: self.store.scope(
             state: \.urlImageState,
-            action: EnterChallengeInformationCore.Action.urlImageAction
+            action: ChallengeInformationCore.Action.urlImageAction
           )
         )
         .scaledToFill()

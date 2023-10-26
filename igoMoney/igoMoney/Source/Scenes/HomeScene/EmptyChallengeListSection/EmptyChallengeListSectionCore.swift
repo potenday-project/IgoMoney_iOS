@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct EmptyChallengeListSectionCore: Reducer {
   struct State: Equatable {
-    var challenges: IdentifiedArrayOf<EnterChallengeInformationCore.State> = []
+    var challenges: IdentifiedArrayOf<ChallengeInformationCore.State> = []
     
     var showExplore: Bool = false
     var showGenerate: Bool = false
@@ -35,7 +35,7 @@ struct EmptyChallengeListSectionCore: Reducer {
     case _notStartedChallengeListResponse(TaskResult<[Challenge]>)
     
     // Child Action
-    case challengeInformationAction(Int, EnterChallengeInformationCore.Action)
+    case challengeInformationAction(Int, ChallengeInformationCore.Action)
     case exploreChallengeAction(ExploreChallengeCore.Action)
     case enterAction(EnterChallengeCore.Action)
     case generateAction(GenerateRoomCore.Action)
@@ -100,7 +100,7 @@ struct EmptyChallengeListSectionCore: Reducer {
         return .none
         
       case ._notStartedChallengeListResponse(.success(let challenges)):
-        let emptyChallenges = challenges.map { EnterChallengeInformationCore.State(challenge: $0) }
+        let emptyChallenges = challenges.map { ChallengeInformationCore.State(challenge: $0) }
         state.challenges = IdentifiedArray(uniqueElements: emptyChallenges)
         return .none
         
@@ -132,7 +132,7 @@ struct EmptyChallengeListSectionCore: Reducer {
       EnterChallengeCore()
     }
     .forEach(\.challenges, action: /Action.challengeInformationAction) {
-      EnterChallengeInformationCore()
+      ChallengeInformationCore()
     }
    }
 }

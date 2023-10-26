@@ -17,12 +17,12 @@ struct EnterChallengeCore: Reducer {
     var alertTitle: String = ""
     
     var enterChallengeButtonState = EnterChallengeButtonCore.State()
-    var challengeInformationState: EnterChallengeInformationCore.State
+    var challengeInformationState: ChallengeInformationCore.State
     var alertState = IGOAlertCore.State()
     
     init(challenge: Challenge) {
       self.id = challenge.id
-      self.challengeInformationState = EnterChallengeInformationCore.State(challenge: challenge)
+      self.challengeInformationState = ChallengeInformationCore.State(challenge: challenge)
     }
   }
   
@@ -32,7 +32,7 @@ struct EnterChallengeCore: Reducer {
     
     case _requestEnterChallenge(TaskResult<Bool>)
     
-    case enterChallengeInformationAction(EnterChallengeInformationCore.Action)
+    case enterChallengeInformationAction(ChallengeInformationCore.Action)
     case enterChallengeButtonAction(EnterChallengeButtonCore.Action)
     case alertAction(IGOAlertCore.Action)
   }
@@ -42,7 +42,7 @@ struct EnterChallengeCore: Reducer {
   
   var body: some Reducer<State, Action> {
     Scope(state: \.challengeInformationState, action: /Action.enterChallengeInformationAction) {
-      EnterChallengeInformationCore()
+      ChallengeInformationCore()
     }
     
     Scope(state: \.enterChallengeButtonState, action: /Action.enterChallengeButtonAction) {

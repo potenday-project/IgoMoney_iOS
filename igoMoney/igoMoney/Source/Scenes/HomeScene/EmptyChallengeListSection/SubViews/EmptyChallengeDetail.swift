@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EmptyChallengeDetail: View {
-  let store: StoreOf<EnterChallengeInformationCore>
+  let store: StoreOf<ChallengeInformationCore>
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -52,7 +52,7 @@ struct EmptyChallengeDetail: View {
         URLImage(
           store: self.store.scope(
             state: \.urlImageState,
-            action: EnterChallengeInformationCore.Action.urlImageAction
+            action: ChallengeInformationCore.Action.urlImageAction
           )
         )
         .scaledToFill()
@@ -80,8 +80,8 @@ struct EmptyChallengeDetail: View {
 #Preview {
   EmptyChallengeDetail(
     store: Store(
-      initialState: EnterChallengeInformationCore.State(challenge: .default),
-      reducer: { EnterChallengeInformationCore() }
+      initialState: ChallengeInformationCore.State(challenge: .default),
+      reducer: { ChallengeInformationCore() }
     )
   )
 }
