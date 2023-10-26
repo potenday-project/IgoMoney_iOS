@@ -6,44 +6,19 @@
 
 import SwiftUI
 
-enum ChallengeCounterType: Int, CaseIterable {
-  case win
-  case total
-  
-  var title: String {
-    switch self {
-    case .win:
-      return "승리"
-    case .total:
-      return "누적"
-    }
-  }
-}
+import ComposableArchitecture
 
 struct ChallengeStatisticSection: View {
-  @ViewBuilder
-  private func ChallengeCountCell(title: String, count: Int) -> some View {
-    VStack {
-      Text("승리 챌린지 수")
-        .font(.pretendard(size: 14, weight: .medium))
-        .lineHeight(font: .pretendard(size: 14, weight: .medium), lineHeight: 20)
-      
-      Text("5")
-        .font(.pretendard(size: 20, weight: .bold))
-        .lineHeight(font: .pretendard(size: 20, weight: .bold), lineHeight: 27)
-    }
-    .frame(maxWidth: .infinity)
-    .padding(.vertical, 12)
-    .background(ColorConstants.primary8)
-    .cornerRadius(8)
-    .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
-  }
-  
   var body: some View {
     VStack(spacing: 16) {
       HStack(spacing: 8) {
         ForEach(ChallengeCounterType.allCases, id: \.rawValue) { counter in
-          ChallengeCountCell(title: counter.title, count: 5)
+          ChallengeCounterView(
+            store: Store(
+              initialState: ChallengeCounterCore.State(challengeType: counter),
+              reducer: { ChallengeCounterCore() }
+            )
+          )
         }
       }
       
@@ -73,6 +48,58 @@ struct ChallengeStatisticSection: View {
       .cornerRadius(8)
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
     }
+  }
+}
+
+enum ChallengeCounterType: Int, CaseIterable {
+  case win
+  case total
+  
+  var title: String {
+    switch self {
+    case .win:
+      return "승리"
+    case .total:
+      return "누적"
+    }
+  }
+}
+
+struct ChallengeCounterCore: Reducer {
+  struct State: Equatable {
+    var challengeCount: Int = .zero
+    let challengeType: ChallengeCounterType
+  }
+  
+  enum Action {
+    
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    return .none
+  }
+}
+
+struct ChallengeCounterView: View {
+  let store: StoreOf<ChallengeCounterCore>
+  
+  var body: some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      VStack {
+        Text("\(viewStore.challengeType.title) 챌린지 수")
+          .font(.pretendard(size: 14, weight: .medium))
+          .lineHeight(font: .pretendard(size: 14, weight: .medium), lineHeight: 20)
+        
+        Text("\(viewStore.challengeCount)")
+          .font(.pretendard(size: 20, weight: .bold))
+          .lineHeight(font: .pretendard(size: 20, weight: .bold), lineHeight: 27)
+      }
+    }
+    .frame(maxWidth: .infinity)
+    .padding(.vertical, 12)
+    .background(ColorConstants.primary8)
+    .cornerRadius(8)
+    .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
   }
 }
 
