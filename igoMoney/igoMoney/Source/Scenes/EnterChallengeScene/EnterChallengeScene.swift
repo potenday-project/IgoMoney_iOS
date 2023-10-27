@@ -112,7 +112,7 @@ extension EnterChallengeScene {
             .cornerRadius(8)
             
             Button {
-              viewStore.send(.alertAction(.dismiss))
+              viewStore.send(.enterChallenge)
             } label: {
               Text("네")
                 .frame(maxWidth: .infinity)
