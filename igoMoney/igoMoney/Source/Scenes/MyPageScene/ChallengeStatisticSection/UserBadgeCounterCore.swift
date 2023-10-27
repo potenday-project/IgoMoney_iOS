@@ -1,5 +1,5 @@
 //
-//  UserBadgetCounterCore.swift
+//  UserBadgeCounterCore.swift
 //  igoMoney
 //
 //  Copyright (c) 2023 Minii All rights reserved.

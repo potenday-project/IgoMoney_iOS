@@ -45,7 +45,7 @@
 		183169572ADBDB200098638E /* ChallengeInformationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169562ADBDB200098638E /* ChallengeInformationCardView.swift */; };
 		183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */; };
 		1833D8A22AEAC78D002FBEDD /* ChallengeStatisticSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A12AEAC78D002FBEDD /* ChallengeStatisticSection.swift */; };
-		1833D8A42AEACDD1002FBEDD /* UserBadgetCounterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A32AEACDD1002FBEDD /* UserBadgetCounterCore.swift */; };
+		1833D8A42AEACDD1002FBEDD /* UserBadgeCounterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A32AEACDD1002FBEDD /* UserBadgeCounterCore.swift */; };
 		1833D8A62AEACDE8002FBEDD /* UserBadgeCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A52AEACDE8002FBEDD /* UserBadgeCounterView.swift */; };
 		1833D8A82AEACDFD002FBEDD /* ChallengeCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A72AEACDFD002FBEDD /* ChallengeCounterView.swift */; };
 		1833D8AA2AEACE13002FBEDD /* ChallengeCounterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A92AEACE13002FBEDD /* ChallengeCounterCore.swift */; };
@@ -166,7 +166,7 @@
 		183169562ADBDB200098638E /* ChallengeInformationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformationCardView.swift; sourceTree = "<group>"; };
 		183169582ADBDB3F0098638E /* EnterChallengeNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeNoticeView.swift; sourceTree = "<group>"; };
 		1833D8A12AEAC78D002FBEDD /* ChallengeStatisticSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStatisticSection.swift; sourceTree = "<group>"; };
-		1833D8A32AEACDD1002FBEDD /* UserBadgetCounterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadgetCounterCore.swift; sourceTree = "<group>"; };
+		1833D8A32AEACDD1002FBEDD /* UserBadgeCounterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadgeCounterCore.swift; sourceTree = "<group>"; };
 		1833D8A52AEACDE8002FBEDD /* UserBadgeCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBadgeCounterView.swift; sourceTree = "<group>"; };
 		1833D8A72AEACDFD002FBEDD /* ChallengeCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCounterView.swift; sourceTree = "<group>"; };
 		1833D8A92AEACE13002FBEDD /* ChallengeCounterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCounterCore.swift; sourceTree = "<group>"; };
@@ -387,7 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				1833D8A12AEAC78D002FBEDD /* ChallengeStatisticSection.swift */,
-				1833D8A32AEACDD1002FBEDD /* UserBadgetCounterCore.swift */,
+				1833D8A32AEACDD1002FBEDD /* UserBadgeCounterCore.swift */,
 				1833D8A52AEACDE8002FBEDD /* UserBadgeCounterView.swift */,
 				1833D8A72AEACDFD002FBEDD /* ChallengeCounterView.swift */,
 				1833D8A92AEACE13002FBEDD /* ChallengeCounterCore.swift */,
@@ -892,7 +892,7 @@
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
 				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
-				1833D8A42AEACDD1002FBEDD /* UserBadgetCounterCore.swift in Sources */,
+				1833D8A42AEACDD1002FBEDD /* UserBadgeCounterCore.swift in Sources */,
 				183C7EB02AE569FC0054F9D3 /* ShareSheet.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */,
