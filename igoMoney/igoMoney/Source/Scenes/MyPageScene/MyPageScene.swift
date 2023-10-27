@@ -79,8 +79,7 @@ struct MyPageScene: View {
           
           VStack(spacing: 12) {
             Section(header: sectionHeaderView(title: "챌린지 현황")) {
-              RoundedRectangle(cornerRadius: 20)
-                .frame(height: 76 + 110)
+              ChallengeStatisticSection()
             }
           }
           

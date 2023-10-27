@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icon_badge_unFill.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
