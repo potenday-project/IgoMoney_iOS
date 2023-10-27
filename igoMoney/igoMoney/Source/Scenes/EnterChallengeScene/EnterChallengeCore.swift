@@ -14,7 +14,7 @@ struct EnterChallengeCore: Reducer {
     var showProgressView: Bool = false
     var dismissView: Bool = false
     
-    var alertTitle: String = ""
+    var alertTitle: String = "챌린지에 참여하시겠습니까?"
     
     var enterChallengeButtonState = EnterChallengeButtonCore.State()
     var challengeInformationState: ChallengeInformationCore.State
@@ -72,6 +72,7 @@ struct EnterChallengeCore: Reducer {
         return .none
         
       case .enterChallengeButtonAction(.didTapButton):
+        state.alertTitle = "챌린지에 참가 하시겠습니까?"
         return .send(.alertAction(.present))
         
       case ._requestEnterChallenge(.success):

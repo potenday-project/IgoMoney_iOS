@@ -93,9 +93,10 @@ extension EnterChallengeScene {
     
     var body: some View {
       WithViewStore(store, observe: { $0 }) { viewStore in
-        VStack(spacing: 16) {
+        VStack(spacing: 24) {
           Text(viewStore.alertTitle)
-            .font(.pretendard(size: 18, weight: .bold))
+            .font(.pretendard(size: 15, weight: .medium))
+            .lineHeight(font: .pretendard(size: 15, weight: .medium), lineHeight: 22)
           
           HStack {
             Button {
@@ -103,7 +104,6 @@ extension EnterChallengeScene {
             } label: {
               Text("아니요")
                 .frame(maxWidth: .infinity)
-                .font(.pretendard(size: 16, weight: .medium))
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
@@ -112,23 +112,24 @@ extension EnterChallengeScene {
             .cornerRadius(8)
             
             Button {
-              viewStore.send(.alertAction(.dismiss))
+              viewStore.send(.enterChallenge)
             } label: {
               Text("네")
                 .frame(maxWidth: .infinity)
-                .font(.pretendard(size: 16, weight: .medium))
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
             .background(ColorConstants.primary)
             .cornerRadius(8)
           }
+          .font(.pretendard(size: 16, weight: .medium))
+          .lineHeight(font: .pretendard(size: 16, weight: .medium), lineHeight: 22)
         }
         .foregroundColor(Color.black)
-        .padding()
+        .padding(24)
         .background(Color.white)
         .cornerRadius(8)
-        .frame(width: 250)
+        .frame(maxWidth: 250)
       }
     }
   }
@@ -150,4 +151,6 @@ extension EnterChallengeScene {
       reducer: { EnterChallengeCore() }
     )
   )
+  .padding()
+  .background(ColorConstants.gray4)
 }
