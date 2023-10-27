@@ -81,7 +81,7 @@ struct IGOAlertCore: Reducer {
           await send(.scrimOpacityChanged(opacity: .zero), animation: .default)
         },
         .run { [start = state.alertStartPosition] send in
-          Thread.sleep(forTimeInterval: TimeInterval(500))
+          try await Task.sleep(nanoseconds: 5_000_000)
           await send(.modalOffsetChanged(offset: start))
         }
       )
