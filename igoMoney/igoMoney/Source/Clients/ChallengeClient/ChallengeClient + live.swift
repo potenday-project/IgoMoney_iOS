@@ -56,5 +56,15 @@ extension ChallengeClient {
     
     let values: [String: Int] = try await APIClient.request(to: api)
     return values
+  } challengeCosts: { challengeID in
+    let api = ChallengeAPI(
+      method: .get,
+      path: "/challenges/total-cost/\(challengeID)",
+      query: [:],
+      header: [:]
+    )
+    
+    let response: [ChallengeCostResponse] = try await APIClient.request(to: api)
+    return response
   }
 }
