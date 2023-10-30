@@ -50,7 +50,7 @@ struct MyChallengeSection: View {
                 action: MyChallengeSectionCore.Action.participatingChallengeAction
               )
             ) { store in
-              ParticipatingChallengeScene()
+              ParticipatingChallengeScene(store: store)
             }
           } label: {
             MyChallengeBannerView(title: challenge.title) {
