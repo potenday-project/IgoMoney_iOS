@@ -43,9 +43,21 @@ struct MyChallengeSection: View {
       WithViewStore(store, observe: { $0.userChallenge }) { status in
         switch status.state {
         case .processingChallenge(let challenge):
-          MyChallengeBannerView(title: challenge.title) {
-            challengeInformationView(to: challenge)
+          NavigationLink {
+            IfLetStore(
+              store.scope(
+                state: \.participatingChallenge,
+                action: MyChallengeSectionCore.Action.participatingChallengeAction
+              )
+            ) { store in
+              ParticipatingChallengeScene()
+            }
+          } label: {
+            MyChallengeBannerView(title: challenge.title) {
+              challengeInformationView(to: challenge)
+            }
           }
+          .buttonStyle(.plain)
           
         case .waitingUser(let challenge):
           MyChallengeBannerView(

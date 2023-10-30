@@ -11,11 +11,14 @@ import ComposableArchitecture
 struct MyChallengeSectionCore: Reducer {
   struct State: Equatable {
     var userChallenge: ChallengeStatus = .notInChallenge
+    var participatingChallenge: ParticipatingChallengeCore.State?
   }
   
   enum Action: Equatable {
     case _onAppear
     case _myChallengeResponse(TaskResult<Challenge>)
+    
+    case participatingChallengeAction(ParticipatingChallengeCore.Action)
   }
   
   @Dependency(\.challengeClient) var challengeClient
@@ -47,6 +50,7 @@ struct MyChallengeSectionCore: Reducer {
         }
         
         state.userChallenge = .processingChallenge(challenge)
+        state.participatingChallenge = ParticipatingChallengeCore.State(challenge: challenge)
         return .none
         
       case ._myChallengeResponse(.failure(let error as APIError)):
@@ -60,6 +64,9 @@ struct MyChallengeSectionCore: Reducer {
       default:
         return .none
       }
+    }
+    .ifLet(\.participatingChallenge, action: /Action.participatingChallengeAction) {
+      ParticipatingChallengeCore()
     }
   }
 }

@@ -40,6 +40,7 @@ struct ParticipatingChallengeScene: View {
             
             Spacer()
         }
+        .navigationBarHidden(true)
         .padding(.horizontal, 24)
         .background(Color("background_color").edgesIgnoringSafeArea(.all))
     }
