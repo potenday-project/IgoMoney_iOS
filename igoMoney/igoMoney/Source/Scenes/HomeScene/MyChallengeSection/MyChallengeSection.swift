@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 struct MyChallengeSection: View {
   let store: StoreOf<MyChallengeSectionCore>
-  // TODO: - 섹션 reducer 연결하기
   
   @ViewBuilder
   func challengeInformationView(to challenge: Challenge) -> some View {
