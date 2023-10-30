@@ -3,7 +3,7 @@
 //  igoMoney
 //
 //  Copyright (c) 2023 Minii All rights reserved.
-        
+
 
 import SwiftUI
 
@@ -35,6 +35,8 @@ struct DetailChallengeScene: View {
                     reducer: { ChallengeInformationCore() }
                 )
             )
+            
+            DetailChallengeResultSection()
             
             Spacer()
         }
