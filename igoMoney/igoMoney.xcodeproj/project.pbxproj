@@ -588,7 +588,7 @@
 		18F55C952ADDA12200DE50C4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				18F6BB6E2AEF3BD200AB0F1B /* DetailChallengeScene */,
+				18F6BB6E2AEF3BD200AB0F1B /* ParticipatingChallengeScene */,
 				18F55C962ADDA13A00DE50C4 /* AppScene */,
 				18F55C972ADDA18E00DE50C4 /* AuthScene */,
 				18F55CA22ADDAAC400DE50C4 /* EnterChallengeScene */,
@@ -740,14 +740,14 @@
 			path = GenerateChallengeScene;
 			sourceTree = "<group>";
 		};
-		18F6BB6E2AEF3BD200AB0F1B /* DetailChallengeScene */ = {
+		18F6BB6E2AEF3BD200AB0F1B /* ParticipatingChallengeScene */ = {
 			isa = PBXGroup;
 			children = (
 				18F6BB712AEF51D800AB0F1B /* SubViews */,
 				18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */,
 				18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */,
 			);
-			path = DetailChallengeScene;
+			path = ParticipatingChallengeScene;
 			sourceTree = "<group>";
 		};
 		18F6BB712AEF51D800AB0F1B /* SubViews */ = {
