@@ -56,10 +56,10 @@ extension ChallengeClient {
     
     let values: [String: Int] = try await APIClient.request(to: api)
     return values
-  } challengeCosts: { challengeID in
+  } challengeCosts: { challenge in
     let api = ChallengeAPI(
       method: .get,
-      path: "/challenges/total-cost/\(challengeID)",
+      path: "/challenges/total-cost/\(challenge.id)",
       query: [:],
       header: [:]
     )
@@ -68,8 +68,15 @@ extension ChallengeClient {
     
     let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
     if let tokenInformation: AuthToken = tokenData.toDecodable() {
-      
       var response = response
+      
+      if response.count == 1 {
+        let userID = (tokenInformation.userID == challenge.competitorID)
+        ? challenge.leaderID : challenge.competitorID
+        
+        response.append(.empty(userID: userID ?? tokenInformation.userID , fetchUserID: tokenInformation.userID))
+      }
+      
       
       for index in 0..<response.count {
         response[index].fetchUserID = tokenInformation.userID
