@@ -38,6 +38,12 @@ struct ChallengeCostResponse: Decodable, Equatable {
     case totalCost = "totalCost"
   }
   
+  init(userID: Int, totalCost: Int, fetchUserID: Int) {
+    self.userID = userID
+    self.totalCost = totalCost
+    self.fetchUserID = fetchUserID
+  }
+  
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.userID = try container.decode(Int.self, forKey: .userID)
@@ -45,6 +51,9 @@ struct ChallengeCostResponse: Decodable, Equatable {
     self.fetchUserID = userID
   }
   
+  static func empty(userID: Int, fetchUserID: Int) -> Self {
+    return .init(userID: userID, totalCost: .zero, fetchUserID: fetchUserID)
+  }
 }
 
 struct ChallengeClient {
@@ -52,7 +61,7 @@ struct ChallengeClient {
   var fetchNotStartedChallenge: @Sendable () async throws -> [Challenge]
   var enterChallenge: @Sendable (_ challengeID: String) async throws -> Bool
   var generateChallenge: @Sendable (_ challenge: ChallengeGenerateRequest) async throws -> [String: Int]
-  var challengeCosts: @Sendable (_ challengeID: String) async throws -> [ChallengeCostResponse]
+  var challengeCosts: @Sendable (_ challengeID: Challenge) async throws -> [ChallengeCostResponse]
 }
 
 extension ChallengeClient: DependencyKey { }
