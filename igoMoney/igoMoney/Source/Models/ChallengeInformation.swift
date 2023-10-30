@@ -64,17 +64,17 @@ extension Challenge {
   }
   
   static let `default`: Challenge = .init(
-    id: Int.random(in: Int.min...Int.max),
+    id: 1,
     recordID: nil,
-    leaderID: 10,
-    competitorID: nil,
+    leaderID: 2,
+    competitorID: 2,
     winnerID: nil,
-    title: "만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요! 만원의 행복 도전해봐요!",
-    content: "오늘부터 일주일 동안 만원으로 대결하실 분 구합니다. 최대한 커피 지출을 줄이고 싶습니다.",
-    targetAmount: .init(money: 30000), 
+    title: "만원의 행복🥇",
+    content: "이번엔진짜해본다",
+    targetAmount: .init(money: 10000),
     category: .living,
-    startDate: Date().addingTimeInterval(86400),
-    term: nil,
+    startDate: "2023-10-29".toDate(with: "yyyy-MM-dd"),
+    term: 7,
     endDate: nil
   )
 }
