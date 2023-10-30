@@ -64,7 +64,20 @@ extension ChallengeClient {
       header: [:]
     )
     
-    let response: [ChallengeCostResponse] = try await APIClient.request(to: api)
+    var response: [ChallengeCostResponse] = try await APIClient.request(to: api)
+    
+    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+    if let tokenInformation: AuthToken = tokenData.toDecodable() {
+      
+      var response = response
+      
+      for index in 0..<response.count {
+        response[index].fetchUserID = tokenInformation.userID
+      }
+      
+      return response
+    }
+    
     return response
   }
 }
