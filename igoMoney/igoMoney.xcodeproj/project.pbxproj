@@ -127,8 +127,9 @@
 		18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */; };
 		18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */; };
 		18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */; };
-		18F6BB702AEF3BF000AB0F1B /* DetailChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */; };
-		18F6BB732AEF51E600AB0F1B /* DetailChallengeResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */; };
+		18F6BB702AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */; };
+		18F6BB732AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */; };
+		18F6BB752AEF524200AB0F1B /* ParticipatingChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -250,8 +251,9 @@
 		18F55C932ADD94B700DE50C4 /* AuthClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthClient + live.swift"; sourceTree = "<group>"; };
 		18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterSection.swift; sourceTree = "<group>"; };
 		18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCellView.swift; sourceTree = "<group>"; };
-		18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChallengeScene.swift; sourceTree = "<group>"; };
-		18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChallengeResultSection.swift; sourceTree = "<group>"; };
+		18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeScene.swift; sourceTree = "<group>"; };
+		18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeResultSection.swift; sourceTree = "<group>"; };
+		18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeCore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -742,7 +744,8 @@
 			isa = PBXGroup;
 			children = (
 				18F6BB712AEF51D800AB0F1B /* SubViews */,
-				18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */,
+				18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */,
+				18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */,
 			);
 			path = DetailChallengeScene;
 			sourceTree = "<group>";
@@ -750,7 +753,7 @@
 		18F6BB712AEF51D800AB0F1B /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */,
+				18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -847,7 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
-				18F6BB702AEF3BF000AB0F1B /* DetailChallengeScene.swift in Sources */,
+				18F6BB702AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift in Sources */,
 				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
 				18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */,
 				1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */,
@@ -889,6 +892,7 @@
 				18599A452ABC2A950075DE76 /* ChallengeCore.swift in Sources */,
 				183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */,
 				18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */,
+				18F6BB752AEF524200AB0F1B /* ParticipatingChallengeCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
@@ -939,7 +943,7 @@
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
-				18F6BB732AEF51E600AB0F1B /* DetailChallengeResultSection.swift in Sources */,
+				18F6BB732AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
 				18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */,
