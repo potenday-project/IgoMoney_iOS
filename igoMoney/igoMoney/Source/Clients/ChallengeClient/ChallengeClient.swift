@@ -28,14 +28,23 @@ struct ChallengeGenerateRequest {
   }
 }
 
-struct ChallengeCostResponse: Decodable {
+struct ChallengeCostResponse: Decodable, Equatable {
   let userID: Int
   let totalCost: Int
+  var fetchUserID: Int
   
   enum CodingKeys: String, CodingKey {
     case userID = "userId"
     case totalCost = "totalCost"
   }
+  
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.userID = try container.decode(Int.self, forKey: .userID)
+    self.totalCost = try container.decode(Int.self, forKey: .totalCost)
+    self.fetchUserID = userID
+  }
+  
 }
 
 struct ChallengeClient {

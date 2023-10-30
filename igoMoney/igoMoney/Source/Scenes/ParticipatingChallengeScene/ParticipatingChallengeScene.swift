@@ -37,7 +37,13 @@ struct ParticipatingChallengeScene: View {
         )
       )
       
-      DetailChallengeResultSection()
+      DetailChallengeResultSection(
+        store: self.store.scope(
+          state: \.challengeResultSectionState,
+          action: ParticipatingChallengeCore.Action.challengeResultSectionAction
+        )
+      )
+      
       
       Spacer()
     }

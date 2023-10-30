@@ -130,6 +130,7 @@
 		18F6BB702AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */; };
 		18F6BB732AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */; };
 		18F6BB752AEF524200AB0F1B /* ParticipatingChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */; };
+		18F6BB772AEF586500AB0F1B /* ParticipatingChallengeResultSectionCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB762AEF586500AB0F1B /* ParticipatingChallengeResultSectionCore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -254,6 +255,7 @@
 		18F6BB6F2AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeScene.swift; sourceTree = "<group>"; };
 		18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeResultSection.swift; sourceTree = "<group>"; };
 		18F6BB742AEF524200AB0F1B /* ParticipatingChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeCore.swift; sourceTree = "<group>"; };
+		18F6BB762AEF586500AB0F1B /* ParticipatingChallengeResultSectionCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatingChallengeResultSectionCore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -754,6 +756,7 @@
 			isa = PBXGroup;
 			children = (
 				18F6BB722AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift */,
+				18F6BB762AEF586500AB0F1B /* ParticipatingChallengeResultSectionCore.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 				18CD8F2D2AB995F5006FEA6F /* AgreeTermsCore.swift in Sources */,
 				18599A752ABC98780075DE76 /* ExploreChallengeDetail.swift in Sources */,
 				182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */,
+				18F6BB772AEF586500AB0F1B /* ParticipatingChallengeResultSectionCore.swift in Sources */,
 				1833D8A82AEACDFD002FBEDD /* ChallengeCounterView.swift in Sources */,
 				18599A532ABC34640075DE76 /* ChallengeInformation.swift in Sources */,
 				18F332172AE6590A008C415E /* ProfileSettingScene.swift in Sources */,
