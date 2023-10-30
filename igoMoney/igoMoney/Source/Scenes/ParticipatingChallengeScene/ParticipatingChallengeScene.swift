@@ -1,5 +1,5 @@
 //
-//  DetailChallengeScene.swift
+//  ParticipatingChallengeScene.swift
 //  igoMoney
 //
 //  Copyright (c) 2023 Minii All rights reserved.
@@ -9,7 +9,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct DetailChallengeScene: View {
+struct ParticipatingChallengeScene: View {
     var body: some View {
         VStack(spacing: 24) {
             IGONavigationBar {
@@ -102,5 +102,5 @@ struct DetailChallengeInformationCard: View {
 }
 
 #Preview {
-    DetailChallengeScene()
+    ParticipatingChallengeScene()
 }
