@@ -34,7 +34,14 @@ struct DetailChallengeResultSection: View {
       
       Divider()
       
-      Text("현재 아이고머니님이 더 절약하고 있어요")
+      WithViewStore(store, observe: { $0.winnerName }) { winner in
+        if winner.state.isEmpty {
+          Text("같은 금액을 소비하고 있습니다!")
+        } else {
+          Text("현재 \(winner.state)님이 더 절약하고 있어요")
+        }
+      }
+      .font(.pretendard(size: 16, weight: .bold))
     }
     .padding(16)
     .background(ColorConstants.primary8)
@@ -47,11 +54,17 @@ struct DetailChallengeResultSection: View {
 
 struct ChallengeResultCore: Reducer {
   struct State: Equatable {
+    let challenge: Challenge
     var user: User?
     var cost: ChallengeCostResponse
     
-    init(cost: ChallengeCostResponse) {
+    init(challenge: Challenge, cost: ChallengeCostResponse) {
+      self.challenge = challenge
       self.cost = cost
+    }
+    
+    var ratio: Double {
+      return Double(cost.totalCost) / Double(challenge.targetAmount.money)
     }
   }
   
@@ -97,10 +110,13 @@ struct DetailChallengeResultCard: View {
       VStack(spacing: 8) {
         HStack {
           Text(viewStore.user?.nickName ?? "")
+            .font(.pretendard(size: 16, weight: .bold))
           
           Spacer()
           
           Text("누적 금액 \(viewStore.cost.totalCost)원")
+            .font(.pretendard(size: 14, weight: .bold))
+            .foregroundColor(ColorConstants.primary2)
         }
         
         GeometryReader { proxy in
@@ -108,7 +124,7 @@ struct DetailChallengeResultCard: View {
           
           VStack(alignment: .leading) {
             Image("icon_bolt")
-              .offset(x: size.width * 0.27)
+              .offset(x: size.width * viewStore.ratio)
             
             Capsule()
               .fill(ColorConstants.primary6)
@@ -116,17 +132,19 @@ struct DetailChallengeResultCard: View {
               .overlay(
                 Capsule()
                   .fill(ColorConstants.primary)
-                  .frame(width: size.width * 0.27, height: 8),
+                  .frame(width: size.width * viewStore.ratio, height: 8),
                 alignment: .leading
               )
             
             HStack {
-              Text("0원")
+              Text("\(viewStore.cost.totalCost)원")
               
               Spacer()
               
-              Text("10000원")
+              Text("\(viewStore.challenge.targetAmount.money)원")
             }
+            .font(.pretendard(size: 12, weight: .medium))
+            .foregroundColor(ColorConstants.gray3)
           }
         }
       }
