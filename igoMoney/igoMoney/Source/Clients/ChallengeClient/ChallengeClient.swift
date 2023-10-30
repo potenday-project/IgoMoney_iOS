@@ -28,11 +28,22 @@ struct ChallengeGenerateRequest {
   }
 }
 
+struct ChallengeCostResponse: Decodable {
+  let userID: Int
+  let totalCost: Int
+  
+  enum CodingKeys: String, CodingKey {
+    case userID = "userId"
+    case totalCost = "totalCost"
+  }
+}
+
 struct ChallengeClient {
   var getMyChallenge: @Sendable () async throws -> Challenge
   var fetchNotStartedChallenge: @Sendable () async throws -> [Challenge]
   var enterChallenge: @Sendable (_ challengeID: String) async throws -> Bool
   var generateChallenge: @Sendable (_ challenge: ChallengeGenerateRequest) async throws -> [String: Int]
+  var challengeCosts: @Sendable (_ challengeID: String) async throws -> [ChallengeCostResponse]
 }
 
 extension ChallengeClient: DependencyKey { }
