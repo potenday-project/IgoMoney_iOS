@@ -128,6 +128,7 @@
 		18F55C9F2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */; };
 		18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */; };
 		18F6BB702AEF3BF000AB0F1B /* DetailChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */; };
+		18F6BB732AEF51E600AB0F1B /* DetailChallengeResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -250,6 +251,7 @@
 		18F55C9E2ADDAA4200DE50C4 /* ExploreChallengeFilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterSection.swift; sourceTree = "<group>"; };
 		18F55CA02ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeCellView.swift; sourceTree = "<group>"; };
 		18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChallengeScene.swift; sourceTree = "<group>"; };
+		18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChallengeResultSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -739,9 +741,18 @@
 		18F6BB6E2AEF3BD200AB0F1B /* DetailChallengeScene */ = {
 			isa = PBXGroup;
 			children = (
+				18F6BB712AEF51D800AB0F1B /* SubViews */,
 				18F6BB6F2AEF3BF000AB0F1B /* DetailChallengeScene.swift */,
 			);
 			path = DetailChallengeScene;
+			sourceTree = "<group>";
+		};
+		18F6BB712AEF51D800AB0F1B /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				18F6BB722AEF51E600AB0F1B /* DetailChallengeResultSection.swift */,
+			);
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -928,6 +939,7 @@
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
+				18F6BB732AEF51E600AB0F1B /* DetailChallengeResultSection.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
 				18F3321A2AE69F6E008C415E /* NickNameInputView.swift in Sources */,
