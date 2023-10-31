@@ -141,7 +141,38 @@ struct CertifiedDateSelectView: View {
       .background(Color.white)
       .cornerRadius(8)
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+      
+      CertifyButton(selectedDate: $selectedDate)
     }
+  }
+}
+
+struct CertifyButton: View {
+  @Binding var selectedDate: Date
+  
+  var body: some View {
+    Button {
+      
+    } label: {
+      HStack {
+        VStack(alignment: .leading, spacing: .zero) {
+          Text(selectedDate.toString(with: "M월 dd일"))
+            .font(.pretendard(size: 12, weight: .medium))
+          
+          Text("오늘 하루 지출 내역 인증하기")
+            .font(.pretendard(size: 16, weight: .bold))
+        }
+        
+        Spacer()
+        
+        Image("icon_add_task")
+      }
+    }
+    .buttonStyle(.plain)
+    .padding(16)
+    .background(ColorConstants.primary8)
+    .cornerRadius(10)
+    .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
   }
 }
 
