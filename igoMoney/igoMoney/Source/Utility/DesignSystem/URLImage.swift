@@ -54,6 +54,10 @@ struct URLImageCore: Reducer {
       }
       
     case ._setURLPath(let path):
+      if path == nil {
+        return .send(._fetchURLImageResponse(.failure(APIError.badRequest(400))))
+      }
+      
       state.urlPath = path
       return .send(.fetchURLImage)
       

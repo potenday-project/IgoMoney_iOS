@@ -30,10 +30,9 @@ struct ParticipatingChallengeScene: View {
       .padding(.top, 16)
       
       DetailChallengeInformationCard(
-        store: .init(
-          initialState: ChallengeInformationCore.State(
-            challenge: .default),
-          reducer: { ChallengeInformationCore() }
+        store: self.store.scope(
+          state: \.challengeInformationState,
+          action: ParticipatingChallengeCore.Action.challengeInformationAction
         )
       )
       
