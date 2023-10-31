@@ -12,43 +12,55 @@ import ComposableArchitecture
 struct ParticipatingChallengeScene: View {
   let store: StoreOf<ParticipatingChallengeCore>
   var body: some View {
-    VStack(spacing: 24) {
-      IGONavigationBar {
-        EmptyView()
-      } leftView: {
-        Text("참여중인 챌린지")
-      } rightView: {
-        Button {
-          
-        } label: {
-          Image(systemName: "ellipsis")
+    ZStack {
+      VStack {
+        Color("background_color")
+        Color.white
+      }
+      .edgesIgnoringSafeArea(.all)
+      
+      VStack(spacing: 24) {
+        IGONavigationBar {
+          EmptyView()
+        } leftView: {
+          Text("참여중인 챌린지")
+        } rightView: {
+          Button {
+            
+          } label: {
+            Image(systemName: "ellipsis")
+          }
+        }
+        .foregroundColor(.white)
+        .font(.pretendard(size: 20, weight: .bold))
+        .buttonStyle(.plain)
+        .padding(.top, 16)
+        .padding(.horizontal, 24)
+        
+        ScrollView(.vertical, showsIndicators: false) {
+          VStack {
+            DetailChallengeInformationCard(
+              store: self.store.scope(
+                state: \.challengeInformationState,
+                action: ParticipatingChallengeCore.Action.challengeInformationAction
+              )
+            )
+            .padding(.horizontal, 24)
+            
+            DetailChallengeResultSection(
+              store: self.store.scope(
+                state: \.challengeResultSectionState,
+                action: ParticipatingChallengeCore.Action.challengeResultSectionAction
+              )
+            )
+            .padding(.horizontal, 24)
+            
+            CertifiedArticleSection()
+          }
         }
       }
-      .foregroundColor(.white)
-      .font(.pretendard(size: 20, weight: .bold))
-      .buttonStyle(.plain)
-      .padding(.top, 16)
-      
-      DetailChallengeInformationCard(
-        store: self.store.scope(
-          state: \.challengeInformationState,
-          action: ParticipatingChallengeCore.Action.challengeInformationAction
-        )
-      )
-      
-      DetailChallengeResultSection(
-        store: self.store.scope(
-          state: \.challengeResultSectionState,
-          action: ParticipatingChallengeCore.Action.challengeResultSectionAction
-        )
-      )
-      
-      
-      Spacer()
     }
     .navigationBarHidden(true)
-    .padding(.horizontal, 24)
-    .background(Color("background_color").edgesIgnoringSafeArea(.all))
   }
 }
 
