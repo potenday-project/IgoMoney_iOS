@@ -35,6 +35,7 @@ struct CertifiedArticleSection: View {
   var body: some View {
     ZStack {
       Color.white.edgesIgnoringSafeArea(.all)
+        .ignoresSafeArea()
       
       VStack(spacing: 24) {
         HStack(spacing: 16) {
@@ -57,6 +58,8 @@ struct CertifiedArticleSection: View {
         
         CertifiedDateSelectView()
         
+        CertifiedArticleListView()
+        
         Spacer()
       }
       .padding(.horizontal, 24)
@@ -64,6 +67,7 @@ struct CertifiedArticleSection: View {
     .cornerRadius(20, corner: .topLeft)
     .cornerRadius(20, corner: .topRight)
   }
+  
 }
 
 struct CertifiedDateSelectView: View {
@@ -173,6 +177,44 @@ struct CertifyButton: View {
     .background(ColorConstants.primary8)
     .cornerRadius(10)
     .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+  }
+}
+
+struct CertifiedArticleListView: View {
+  var body: some View {
+    VStack(spacing: 12) {
+      ForEach(1...10, id: \.self) { _ in
+        HStack {
+          Image("example_food")
+            .resizable()
+            .scaledToFill()
+            .frame(width: 65, height: 65)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+          
+          VStack(alignment: .leading, spacing: 4) {
+            Text("9월 24일 1일차")
+              .font(.pretendard(size: 12, weight: .medium))
+              .foregroundColor(ColorConstants.gray3)
+            
+            Text("도시락을 먹어서 지출은 커피값만! 🤟🏼")
+              .font(.pretendard(size: 16, weight: .bold))
+            
+            Text("총 3000원 지출")
+              .font(.pretendard(size: 12, weight: .medium))
+              .padding(.vertical, 2)
+              .padding(.horizontal, 4)
+              .background(ColorConstants.blue)
+              .cornerRadius(4)
+          }
+          
+          Spacer()
+        }
+        .padding(16)
+        .background(Color.white)
+        .cornerRadius(10)
+        .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+      }
+    }
   }
 }
 
