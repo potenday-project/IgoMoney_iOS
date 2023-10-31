@@ -55,12 +55,93 @@ struct CertifiedArticleSection: View {
         .padding(.top, 20)
         .font(.pretendard(size: 16, weight: .bold))
         
+        CertifiedDateSelectView()
+        
         Spacer()
       }
       .padding(.horizontal, 24)
     }
     .cornerRadius(20, corner: .topLeft)
     .cornerRadius(20, corner: .topRight)
+  }
+}
+
+struct CertifiedDateSelectView: View {
+  @State private var selectedDate: Date
+  private let startDate = Date()
+  private var challengeRange: [Date] = []
+  
+  init() {
+    self._selectedDate = State(initialValue: Date())
+    self.challengeRange = generateChallengeRange()
+  }
+  
+  private func generateChallengeRange() -> [Date] {
+    let valueRange = (0...6)
+    let calendar = Calendar.current
+    let days = valueRange.map {
+      return calendar.date(byAdding: .day, value: $0, to: startDate) ?? Date()
+    }
+    return days
+  }
+  
+  private func equalDate(lhs: Date, rhs: Date) -> Bool {
+    return lhs.toString(with: "M/dd") == rhs.toString(with: "M/dd")
+  }
+  
+  @ViewBuilder
+  private func DateSelectButton(index: Int, to date: Date) -> some View {
+    VStack(spacing: 8) {
+      Text(date.toString(with: "M/dd"))
+        .font(.pretendard(size: 12, weight: .medium))
+      
+      Text((index + 1).description + "일차")
+        .font(.pretendard(size: 14, weight: .semiBold))
+      
+      Image(systemName: "checkmark.circle")
+        .resizable()
+        .scaledToFit()
+        .frame(width: 20, height: 20)
+    }
+  }
+  
+  var body: some View {
+    VStack(spacing: 12) {
+      HStack {
+        Text("🔥 9월 24일 일요일 1일차")
+        
+        Spacer()
+      }
+      .font(.pretendard(size: 18, weight: .bold))
+      
+      HStack(spacing: .zero) {
+        ForEach(0..<challengeRange.count, id: \.self) { index in
+          let date = challengeRange[index]
+          
+          ZStack {
+            if equalDate(lhs: date, rhs: selectedDate) {
+              RoundedRectangle(cornerRadius: 8)
+                .fill(ColorConstants.primary7)
+                .transition(.scale)
+            }
+            
+            DateSelectButton(index: index, to: date)
+              .padding(.vertical, 8)
+          }
+          .frame(maxWidth: .infinity, maxHeight: 100)
+          .onTapGesture {
+            withAnimation {
+              self.selectedDate = date
+            }
+          }
+        }
+      }
+      .padding(.vertical, 12)
+      .padding(.horizontal, 16)
+      .background(Color.white)
+      .cornerRadius(8)
+      .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+    }
   }
 }
 
