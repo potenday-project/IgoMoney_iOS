@@ -60,7 +60,7 @@ struct ParticipatingChallengeScene: View {
             .padding(.horizontal, 24)
             
             CertifiedArticleSection(
-              challengeListCore: self.store.scope(
+              store: self.store.scope(
                 state: \.challengeAuthListState,
                 action: ParticipatingChallengeCore.Action.challengeAuthListAction
               )

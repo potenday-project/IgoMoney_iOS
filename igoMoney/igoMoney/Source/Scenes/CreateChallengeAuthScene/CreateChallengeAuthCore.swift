@@ -8,7 +8,12 @@ import ComposableArchitecture
 
 struct CreateChallengeAuthCore: Reducer {
   struct State: Equatable {
-    var money: String
+    let challenge: Challenge
+    var money: String = ""
+    
+    init(challenge: Challenge) {
+      self.challenge = challenge
+    }
   }
   
   enum Action: Equatable {
