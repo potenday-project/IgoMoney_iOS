@@ -18,6 +18,10 @@ struct CreateChallengeAuthCore: Reducer {
     
     var isShowImagePicker: Bool = false
     
+    var isAvailableRegister: Bool {
+      return (Int(money) != nil) && ((5...15) ~= title.count) && ((3...100) ~= content.count) && authImages.isEmpty == false
+    }
+    
     init(challenge: Challenge) {
       self.challenge = challenge
     }
@@ -30,7 +34,12 @@ struct CreateChallengeAuthCore: Reducer {
     case contentChanged(String)
     case imageAdd(UIImage)
     case imageRemove(UIImage)
+    case registerRecord
+    
+    case _registerRecordResponse(TaskResult<Data>)
   }
+  
+  @Dependency(\.recordClient) var recordClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
@@ -61,6 +70,33 @@ struct CreateChallengeAuthCore: Reducer {
       
     case let .imageRemove(image):
       state.authImages.removeAll(where: { $0 == image })
+      return .none
+      
+    case .registerRecord:
+      guard let userID = APIClient.currentUser?.userID,
+            let image = state.authImages.first?.pngData() else { return .none }
+      print(userID, image)
+      let request = RecordRequest(
+        challengeID: state.challenge.id,
+        userID: userID,
+        title: state.title,
+        content: state.content,
+        cost: state.money,
+        image: image
+      )
+      return .run { send in
+        await send(
+          ._registerRecordResponse(
+            TaskResult {
+              try await recordClient.registerRecord(request)
+            }
+          )
+        )
+      }
+      
+    case ._registerRecordResponse(.success):
+      return .none
+    case ._registerRecordResponse(.failure):
       return .none
     }
   }

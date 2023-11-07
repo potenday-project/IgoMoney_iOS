@@ -64,15 +64,20 @@ struct CreateChallengeAuthScene: View {
         }
         
         Button {
-          
+          viewStore.send(.registerRecord)
         } label: {
           Text("인증하기")
             .font(.pretendard(size: 18, weight: .bold))
         }
-        .foregroundColor(ColorConstants.gray4)
+        .disabled(viewStore.isAvailableRegister == false)
+        .foregroundColor(
+          viewStore.isAvailableRegister ? Color.black : ColorConstants.gray4
+        )
         .frame(maxWidth: .infinity)
         .padding(16)
-        .background(ColorConstants.gray5)
+        .background(
+          viewStore.isAvailableRegister ? ColorConstants.primary : ColorConstants.gray5
+        )
         .cornerRadius(8)
         .padding(.horizontal, 24)
         .buttonStyle(.plain)
