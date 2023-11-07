@@ -12,14 +12,36 @@ struct ChallengeAuthListCore: Reducer {
   struct State: Equatable {
     let challenge: Challenge
     
+    var isPresentCreate: Bool = false
+    var createChallengeState: CreateChallengeAuthCore.State?
   }
   
   enum Action: Equatable {
-    
+    case presentCreate(Bool)
+    case createChallengeAuthAction(CreateChallengeAuthCore.Action)
   }
   
-  func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .presentCreate(true):
+        let challenge = state.challenge
+        state.createChallengeState = CreateChallengeAuthCore.State(challenge: challenge)
+        state.isPresentCreate = true
+        return .none
+        
+      case .presentCreate(false):
+        state.createChallengeState = nil
+        state.isPresentCreate = false
+        return .none
+        
+      case .createChallengeAuthAction:
+        return .none
+      }
+    }
+    .ifLet(\.createChallengeState, action: /Action.createChallengeAuthAction) {
+      CreateChallengeAuthCore()
+    }
   }
 }
 
@@ -47,50 +69,70 @@ struct CertifiedArticleSection: View {
     )
   }
   
-  let challengeListCore: StoreOf<ChallengeAuthListCore>
+  let store: StoreOf<ChallengeAuthListCore>
   
   var body: some View {
-    ZStack {
-      Color.white.edgesIgnoringSafeArea(.all)
-        .ignoresSafeArea()
-      
-      VStack(spacing: 24) {
-        HStack(spacing: 16) {
-          ChallengeClassificationButton(
-            title: "나의 챌린지",
-            isSelected: true
-          ) {
-            print("Tapped 나의 챌린지")
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      ZStack {
+        Color.white.edgesIgnoringSafeArea(.all)
+          .ignoresSafeArea()
+        
+        VStack(spacing: 24) {
+          HStack(spacing: 16) {
+            ChallengeClassificationButton(
+              title: "나의 챌린지",
+              isSelected: true
+            ) {
+              print("Tapped 나의 챌린지")
+            }
+            
+            ChallengeClassificationButton(
+              title: "상대방 챌린지",
+              isSelected: false
+            ) {
+              print("Tapped 상대방 챌린지")
+            }
           }
+          .padding(.top, 20)
+          .font(.pretendard(size: 16, weight: .bold))
           
-          ChallengeClassificationButton(
-            title: "상대방 챌린지",
-            isSelected: false
-          ) {
-            print("Tapped 상대방 챌린지")
-          }
+          CertifiedDateSelectView(store: self.store)
+          
+          CertifiedArticleListView()
+          
+          Spacer()
         }
-        .padding(.top, 20)
-        .font(.pretendard(size: 16, weight: .bold))
-        
-        CertifiedDateSelectView()
-        
-        CertifiedArticleListView()
-        
-        Spacer()
+        .padding(.horizontal, 24)
       }
-      .padding(.horizontal, 24)
+      .fullScreenCover(
+        isPresented: viewStore.binding(
+          get: \.isPresentCreate,
+          send: ChallengeAuthListCore.Action.presentCreate
+        )
+      ) {
+        IfLetStore(
+          store.scope(
+            state: \.createChallengeState,
+            action: ChallengeAuthListCore.Action.createChallengeAuthAction
+          )
+        ) { store in
+          CreateChallengeAuthScene(store: store)
+        }
+      }
     }
   }
   
 }
 
 struct CertifiedDateSelectView: View {
+  let store: StoreOf<ChallengeAuthListCore>
+  
   @State private var selectedDate: Date
   private let startDate = Date()
   private var challengeRange: [Date] = []
   
-  init() {
+  init(store: StoreOf<ChallengeAuthListCore>) {
+    self.store = store
     self._selectedDate = State(initialValue: Date())
     self.challengeRange = generateChallengeRange()
   }
@@ -162,7 +204,7 @@ struct CertifiedDateSelectView: View {
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
       
       CertifyButton(selectedDate: $selectedDate) {
-        
+        store.send(.presentCreate(true))
       }
     }
   }
