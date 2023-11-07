@@ -33,7 +33,7 @@ struct CreateChallengeAuthScene: View {
         
         ScrollView(.vertical, showsIndicators: false) {
           VStack(spacing: 24) {
-            ChallengeAuthImageListSection()
+            ChallengeAuthImageListSection(viewStore: viewStore)
             
             ChallengeAuthMoneyInputSection(
               money: viewStore.binding(
@@ -83,13 +83,15 @@ struct CreateChallengeAuthScene: View {
 }
 
 struct ChallengeAuthImageListSection: View {
+  let viewStore: ViewStoreOf<CreateChallengeAuthCore>
+  
   var body: some View {
     Section {
       InputHeaderView(title: "인증 사진", detail: "선택, 최대 1장")
         .padding(.horizontal, 24)
       
       Button {
-        
+        viewStore.send(.showPicker(true))
       } label: {
         VStack(spacing: 8) {
           Image("icon_add_photo")
@@ -108,14 +110,15 @@ struct ChallengeAuthImageListSection: View {
       
       ScrollView(.horizontal, showsIndicators: false) {
         HStack {
-          ForEach(0..<5) { _ in
-            Image("example_food")
+          ForEach(viewStore.authImages, id: \.self) { uiimage in
+            Image(uiImage: uiimage)
               .resizable()
+              .scaledToFill()
               .frame(width: 100, height: 100)
               .clipShape(RoundedRectangle(cornerRadius: 8))
               .overlay(
                 Button {
-                  
+                  viewStore.send(.imageRemove(uiimage))
                 } label: {
                   Image(systemName: "xmark.circle.fill")
                 }
@@ -128,6 +131,16 @@ struct ChallengeAuthImageListSection: View {
           }
         }
         .padding(.horizontal, 24)
+      }
+    }
+    .fullScreenCover(
+      isPresented: viewStore.binding(
+        get: \.isShowImagePicker,
+        send: CreateChallengeAuthCore.Action.showPicker
+      )
+    ) {
+      IGOPhotoPicker(configuration: .init(photoLibrary: .shared())) { uiimage in
+        viewStore.send(.imageAdd(uiimage))
       }
     }
   }

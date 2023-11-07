@@ -73,14 +73,9 @@ struct ProfileSettingScene: View {
           send: ProfileSettingCore.Action.presentPhotoPicker
         )
       ) {
-        IGOPhotoPicker(
-          selectedImage: viewStore.binding(
-            get: \.selectedImage,
-            send: ProfileSettingCore.Action.selectImage
-          ),
-          configuration: imagePickerConfiguration
-        )
-        
+        IGOPhotoPicker(configuration: imagePickerConfiguration) { uiimage in
+          store.send(.selectImage(uiimage))
+        }
       }
       
       InputHeaderView(title: "닉네임", detail: "최소 3자 / 최대 8자")

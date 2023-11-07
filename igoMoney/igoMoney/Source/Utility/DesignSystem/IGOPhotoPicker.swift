@@ -8,8 +8,8 @@ import SwiftUI
 import PhotosUI
 
 struct IGOPhotoPicker: UIViewControllerRepresentable {
-  @Binding var selectedImage: UIImage?
   let configuration: PHPickerConfiguration
+  var imageSelectAction: (UIImage) -> Void
   
   func makeUIViewController(context: Context) -> PHPickerViewController {
     let controller = PHPickerViewController(configuration: configuration)
@@ -43,8 +43,8 @@ struct IGOPhotoPicker: UIViewControllerRepresentable {
           
           guard let image = image as? UIImage else { return }
           
-          DispatchQueue.main.async {
-            self?.parent.$selectedImage.wrappedValue = image.resize(to: 100)
+          DispatchQueue.main.async { [weak self] in
+            self?.parent.imageSelectAction(image.resize(to: 100))
           }
         }
       }
