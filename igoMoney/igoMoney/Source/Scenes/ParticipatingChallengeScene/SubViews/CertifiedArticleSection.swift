@@ -8,6 +8,21 @@ import SwiftUI
 
 import ComposableArchitecture
 
+struct ChallengeAuthListCore: Reducer {
+  struct State: Equatable {
+    let challenge: Challenge
+    
+  }
+  
+  enum Action: Equatable {
+    
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    return .none
+  }
+}
+
 struct CertifiedArticleSection: View {
   @ViewBuilder
   private func ChallengeClassificationButton(
@@ -31,6 +46,8 @@ struct CertifiedArticleSection: View {
       , alignment: .bottom
     )
   }
+  
+  let challengeListCore: StoreOf<ChallengeAuthListCore>
   
   var body: some View {
     ZStack {
@@ -64,8 +81,6 @@ struct CertifiedArticleSection: View {
       }
       .padding(.horizontal, 24)
     }
-    .cornerRadius(20, corner: .topLeft)
-    .cornerRadius(20, corner: .topRight)
   }
   
 }
@@ -146,17 +161,20 @@ struct CertifiedDateSelectView: View {
       .cornerRadius(8)
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
       
-      CertifyButton(selectedDate: $selectedDate)
+      CertifyButton(selectedDate: $selectedDate) {
+        
+      }
     }
   }
 }
 
 struct CertifyButton: View {
   @Binding var selectedDate: Date
+  let action: () -> Void
   
   var body: some View {
     Button {
-      
+      action()
     } label: {
       HStack {
         VStack(alignment: .leading, spacing: .zero) {
@@ -216,10 +234,4 @@ struct CertifiedArticleListView: View {
       }
     }
   }
-}
-
-#Preview {
-  CertifiedArticleSection()
-    .padding()
-    .background(ColorConstants.gray4)
 }
