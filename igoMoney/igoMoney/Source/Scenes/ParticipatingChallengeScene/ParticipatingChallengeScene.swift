@@ -13,11 +13,15 @@ struct ParticipatingChallengeScene: View {
   let store: StoreOf<ParticipatingChallengeCore>
   var body: some View {
     ZStack {
+      Color("background_color")
+        .edgesIgnoringSafeArea(.top)
+      
       VStack {
-        Color("background_color")
+        Spacer()
+        
         Color.white
+          .frame(maxHeight: 200)
       }
-      .edgesIgnoringSafeArea(.all)
       
       VStack(spacing: 24) {
         IGONavigationBar {
@@ -55,9 +59,17 @@ struct ParticipatingChallengeScene: View {
             )
             .padding(.horizontal, 24)
             
-            CertifiedArticleSection()
+            CertifiedArticleSection(
+              challengeListCore: self.store.scope(
+                state: \.challengeAuthListState,
+                action: ParticipatingChallengeCore.Action.challengeAuthListAction
+              )
+            )
+            .cornerRadius(20, corner: .topLeft)
+            .cornerRadius(20, corner: .topRight)
           }
         }
+        .edgesIgnoringSafeArea(.bottom)
       }
     }
     .navigationBarHidden(true)
