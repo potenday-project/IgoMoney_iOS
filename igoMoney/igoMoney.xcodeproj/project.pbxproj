@@ -40,6 +40,9 @@
 		182B8CFE2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B8CFD2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift */; };
 		182B9E082AF9D08100B47CBA /* CreateChallengeAuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E072AF9D08100B47CBA /* CreateChallengeAuthScene.swift */; };
 		182B9E0A2AFA476E00B47CBA /* CreateChallengeAuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E092AFA476E00B47CBA /* CreateChallengeAuthCore.swift */; };
+		182B9E0D2AFA5B9900B47CBA /* RecordClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E0C2AFA5B9900B47CBA /* RecordClient.swift */; };
+		182B9E0F2AFA5C1400B47CBA /* RecordClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E0E2AFA5C1400B47CBA /* RecordClient + live.swift */; };
+		182B9E112AFA5CAE00B47CBA /* RecordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */; };
 		1831694B2ADBD6DE0098638E /* IGOAlertCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831694A2ADBD6DE0098638E /* IGOAlertCore.swift */; };
 		183169512ADBDAA20098638E /* EnterChallengeButtonCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */; };
 		183169532ADBDAC60098638E /* ChallengeInformationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183169522ADBDAC60098638E /* ChallengeInformationCore.swift */; };
@@ -168,6 +171,9 @@
 		182B8CFD2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterCore.swift; sourceTree = "<group>"; };
 		182B9E072AF9D08100B47CBA /* CreateChallengeAuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeAuthScene.swift; sourceTree = "<group>"; };
 		182B9E092AFA476E00B47CBA /* CreateChallengeAuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeAuthCore.swift; sourceTree = "<group>"; };
+		182B9E0C2AFA5B9900B47CBA /* RecordClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordClient.swift; sourceTree = "<group>"; };
+		182B9E0E2AFA5C1400B47CBA /* RecordClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordClient + live.swift"; sourceTree = "<group>"; };
+		182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAPI.swift; sourceTree = "<group>"; };
 		1831694A2ADBD6DE0098638E /* IGOAlertCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOAlertCore.swift; sourceTree = "<group>"; };
 		183169502ADBDAA20098638E /* EnterChallengeButtonCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeButtonCore.swift; sourceTree = "<group>"; };
 		183169522ADBDAC60098638E /* ChallengeInformationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInformationCore.swift; sourceTree = "<group>"; };
@@ -397,6 +403,15 @@
 			path = CreateChallengeAuthScene;
 			sourceTree = "<group>";
 		};
+		182B9E0B2AFA5B9200B47CBA /* RecordClient */ = {
+			isa = PBXGroup;
+			children = (
+				182B9E0C2AFA5B9900B47CBA /* RecordClient.swift */,
+				182B9E0E2AFA5C1400B47CBA /* RecordClient + live.swift */,
+			);
+			path = RecordClient;
+			sourceTree = "<group>";
+		};
 		183169492ADBD6D10098638E /* IGOAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +511,7 @@
 				18B437792AC170B30026A71E /* AuthAPI.swift */,
 				181988B12ACE80840021214C /* ChallengeAPI.swift */,
 				188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */,
+				182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -583,6 +599,7 @@
 		18F55C8F2ADD92D600DE50C4 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				182B9E0B2AFA5B9200B47CBA /* RecordClient */,
 				188103A42AE539F5003EBE95 /* ImageClient */,
 				18F55C902ADD942200DE50C4 /* AuthClient */,
 				181988AA2ACE72200021214C /* ChallengeClient */,
@@ -940,8 +957,10 @@
 				182B8CFB2AEA4C7A00ED8890 /* ExploreChallengeFilterHeaderSection.swift in Sources */,
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
+				182B9E0D2AFA5B9900B47CBA /* RecordClient.swift in Sources */,
 				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
 				1833D8A42AEACDD1002FBEDD /* UserBadgeCounterCore.swift in Sources */,
+				182B9E112AFA5CAE00B47CBA /* RecordAPI.swift in Sources */,
 				183C7EB02AE569FC0054F9D3 /* ShareSheet.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */,
@@ -967,6 +986,7 @@
 				183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */,
 				1809AC3F2AD4371100FB044A /* UINavigationController + Extensions.swift in Sources */,
 				18CD8F322AB9A57D006FEA6F /* Constants.swift in Sources */,
+				182B9E0F2AFA5C1400B47CBA /* RecordClient + live.swift in Sources */,
 				18F6BB732AEF51E600AB0F1B /* ParticipatingChallengeResultSection.swift in Sources */,
 				18B4377A2AC170B30026A71E /* AuthAPI.swift in Sources */,
 				18B6306A2AC408A300F638C0 /* AppView.swift in Sources */,
