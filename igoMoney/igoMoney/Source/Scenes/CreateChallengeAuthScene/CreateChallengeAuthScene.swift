@@ -29,9 +29,10 @@ struct CreateChallengeAuthScene: View {
           EmptyView()
         }
         .padding(.top, 16)
+        .padding(.horizontal, 24)
         
         ScrollView(.vertical, showsIndicators: false) {
-          VStack {
+          VStack(spacing: 24) {
             ChallengeAuthImageListSection()
             
             ChallengeAuthMoneyInputSection(
@@ -40,15 +41,27 @@ struct CreateChallengeAuthScene: View {
                 send: CreateChallengeAuthCore.Action.moneyChanged
               )
             )
+            .padding(.horizontal, 24)
             
-            ChallengeAuthTitleSection()
+            ChallengeAuthTitleSection(
+              title: viewStore.binding(
+                get: \.title,
+                send: CreateChallengeAuthCore.Action.titleChanged
+              )
+            )
+            .padding(.horizontal, 24)
             
-            ChallengeAuthContentSection()
+            ChallengeAuthContentSection(
+              content: viewStore.binding(
+                get: \.content,
+                send: CreateChallengeAuthCore.Action.contentChanged
+              )
+            )
+            .padding(.horizontal, 24)
+            
+            Spacer()
           }
-          .padding(.horizontal, 24)
         }
-        
-        Spacer()
         
         Button {
           
@@ -62,6 +75,8 @@ struct CreateChallengeAuthScene: View {
         .background(ColorConstants.gray5)
         .cornerRadius(8)
         .padding(.horizontal, 24)
+        .buttonStyle(.plain)
+        .padding(.bottom, 16)
       }
     }
   }
@@ -71,6 +86,7 @@ struct ChallengeAuthImageListSection: View {
   var body: some View {
     Section {
       InputHeaderView(title: "인증 사진", detail: "선택, 최대 1장")
+        .padding(.horizontal, 24)
       
       Button {
         
@@ -88,6 +104,7 @@ struct ChallengeAuthImageListSection: View {
       .background(Color.white)
       .cornerRadius(8)
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+      .padding(.horizontal, 24)
       
       ScrollView(.horizontal, showsIndicators: false) {
         HStack {
@@ -118,6 +135,10 @@ struct ChallengeAuthImageListSection: View {
 
 struct ChallengeAuthMoneyInputSection: View {
   @Binding var money: String
+  var isAvailable: Bool {
+    return Int($money.wrappedValue) != nil
+  }
+  
   var body: some View {
     Section {
       InputHeaderView(title: "금액", detail: "숫자만 입력")
@@ -127,23 +148,30 @@ struct ChallengeAuthMoneyInputSection: View {
         placeholder: "금액을 입력해주세요.",
         placeholderColor: ColorConstants.gray4
       )
+      .keyboardType(.numberPad)
       .padding(.vertical, 12)
       .padding(.horizontal, 16)
       .background(
         RoundedRectangle(cornerRadius: 4)
-          .stroke(ColorConstants.gray4)
+          .stroke(isAvailable ? ColorConstants.primary : ColorConstants.gray4)
+          .background(isAvailable ? ColorConstants.primary7 : Color.white)
       )
     }
   }
 }
 
 struct ChallengeAuthTitleSection: View {
+  @Binding var title: String
+  var isAvailable: Bool {
+    return (5...15) ~= $title.wrappedValue.count
+  }
+  
   var body: some View {
     Section {
       InputHeaderView(title: "제목", detail: "최소 5자 / 최대 15자")
       
       IGOTextField(
-        text: .constant(""),
+        text: $title,
         placeholder: "제목을 입력해주세요.",
         placeholderColor: ColorConstants.gray4
       )
@@ -151,31 +179,50 @@ struct ChallengeAuthTitleSection: View {
       .padding(.horizontal, 16)
       .background(
         RoundedRectangle(cornerRadius: 4)
-          .stroke(ColorConstants.gray4)
+          .stroke(isAvailable ? ColorConstants.primary : ColorConstants.gray4)
+          .background(isAvailable ? ColorConstants.primary7 : Color.white)
       )
+    }
+    .onChange(of: isAvailable) {
+      print($0)
     }
   }
 }
 
 struct ChallengeAuthContentSection: View {
+  @Binding var content: String
+  var isAvailable: Bool {
+    return (3...100) ~= content.count
+  }
+  
   var body: some View {
     Section {
       InputHeaderView(title: "내용", detail: "최소 3자 / 최대 100자")
       
-      TextEditor(
-        text: .constant("")
-      )
-      .font(.pretendard(size: 16, weight: .medium))
-      .padding(.horizontal, 16)
-      .padding(.vertical, 12)
-      .textEditorBackground {
-        RoundedRectangle(cornerRadius: 4)
-          .stroke(ColorConstants.gray4, lineWidth: 2)
-          .background(Color.clear)
-          .cornerRadius(4)
-      }
-      .frame(height: 100)
+      TextEditor(text: $content)
+        .font(.pretendard(size: 16, weight: .medium))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .textEditorBackground {
+          RoundedRectangle(cornerRadius: 4)
+            .stroke(
+              isAvailable ? ColorConstants.primary : ColorConstants.gray4,
+              lineWidth: 2
+            )
+            .background(isAvailable ? ColorConstants.primary7 : Color.white)
+            .cornerRadius(4)
+        }
+        .frame(height: 100)
       
     }
   }
+}
+
+#Preview {
+  CreateChallengeAuthScene(
+    store: Store(
+      initialState: CreateChallengeAuthCore.State(challenge: .default),
+      reducer: { CreateChallengeAuthCore() }
+    )
+  )
 }
