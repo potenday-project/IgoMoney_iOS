@@ -22,7 +22,7 @@ extension MultipartForm {
     
     values.forEach { (key, value) in
       data.appendString(to: "--\(boundary)\r\n")
-      
+      print("Append Data", (key, value))
       switch value {
       case .text(let text):
         data.appendString(to: "Content-Disposition: form-data; name=\"\(key)\"\r\n")

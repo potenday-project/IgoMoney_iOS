@@ -75,7 +75,7 @@ struct CreateChallengeAuthCore: Reducer {
     case .registerRecord:
       guard let userID = APIClient.currentUser?.userID,
             let image = state.authImages.first?.pngData() else { return .none }
-      print(userID, image)
+        
       let request = RecordRequest(
         challengeID: state.challenge.id,
         userID: userID,
