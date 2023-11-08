@@ -19,6 +19,7 @@ struct ChallengeAuthListCore: Reducer {
     var currentUserID: Int? = nil
     var competitorUserID: Int? = nil
     var selectDateState: RecordSelectDateCore.State
+    var records: IdentifiedArrayOf<ChallengeRecordDetailCore.State> = []
     
     var isPresentCreate: Bool = false
     var createChallengeState: CreateChallengeAuthCore.State? = nil
@@ -42,6 +43,7 @@ struct ChallengeAuthListCore: Reducer {
     
     case createChallengeAuthAction(CreateChallengeAuthCore.Action)
     case selectDateAction(RecordSelectDateCore.Action)
+    case challengeRecordAction(Int, ChallengeRecordDetailCore.Action)
   }
   
   @Dependency(\.recordClient) var recordClient
@@ -78,7 +80,7 @@ struct ChallengeAuthListCore: Reducer {
         return .none
         
       case .fetchRecords:
-        var userID = state.selectedFetchChallenge == .mine ? state.currentUserID : state.competitorUserID
+        let userID = state.selectedFetchChallenge == .mine ? state.currentUserID : state.competitorUserID
         guard let userID = userID else {
           return .none
         }
@@ -94,7 +96,8 @@ struct ChallengeAuthListCore: Reducer {
         }
         
       case ._fetchRecordsResponse(.success(let records)):
-        print(records)
+        let decodeRecords = records.map { ChallengeRecordDetailCore.State(record: $0) }
+        state.records = IdentifiedArray(uniqueElements: decodeRecords)
         return .none
         
       case ._fetchRecordsResponse(.failure):
@@ -114,10 +117,16 @@ struct ChallengeAuthListCore: Reducer {
         
       case .selectDateAction:
         return .none
+        
+      case .challengeRecordAction:
+        return .none
       }
     }
     .ifLet(\.createChallengeState, action: /Action.createChallengeAuthAction) {
       CreateChallengeAuthCore()
+    }
+    .forEach(\.records, action: /Action.challengeRecordAction) {
+      ChallengeRecordDetailCore()
     }
   }
 }
@@ -180,7 +189,7 @@ struct CertifiedArticleSection: View {
             )
           )
           
-          CertifiedArticleListView()
+          CertifiedArticleListView(store: self.store)
           
           Spacer()
         }
@@ -343,39 +352,102 @@ struct CertifyButton: View {
   }
 }
 
+struct ChallengeRecordDetailCore: Reducer {
+  struct State: Equatable, Identifiable {
+    let record: ChallengeRecord
+    var imageState: URLImageCore.State
+    let title: String
+    let cost: Int
+    
+    var id: Int {
+      return record.ID
+    }
+    
+    init(record: ChallengeRecord) {
+      self.record = record
+      self.imageState = URLImageCore.State(urlPath: record.imagePath)
+      self.title = record.title
+      self.cost = record.cost
+    }
+  }
+  
+  enum Action: Equatable {
+    case onAppear
+    case urlImageAction(URLImageCore.Action)
+  }
+  
+  var body: some Reducer<State, Action> {
+    Scope(state: \.imageState, action: /Action.urlImageAction) {
+      URLImageCore()
+    }
+    
+    Reduce { state, action in
+      switch action {
+      case .onAppear:
+        return .send(.urlImageAction(.fetchURLImage))
+      case .urlImageAction:
+        return .none
+      }
+    }
+  }
+}
+
+struct ChallengeRecordCell: View {
+  let store: StoreOf<ChallengeRecordDetailCore>
+  var body: some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      HStack {
+        URLImage(
+          store: store.scope(
+            state: \.imageState,
+            action: ChallengeRecordDetailCore.Action.urlImageAction
+          )
+        )
+        .scaledToFill()
+        .frame(width: 65, height: 65)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        
+        VStack(alignment: .leading, spacing: 4) {
+          Text("9월 24일 1일차")
+            .font(.pretendard(size: 12, weight: .medium))
+            .foregroundColor(ColorConstants.gray3)
+          
+          Text(viewStore.title)
+            .font(.pretendard(size: 16, weight: .bold))
+          
+          Text("총 \(viewStore.cost)원 지출")
+            .font(.pretendard(size: 12, weight: .medium))
+            .padding(.vertical, 2)
+            .padding(.horizontal, 4)
+            .background(ColorConstants.blue)
+            .cornerRadius(4)
+        }
+        
+        Spacer()
+      }
+    }
+    .padding(16)
+    .background(Color.white)
+    .cornerRadius(10)
+    .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+    .onAppear {
+      store.send(.onAppear)
+    }
+  }
+}
+
 struct CertifiedArticleListView: View {
+  let store: StoreOf<ChallengeAuthListCore>
+  
   var body: some View {
     VStack(spacing: 12) {
-      ForEach(1...10, id: \.self) { _ in
-        HStack {
-          Image("example_food")
-            .resizable()
-            .scaledToFill()
-            .frame(width: 65, height: 65)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-          
-          VStack(alignment: .leading, spacing: 4) {
-            Text("9월 24일 1일차")
-              .font(.pretendard(size: 12, weight: .medium))
-              .foregroundColor(ColorConstants.gray3)
-            
-            Text("도시락을 먹어서 지출은 커피값만! 🤟🏼")
-              .font(.pretendard(size: 16, weight: .bold))
-            
-            Text("총 3000원 지출")
-              .font(.pretendard(size: 12, weight: .medium))
-              .padding(.vertical, 2)
-              .padding(.horizontal, 4)
-              .background(ColorConstants.blue)
-              .cornerRadius(4)
-          }
-          
-          Spacer()
-        }
-        .padding(16)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+      ForEachStore(
+        store.scope(
+          state: \.records,
+          action: ChallengeAuthListCore.Action.challengeRecordAction
+        )
+      ) { store in
+        ChallengeRecordCell(store: store)
       }
     }
   }
