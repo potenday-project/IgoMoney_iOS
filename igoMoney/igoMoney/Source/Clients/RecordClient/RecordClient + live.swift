@@ -18,9 +18,16 @@ extension RecordClient {
       header: ["Content-Type": "multipart/form-data; boundary=\(boundary)"],
       body: .multipart(boundary: boundary, values: request.toDictionary())
     )
-      
-      print(api.body)
     
     return try await APIClient.execute(to: api)
+  } fetchAllRecord: { selectedDate, userID in
+    let api = RecordAPI(
+      method: .get,
+      path: "/records/daily-records/\(userID)/\(selectedDate.toString(with: "yyyy-MM-dd"))",
+      query: [:],
+      header: [:]
+    )
+    
+    return try await APIClient.request(to: api)
   }
 }
