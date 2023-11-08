@@ -9,21 +9,51 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChallengeAuthListCore: Reducer {
+  enum FetchChallengeCase {
+    case mine
+    case competitor
+  }
   struct State: Equatable {
+    var selectedFetchChallenge: FetchChallengeCase = .mine
     let challenge: Challenge
+    var currentUserID: Int? = nil
+    var competitorUserID: Int? = nil
+    var selectDateState: RecordSelectDateCore.State
     
     var isPresentCreate: Bool = false
-    var createChallengeState: CreateChallengeAuthCore.State?
+    var createChallengeState: CreateChallengeAuthCore.State? = nil
+    
+    init(challenge: Challenge) {
+      self.challenge = challenge
+      let date = challenge.startDate ?? Date()
+      self.selectDateState = RecordSelectDateCore.State(startDate: date)
+    }
   }
   
   enum Action: Equatable {
+    case toggleSelect(FetchChallengeCase)
     case presentCreate(Bool)
+    case setCurrentUserID(userID: Int)
+    case setCompetitorID(userID: Int)
+    
     case createChallengeAuthAction(CreateChallengeAuthCore.Action)
+    case selectDateAction(RecordSelectDateCore.Action)
   }
   
+  @Dependency(\.recordClient) var recordClient
+  
   var body: some Reducer<State, Action> {
+    Scope(state: \.selectDateState, action: /Action.selectDateAction) {
+      RecordSelectDateCore()
+    }
+    
     Reduce { state, action in
       switch action {
+      case .toggleSelect(let fetchType):
+        state.selectedFetchChallenge = fetchType
+        // Fetch User Data
+        return .none
+        
       case .presentCreate(true):
         let challenge = state.challenge
         state.createChallengeState = CreateChallengeAuthCore.State(challenge: challenge)
@@ -36,11 +66,23 @@ struct ChallengeAuthListCore: Reducer {
         return .none
         
       case .createChallengeAuthAction(._registerRecordResponse(.success)):
-          state.isPresentCreate = false
-          state.createChallengeState = nil
-          return .none
-          
+        return .send(.presentCreate(false))
+        
       case .createChallengeAuthAction:
+        return .none
+        
+      case let .setCurrentUserID(userID):
+        state.currentUserID = userID
+        return .none
+        
+      case let .setCompetitorID(userID):
+        state.competitorUserID = userID
+        return .none
+        
+      case .selectDateAction(.presentCreateRecord(true)):
+        return .send(.presentCreate(true))
+        
+      case .selectDateAction:
         return .none
       }
     }
@@ -88,20 +130,25 @@ struct CertifiedArticleSection: View {
               title: "나의 챌린지",
               isSelected: true
             ) {
-              print("Tapped 나의 챌린지")
+              viewStore.send(.toggleSelect(.mine))
             }
             
             ChallengeClassificationButton(
               title: "상대방 챌린지",
               isSelected: false
             ) {
-              print("Tapped 상대방 챌린지")
+              viewStore.send(.toggleSelect(.mine))
             }
           }
           .padding(.top, 20)
           .font(.pretendard(size: 16, weight: .bold))
           
-          CertifiedDateSelectView(store: self.store)
+          CertifiedDateSelectView(
+            store: self.store.scope(
+              state: \.selectDateState,
+              action: ChallengeAuthListCore.Action.selectDateAction
+            )
+          )
           
           CertifiedArticleListView()
           
@@ -126,35 +173,54 @@ struct CertifiedArticleSection: View {
       }
     }
   }
+}
+
+struct RecordSelectDateCore: Reducer {
+  struct State: Equatable {
+    let startDate: Date
+    var selectedDate: Date = Date()
+    var rangeOfChallengeDate: [Date] {
+      let valueRange = (0...6)
+      let calendar = Calendar.current
+      let days = valueRange.map {
+        return calendar.date(byAdding: .day, value: $0, to: startDate) ?? Date()
+      }
+      return days
+    }
+    
+    var differenceOfStartDate: Int {
+      let difference = Calendar.current.dateComponents([.day], from: startDate, to: selectedDate).day
+      return (difference ?? .zero) + 1
+    }
+  }
   
+  enum Action: Equatable {
+    case selectDate(Date)
+    case presentCreateRecord(Bool)
+  }
+  
+  var body: some Reducer<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .selectDate(let date):
+        state.selectedDate = date
+        return .none
+        
+      case .presentCreateRecord:
+        return .none
+      }
+    }
+  }
+}
+
+extension Date {
+  static func ==(lhs: Self, rhs: Self) -> Bool {
+    return lhs.toString(with: "yy.MM.dd") == rhs.toString(with: "yy.MM.dd")
+  }
 }
 
 struct CertifiedDateSelectView: View {
-  let store: StoreOf<ChallengeAuthListCore>
-  
-  @State private var selectedDate: Date
-  private let startDate = Date()
-  private var challengeRange: [Date] = []
-  
-  init(store: StoreOf<ChallengeAuthListCore>) {
-    self.store = store
-    self._selectedDate = State(initialValue: Date())
-    self.challengeRange = generateChallengeRange()
-  }
-  
-  private func generateChallengeRange() -> [Date] {
-    let valueRange = (0...6)
-    let calendar = Calendar.current
-    let days = valueRange.map {
-      return calendar.date(byAdding: .day, value: $0, to: startDate) ?? Date()
-    }
-    return days
-  }
-  
-  private func equalDate(lhs: Date, rhs: Date) -> Bool {
-    return lhs.toString(with: "M/dd") == rhs.toString(with: "M/dd")
-  }
-  
+  let store: StoreOf<RecordSelectDateCore>
   @ViewBuilder
   private func DateSelectButton(index: Int, to date: Date) -> some View {
     VStack(spacing: 8) {
@@ -172,20 +238,22 @@ struct CertifiedDateSelectView: View {
   }
   
   var body: some View {
-    VStack(spacing: 12) {
-      HStack {
-        Text("🔥 9월 24일 일요일 1일차")
-        
-        Spacer()
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      
+      VStack(spacing: 12) {
+        HStack {
+          Text("🔥 \(viewStore.selectedDate.toString(with: "MM월 d일 EE요일")) \(viewStore.differenceOfStartDate)일차")
+          
+          Spacer()
+        }
+        .font(.pretendard(size: 18, weight: .bold))
       }
-      .font(.pretendard(size: 18, weight: .bold))
       
       HStack(spacing: .zero) {
-        ForEach(0..<challengeRange.count, id: \.self) { index in
-          let date = challengeRange[index]
-          
+        ForEach(0..<viewStore.rangeOfChallengeDate.count, id: \.self) { index in
+          let date = viewStore.rangeOfChallengeDate[index]
           ZStack {
-            if equalDate(lhs: date, rhs: selectedDate) {
+            if viewStore.selectedDate == date {
               RoundedRectangle(cornerRadius: 8)
                 .fill(ColorConstants.primary7)
                 .transition(.scale)
@@ -196,11 +264,10 @@ struct CertifiedDateSelectView: View {
           }
           .frame(maxWidth: .infinity, maxHeight: 100)
           .onTapGesture {
-            withAnimation {
-              self.selectedDate = date
-            }
+            viewStore.send(.selectDate(date))
           }
         }
+        
       }
       .padding(.vertical, 12)
       .padding(.horizontal, 16)
@@ -208,15 +275,16 @@ struct CertifiedDateSelectView: View {
       .cornerRadius(8)
       .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
       
-      CertifyButton(selectedDate: $selectedDate) {
-        store.send(.presentCreate(true))
+      
+      CertifyButton(selectedDate: viewStore.selectedDate) {
+        viewStore.send(.presentCreateRecord(true))
       }
     }
   }
 }
 
 struct CertifyButton: View {
-  @Binding var selectedDate: Date
+  let selectedDate: Date
   let action: () -> Void
   
   var body: some View {

@@ -12,25 +12,22 @@ struct DetailChallengeResultSection: View {
   let store: StoreOf<ParticipatingChallengeResultSectionCore>
   var body: some View {
     VStack(spacing: 12) {
-      IfLetStore(
-        self.store.scope(
+      DetailChallengeResultCard(
+        store: self.store.scope(
           state: \.myChallengeCost,
           action: ParticipatingChallengeResultSectionCore.Action.myChallengeCostAction
         )
-      ) { costStore in
-        DetailChallengeResultCard(store: costStore)
-      }
+      )
       
       Divider()
       
-      IfLetStore(
-        self.store.scope(
+      DetailChallengeResultCard(
+        store: self.store.scope(
           state: \.competitorChallengeCost,
           action: ParticipatingChallengeResultSectionCore.Action.competitorChallengeCostAction
         )
-      ) { costStore in
-        DetailChallengeResultCard(store: costStore)
-      }
+      )
+      
       
       Divider()
       
@@ -46,45 +43,58 @@ struct DetailChallengeResultSection: View {
     .padding(16)
     .background(ColorConstants.primary8)
     .cornerRadius(10)
-    .onAppear {
-      store.send(.onAppear)
-    }
   }
 }
 
 struct ChallengeResultCore: Reducer {
   struct State: Equatable {
     let challenge: Challenge
-    var user: User?
-    var cost: ChallengeCostResponse
+    let isMine: Bool
+    var cost: Int = .zero
+    var userNickName: String = ""
     
-    init(challenge: Challenge, cost: ChallengeCostResponse) {
+    init(challenge: Challenge, isMine: Bool) {
       self.challenge = challenge
-      self.cost = cost
+      self.isMine = isMine
     }
     
     var ratio: Double {
-      return Double(cost.totalCost) / Double(challenge.targetAmount.money)
+      return Double(cost) / Double(challenge.targetAmount.money)
     }
   }
   
   enum Action: Equatable {
     case onAppear
-    case _fetchCurrentUser
-    case _fetchCurrentUserResponse(TaskResult<User>)
+    case fetchTotalCost
+    case fetchUser(userID: Int)
+    
+    case _fetchTotalCostResponse(TaskResult<ChallengeCostResponse>)
+    case _fetchUserNameResponse(TaskResult<User>)
   }
   
   @Dependency(\.userClient) var userClient
+  @Dependency(\.challengeClient) var challengeClient
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .onAppear:
-      return .send(._fetchCurrentUser)
+      return .send(.fetchTotalCost)
       
-    case ._fetchCurrentUser:
-      return .run { [userID = state.cost.userID] send in
+    case .fetchTotalCost:
+      return .run { [challenge = state.challenge, isMine = state.isMine] send in
         await send(
-          ._fetchCurrentUserResponse(
+          ._fetchTotalCostResponse(
+            TaskResult {
+              try await challengeClient.challengeCosts(challenge, isMine)
+            }
+          )
+        )
+      }
+      
+    case .fetchUser(let userID):
+      return .run { send in
+        await send(
+          ._fetchUserNameResponse(
             TaskResult {
               try await userClient.getUserInformation(userID.description)
             }
@@ -92,11 +102,21 @@ struct ChallengeResultCore: Reducer {
         )
       }
       
-    case ._fetchCurrentUserResponse(.success(let user)):
-      state.user = user
+    case ._fetchTotalCostResponse(.success(let response)):
+      state.cost = response.totalCost
+      return .send(.fetchUser(userID: response.userID))
+      
+    case ._fetchTotalCostResponse(.failure):
       return .none
       
-    case ._fetchCurrentUserResponse(.failure):
+    case ._fetchUserNameResponse(.success(let user)):
+      if let userNickName = user.nickName {
+        state.userNickName = userNickName
+      }
+      
+      return .none
+      
+    case ._fetchUserNameResponse(.failure):
       return .none
     }
   }
@@ -109,12 +129,12 @@ struct DetailChallengeResultCard: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       VStack(spacing: 8) {
         HStack {
-          Text(viewStore.user?.nickName ?? "")
+          Text(viewStore.userNickName)
             .font(.pretendard(size: 16, weight: .bold))
           
           Spacer()
           
-          Text("누적 금액 \(viewStore.cost.totalCost)원")
+          Text("누적 금액 \(viewStore.cost)원")
             .font(.pretendard(size: 14, weight: .bold))
             .foregroundColor(ColorConstants.primary2)
         }
@@ -137,7 +157,7 @@ struct DetailChallengeResultCard: View {
               )
             
             HStack {
-              Text("\(viewStore.cost.totalCost)원")
+              Text("\(viewStore.cost)원")
               
               Spacer()
               
@@ -148,11 +168,11 @@ struct DetailChallengeResultCard: View {
           }
         }
       }
+      .onAppear {
+        viewStore.send(.onAppear)
+      }
     }
     .frame(height: 80)
-    .onAppear {
-      store.send(.onAppear)
-    }
   }
 }
 
