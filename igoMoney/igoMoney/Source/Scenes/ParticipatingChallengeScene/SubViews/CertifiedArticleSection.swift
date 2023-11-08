@@ -35,6 +35,11 @@ struct ChallengeAuthListCore: Reducer {
         state.isPresentCreate = false
         return .none
         
+      case .createChallengeAuthAction(._registerRecordResponse(.success)):
+          state.isPresentCreate = false
+          state.createChallengeState = nil
+          return .none
+          
       case .createChallengeAuthAction:
         return .none
       }

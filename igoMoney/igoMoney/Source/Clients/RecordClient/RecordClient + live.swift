@@ -10,14 +10,16 @@ import Dependencies
 
 extension RecordClient {
   static var liveValue = RecordClient { request in
-    let boundary = UUID().uuidString
+    let boundary = "Boundary_" + UUID().uuidString
     let api = RecordAPI(
       method: .post,
       path: "/records/new",
       query: [:],
-      header: [:],
+      header: ["Content-Type": "multipart/form-data; boundary=\(boundary)"],
       body: .multipart(boundary: boundary, values: request.toDictionary())
     )
+      
+      print(api.body)
     
     return try await APIClient.execute(to: api)
   }
