@@ -10,20 +10,24 @@ struct ParticipatingChallengeResultSectionCore: Reducer {
   struct State: Equatable {
     let challenge: Challenge
     
-    var myChallengeCost: ChallengeResultCore.State?
-    var competitorChallengeCost: ChallengeResultCore.State?
+    var myChallengeCost: ChallengeResultCore.State
+    var competitorChallengeCost: ChallengeResultCore.State
+    
+    var currentUserID: Int = .zero
+    var competitorUserID: Int = .zero
     
     var winnerName: String = ""
+    
+    init(challenge: Challenge) {
+      self.challenge = challenge
+      self.myChallengeCost = ChallengeResultCore.State(challenge: challenge, isMine: true)
+      self.competitorChallengeCost = ChallengeResultCore.State(challenge: challenge, isMine: false)
+    }
   }
   
   enum Action: Equatable {
-    case onAppear
-    
-    case _fetchChallengeCost
-    case _fetchChallengeCostResponse(TaskResult<[ChallengeCostResponse]>)
-    case _fetchWinnerInformation(id: Int)
-    case _fetchWinnerInformationResponse(TaskResult<User>)
-    
+    case _setCurrentUserID(userID: Int)
+    case _setCompetitorUserID(userID: Int)
     case myChallengeCostAction(ChallengeResultCore.Action)
     case competitorChallengeCostAction(ChallengeResultCore.Action)
   }
@@ -32,81 +36,33 @@ struct ParticipatingChallengeResultSectionCore: Reducer {
   @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
+    Scope(state: \.myChallengeCost, action: /Action.myChallengeCostAction) {
+      ChallengeResultCore()
+    }
+    
+    Scope(state: \.competitorChallengeCost, action: /Action.competitorChallengeCostAction) {
+      ChallengeResultCore()
+    }
+    
     Reduce { state, action in
       switch action {
-      case .onAppear:
-        return .send(._fetchChallengeCost)
-        
-      case ._fetchChallengeCost:
-        return .run { [challenge = state.challenge] send in
-          await send(
-            ._fetchChallengeCostResponse(
-              TaskResult {
-                try await challengeClient.challengeCosts(challenge)
-              }
-            )
-          )
-        }
-        
-      case ._fetchChallengeCostResponse(.success(let challengeCosts)):
-        challengeCosts.forEach {
-          if $0.fetchUserID == $0.userID {
-            state.myChallengeCost = ChallengeResultCore.State(
-              challenge: state.challenge,
-              cost: $0
-            )
-          } else {
-            state.competitorChallengeCost = ChallengeResultCore.State(
-              challenge: state.challenge,
-              cost: $0
-            )
-          }
-        }
-        
-        var minCost = Int.max
-        var minID: Int? = nil
-        
-        for cost in challengeCosts {
-          if cost.totalCost < minCost {
-            minCost = cost.totalCost
-            minID = cost.userID
-          }
-        }
-        
-        guard let winnerID = minID else { return .none }
-        
-        return .send(._fetchWinnerInformation(id: winnerID))
-        
-      case ._fetchChallengeCostResponse(.failure):
+      case let ._setCurrentUserID(userID):
+        state.currentUserID = userID
         return .none
         
-      case ._fetchWinnerInformation(let id):
-        return .run { send in
-          await send(
-            ._fetchWinnerInformationResponse(
-              TaskResult {
-                try await userClient.getUserInformation(id.description)
-              }
-            )
-          )
-        }
-        
-      case ._fetchWinnerInformationResponse(.success(let user)):
-        state.winnerName = user.nickName ?? ""
+      case let ._setCompetitorUserID(userID):
+        state.competitorUserID = userID
         return .none
         
-      case ._fetchWinnerInformationResponse(.failure):
-        return .none
+      case .myChallengeCostAction(._fetchUserNameResponse(.success(let user))):
+        return .send(._setCurrentUserID(userID: user.userID))
+        
+      case .competitorChallengeCostAction(._fetchUserNameResponse(.success(let user))):
+        return .send(._setCompetitorUserID(userID: user.userID))
         
       default:
         return .none
       }
-    }
-    .ifLet(\.myChallengeCost, action: /Action.myChallengeCostAction) {
-      ChallengeResultCore()
-    }
-    .ifLet(\.competitorChallengeCost, action: /Action.competitorChallengeCostAction) {
-      ChallengeResultCore()
     }
   }
 }

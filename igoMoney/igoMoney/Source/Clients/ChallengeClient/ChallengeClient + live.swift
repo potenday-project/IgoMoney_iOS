@@ -56,35 +56,26 @@ extension ChallengeClient {
     
     let values: [String: Int] = try await APIClient.request(to: api)
     return values
-  } challengeCosts: { challenge in
-    let api = ChallengeAPI(
-      method: .get,
-      path: "/challenges/total-cost/\(challenge.id)",
-      query: [:],
-      header: [:]
-    )
-    
-    var response: [ChallengeCostResponse] = try await APIClient.request(to: api)
-    
-    let tokenData = try KeyChainClient.read(.token, SystemConfigConstants.tokenService)
-    if let tokenInformation: AuthToken = tokenData.toDecodable() {
-      var response = response
-      
-      if response.count == 1 {
-        let userID = (tokenInformation.userID == challenge.competitorID)
-        ? challenge.leaderID : challenge.competitorID
-        
-        response.append(.empty(userID: userID ?? tokenInformation.userID , fetchUserID: tokenInformation.userID))
-      }
-      
-      
-      for index in 0..<response.count {
-        response[index].fetchUserID = tokenInformation.userID
-      }
-      
-      return response
+  } challengeCosts: { challenge, isMine  in
+    guard let currentAuthUser = APIClient.currentUser,
+          let competitorID = challenge.competitorID else {
+      throw APIError.badRequest(400)
     }
     
-    return response
+    let isLeader = (currentAuthUser.userID == challenge.leaderID)
+    let userID = isMine ? currentAuthUser.userID : isLeader ? competitorID : challenge.leaderID
+    
+    let api = ChallengeAPI(
+      method: .get,
+      path: "/challenges/total-cost",
+      query: [:],
+      header: [:],
+      body: .json(value: [
+        "challengeId": challenge.id.description,
+        "userId": userID.description
+      ])
+    )
+    
+    return try await APIClient.request(to: api)
   }
 }

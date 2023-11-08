@@ -42,6 +42,11 @@ struct ParticipatingChallengeCore: Reducer {
     
     Reduce { state, action in
       switch action {
+      case .challengeResultSectionAction(._setCurrentUserID(let userID)):
+        return .send(.challengeAuthListAction(.setCurrentUserID(userID: userID)))
+      case .challengeResultSectionAction(._setCompetitorUserID(let userID)):
+        return .send(.challengeAuthListAction(.setCompetitorID(userID: userID)))
+        
       default:
         return .none
       }
