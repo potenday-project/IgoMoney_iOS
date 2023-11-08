@@ -57,8 +57,7 @@ struct ChallengeAuthListCore: Reducer {
       switch action {
       case .toggleSelect(let fetchType):
         state.selectedFetchChallenge = fetchType
-        // Fetch User Data
-        return .none
+        return .send(.fetchRecords)
         
       case .presentCreate(true):
         let challenge = state.challenge
@@ -167,14 +166,14 @@ struct CertifiedArticleSection: View {
           HStack(spacing: 16) {
             ChallengeClassificationButton(
               title: "나의 챌린지",
-              isSelected: true
+              isSelected: viewStore.selectedFetchChallenge == .mine
             ) {
               viewStore.send(.toggleSelect(.mine))
             }
             
             ChallengeClassificationButton(
               title: "상대방 챌린지",
-              isSelected: false
+              isSelected: viewStore.selectedFetchChallenge == .competitor
             ) {
               viewStore.send(.toggleSelect(.competitor))
             }
@@ -303,7 +302,7 @@ struct CertifiedDateSelectView: View {
           }
           .frame(maxWidth: .infinity, maxHeight: 100)
           .onTapGesture {
-            viewStore.send(.selectDate(date))
+            viewStore.send(.selectDate(date), animation: .easeInOut)
           }
         }
         
