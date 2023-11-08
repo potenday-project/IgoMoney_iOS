@@ -36,6 +36,10 @@ struct ChallengeAuthListCore: Reducer {
     case setCurrentUserID(userID: Int)
     case setCompetitorID(userID: Int)
     
+    case fetchRecords
+    
+    case _fetchRecordsResponse(TaskResult<[ChallengeRecord]>)
+    
     case createChallengeAuthAction(CreateChallengeAuthCore.Action)
     case selectDateAction(RecordSelectDateCore.Action)
   }
@@ -65,12 +69,6 @@ struct ChallengeAuthListCore: Reducer {
         state.isPresentCreate = false
         return .none
         
-      case .createChallengeAuthAction(._registerRecordResponse(.success)):
-        return .send(.presentCreate(false))
-        
-      case .createChallengeAuthAction:
-        return .none
-        
       case let .setCurrentUserID(userID):
         state.currentUserID = userID
         return .none
@@ -78,6 +76,38 @@ struct ChallengeAuthListCore: Reducer {
       case let .setCompetitorID(userID):
         state.competitorUserID = userID
         return .none
+        
+      case .fetchRecords:
+        var userID = state.selectedFetchChallenge == .mine ? state.currentUserID : state.competitorUserID
+        guard let userID = userID else {
+          return .none
+        }
+        
+        return .run { [selectedDate = state.selectDateState.selectedDate] send in
+          await send(
+            ._fetchRecordsResponse(
+              TaskResult {
+                try await recordClient.fetchAllRecord(selectedDate, userID)
+              }
+            )
+          )
+        }
+        
+      case ._fetchRecordsResponse(.success(let records)):
+        print(records)
+        return .none
+        
+      case ._fetchRecordsResponse(.failure):
+        return .none
+        
+      case .createChallengeAuthAction(._registerRecordResponse(.success)):
+        return .send(.presentCreate(false))
+        
+      case .createChallengeAuthAction:
+        return .none
+        
+      case .selectDateAction(.selectDate):
+        return .send(.fetchRecords)
         
       case .selectDateAction(.presentCreateRecord(true)):
         return .send(.presentCreate(true))
@@ -137,7 +167,7 @@ struct CertifiedArticleSection: View {
               title: "상대방 챌린지",
               isSelected: false
             ) {
-              viewStore.send(.toggleSelect(.mine))
+              viewStore.send(.toggleSelect(.competitor))
             }
           }
           .padding(.top, 20)

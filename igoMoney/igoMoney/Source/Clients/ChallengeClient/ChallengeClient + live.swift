@@ -68,12 +68,11 @@ extension ChallengeClient {
     let api = ChallengeAPI(
       method: .get,
       path: "/challenges/total-cost",
-      query: [:],
-      header: [:],
-      body: .json(value: [
+      query: [
         "challengeId": challenge.id.description,
         "userId": userID.description
-      ])
+      ],
+      header: [:]
     )
     
     return try await APIClient.request(to: api)
