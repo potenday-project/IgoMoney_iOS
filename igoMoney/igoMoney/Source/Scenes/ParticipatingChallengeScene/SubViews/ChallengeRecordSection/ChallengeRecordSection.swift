@@ -84,7 +84,7 @@ struct ChallengeRecordSection: View {
             action: ChallengeRecordSectionCore.Action.createChallengeAuthAction
           )
         ) { store in
-          CreateChallengeAuthScene(store: store)
+          CreateChallengeRecordScene(store: store)
         }
       }
     }
@@ -107,6 +107,10 @@ struct RecordSelectDateCore: Reducer {
     var differenceOfStartDate: Int {
       let difference = Calendar.current.dateComponents([.day], from: startDate, to: selectedDate).day
       return (difference ?? .zero) + 1
+    }
+    
+    var isSame: Bool {
+      return selectedDate == Date()
     }
   }
   

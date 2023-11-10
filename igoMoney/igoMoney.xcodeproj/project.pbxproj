@@ -38,8 +38,8 @@
 		182B1B632AD68C4200D01DBA /* IGOInputForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B622AD68C4200D01DBA /* IGOInputForm.swift */; };
 		182B8CFB2AEA4C7A00ED8890 /* ExploreChallengeFilterHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B8CFA2AEA4C7A00ED8890 /* ExploreChallengeFilterHeaderSection.swift */; };
 		182B8CFE2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B8CFD2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift */; };
-		182B9E082AF9D08100B47CBA /* CreateChallengeAuthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E072AF9D08100B47CBA /* CreateChallengeAuthScene.swift */; };
-		182B9E0A2AFA476E00B47CBA /* CreateChallengeAuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E092AFA476E00B47CBA /* CreateChallengeAuthCore.swift */; };
+		182B9E082AF9D08100B47CBA /* CreateChallengeRecordScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E072AF9D08100B47CBA /* CreateChallengeRecordScene.swift */; };
+		182B9E0A2AFA476E00B47CBA /* CreateChallengeRecordCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E092AFA476E00B47CBA /* CreateChallengeRecordCore.swift */; };
 		182B9E0D2AFA5B9900B47CBA /* RecordClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E0C2AFA5B9900B47CBA /* RecordClient.swift */; };
 		182B9E0F2AFA5C1400B47CBA /* RecordClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E0E2AFA5C1400B47CBA /* RecordClient + live.swift */; };
 		182B9E112AFA5CAE00B47CBA /* RecordAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */; };
@@ -171,8 +171,8 @@
 		182B1B622AD68C4200D01DBA /* IGOInputForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOInputForm.swift; sourceTree = "<group>"; };
 		182B8CFA2AEA4C7A00ED8890 /* ExploreChallengeFilterHeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterHeaderSection.swift; sourceTree = "<group>"; };
 		182B8CFD2AEA601B00ED8890 /* ExploreChallengeFilterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreChallengeFilterCore.swift; sourceTree = "<group>"; };
-		182B9E072AF9D08100B47CBA /* CreateChallengeAuthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeAuthScene.swift; sourceTree = "<group>"; };
-		182B9E092AFA476E00B47CBA /* CreateChallengeAuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeAuthCore.swift; sourceTree = "<group>"; };
+		182B9E072AF9D08100B47CBA /* CreateChallengeRecordScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeRecordScene.swift; sourceTree = "<group>"; };
+		182B9E092AFA476E00B47CBA /* CreateChallengeRecordCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeRecordCore.swift; sourceTree = "<group>"; };
 		182B9E0C2AFA5B9900B47CBA /* RecordClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordClient.swift; sourceTree = "<group>"; };
 		182B9E0E2AFA5C1400B47CBA /* RecordClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordClient + live.swift"; sourceTree = "<group>"; };
 		182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordAPI.swift; sourceTree = "<group>"; };
@@ -401,8 +401,8 @@
 		182B9E062AF9D07300B47CBA /* CreateChallengeAuthScene */ = {
 			isa = PBXGroup;
 			children = (
-				182B9E072AF9D08100B47CBA /* CreateChallengeAuthScene.swift */,
-				182B9E092AFA476E00B47CBA /* CreateChallengeAuthCore.swift */,
+				182B9E072AF9D08100B47CBA /* CreateChallengeRecordScene.swift */,
+				182B9E092AFA476E00B47CBA /* CreateChallengeRecordCore.swift */,
 			);
 			path = CreateChallengeAuthScene;
 			sourceTree = "<group>";
@@ -1002,11 +1002,11 @@
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
 				183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */,
 				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
-				182B9E082AF9D08100B47CBA /* CreateChallengeAuthScene.swift in Sources */,
+				182B9E082AF9D08100B47CBA /* CreateChallengeRecordScene.swift in Sources */,
 				1833D8A22AEAC78D002FBEDD /* ChallengeStatisticSection.swift in Sources */,
 				18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */,
 				188103AA2AE53ABD003EBE95 /* ImageLoadAPI.swift in Sources */,
-				182B9E0A2AFA476E00B47CBA /* CreateChallengeAuthCore.swift in Sources */,
+				182B9E0A2AFA476E00B47CBA /* CreateChallengeRecordCore.swift in Sources */,
 				180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */,
 				1831694B2ADBD6DE0098638E /* IGOAlertCore.swift in Sources */,
 				18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */,

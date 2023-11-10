@@ -8,9 +8,12 @@ import UIKit
 
 import ComposableArchitecture
 
-struct CreateChallengeAuthCore: Reducer {
+struct CreateChallengeRecordCore: Reducer {
   struct State: Equatable {
     let challenge: Challenge
+    let selectedDate: String
+    
+    var dateDifference: Int
     var title: String = ""
     var money: String = ""
     var content: String = ""
@@ -22,8 +25,10 @@ struct CreateChallengeAuthCore: Reducer {
       return (Int(money) != nil) && ((5...15) ~= title.count) && ((3...100) ~= content.count) && authImages.isEmpty == false
     }
     
-    init(challenge: Challenge) {
+    init(challenge: Challenge, selectedDate: Date) {
       self.challenge = challenge
+      self.selectedDate = selectedDate.toString(with: "M월 dd일")
+      self.dateDifference = challenge.day(to: selectedDate)
     }
   }
   
