@@ -28,7 +28,6 @@ struct DetailChallengeResultSection: View {
         )
       )
       
-      
       Divider()
       
       WithViewStore(store, observe: { $0.winnerName }) { winner in

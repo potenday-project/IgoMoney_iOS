@@ -11,20 +11,20 @@ struct ParticipatingChallengeCore: Reducer {
     var challenge: Challenge
     var challengeInformationState: ChallengeInformationCore.State
     var challengeResultSectionState: ParticipatingChallengeResultSectionCore.State
-    var challengeAuthListState: ChallengeAuthListCore.State
+    var challengeAuthListState: ChallengeRecordSectionCore.State
     
     init(challenge: Challenge) {
       self.challenge = challenge
       self.challengeInformationState = ChallengeInformationCore.State(challenge: challenge)
       self.challengeResultSectionState = ParticipatingChallengeResultSectionCore.State(challenge: challenge)
-      self.challengeAuthListState = ChallengeAuthListCore.State(challenge: challenge)
+      self.challengeAuthListState = ChallengeRecordSectionCore.State(challenge: challenge)
     }
   }
   
   enum Action: Equatable {
     case challengeInformationAction(ChallengeInformationCore.Action)
     case challengeResultSectionAction(ParticipatingChallengeResultSectionCore.Action)
-    case challengeAuthListAction(ChallengeAuthListCore.Action)
+    case challengeAuthListAction(ChallengeRecordSectionCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -37,7 +37,7 @@ struct ParticipatingChallengeCore: Reducer {
     }
     
     Scope(state: \.challengeAuthListState, action: /Action.challengeAuthListAction) {
-      ChallengeAuthListCore()
+      ChallengeRecordSectionCore()
     }
     
     Reduce { state, action in
