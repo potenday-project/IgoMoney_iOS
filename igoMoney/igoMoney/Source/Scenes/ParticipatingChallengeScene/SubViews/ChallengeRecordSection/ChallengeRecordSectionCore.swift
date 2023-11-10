@@ -23,7 +23,7 @@ struct ChallengeRecordSectionCore: Reducer {
     var records: IdentifiedArrayOf<ChallengeRecordDetailCore.State> = []
     
     var isPresentCreate: Bool = false
-    var createChallengeState: CreateChallengeAuthCore.State? = nil
+    var createChallengeState: CreateChallengeRecordCore.State? = nil
     
     init(challenge: Challenge) {
       self.challenge = challenge
@@ -42,7 +42,7 @@ struct ChallengeRecordSectionCore: Reducer {
     
     case _fetchRecordsResponse(TaskResult<[ChallengeRecord]>)
     
-    case createChallengeAuthAction(CreateChallengeAuthCore.Action)
+    case createChallengeAuthAction(CreateChallengeRecordCore.Action)
     case selectDateAction(RecordSelectDateCore.Action)
     case challengeRecordAction(Int, ChallengeRecordDetailCore.Action)
   }
@@ -62,8 +62,16 @@ struct ChallengeRecordSectionCore: Reducer {
         
       case .presentCreate(true):
         let challenge = state.challenge
-        state.createChallengeState = CreateChallengeAuthCore.State(challenge: challenge)
-        state.isPresentCreate = true
+        let selectedDate = state.selectDateState.selectedDate
+        
+        if state.selectDateState.isSame {
+          state.createChallengeState = CreateChallengeRecordCore.State(
+            challenge: challenge,
+            selectedDate: selectedDate
+          )
+          state.isPresentCreate = true
+          return .none
+        }
         return .none
         
       case .presentCreate(false):
@@ -123,7 +131,7 @@ struct ChallengeRecordSectionCore: Reducer {
       }
     }
     .ifLet(\.createChallengeState, action: /Action.createChallengeAuthAction) {
-      CreateChallengeAuthCore()
+      CreateChallengeRecordCore()
     }
     .forEach(\.records, action: /Action.challengeRecordAction) {
       ChallengeRecordDetailCore()

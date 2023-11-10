@@ -77,6 +77,12 @@ extension Challenge {
     term: 7,
     endDate: nil
   )
+  
+  func day(to selectedDate: Date) -> Int {
+    guard let startDate = startDate else { return .zero }
+    let difference = Calendar.current.dateComponents([.day], from: startDate, to: selectedDate).day
+    return (difference ?? .zero) + 1
+  }
 }
 
 enum ChallengeCategory: Int, Decodable, CustomStringConvertible, CaseIterable {

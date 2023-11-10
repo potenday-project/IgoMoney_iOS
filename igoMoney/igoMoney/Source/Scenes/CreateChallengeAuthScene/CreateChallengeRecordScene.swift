@@ -8,14 +8,14 @@ import SwiftUI
 
 import ComposableArchitecture
 
-struct CreateChallengeAuthScene: View {
-  let store: StoreOf<CreateChallengeAuthCore>
+struct CreateChallengeRecordScene: View {
+  let store: StoreOf<CreateChallengeRecordCore>
   
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       VStack(spacing: 24) {
         IGONavigationBar {
-          Text("9월 24일 1일차")
+          Text("\(viewStore.selectedDate) \(viewStore.dateDifference)일차")
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
           Button {
@@ -38,7 +38,7 @@ struct CreateChallengeAuthScene: View {
             ChallengeAuthMoneyInputSection(
               money: viewStore.binding(
                 get: \.money,
-                send: CreateChallengeAuthCore.Action.moneyChanged
+                send: CreateChallengeRecordCore.Action.moneyChanged
               )
             )
             .padding(.horizontal, 24)
@@ -46,7 +46,7 @@ struct CreateChallengeAuthScene: View {
             ChallengeAuthTitleSection(
               title: viewStore.binding(
                 get: \.title,
-                send: CreateChallengeAuthCore.Action.titleChanged
+                send: CreateChallengeRecordCore.Action.titleChanged
               )
             )
             .padding(.horizontal, 24)
@@ -54,7 +54,7 @@ struct CreateChallengeAuthScene: View {
             ChallengeAuthContentSection(
               content: viewStore.binding(
                 get: \.content,
-                send: CreateChallengeAuthCore.Action.contentChanged
+                send: CreateChallengeRecordCore.Action.contentChanged
               )
             )
             .padding(.horizontal, 24)
@@ -88,7 +88,7 @@ struct CreateChallengeAuthScene: View {
 }
 
 struct ChallengeAuthImageListSection: View {
-  let viewStore: ViewStoreOf<CreateChallengeAuthCore>
+  let viewStore: ViewStoreOf<CreateChallengeRecordCore>
   
   var body: some View {
     Section {
@@ -141,7 +141,7 @@ struct ChallengeAuthImageListSection: View {
     .fullScreenCover(
       isPresented: viewStore.binding(
         get: \.isShowImagePicker,
-        send: CreateChallengeAuthCore.Action.showPicker
+        send: CreateChallengeRecordCore.Action.showPicker
       )
     ) {
       IGOPhotoPicker(configuration: .init(photoLibrary: .shared())) { uiimage in
@@ -237,10 +237,10 @@ struct ChallengeAuthContentSection: View {
 }
 
 #Preview {
-  CreateChallengeAuthScene(
+  CreateChallengeRecordScene(
     store: Store(
-      initialState: CreateChallengeAuthCore.State(challenge: .default),
-      reducer: { CreateChallengeAuthCore() }
+      initialState: CreateChallengeRecordCore.State(challenge: .default, selectedDate: Date()),
+      reducer: { CreateChallengeRecordCore() }
     )
   )
 }
