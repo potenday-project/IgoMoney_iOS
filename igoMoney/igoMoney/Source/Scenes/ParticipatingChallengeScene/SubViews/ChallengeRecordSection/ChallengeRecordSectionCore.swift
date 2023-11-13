@@ -24,6 +24,7 @@ struct ChallengeRecordSectionCore: Reducer {
     
     var isPresentCreate: Bool = false
     var createChallengeState: CreateChallengeRecordCore.State? = nil
+    var alertState: IGOAlertCore.State = .init()
     
     init(challenge: Challenge) {
       self.challenge = challenge
@@ -45,6 +46,8 @@ struct ChallengeRecordSectionCore: Reducer {
     case createChallengeAuthAction(CreateChallengeRecordCore.Action)
     case selectDateAction(RecordSelectDateCore.Action)
     case challengeRecordAction(Int, ChallengeRecordDetailCore.Action)
+    case selectedRecordAction(ChallengeRecordDetailCore.Action)
+    case alertAction(IGOAlertCore.Action)
   }
   
   @Dependency(\.recordClient) var recordClient
@@ -52,6 +55,10 @@ struct ChallengeRecordSectionCore: Reducer {
   var body: some Reducer<State, Action> {
     Scope(state: \.selectDateState, action: /Action.selectDateAction) {
       RecordSelectDateCore()
+    }
+    
+    Scope(state: \.alertState, action: /Action.alertAction) {
+      IGOAlertCore()
     }
     
     Reduce { state, action in
@@ -127,6 +134,12 @@ struct ChallengeRecordSectionCore: Reducer {
         return .none
         
       case .challengeRecordAction:
+        return .none
+        
+      case .selectedRecordAction:
+        return .none
+        
+      case .alertAction:
         return .none
       }
     }

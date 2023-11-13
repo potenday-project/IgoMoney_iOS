@@ -51,6 +51,28 @@ struct ChallengeRecord: Decodable, Equatable {
     case isHide = "hide"
   }
   
+  init(
+    ID: Int,
+    challengeID: Int,
+    userID: Int,
+    title: String,
+    content: String,
+    imagePath: String,
+    cost: Int,
+    date: Date,
+    isHide: Bool
+  ) {
+    self.ID = ID
+    self.challengeID = challengeID
+    self.userID = userID
+    self.title = title
+    self.content = content
+    self.imagePath = imagePath
+    self.cost = cost
+    self.date = date
+    self.isHide = isHide
+  }
+  
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.ID = try container.decode(Int.self, forKey: .ID)
@@ -64,6 +86,18 @@ struct ChallengeRecord: Decodable, Equatable {
     self.date = stringDate.toDate(with: "yy.MM.dd") ?? Date()
     self.isHide = try container.decode(Bool.self, forKey: .isHide)
   }
+  
+  static let `default` = Self.init(
+    ID: 1,
+    challengeID: 1,
+    userID: 1,
+    title: "123123123123123123",
+    content: "123123123123123123123",
+    imagePath: "",
+    cost: 200,
+    date: Date(),
+    isHide: false
+  )
 }
 
 struct RecordClient {

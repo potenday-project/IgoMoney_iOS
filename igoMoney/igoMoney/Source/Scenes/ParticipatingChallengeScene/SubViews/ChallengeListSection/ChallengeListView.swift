@@ -12,14 +12,24 @@ struct ChallengeListView: View {
   let store: StoreOf<ChallengeRecordSectionCore>
   
   var body: some View {
-    VStack(spacing: 12) {
-      ForEachStore(
-        store.scope(
-          state: \.records,
-          action: ChallengeRecordSectionCore.Action.challengeRecordAction
-        )
-      ) { store in
-        ChallengeRecordCell(store: store)
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      VStack(spacing: 12) {
+        ForEachStore(
+          store.scope(
+            state: \.records,
+            action: ChallengeRecordSectionCore.Action.challengeRecordAction
+          )
+        ) { store in
+          ChallengeRecordCell(store: store)
+            .igoAlert(
+              self.store.scope(
+                state: \.alertState,
+                action: ChallengeRecordSectionCore.Action.alertAction
+              )
+            ) {
+              ChallengeDetailDialog(store: store)
+            }
+        }
       }
     }
   }
@@ -30,6 +40,7 @@ struct ChallengeRecordDetailCore: Reducer {
     let record: ChallengeRecord
     var imageState: URLImageCore.State
     let title: String
+    let content: String
     let cost: Int
     
     var id: Int {
@@ -40,6 +51,7 @@ struct ChallengeRecordDetailCore: Reducer {
       self.record = record
       self.imageState = URLImageCore.State(urlPath: record.imagePath)
       self.title = record.title
+      self.content = record.content
       self.cost = record.cost
     }
   }
