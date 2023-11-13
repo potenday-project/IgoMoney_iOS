@@ -9,12 +9,37 @@ import SwiftUI
 
 import ComposableArchitecture
 import KakaoSDKCommon
+import FirebaseCore
+
+final class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
+    FirebaseApp.configure()
+    KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
+    
+    UNUserNotificationCenter.current().delegate = self
+    
+    let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+    UNUserNotificationCenter.current().requestAuthorization(
+      options: authOptions,
+      completionHandler: { _, _ in }
+    )
+    
+    application.registerForRemoteNotifications()
+    
+    return true
+  }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+  
+}
 
 @main
 struct igoMoneyApp: App {
-  init() {
-    KakaoSDK.initSDK(appKey: Bundle.main.kakaoNativeKey)
-  }
+  @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
   
   var body: some Scene {
     WindowGroup {
