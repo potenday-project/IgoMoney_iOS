@@ -163,14 +163,14 @@ struct AuthCore: Reducer {
         return .send(._presentMainScene)
         
       case ._userInformationResponse(.failure):
-        return .none
+        return .send(.presentSignUp(true))
         
         // Child Action
       case .signUpAction(.didTapConfirm):
-        return .run { send in
-          await send(.presentSignUp(false))
-          await send(.presentProfileSetting(true))
-        }
+        return .concatenate(
+          .send(.presentSignUp(false)),
+          .send(.presentProfileSetting(true))
+        )
         
       case .profileSettingAction(._updateProfileResponse(.success)):
         return .run {
