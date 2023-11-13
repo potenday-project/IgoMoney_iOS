@@ -149,24 +149,20 @@ struct AuthCore: Reducer {
         if case .tokenExpired = error as? APIError {
           return .send(.refreshToken)
         }
+        
         return .send(._userInformationResponse(.failure(error)))
         
       case ._userInformationResponse(.success(let user)):
         state.currentUser = user
         guard let nickName = user.nickName else {
           // 닉네임이 없는 경우
-          return .run { send in
-            await send(.presentSignUp(true))
-          }
+          return .send(.presentSignUp(true))
         }
         
         // 닉네임이 있는 경우
-        return .run { send in
-          await send(._presentMainScene)
-        }
+        return .send(._presentMainScene)
         
       case ._userInformationResponse(.failure):
-        print("Error in User Information Response")
         return .none
         
         // Child Action
