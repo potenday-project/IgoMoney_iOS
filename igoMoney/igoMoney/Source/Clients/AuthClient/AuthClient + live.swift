@@ -4,14 +4,18 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import FirebaseMessaging
+
 extension AuthClient {
   static var liveValue = AuthClient { token in
+    let fcmToken = try await Messaging.messaging().token()
+    
     let api = AuthAPI(
       method: .post,
       path: "/auth/login/kakao",
       query: [:],
       header: ["Content-Type": "application/json"],
-      body: .json(value: ["accessToken": token])
+      body: .json(value: ["accessToken": token, "fcmToken": fcmToken])
     )
     
     var response: AuthToken = try await APIClient.request(to: api)
@@ -21,7 +25,9 @@ extension AuthClient {
     
     return response
   } signInWithApple: { user, idToken, authCode in
-    let body = ["id_token": idToken, "code": authCode]
+    let fcmToken = try await Messaging.messaging().token()
+
+    let body = ["id_token": idToken, "code": authCode, "fcmToken": fcmToken]
     
     let api = AuthAPI(
       method: .post,
