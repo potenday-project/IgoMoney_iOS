@@ -10,6 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 import KakaoSDKCommon
 import FirebaseCore
+import FirebaseMessaging
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
   func application(
@@ -29,17 +30,37 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     
     application.registerForRemoteNotifications()
     
+    Messaging.messaging().delegate = self
+    
     return true
   }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+  func application(
+    _ application: UIApplication,
+    didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+  ) {
+    Messaging.messaging().apnsToken = deviceToken
+  }
   
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification
+  ) async -> UNNotificationPresentationOptions {
+    return [.list, .sound]
+  }
+}
+
+extension AppDelegate: MessagingDelegate {
+  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+    print("FCM", fcmToken!)
+  }
 }
 
 @main
 struct igoMoneyApp: App {
-  @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   
   var body: some Scene {
     WindowGroup {

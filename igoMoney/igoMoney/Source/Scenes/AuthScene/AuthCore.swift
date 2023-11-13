@@ -134,6 +134,7 @@ struct AuthCore: Reducer {
         return .none
         
       case let ._authTokenResponse(.success(token)):
+        state.currentUser = User(userID: token.userID)
         print(#fileID, #function, #line, "🐯", token)
         return .run { send in
           await send(
@@ -163,7 +164,7 @@ struct AuthCore: Reducer {
         return .send(._presentMainScene)
         
       case ._userInformationResponse(.failure):
-        return .send(.presentSignUp(true))
+        return .none
         
         // Child Action
       case .signUpAction(.didTapConfirm):
