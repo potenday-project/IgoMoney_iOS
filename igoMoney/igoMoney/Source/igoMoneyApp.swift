@@ -41,14 +41,21 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     _ application: UIApplication,
     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
   ) {
-    Messaging.messaging().apnsToken = deviceToken
+    Messaging.messaging().setAPNSToken(deviceToken, type: .sandbox)
   }
   
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     willPresent notification: UNNotification
   ) async -> UNNotificationPresentationOptions {
-    return [.list, .sound]
+    return [.list, .sound, .banner]
+  }
+  
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse
+  ) async {
+    debugPrint(response)
   }
 }
 

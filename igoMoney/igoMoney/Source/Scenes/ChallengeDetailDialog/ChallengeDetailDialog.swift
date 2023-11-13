@@ -11,16 +11,13 @@ struct ChallengeDetailDialog: View {
   let store: StoreOf<ChallengeRecordDetailCore>
   
   var body: some View {
-    VStack(alignment: .leading, spacing: 16) {
+    VStack(alignment: .leading, spacing: 8) {
       /// Header Control Section
       HStack(spacing: .zero) {
         Button {
           
         } label: {
-          Image(systemName: "xmark")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 24, height: 24)
+          Image("icon_xmark")
         }
         
         Spacer()
@@ -46,20 +43,22 @@ struct ChallengeDetailDialog: View {
             .foregroundColor(.red)
           }
         } label: {
-          Image(systemName: "ellipsis")
+          Image("icon_dot3")
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
         }
       }
-      .padding(.vertical, 24)
+      .padding(.bottom, 24)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         Text(viewStore.record.date.toString(with: "MM월 dd일"))
+          .font(.pretendard(size: 16, weight: .bold))
         
         Divider()
         
         Text(viewStore.cost.description + "원 지출")
+          .font(.pretendard(size: 16, weight: .medium))
       }
       
       Divider()
@@ -69,36 +68,44 @@ struct ChallengeDetailDialog: View {
           Image("example_food")
             .resizable()
             .scaledToFill()
+            .clipped()
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .never))
       .indexViewStyle(.page(backgroundDisplayMode: .never))
       .clipShape(RoundedRectangle(cornerRadius: 8))
-      .frame(maxHeight: .infinity)
       
       Divider()
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         Text(viewStore.title)
+          .font(.pretendard(size: 16, weight: .bold))
       }
       
       Divider()
       
       WithViewStore(store, observe: { $0 }) { viewStore in
         Text(viewStore.content)
+          .font(.pretendard(size: 14, weight: .bold))
       }
     }
-    .padding(.horizontal, 24)
+    .padding(24)
+    .background(Color.white)
+    .cornerRadius(8)
+    .padding()
   }
 }
 
 #Preview {
-  ChallengeDetailDialog(
-    store: .init(
-      initialState: ChallengeRecordDetailCore.State(
-        record: .default
-      ),
-      reducer: { ChallengeRecordDetailCore() }
+  ZStack {
+    Color.gray
+
+    ChallengeDetailDialog(
+      store: Store(
+        initialState: ChallengeRecordDetailCore.State(record: .default),
+        reducer: { ChallengeRecordDetailCore() }
+      )
     )
-  )
+    .frame(height: UIScreen.main.bounds.height * 0.7)
+  }
 }
