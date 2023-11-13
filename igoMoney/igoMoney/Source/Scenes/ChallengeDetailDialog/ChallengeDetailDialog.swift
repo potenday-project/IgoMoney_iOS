@@ -8,6 +8,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChallengeDetailDialog: View {
+  @State var selectedIndex: Int = .zero
   let store: StoreOf<ChallengeRecordDetailCore>
   
   var body: some View {
@@ -63,17 +64,33 @@ struct ChallengeDetailDialog: View {
       
       Divider()
       
-      TabView {
+      TabView(selection: $selectedIndex) {
         ForEach(0..<5) { index in
           Image("example_food")
             .resizable()
             .scaledToFill()
-            .clipped()
+            .clipped(antialiased: true)
+            .tag(index)
         }
       }
       .tabViewStyle(.page(indexDisplayMode: .never))
       .indexViewStyle(.page(backgroundDisplayMode: .never))
       .clipShape(RoundedRectangle(cornerRadius: 8))
+      .overlay(
+        HStack(spacing: .zero) {
+          Text("\(selectedIndex)")
+            .foregroundColor(ColorConstants.gray4)
+          
+          Text(" / \(5)")
+            .foregroundColor(ColorConstants.gray2)
+        }.font(.pretendard(size: 16, weight: .medium))
+          .padding(.horizontal, 8)
+          .padding(.vertical, 2)
+          .background(ColorConstants.gray3)
+          .cornerRadius(.infinity)
+          .padding(12),
+        alignment: .bottomTrailing
+      )
       
       Divider()
       
@@ -99,7 +116,7 @@ struct ChallengeDetailDialog: View {
 #Preview {
   ZStack {
     Color.gray
-
+    
     ChallengeDetailDialog(
       store: Store(
         initialState: ChallengeRecordDetailCore.State(record: .default),
