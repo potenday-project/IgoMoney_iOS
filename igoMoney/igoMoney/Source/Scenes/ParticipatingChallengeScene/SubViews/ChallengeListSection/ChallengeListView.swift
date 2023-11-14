@@ -34,9 +34,13 @@ struct ChallengeRecordDetailCore: Reducer {
   struct State: Equatable, Identifiable {
     let record: ChallengeRecord
     var imageState: URLImageCore.State
-    let title: String
-    let content: String
+    var title: String
+    var content: String
     let cost: Int
+    
+    var isEditable: Bool = false
+    
+    var selectedIndex: Int = .zero
     
     var id: Int {
       return record.ID
@@ -54,6 +58,13 @@ struct ChallengeRecordDetailCore: Reducer {
   enum Action: Equatable {
     case onAppear
     case urlImageAction(URLImageCore.Action)
+    case selectImageIndex(Int)
+    case onChangeEditable(Bool)
+    case onChangeTitle(String)
+    case onChangeContent(String)
+    
+    
+    case onDisappear
   }
   
   var body: some Reducer<State, Action> {
@@ -65,7 +76,27 @@ struct ChallengeRecordDetailCore: Reducer {
       switch action {
       case .onAppear:
         return .send(.urlImageAction(.fetchURLImage))
+        
       case .urlImageAction:
+        return .none
+        
+      case .onChangeEditable(let isEditable):
+        state.isEditable = isEditable
+        return .none
+        
+      case .onChangeTitle(let title):
+        state.title = title
+        return .none
+        
+      case .onChangeContent(let content):
+        state.content = content
+        return .none
+        
+      case .selectImageIndex(let index):
+        state.selectedIndex = index
+        return .none
+        
+      case .onDisappear:
         return .none
       }
     }

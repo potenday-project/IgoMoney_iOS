@@ -8,7 +8,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ChallengeDetailDialog: View {
-  @State var selectedIndex: Int = .zero
   let store: StoreOf<ChallengeRecordDetailCore>
   
   var body: some View {
@@ -16,38 +15,48 @@ struct ChallengeDetailDialog: View {
       /// Header Control Section
       HStack(spacing: .zero) {
         Button {
-          
+          store.send(.onDisappear)
         } label: {
           Image("icon_xmark")
         }
         
         Spacer()
         
-        Button {
-          
-        } label: {
-          Image("icon_pancil")
-        }
-        .padding(.trailing, 8)
-        
-        Menu {
-          Button {
-            
-          } label: {
-            HStack {
-              Text("삭제하기")
-              
-              Spacer()
-              
-              Image(systemName: "trash")
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          if viewStore.isEditable {
+            Button {
+              viewStore.send(.onChangeEditable(false))
+            } label: {
+              Text("완료")
             }
-            .foregroundColor(.red)
+          } else {
+            Button {
+              store.send(.onChangeEditable(true))
+            } label: {
+              Image("icon_pancil")
+            }
+            .padding(.trailing, 8)
+            
+            Menu {
+              Button {
+                
+              } label: {
+                HStack {
+                  Text("삭제하기")
+                  
+                  Spacer()
+                  
+                  Image(systemName: "trash")
+                }
+                .foregroundColor(.red)
+              }
+            } label: {
+              Image("icon_dot3")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+            }
           }
-        } label: {
-          Image("icon_dot3")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 24, height: 24)
         }
       }
       .padding(.bottom, 24)
@@ -57,28 +66,41 @@ struct ChallengeDetailDialog: View {
           .font(.pretendard(size: 16, weight: .bold))
         
         Divider()
+          .padding(.vertical, 8)
         
         Text(viewStore.cost.description + "원 지출")
           .font(.pretendard(size: 16, weight: .medium))
       }
       
-      Divider()
+      Divider().padding(.vertical, 8)
       
-      TabView(selection: $selectedIndex) {
-        ForEach(0..<5) { index in
-          Image("example_food")
-            .resizable()
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        TabView(
+          selection: viewStore.binding(
+            get: \.selectedIndex,
+            send: ChallengeRecordDetailCore.Action.selectImageIndex
+          )
+        ) {
+          ForEach(0..<5) { index in
+            URLImage(
+              store: store.scope(
+                state: \.imageState,
+                action: ChallengeRecordDetailCore.Action.urlImageAction
+              )
+            )
             .scaledToFill()
-            .clipped(antialiased: true)
+            .frame(maxHeight: 280)
             .tag(index)
+          }
         }
       }
+      .frame(maxHeight: 280)
       .tabViewStyle(.page(indexDisplayMode: .never))
       .indexViewStyle(.page(backgroundDisplayMode: .never))
       .clipShape(RoundedRectangle(cornerRadius: 8))
       .overlay(
         HStack(spacing: .zero) {
-          Text("\(selectedIndex)")
+          Text("\(store.withState(\.selectedIndex))")
             .foregroundColor(ColorConstants.gray4)
           
           Text(" / \(5)")
@@ -93,17 +115,33 @@ struct ChallengeDetailDialog: View {
       )
       
       Divider()
+        .padding(.vertical, 8)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
-        Text(viewStore.title)
-          .font(.pretendard(size: 16, weight: .bold))
+        TextField(
+          "",
+          text: viewStore.binding(
+            get: \.title,
+            send: ChallengeRecordDetailCore.Action.onChangeTitle
+          )
+        )
+        .font(.pretendard(size: 16, weight: .bold))
+        .disabled(viewStore.isEditable == false)
       }
       
       Divider()
+        .padding(.vertical, 8)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
-        Text(viewStore.content)
-          .font(.pretendard(size: 14, weight: .bold))
+        TextField(
+          "",
+          text: viewStore.binding(
+            get: \.content,
+            send: ChallengeRecordDetailCore.Action.onChangeContent
+          )
+        )
+        .font(.pretendard(size: 14, weight: .bold))
+        .disabled(viewStore.isEditable == false)
       }
     }
     .padding(24)
