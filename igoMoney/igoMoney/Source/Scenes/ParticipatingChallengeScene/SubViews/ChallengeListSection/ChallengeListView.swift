@@ -21,13 +21,8 @@ struct ChallengeListView: View {
           )
         ) { store in
           ChallengeRecordCell(store: store)
-            .igoAlert(
-              self.store.scope(
-                state: \.alertState,
-                action: ChallengeRecordSectionCore.Action.alertAction
-              )
-            ) {
-              ChallengeDetailDialog(store: store)
+            .onTapGesture {
+              viewStore.send(.onTapSelectRecord(recordID: store.withState(\.id)))
             }
         }
       }

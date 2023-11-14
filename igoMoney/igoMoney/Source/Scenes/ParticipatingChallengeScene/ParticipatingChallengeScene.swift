@@ -71,6 +71,21 @@ struct ParticipatingChallengeScene: View {
         }
         .edgesIgnoringSafeArea(.bottom)
       }
+      .disabled(store.withState(\.isSelected))
+      
+      IfLetStore(
+        self.store.scope(
+          state: \.selectedChallengeRecordState,
+          action: ParticipatingChallengeCore.Action.selectedChallengeRecordAction
+        )
+      ) { store in
+        ZStack {
+          Color.black.opacity(0.2)
+            .edgesIgnoringSafeArea(.all)
+          
+          ChallengeDetailDialog(store: store)
+        }
+      }
     }
     .navigationBarHidden(true)
   }

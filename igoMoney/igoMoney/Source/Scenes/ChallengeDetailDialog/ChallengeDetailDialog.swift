@@ -83,7 +83,7 @@ struct ChallengeDetailDialog: View {
           
           Text(" / \(5)")
             .foregroundColor(ColorConstants.gray2)
-        }.font(.pretendard(size: 16, weight: .medium))
+        }.font(.pretendard(size: 11, weight: .medium))
           .padding(.horizontal, 8)
           .padding(.vertical, 2)
           .background(ColorConstants.gray3)
