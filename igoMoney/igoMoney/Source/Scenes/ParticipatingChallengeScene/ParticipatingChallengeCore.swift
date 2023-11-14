@@ -12,6 +12,10 @@ struct ParticipatingChallengeCore: Reducer {
     var challengeInformationState: ChallengeInformationCore.State
     var challengeResultSectionState: ParticipatingChallengeResultSectionCore.State
     var challengeAuthListState: ChallengeRecordSectionCore.State
+    var selectedChallengeRecordState: ChallengeRecordDetailCore.State?
+    var isSelected: Bool {
+      return selectedChallengeRecordState != nil
+    }
     
     init(challenge: Challenge) {
       self.challenge = challenge
@@ -25,6 +29,7 @@ struct ParticipatingChallengeCore: Reducer {
     case challengeInformationAction(ChallengeInformationCore.Action)
     case challengeResultSectionAction(ParticipatingChallengeResultSectionCore.Action)
     case challengeAuthListAction(ChallengeRecordSectionCore.Action)
+    case selectedChallengeRecordAction(ChallengeRecordDetailCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -47,9 +52,16 @@ struct ParticipatingChallengeCore: Reducer {
       case .challengeResultSectionAction(._setCompetitorUserID(let userID)):
         return .send(.challengeAuthListAction(.setCompetitorID(userID: userID)))
         
+      case .challengeAuthListAction(._presentRecordDialog(let record)):
+        state.selectedChallengeRecordState = record
+        return .none
+        
       default:
         return .none
       }
+    }
+    .ifLet(\.selectedChallengeRecordState, action: /Action.selectedChallengeRecordAction) {
+      ChallengeRecordDetailCore()
     }
   }
 }

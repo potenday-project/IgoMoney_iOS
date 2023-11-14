@@ -24,7 +24,6 @@ struct ChallengeRecordSectionCore: Reducer {
     
     var isPresentCreate: Bool = false
     var createChallengeState: CreateChallengeRecordCore.State? = nil
-    var alertState: IGOAlertCore.State = .init()
     
     init(challenge: Challenge) {
       self.challenge = challenge
@@ -38,9 +37,11 @@ struct ChallengeRecordSectionCore: Reducer {
     case presentCreate(Bool)
     case setCurrentUserID(userID: Int)
     case setCompetitorID(userID: Int)
+    case onTapSelectRecord(recordID: Int)
     
     case fetchRecords
     
+    case _presentRecordDialog(ChallengeRecordDetailCore.State)
     case _fetchRecordsResponse(TaskResult<[ChallengeRecord]>)
     
     case createChallengeAuthAction(CreateChallengeRecordCore.Action)
@@ -55,10 +56,6 @@ struct ChallengeRecordSectionCore: Reducer {
   var body: some Reducer<State, Action> {
     Scope(state: \.selectDateState, action: /Action.selectDateAction) {
       RecordSelectDateCore()
-    }
-    
-    Scope(state: \.alertState, action: /Action.alertAction) {
-      IGOAlertCore()
     }
     
     Reduce { state, action in
@@ -92,6 +89,16 @@ struct ChallengeRecordSectionCore: Reducer {
         
       case let .setCompetitorID(userID):
         state.competitorUserID = userID
+        return .none
+        
+      case let .onTapSelectRecord(recordID):
+        guard let record = state.records[id: recordID] else {
+          return .none
+        }
+        
+        return .send(._presentRecordDialog(record))
+        
+      case ._presentRecordDialog:
         return .none
         
       case .fetchRecords:
