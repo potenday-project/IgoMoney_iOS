@@ -80,7 +80,7 @@ struct ParticipatingChallengeScene: View {
         )
       ) { store in
         ZStack {
-          Color.black.opacity(0.2)
+          Color.black.opacity(0.8)
             .edgesIgnoringSafeArea(.all)
           
           ChallengeDetailDialog(store: store)
