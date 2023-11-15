@@ -50,5 +50,14 @@ extension RecordClient {
     )
     
     return try await APIClient.request(to: api)
+  } deleteRecord: { recordID in
+    let api = RecordAPI(
+      method: .delete,
+      path: "/records/delete/\(recordID)",
+      query: [:],
+      header: [:]
+    )
+    
+    return try await APIClient.execute(to: api)
   }
 }

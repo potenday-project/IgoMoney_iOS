@@ -118,7 +118,12 @@ struct ChallengeRecordSectionCore: Reducer {
         }
         
       case ._fetchRecordsResponse(.success(let records)):
-        let decodeRecords = records.map { 
+        if records.isEmpty {
+          state.records = []
+          return .none
+        }
+        
+        let decodeRecords = records.map {
           ChallengeRecordDetailCore.State(record: $0, isMine: state.selectedFetchChallenge == .mine)
         }
         state.records = IdentifiedArray(uniqueElements: decodeRecords)

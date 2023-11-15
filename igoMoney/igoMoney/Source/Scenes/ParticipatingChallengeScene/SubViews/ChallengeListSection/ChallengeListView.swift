@@ -65,11 +65,14 @@ struct ChallengeRecordDetailCore: Reducer {
     case onChangeContent(String)
     case didFinishUpdateContent
     case updateContent
+    case deleteRecord
+    
     case onDisappear
     
     case _reloadItem
     case _reloadItemResponse(TaskResult<ChallengeRecord>)
     case updateContentResponse(TaskResult<Data>)
+    case _deleteContentResponse(TaskResult<Data>)
   }
   
   @Dependency(\.recordClient) var recordClient
@@ -79,9 +82,7 @@ struct ChallengeRecordDetailCore: Reducer {
       URLImageCore()
     }
     
-    Reduce {
-      state,
-      action in
+    Reduce { state, action in
       switch action {
       case .onAppear:
         return .send(.urlImageAction(.fetchURLImage))
@@ -137,6 +138,17 @@ struct ChallengeRecordDetailCore: Reducer {
           )
         }
         
+      case .deleteRecord:
+        return .run { [id = state.record.ID] send in
+          await send(
+            ._deleteContentResponse(
+              TaskResult {
+                try await recordClient.deleteRecord(id)
+              }
+            )
+          )
+        }
+        
       case .updateContentResponse(.success):
         return .send(._reloadItem)
         
@@ -163,6 +175,11 @@ struct ChallengeRecordDetailCore: Reducer {
         return .send(.urlImageAction(._setURLPath(record.imagePath.first)))
         
       case ._reloadItemResponse(.failure):
+        return .none
+        
+      case ._deleteContentResponse(.success):
+        return .send(.onDisappear)
+      case ._deleteContentResponse(.failure):
         return .none
       }
     }

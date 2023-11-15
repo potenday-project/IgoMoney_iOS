@@ -39,7 +39,7 @@ struct ChallengeDetailDialog: View {
             
             Menu {
               Button {
-                
+                viewStore.send(.deleteRecord)
               } label: {
                 HStack {
                   Text("삭제하기")
