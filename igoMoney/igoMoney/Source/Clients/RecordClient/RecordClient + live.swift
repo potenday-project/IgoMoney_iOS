@@ -41,5 +41,14 @@ extension RecordClient {
     
     let response = try await APIClient.execute(to: api)
     return response
+  } fetchRecord: { recordID in
+    let api = RecordAPI(
+      method: .get,
+      path: "/records/\(recordID)",
+      query: [:],
+      header: [:]
+    )
+    
+    return try await APIClient.request(to: api)
   }
 }

@@ -32,13 +32,13 @@ struct ChallengeListView: View {
 
 struct ChallengeRecordDetailCore: Reducer {
   struct State: Equatable, Identifiable {
-    let record: ChallengeRecord
+    var record: ChallengeRecord
     var isMine: Bool = false
     
     var imageState: URLImageCore.State
     var title: String
     var content: String
-    let cost: Int
+    var cost: Int
     var isEditable: Bool = false
     var selectedIndex: Int = .zero
     
@@ -64,11 +64,11 @@ struct ChallengeRecordDetailCore: Reducer {
     case onChangeTitle(String)
     case onChangeContent(String)
     case didFinishUpdateContent
-    
     case updateContent
-    
     case onDisappear
     
+    case _reloadItem
+    case _reloadItemResponse(TaskResult<ChallengeRecord>)
     case updateContentResponse(TaskResult<Data>)
   }
   
@@ -138,9 +138,31 @@ struct ChallengeRecordDetailCore: Reducer {
         }
         
       case .updateContentResponse(.success):
+        return .send(._reloadItem)
+        
+      case .updateContentResponse(.failure):
         return .none
         
-      case .updateContentResponse(.failure(let error)):
+      case ._reloadItem:
+        return .run { [id = state.record.ID] send in
+          await send(
+            ._reloadItemResponse(
+              TaskResult {
+                try await recordClient.fetchRecord(id)
+              }
+            )
+          )
+        }
+        
+      case ._reloadItemResponse(.success(let record)):
+        state.record = record
+        state.title = record.title
+        state.content = record.content
+        state.content = record.content
+        state.cost = record.cost
+        return .send(.urlImageAction(._setURLPath(record.imagePath.first)))
+        
+      case ._reloadItemResponse(.failure):
         return .none
       }
     }

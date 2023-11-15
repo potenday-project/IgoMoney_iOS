@@ -114,6 +114,7 @@ struct RecordClient {
   var registerRecord: @Sendable (RecordRequest) async throws -> Data
   var fetchAllRecord: @Sendable (_ selectedDate: Date, _ userID: Int) async throws -> [ChallengeRecord]
   var updateRecord: @Sendable (RecordRequest) async throws -> Data
+  var fetchRecord: @Sendable (_ recordID: Int) async throws -> ChallengeRecord
 }
 
 extension RecordClient: DependencyKey { }
