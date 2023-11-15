@@ -58,7 +58,11 @@ struct ParticipatingChallengeCore: Reducer {
         
       case .selectedChallengeRecordAction(.onDisappear):
         state.selectedChallengeRecordState = nil
-        return .none
+        return .concatenate(
+          .send(.challengeResultSectionAction(.myChallengeCostAction(.onAppear))),
+          .send(.challengeResultSectionAction(.competitorChallengeCostAction(.onAppear))),
+          .send(.challengeAuthListAction(.fetchRecords))
+        )
         
       default:
         return .none
