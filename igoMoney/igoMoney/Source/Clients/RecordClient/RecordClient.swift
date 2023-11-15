@@ -26,6 +26,16 @@ struct RecordRequest: Codable, Sendable {
       "image": .image(image)
     ]
   }
+  
+  func toUpdateRequest() -> [String: MultipartForm.FormData] {
+    [
+      "recordId": .text(challengeID.description),
+      "title": .text(title),
+      "content": .text(content),
+      "cost": .text(cost),
+      "image": .image(image)
+    ]
+  }
 }
 
 struct ChallengeRecord: Decodable, Equatable {
@@ -34,7 +44,7 @@ struct ChallengeRecord: Decodable, Equatable {
   let userID: Int
   let title: String
   let content: String
-  let imagePath: String
+  let imagePath: [String]
   let cost: Int
   let date: Date
   let isHide: Bool
@@ -57,7 +67,7 @@ struct ChallengeRecord: Decodable, Equatable {
     userID: Int,
     title: String,
     content: String,
-    imagePath: String,
+    imagePath: [String],
     cost: Int,
     date: Date,
     isHide: Bool
@@ -80,7 +90,7 @@ struct ChallengeRecord: Decodable, Equatable {
     self.userID = try container.decode(Int.self, forKey: .userID)
     self.title = try container.decode(String.self, forKey: .title)
     self.content = try container.decode(String.self, forKey: .content)
-    self.imagePath = try container.decode(String.self, forKey: .imagePath)
+    self.imagePath = try container.decode([String].self, forKey: .imagePath)
     self.cost = try container.decode(Int.self, forKey: .cost)
     let stringDate = try container.decode(String.self, forKey: .date)
     self.date = stringDate.toDate(with: "yy.MM.dd") ?? Date()
@@ -93,7 +103,7 @@ struct ChallengeRecord: Decodable, Equatable {
     userID: 1,
     title: "123123123123123123",
     content: "123123123123123123123",
-    imagePath: "",
+    imagePath: [""],
     cost: 200,
     date: Date(),
     isHide: false
@@ -103,6 +113,7 @@ struct ChallengeRecord: Decodable, Equatable {
 struct RecordClient {
   var registerRecord: @Sendable (RecordRequest) async throws -> Data
   var fetchAllRecord: @Sendable (_ selectedDate: Date, _ userID: Int) async throws -> [ChallengeRecord]
+  var updateRecord: @Sendable (RecordRequest) async throws -> Data
 }
 
 extension RecordClient: DependencyKey { }

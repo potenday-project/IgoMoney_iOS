@@ -29,5 +29,17 @@ extension RecordClient {
     )
     
     return try await APIClient.request(to: api)
+  } updateRecord: { request in
+    let boundary = "Boundary_\(UUID().uuidString)"
+    let api = RecordAPI(
+      method: .patch,
+      path: "/records/edit",
+      query: [:],
+      header: ["Content-Type": "multipart/form-data; boundary=\(boundary)"],
+      body: .multipart(boundary: boundary, values: request.toUpdateRequest())
+    )
+    
+    let response = try await APIClient.execute(to: api)
+    return response
   }
 }

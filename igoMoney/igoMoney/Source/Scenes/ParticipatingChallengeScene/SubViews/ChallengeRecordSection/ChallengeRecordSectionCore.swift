@@ -118,11 +118,14 @@ struct ChallengeRecordSectionCore: Reducer {
         }
         
       case ._fetchRecordsResponse(.success(let records)):
-        let decodeRecords = records.map { ChallengeRecordDetailCore.State(record: $0) }
+        let decodeRecords = records.map { 
+          ChallengeRecordDetailCore.State(record: $0, isMine: state.selectedFetchChallenge == .mine)
+        }
         state.records = IdentifiedArray(uniqueElements: decodeRecords)
         return .none
         
       case ._fetchRecordsResponse(.failure):
+        state.records = []
         return .none
         
       case .createChallengeAuthAction(._registerRecordResponse(.success)):
