@@ -25,7 +25,7 @@ struct ChallengeDetailDialog: View {
         WithViewStore(store, observe: { $0 }) { viewStore in
           if viewStore.isEditable {
             Button {
-              viewStore.send(.onChangeEditable(false))
+              viewStore.send(.didFinishUpdateContent)
             } label: {
               Text("완료")
             }
@@ -157,7 +157,7 @@ struct ChallengeDetailDialog: View {
     
     ChallengeDetailDialog(
       store: Store(
-        initialState: ChallengeRecordDetailCore.State(record: .default),
+        initialState: ChallengeRecordDetailCore.State(record: .default, isMine: true),
         reducer: { ChallengeRecordDetailCore() }
       )
     )

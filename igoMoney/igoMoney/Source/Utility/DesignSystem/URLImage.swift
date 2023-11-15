@@ -12,6 +12,7 @@ import ComposableArchitecture
 struct URLImageCore: Reducer {
   struct State: Equatable {
     var urlPath: String?
+    var image: UIImage?
     var loadingStatus: LoadingState = .initial
   }
   
@@ -26,7 +27,7 @@ struct URLImageCore: Reducer {
     case fetchURLImage
     
     case _setURLPath(String?)
-    case _fetchURLImageResponse(TaskResult<Image>)
+    case _fetchURLImageResponse(TaskResult<UIImage?>)
   }
   
   @Dependency(\.imageClient) var imageClient
@@ -43,11 +44,8 @@ struct URLImageCore: Reducer {
           ._fetchURLImageResponse(
             TaskResult {
               let imageData = try await imageClient.getImageData(url)
-              guard let uiImage = UIImage(data: imageData) else {
-                throw APIError.badRequest(400)
-              }
-              
-              return Image(uiImage: uiImage)
+              let uiImage = UIImage(data: imageData)
+              return uiImage
             }
           )
         )
@@ -62,7 +60,10 @@ struct URLImageCore: Reducer {
       return .send(.fetchURLImage)
       
     case ._fetchURLImageResponse(.success(let image)):
-      state.loadingStatus = .success(image)
+      if let image = image {
+        state.image = image
+        state.loadingStatus = .success(Image(uiImage: image))
+      }
       return .none
       
     case ._fetchURLImageResponse(.failure):
