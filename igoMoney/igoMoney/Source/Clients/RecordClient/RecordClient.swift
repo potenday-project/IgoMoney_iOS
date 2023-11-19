@@ -49,6 +49,10 @@ struct ChallengeRecord: Decodable, Equatable {
   let date: Date
   let isHide: Bool
   
+  var dateDescription: String {
+    return date.toString(with: "MM월 dd일")
+  }
+  
   enum CodingKeys: String, CodingKey {
     case ID = "recordId"
     case challengeID = "challengeId"

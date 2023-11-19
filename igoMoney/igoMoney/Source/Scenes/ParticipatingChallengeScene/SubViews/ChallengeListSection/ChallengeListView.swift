@@ -202,12 +202,14 @@ struct ChallengeRecordCell: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         
         VStack(alignment: .leading, spacing: 4) {
-          Text("9월 24일 1일차")
-            .font(.pretendard(size: 12, weight: .medium))
-            .foregroundColor(ColorConstants.gray3)
-          
           Text(viewStore.title)
+            .lineLimit(1)
             .font(.pretendard(size: 16, weight: .bold))
+          
+          Text(viewStore.content)
+            .lineLimit(1)
+            .font(.pretendard(size: 12, weight: .medium))
+            .foregroundColor(ColorConstants.gray)
           
           Text("총 \(viewStore.cost)원 지출")
             .font(.pretendard(size: 12, weight: .medium))

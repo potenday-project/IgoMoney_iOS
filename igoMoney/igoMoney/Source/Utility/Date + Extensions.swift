@@ -20,6 +20,12 @@ extension Date {
     formatter.dateFormat = format
     return formatter.string(from: self)
   }
+  
+  func calculateDate(to targetDate: Date) -> Int {
+    let calendar = Calendar.current
+    let component = calendar.dateComponents([.day], from: self, to: targetDate)
+    return abs(component.day ?? .zero)
+  }
 }
 
 extension String {
