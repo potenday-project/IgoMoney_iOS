@@ -13,6 +13,7 @@ struct ParticipatingChallengeCore: Reducer {
     var challengeResultSectionState: ParticipatingChallengeResultSectionCore.State
     var challengeAuthListState: ChallengeRecordSectionCore.State
     var selectedChallengeRecordState: ChallengeRecordDetailCore.State?
+    var showDeclaration: Bool = false
     var isSelected: Bool {
       return selectedChallengeRecordState != nil
     }
@@ -63,6 +64,10 @@ struct ParticipatingChallengeCore: Reducer {
           .send(.challengeResultSectionAction(.competitorChallengeCostAction(.onAppear))),
           .send(.challengeAuthListAction(.fetchRecords))
         )
+        
+      case let .selectedChallengeRecordAction(.showDeclarationView(isShow)):
+        state.showDeclaration = isShow
+        return .none
         
       default:
         return .none

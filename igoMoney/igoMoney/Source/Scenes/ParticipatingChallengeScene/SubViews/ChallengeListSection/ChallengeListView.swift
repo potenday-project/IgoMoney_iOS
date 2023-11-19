@@ -65,6 +65,7 @@ struct ChallengeRecordDetailCore: Reducer {
     case onChangeContent(String)
     case didFinishUpdateContent
     case updateContent
+    case showDeclarationView(Bool)
     case deleteRecord
     
     case onDisappear
@@ -148,6 +149,12 @@ struct ChallengeRecordDetailCore: Reducer {
             )
           )
         }
+        
+      case .showDeclarationView(true):
+        return .none
+        
+      case .showDeclarationView(false):
+        return .none
         
       case .updateContentResponse(.success):
         return .send(._reloadItem)

@@ -143,8 +143,13 @@ struct ChallengeDetailHeaderView: View {
           }
         }
       } else {
-        Button {
-          
+        Menu {
+          Button {
+            // TODO: - 신고 화면 이동
+            viewStore.send(.showDeclarationView(true))
+          } label: {
+            Text("신고하기")
+          }
         } label: {
           Image("icon_notification")
         }
