@@ -73,17 +73,31 @@ struct ParticipatingChallengeScene: View {
       }
       .disabled(store.withState(\.isSelected))
       
-      IfLetStore(
-        self.store.scope(
-          state: \.selectedChallengeRecordState,
-          action: ParticipatingChallengeCore.Action.selectedChallengeRecordAction
-        )
-      ) { store in
-        ZStack {
-          Color.black.opacity(0.8)
-            .edgesIgnoringSafeArea(.all)
-          
-          ChallengeDetailDialog(store: store)
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        IfLetStore(
+          self.store.scope(
+            state: \.selectedChallengeRecordState,
+            action: ParticipatingChallengeCore.Action.selectedChallengeRecordAction
+          )
+        ) { store in
+          ZStack {
+            Color.black.opacity(0.8)
+              .edgesIgnoringSafeArea(.all)
+            
+            ChallengeDetailDialog(store: store)
+          }
+          .fullScreenCover(
+            isPresented: viewStore.binding(
+              get: \.showDeclaration,
+              send: {
+                ParticipatingChallengeCore.Action.selectedChallengeRecordAction(
+                  .showDeclarationView($0)
+                )
+              }
+            )
+          ) {
+            DeclarationScene()
+          }
         }
       }
     }

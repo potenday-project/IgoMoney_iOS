@@ -56,6 +56,7 @@
 		1833D8AA2AEACE13002FBEDD /* ChallengeCounterCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833D8A92AEACE13002FBEDD /* ChallengeCounterCore.swift */; };
 		183C7EB02AE569FC0054F9D3 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */; };
 		183C7EB22AE578700054F9D3 /* EmailSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183C7EB12AE578700054F9D3 /* EmailSendView.swift */; };
+		183D93542B0A3E4D00329F9E /* DeclarationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D93532B0A3E4D00329F9E /* DeclarationScene.swift */; };
 		183DF7D22AD7FE1F0041FB69 /* IGOTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */; };
 		183DF7D42AD836560041FB69 /* View + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D32AD836560041FB69 /* View + Extensions.swift */; };
 		183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */; };
@@ -200,6 +201,7 @@
 		1833D8A92AEACE13002FBEDD /* ChallengeCounterCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCounterCore.swift; sourceTree = "<group>"; };
 		183C7EAF2AE569FC0054F9D3 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		183C7EB12AE578700054F9D3 /* EmailSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSendView.swift; sourceTree = "<group>"; };
+		183D93532B0A3E4D00329F9E /* DeclarationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationScene.swift; sourceTree = "<group>"; };
 		183DF7D12AD7FE1F0041FB69 /* IGOTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOTextField.swift; sourceTree = "<group>"; };
 		183DF7D32AD836560041FB69 /* View + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + Extensions.swift"; sourceTree = "<group>"; };
 		183DF7D52AD83EA40041FB69 /* IGOBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBottomSheetView.swift; sourceTree = "<group>"; };
@@ -462,6 +464,14 @@
 			path = ChallengeStatisticSection;
 			sourceTree = "<group>";
 		};
+		183D93522B0A3E3B00329F9E /* DeclarationScene */ = {
+			isa = PBXGroup;
+			children = (
+				183D93532B0A3E4D00329F9E /* DeclarationScene.swift */,
+			);
+			path = DeclarationScene;
+			sourceTree = "<group>";
+		};
 		18497C232ABDFC040041C350 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,6 +695,7 @@
 		18F55C952ADDA12200DE50C4 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				183D93522B0A3E3B00329F9E /* DeclarationScene */,
 				18C503132B025AB20006499A /* ChallengeDetailDialog */,
 				182B9E062AF9D07300B47CBA /* CreateChallengeAuthScene */,
 				18F6BB6E2AEF3BD200AB0F1B /* ParticipatingChallengeScene */,
@@ -1047,6 +1058,7 @@
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
 				183169592ADBDB3F0098638E /* EnterChallengeNoticeView.swift in Sources */,
+				183D93542B0A3E4D00329F9E /* DeclarationScene.swift in Sources */,
 				182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */,
 				182B9E082AF9D08100B47CBA /* CreateChallengeRecordScene.swift in Sources */,
 				1833D8A22AEAC78D002FBEDD /* ChallengeStatisticSection.swift in Sources */,
