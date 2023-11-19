@@ -13,56 +13,10 @@ struct ChallengeDetailDialog: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       /// Header Control Section
-      HStack(spacing: .zero) {
-        Button {
-          store.send(.onDisappear)
-        } label: {
-          Image("icon_xmark")
-        }
-        
-        Spacer()
-        
-        WithViewStore(store, observe: { $0 }) { viewStore in
-          if viewStore.isEditable {
-            Button {
-              viewStore.send(.didFinishUpdateContent)
-            } label: {
-              Text("완료")
-            }
-          } else {
-            Button {
-              store.send(.onChangeEditable(true))
-            } label: {
-              Image("icon_pancil")
-            }
-            .padding(.trailing, 8)
-            
-            Menu {
-              Button {
-                viewStore.send(.deleteRecord)
-              } label: {
-                HStack {
-                  Text("삭제하기")
-                  
-                  Spacer()
-                  
-                  Image(systemName: "trash")
-                }
-                .foregroundColor(.red)
-              }
-            } label: {
-              Image("icon_dot3")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-            }
-          }
-        }
-      }
-      .padding(.bottom, 24)
+      ChallengeDetailHeaderView(store: store)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
-        Text(viewStore.record.date.toString(with: "MM월 dd일"))
+        Text(viewStore.record.dateDescription)
           .font(.pretendard(size: 16, weight: .bold))
         
         Divider()
@@ -148,6 +102,69 @@ struct ChallengeDetailDialog: View {
     .background(Color.white)
     .cornerRadius(8)
     .padding()
+  }
+}
+
+struct ChallengeDetailHeaderView: View {
+  let store: StoreOf<ChallengeRecordDetailCore>
+  
+  @ViewBuilder
+  private func trailingButtonGroup() -> some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      if viewStore.isMine {
+        if viewStore.isEditable {
+          Button {
+            viewStore.send(.didFinishUpdateContent)
+          } label: {
+            Text("완료")
+          }
+          .font(.pretendard(size: 16, weight: .bold))
+          .buttonStyle(.plain)
+          .foregroundColor(.black)
+        } else {
+          Button {
+            store.send(.onChangeEditable(true))
+          } label: {
+            Image("icon_pancil")
+          }
+          .padding(.trailing, 8)
+          
+          Menu {
+            Button {
+              viewStore.send(.deleteRecord)
+            } label: {
+              Label("삭제하기", image: "trash")
+            }
+          } label: {
+            Image("icon_dot3")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 24, height: 24)
+          }
+        }
+      } else {
+        Button {
+          
+        } label: {
+          Image("icon_notification")
+        }
+      }
+    }
+  }
+  
+  var body: some View {
+    HStack(spacing: .zero) {
+      Button {
+        store.send(.onDisappear)
+      } label: {
+        Image("icon_xmark")
+      }
+      
+      Spacer()
+      
+      trailingButtonGroup()
+    }
+    .padding(.bottom, 24)
   }
 }
 
