@@ -39,8 +39,10 @@ struct ChallengeRecordDetailCore: Reducer {
     var title: String
     var content: String
     var cost: Int
+    
     var isEditable: Bool = false
     var selectedIndex: Int = .zero
+    var deleteAlertState: IGOAlertCore.State = .init()
     
     var id: Int {
       return record.ID
@@ -66,6 +68,7 @@ struct ChallengeRecordDetailCore: Reducer {
     case didFinishUpdateContent
     case updateContent
     case showDeclarationView(Bool)
+    case showDeleteRecord(Bool)
     case deleteRecord
     
     case onDisappear
@@ -74,6 +77,8 @@ struct ChallengeRecordDetailCore: Reducer {
     case _reloadItemResponse(TaskResult<ChallengeRecord>)
     case updateContentResponse(TaskResult<Data>)
     case _deleteContentResponse(TaskResult<Data>)
+    
+    case alertAction(IGOAlertCore.Action)
   }
   
   @Dependency(\.recordClient) var recordClient
@@ -81,6 +86,10 @@ struct ChallengeRecordDetailCore: Reducer {
   var body: some Reducer<State, Action> {
     Scope(state: \.imageState, action: /Action.urlImageAction) {
       URLImageCore()
+    }
+    
+    Scope(state: \.deleteAlertState, action: /Action.alertAction) {
+      IGOAlertCore()
     }
     
     Reduce { state, action in
@@ -139,6 +148,12 @@ struct ChallengeRecordDetailCore: Reducer {
           )
         }
         
+      case .showDeleteRecord(true):
+        return .send(.alertAction(.present))
+        
+      case .showDeleteRecord(false):
+        return .send(.alertAction(.dismiss))
+        
       case .deleteRecord:
         return .run { [id = state.record.ID] send in
           await send(
@@ -186,7 +201,11 @@ struct ChallengeRecordDetailCore: Reducer {
         
       case ._deleteContentResponse(.success):
         return .send(.onDisappear)
+        
       case ._deleteContentResponse(.failure):
+        return .none
+        
+      case .alertAction:
         return .none
       }
     }
