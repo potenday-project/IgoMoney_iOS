@@ -13,6 +13,7 @@ struct ParticipatingChallengeCore: Reducer {
     var challengeResultSectionState: ParticipatingChallengeResultSectionCore.State
     var challengeAuthListState: ChallengeRecordSectionCore.State
     var selectedChallengeRecordState: ChallengeRecordDetailCore.State?
+    var declarationTargetState: DeclarationCore.State?
     var showDeclaration: Bool = false
     var isSelected: Bool {
       return selectedChallengeRecordState != nil
@@ -31,6 +32,7 @@ struct ParticipatingChallengeCore: Reducer {
     case challengeResultSectionAction(ParticipatingChallengeResultSectionCore.Action)
     case challengeAuthListAction(ChallengeRecordSectionCore.Action)
     case selectedChallengeRecordAction(ChallengeRecordDetailCore.Action)
+    case declarationTargetAction(DeclarationCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -65,8 +67,18 @@ struct ParticipatingChallengeCore: Reducer {
           .send(.challengeAuthListAction(.fetchRecords))
         )
         
-      case let .selectedChallengeRecordAction(.showDeclarationView(isShow)):
-        state.showDeclaration = isShow
+      case .selectedChallengeRecordAction(.showDeclarationView(true)):
+        guard let selectedRecord = state.selectedChallengeRecordState?.record else {
+          return .none
+        }
+        
+        state.showDeclaration = true
+        state.declarationTargetState = DeclarationCore.State(record: selectedRecord)
+        return .none
+        
+      case .selectedChallengeRecordAction(.showDeclarationView(false)):
+        state.showDeclaration = false
+        state.declarationTargetState = nil
         return .none
         
       default:
@@ -75,6 +87,9 @@ struct ParticipatingChallengeCore: Reducer {
     }
     .ifLet(\.selectedChallengeRecordState, action: /Action.selectedChallengeRecordAction) {
       ChallengeRecordDetailCore()
+    }
+    .ifLet(\.declarationTargetState, action: /Action.declarationTargetAction) {
+      DeclarationCore()
     }
   }
 }
