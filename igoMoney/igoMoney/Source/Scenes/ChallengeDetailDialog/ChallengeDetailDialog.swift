@@ -102,6 +102,50 @@ struct ChallengeDetailDialog: View {
     .background(Color.white)
     .cornerRadius(8)
     .padding()
+    .igoAlert(
+      self.store.scope(
+        state: \.deleteAlertState,
+        action: ChallengeRecordDetailCore.Action.alertAction
+      )
+    ) {
+      VStack(spacing: 16) {
+        Text("인증을 삭제하시겠습니까?")
+          .font(.pretendard(size: 18, weight: .bold))
+          .multilineTextAlignment(.center)
+        
+        HStack {
+          Button {
+            self.store.send(.showDeleteRecord(false))
+          } label: {
+            Text("취소")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+              .foregroundColor(ColorConstants.gray3)
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.gray5)
+          .cornerRadius(8)
+          
+          Button {
+            self.store.send(.deleteRecord)
+          } label: {
+            Text("삭제")
+              .frame(maxWidth: .infinity)
+              .font(.pretendard(size: 16, weight: .medium))
+          }
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .background(ColorConstants.primary)
+          .cornerRadius(8)
+        }
+      }
+      .foregroundColor(Color.black)
+      .padding()
+      .background(Color.white)
+      .cornerRadius(8)
+      .frame(width: 250)
+    }
   }
 }
 
@@ -131,7 +175,7 @@ struct ChallengeDetailHeaderView: View {
           
           Menu {
             Button {
-              viewStore.send(.deleteRecord)
+              viewStore.send(.showDeleteRecord(true))
             } label: {
               Label("삭제하기", image: "trash")
             }
