@@ -96,7 +96,14 @@ struct ParticipatingChallengeScene: View {
               }
             )
           ) {
-            DeclarationScene()
+            IfLetStore(
+              self.store.scope(
+                state: \.declarationTargetState,
+                action: ParticipatingChallengeCore.Action.declarationTargetAction
+              )
+            ) { declarationStore in
+              DeclarationScene(store: declarationStore)
+            }
           }
         }
       }

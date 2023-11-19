@@ -36,45 +36,105 @@ enum Declaration: CaseIterable {
   }
 }
 
-struct DeclarationScene: View {
-  var body: some View {
-    VStack(spacing: .zero) {
-      IGONavigationBar {
-        Text("신고하기")
-          .font(.pretendard(size: 20, weight: .bold))
-      } leftView: {
-        Button {
-          // TODO: - 신고 화면 취소
-        } label: {
-          Image("icon_xmark")
-        }
-      } rightView: {
-        EmptyView()
-      }
-      .padding(.vertical, 24)
+struct DeclarationCore: Reducer {
+  struct State: Equatable {
+    let record: ChallengeRecord
+    var showReasonView: Bool = false
+  }
+  
+  enum Action: Equatable {
+    case didTapDeclaration
+    case didTapShowReason(isShow: Bool)
+  }
+  
+  func reduce(into state: inout State, action: Action) -> Effect<Action> {
+    switch action {
+    case .didTapShowReason(true):
+      state.showReasonView = true
+      return .none
       
-      ScrollView(.vertical, showsIndicators: false) {
-        ForEach(Declaration.allCases, id: \.hashValue) { declaration in
-          HStack {
-            Text(declaration.description)
-            
-            Spacer()
-            
-            Image(systemName: "chevron.right")
-              .foregroundColor(ColorConstants.gray4)
-          }
-          .font(.pretendard(size: 16, weight: .semiBold))
-          .padding(16)
-          
-          Divider()
-        }
-      }
+    case .didTapShowReason(false):
+      state.showReasonView = false
+      return .none
       
+    default:
+      return .none
     }
-    .padding(.horizontal, 24)
+  }
+}
+
+struct DeclarationScene: View {
+  let store: StoreOf<DeclarationCore>
+  
+  var body: some View {
+    NavigationView {
+      ZStack {
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          NavigationLink(
+            destination: Text("Reason View"),
+            isActive: viewStore.binding(
+              get: \.showReasonView,
+              send: DeclarationCore.Action.didTapDeclaration
+            )
+          ) {
+            EmptyView()
+          }
+        }
+        
+        VStack(spacing: .zero) {
+          IGONavigationBar {
+            Text("신고하기")
+              .font(.pretendard(size: 20, weight: .bold))
+          } leftView: {
+            Button {
+              // TODO: - 신고 화면 취소
+            } label: {
+              Image("icon_xmark")
+            }
+          } rightView: {
+            EmptyView()
+          }
+          .padding(.vertical, 24)
+          
+          ScrollView(.vertical, showsIndicators: false) {
+            ForEach(Declaration.allCases, id: \.hashValue) { declaration in
+              Button {
+                if declaration == .inapposite {
+                  store.send(.didTapShowReason(isShow: true))
+                  return
+                }
+                store.send(.didTapDeclaration)
+              } label: {
+                HStack {
+                  Text(declaration.description)
+                  
+                  Spacer()
+                  
+                  Image(systemName: "chevron.right")
+                    .foregroundColor(ColorConstants.gray4)
+                }
+                .font(.pretendard(size: 16, weight: .semiBold))
+                .padding(16)
+              }
+              .buttonStyle(.plain)
+              
+              Divider()
+            }
+          }
+          
+        }
+        .padding(.horizontal, 24)
+      }
+      .navigationBarHidden(true)
+    }
   }
 }
 
 #Preview {
-  DeclarationScene()
+  DeclarationScene(
+    store: Store.init(
+      initialState: DeclarationCore.State(record: .default),
+      reducer: { DeclarationCore() }
+    )
+  )
 }
