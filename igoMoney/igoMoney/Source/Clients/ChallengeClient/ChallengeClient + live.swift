@@ -56,14 +56,13 @@ extension ChallengeClient {
     
     let values: [String: Int] = try await APIClient.request(to: api)
     return values
-  } challengeCosts: { challenge, isMine  in
-    guard let currentAuthUser = APIClient.currentUser,
+  } challengeCosts: { challenge, isMine in
+    guard let myID = APIClient.currentUser?.userID,
           let competitorID = challenge.competitorID else {
       throw APIError.badRequest(400)
     }
     
-    let isLeader = (currentAuthUser.userID == challenge.leaderID)
-    let userID = isMine ? currentAuthUser.userID : isLeader ? competitorID : challenge.leaderID
+    let userID = isMine ? myID : competitorID
     
     let api = ChallengeAPI(
       method: .get,

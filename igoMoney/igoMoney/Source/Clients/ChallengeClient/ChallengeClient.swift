@@ -43,7 +43,7 @@ struct ChallengeClient {
   var fetchNotStartedChallenge: @Sendable () async throws -> [Challenge]
   var enterChallenge: @Sendable (_ challengeID: String) async throws -> Bool
   var generateChallenge: @Sendable (_ challenge: ChallengeGenerateRequest) async throws -> [String: Int]
-  var challengeCosts: @Sendable (_ challengeID: Challenge, _ isMine: Bool) async throws -> ChallengeCostResponse
+  var challengeCosts: @Sendable (_ challenge: Challenge, _ isMine: Bool) async throws -> ChallengeCostResponse
 }
 
 extension ChallengeClient: DependencyKey { }
