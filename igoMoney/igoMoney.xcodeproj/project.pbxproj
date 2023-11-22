@@ -34,6 +34,8 @@
 		181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181988B12ACE80840021214C /* ChallengeAPI.swift */; };
 		181F288D2B0E471800B499B2 /* NotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F288C2B0E471800B499B2 /* NotificationScene.swift */; };
 		181F288F2B0E472500B499B2 /* NotificationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F288E2B0E472500B499B2 /* NotificationCore.swift */; };
+		181F28922B0E485800B499B2 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F28912B0E485800B499B2 /* NotificationClient.swift */; };
+		181F28942B0E493500B499B2 /* NotificationClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F28932B0E493500B499B2 /* NotificationClient + live.swift */; };
 		1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */; };
 		182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */; };
 		182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */; };
@@ -181,6 +183,8 @@
 		181988B12ACE80840021214C /* ChallengeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeAPI.swift; sourceTree = "<group>"; };
 		181F288C2B0E471800B499B2 /* NotificationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScene.swift; sourceTree = "<group>"; };
 		181F288E2B0E472500B499B2 /* NotificationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCore.swift; sourceTree = "<group>"; };
+		181F28912B0E485800B499B2 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
+		181F28932B0E493500B499B2 /* NotificationClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationClient + live.swift"; sourceTree = "<group>"; };
 		1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomScene.swift; sourceTree = "<group>"; };
 		182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomCore.swift; sourceTree = "<group>"; };
@@ -426,6 +430,15 @@
 				181F288E2B0E472500B499B2 /* NotificationCore.swift */,
 			);
 			path = NotificationScene;
+			sourceTree = "<group>";
+		};
+		181F28902B0E484F00B499B2 /* NotificationClient */ = {
+			isa = PBXGroup;
+			children = (
+				181F28912B0E485800B499B2 /* NotificationClient.swift */,
+				181F28932B0E493500B499B2 /* NotificationClient + live.swift */,
+			);
+			path = NotificationClient;
 			sourceTree = "<group>";
 		};
 		182B8CFC2AEA5FFE00ED8890 /* FilterViews */ = {
@@ -685,6 +698,7 @@
 		18F55C8F2ADD92D600DE50C4 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				181F28902B0E484F00B499B2 /* NotificationClient */,
 				182B9E0B2AFA5B9200B47CBA /* RecordClient */,
 				188103A42AE539F5003EBE95 /* ImageClient */,
 				18F55C902ADD942200DE50C4 /* AuthClient */,
@@ -1011,6 +1025,7 @@
 				1833D8AA2AEACE13002FBEDD /* ChallengeCounterCore.swift in Sources */,
 				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,
 				18599A572ABC35C70075DE76 /* EmptyChallengeDetail.swift in Sources */,
+				181F28922B0E485800B499B2 /* NotificationClient.swift in Sources */,
 				181F288F2B0E472500B499B2 /* NotificationCore.swift in Sources */,
 				1882632A2AE7BD6000100D53 /* UIImage + Extensions.swift in Sources */,
 				18F252262AFE5C9000892961 /* ChallengeListView.swift in Sources */,
@@ -1036,6 +1051,7 @@
 				18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */,
 				18F6BB752AEF524200AB0F1B /* ParticipatingChallengeCore.swift in Sources */,
 				187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */,
+				181F28942B0E493500B499B2 /* NotificationClient + live.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
