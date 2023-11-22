@@ -11,12 +11,14 @@ struct HomeCore: Reducer {
   struct State: Equatable {
     var myChallengeState = MyChallengeSectionCore.State()
     var emptyChallengeListState = EmptyChallengeListSectionCore.State()
+    var notificationState = NotificationCore.State()
   }
   
   enum Action {
     // Child Action
     case myChallengeAction(MyChallengeSectionCore.Action)
     case emptyChallengeAction(EmptyChallengeListSectionCore.Action)
+    case notificationAction(NotificationCore.Action)
   }
   
   var body: some Reducer<State, Action> {
@@ -27,6 +29,9 @@ struct HomeCore: Reducer {
         
       case .emptyChallengeAction:
         return .none
+        
+      case .notificationAction:
+        return .none
       }
     }
     
@@ -36,6 +41,10 @@ struct HomeCore: Reducer {
     
     Scope(state: \.emptyChallengeListState, action: /Action.emptyChallengeAction) {
       EmptyChallengeListSectionCore()
+    }
+    
+    Scope(state: \.notificationState, action: /Action.notificationAction) {
+      NotificationCore()
     }
   }
 }
