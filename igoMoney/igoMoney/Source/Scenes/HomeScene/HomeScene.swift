@@ -12,7 +12,7 @@ struct HomeScene: View {
   let store: StoreOf<HomeCore>
   
   @ViewBuilder
-  var titleHeader: some View {
+  private func titleHeader() -> some View {
     HStack {
       Image("icon_text_main")
         .resizable()
@@ -20,13 +20,19 @@ struct HomeScene: View {
         .frame(height: 20)
       
       Spacer()
+      
+      Button {
+        
+      } label: {
+        Image("icon_notification_fill")
+      }
     }
     .padding(24)
   }
   
   var body: some View {
     VStack {
-      titleHeader
+      titleHeader()
       
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 32) {
