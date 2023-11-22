@@ -36,6 +36,7 @@
 		181F288F2B0E472500B499B2 /* NotificationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F288E2B0E472500B499B2 /* NotificationCore.swift */; };
 		181F28922B0E485800B499B2 /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F28912B0E485800B499B2 /* NotificationClient.swift */; };
 		181F28942B0E493500B499B2 /* NotificationClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F28932B0E493500B499B2 /* NotificationClient + live.swift */; };
+		181F28962B0E499400B499B2 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181F28952B0E499400B499B2 /* NotificationAPI.swift */; };
 		1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */; };
 		182B1B5F2AD678D800D01DBA /* GenerateRoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */; };
 		182B1B612AD6793F00D01DBA /* GenerateRoomCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */; };
@@ -185,6 +186,7 @@
 		181F288E2B0E472500B499B2 /* NotificationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCore.swift; sourceTree = "<group>"; };
 		181F28912B0E485800B499B2 /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
 		181F28932B0E493500B499B2 /* NotificationClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationClient + live.swift"; sourceTree = "<group>"; };
+		181F28952B0E499400B499B2 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		1827C1A52AC96AE000E658B6 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		182B1B5E2AD678D800D01DBA /* GenerateRoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomScene.swift; sourceTree = "<group>"; };
 		182B1B602AD6793F00D01DBA /* GenerateRoomCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateRoomCore.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				181988B12ACE80840021214C /* ChallengeAPI.swift */,
 				188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */,
 				182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */,
+				181F28952B0E499400B499B2 /* NotificationAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1005,6 +1008,7 @@
 				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
 				18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */,
 				1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */,
+				181F28962B0E499400B499B2 /* NotificationAPI.swift in Sources */,
 				18EF46CA2AE8FEA700EA949E /* GeneralToggleCell.swift in Sources */,
 				18599A712ABC505A0075DE76 /* Font + Extensions.swift in Sources */,
 				18EF46C62AE8FD7900EA949E /* IGOToggleStyle.swift in Sources */,

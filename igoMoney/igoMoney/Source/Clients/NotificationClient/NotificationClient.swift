@@ -7,11 +7,18 @@
 import Foundation
 import Dependencies
 
-struct Notification: Hashable {
+struct Notification: Hashable, Decodable {
   let ID: Int
   let userID: Int
   let title: String
   let content: String
+  
+  enum CodingKeys: String, CodingKey {
+    case ID = "notificationId"
+    case userID = "userId"
+    case title = "title"
+    case content = "message"
+  }
 }
 
 struct NotificationClient {
