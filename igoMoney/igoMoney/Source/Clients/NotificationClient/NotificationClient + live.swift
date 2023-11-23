@@ -8,7 +8,11 @@ import Foundation
 import ComposableArchitecture
 
 extension NotificationClient {
-  static var liveValue: NotificationClient = .init { userID in
+  static var liveValue: NotificationClient = .init {
+    guard let userID = APIClient.currentUser?.userID else {
+      throw APIError.badRequest(400)
+    }
+    
     let api = NotificationAPI(
       method: .get,
       path: "/users/notification/\(userID)",

@@ -12,9 +12,12 @@ struct HomeCore: Reducer {
     var myChallengeState = MyChallengeSectionCore.State()
     var emptyChallengeListState = EmptyChallengeListSectionCore.State()
     var notificationState = NotificationCore.State()
+    var showNotificationScene: Bool = false
   }
   
   enum Action {
+    case showNotificationScene(Bool)
+    
     // Child Action
     case myChallengeAction(MyChallengeSectionCore.Action)
     case emptyChallengeAction(EmptyChallengeListSectionCore.Action)
@@ -24,6 +27,14 @@ struct HomeCore: Reducer {
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
+      case .showNotificationScene(true):
+        state.showNotificationScene = true
+        return .none
+        
+      case .showNotificationScene(false):
+        state.showNotificationScene = false
+        return .none
+        
       case .myChallengeAction:
         return .none
         

@@ -21,10 +21,23 @@ struct HomeScene: View {
       
       Spacer()
       
-      Button {
-        
-      } label: {
-        Image("icon_notification_fill")
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        NavigationLink(
+          isActive: viewStore.binding(
+            get: \.showNotificationScene,
+            send: HomeCore.Action.showNotificationScene
+          )
+        ) {
+          NotificationScene(
+            store: self.store.scope(
+              state: \.notificationState,
+              action: HomeCore.Action.notificationAction
+            )
+          )
+        } label: {
+          Image("icon_notification_fill")
+        }
+        .buttonStyle(.plain)
       }
     }
     .padding(24)
