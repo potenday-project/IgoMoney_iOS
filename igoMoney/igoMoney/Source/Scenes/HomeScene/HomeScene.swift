@@ -12,7 +12,7 @@ struct HomeScene: View {
   let store: StoreOf<HomeCore>
   
   @ViewBuilder
-  var titleHeader: some View {
+  private func titleHeader() -> some View {
     HStack {
       Image("icon_text_main")
         .resizable()
@@ -20,13 +20,39 @@ struct HomeScene: View {
         .frame(height: 20)
       
       Spacer()
+      
+      WithViewStore(store, observe: { $0 }) { viewStore in
+        NavigationLink(
+          isActive: viewStore.binding(
+            get: \.showNotificationScene,
+            send: HomeCore.Action.showNotificationScene
+          )
+        ) {
+          NotificationScene(
+            store: self.store.scope(
+              state: \.notificationState,
+              action: HomeCore.Action.notificationAction
+            )
+          )
+        } label: {
+          ZStack(alignment: .topTrailing) {
+            Image("icon_notification_fill")
+            
+            Circle()
+              .fill(Color.orange)
+              .frame(width: 4, height: 4)
+              .opacity(viewStore.unreadNotificationCount == .zero ? .zero : 1)
+          }
+          .buttonStyle(.plain)
+        }
+      }
     }
     .padding(24)
   }
   
   var body: some View {
     VStack {
-      titleHeader
+      titleHeader()
       
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 32) {

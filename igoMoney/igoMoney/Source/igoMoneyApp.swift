@@ -41,7 +41,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     _ application: UIApplication,
     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
   ) {
+    #if DEBUG
     Messaging.messaging().setAPNSToken(deviceToken, type: .sandbox)
+    #else
+    Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
+    #endif
   }
   
   func userNotificationCenter(
@@ -54,15 +58,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     didReceive response: UNNotificationResponse
-  ) async {
-    debugPrint(response)
-  }
+  ) async { debugPrint(response) }
 }
 
 extension AppDelegate: MessagingDelegate {
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    print("FCM", fcmToken!)
-  }
+  func messaging(
+    _ messaging: Messaging,
+    didReceiveRegistrationToken fcmToken: String?
+  ) { debugPrint("Notification Message Receive Token") }
 }
 
 @main
