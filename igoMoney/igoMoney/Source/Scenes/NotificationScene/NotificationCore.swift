@@ -8,7 +8,7 @@ import ComposableArchitecture
 
 struct NotificationCore: Reducer {
   struct State: Equatable {
-    var unreadNotifications: [Notification] = []
+    var unreadNotifications: [Notification] = [.default, .default]
   }
   
   enum Action: Equatable {
@@ -39,7 +39,7 @@ struct NotificationCore: Reducer {
       return .none
       
     case ._fetchUnreadNotificationResponse(.failure):
-      state.unreadNotifications = []
+//      state.unreadNotifications = []
       return .none
     }
   }

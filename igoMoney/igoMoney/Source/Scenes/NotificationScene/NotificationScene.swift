@@ -29,21 +29,24 @@ struct NotificationScene: View {
       } rightView: {
         EmptyView()
       }
-      
+      .padding(.horizontal, 24)
+
       WithViewStore(store, observe: { $0 }) { viewStore in
         if viewStore.unreadNotifications.isEmpty {
           NotificationEmptyView()
         } else {
-          List(viewStore.unreadNotifications, id: \.ID) { notification in
-            NotificationCell(notification: notification)
+          ScrollView(.vertical, showsIndicators: false) {
+            ForEach(viewStore.unreadNotifications, id: \.ID) { notification in
+              NotificationCell(notification: notification)
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
           }
-          .listStyle(.plain)
         }
       }
       
       Spacer()
     }
-    .padding(.horizontal, 24)
     .padding(.top, 16)
     .onAppear {
       store.send(.onAppear)
@@ -86,6 +89,7 @@ struct NotificationCell: View {
         .font(.pretendard(size: 14, weight: .bold))
         .multilineTextAlignment(.leading)
     }
+    .frame(maxWidth: .infinity)
     .padding(.vertical, 12)
     .padding(.horizontal, 16)
     .background(Color.white)
