@@ -54,15 +54,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     didReceive response: UNNotificationResponse
-  ) async {
-    debugPrint(response)
-  }
+  ) async { debugPrint(response) }
 }
 
 extension AppDelegate: MessagingDelegate {
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    print("FCM", fcmToken!)
-  }
+  func messaging(
+    _ messaging: Messaging,
+    didReceiveRegistrationToken fcmToken: String?
+  ) { debugPrint("Notification Message Receive Token") }
 }
 
 @main
