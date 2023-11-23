@@ -23,14 +23,28 @@ extension NotificationClient {
     let response: [Notification] = try await APIClient.request(to: api)
     
     return response
-  } readNotification: { notificationID in
-    let api = NotificationAPI(
-      method: .post,
-      path: "/users/notification/check/\(notificationID)/",
-      query: [:],
-      header: [:]
-    )
+  } readNotifications: { notifications in
+    var results: [Data] = []
     
-    return try await APIClient.execute(to: api)
+    try await withThrowingTaskGroup(of: Data.self) { group in
+      for notification in notifications {
+        group.addTask {
+          let api = NotificationAPI(
+            method: .post,
+            path: "/users/notification/check/\(notification.ID)/",
+            query: [:],
+            header: [:]
+          )
+          
+          return try await APIClient.execute(to: api)
+        }
+      }
+      
+      for try await data in group {
+        results.append(data)
+      }
+    }
+    
+    return results
   }
 }
