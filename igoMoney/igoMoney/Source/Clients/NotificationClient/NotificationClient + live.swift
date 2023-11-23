@@ -15,7 +15,7 @@ extension NotificationClient {
     
     let api = NotificationAPI(
       method: .get,
-      path: "/users/notification/\(userID)",
+      path: "/users/notification/\(userID)/",
       query: [:],
       header: [:]
     )
@@ -26,7 +26,7 @@ extension NotificationClient {
   } readNotification: { notificationID in
     let api = NotificationAPI(
       method: .post,
-      path: "/users/notification/check/\(notificationID)",
+      path: "/users/notification/check/\(notificationID)/",
       query: [:],
       header: [:]
     )
