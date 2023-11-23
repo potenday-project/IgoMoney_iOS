@@ -13,6 +13,11 @@ struct HomeCore: Reducer {
     var emptyChallengeListState = EmptyChallengeListSectionCore.State()
     var notificationState = NotificationCore.State()
     var showNotificationScene: Bool = false
+    
+    var unreadNotificationCount: Int {
+      return notificationState.unreadNotifications.count
+//      return 10
+    }
   }
   
   enum Action {
