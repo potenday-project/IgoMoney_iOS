@@ -35,9 +35,16 @@ struct HomeScene: View {
             )
           )
         } label: {
-          Image("icon_notification_fill")
+          ZStack(alignment: .topTrailing) {
+            Image("icon_notification_fill")
+            
+            Circle()
+              .fill(Color.orange)
+              .frame(width: 4, height: 4)
+              .opacity(viewStore.unreadNotificationCount == .zero ? .zero : 1)
+          }
+          .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
       }
     }
     .padding(24)

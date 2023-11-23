@@ -8,6 +8,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct NotificationScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<NotificationCore>
   
   var body: some View {
@@ -17,7 +18,7 @@ struct NotificationScene: View {
           .font(.pretendard(size: 20, weight: .bold))
       } leftView: {
         Button {
-          
+          presentationMode.wrappedValue.dismiss()
         } label: {
           Image(systemName: "chevron.backward")
             .resizable()
