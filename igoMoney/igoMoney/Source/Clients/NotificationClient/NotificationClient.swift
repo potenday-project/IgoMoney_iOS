@@ -30,7 +30,7 @@ struct Notification: Hashable, Decodable, Equatable {
 
 struct NotificationClient {
   var fetchUnreadNotification: @Sendable () async throws -> [Notification]
-  var readNotification: @Sendable (_ notificationID: Int) async throws -> Data
+  var readNotifications: @Sendable (_ notifications: [Notification]) async throws -> [Data]
 }
 
 extension NotificationClient: DependencyKey { }

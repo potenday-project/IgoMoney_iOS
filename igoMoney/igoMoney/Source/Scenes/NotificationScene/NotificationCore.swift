@@ -4,6 +4,8 @@
 //
 //  Copyright (c) 2023 Minii All rights reserved.
 
+import Foundation
+
 import ComposableArchitecture
 
 struct NotificationCore: Reducer {
@@ -15,6 +17,8 @@ struct NotificationCore: Reducer {
     case onAppear
     case _fetchUnreadNotification
     case _fetchUnreadNotificationResponse(TaskResult<[Notification]>)
+    case _readNotification
+    case _readNotificationResponse(TaskResult<[Data]>)
   }
   
   @Dependency(\.notificationClient) var notificationClient
@@ -36,10 +40,30 @@ struct NotificationCore: Reducer {
       }
     case ._fetchUnreadNotificationResponse(.success(let notifications)):
       state.unreadNotifications = notifications
-      return .none
+      return .send(._readNotification)
       
     case ._fetchUnreadNotificationResponse(.failure):
-//      state.unreadNotifications = []
+      state.unreadNotifications = []
+      return .none
+      
+    case ._readNotification:
+      let notifications = state.unreadNotifications
+      
+      if notifications.isEmpty { return .none }
+      
+      return .run { send in
+        await send(
+          ._readNotificationResponse(
+            TaskResult {
+              try await notificationClient.readNotifications(notifications)
+            }
+          )
+        )
+      }
+      
+    case ._readNotificationResponse(.success):
+      return .none
+    case ._readNotificationResponse(.failure):
       return .none
     }
   }
