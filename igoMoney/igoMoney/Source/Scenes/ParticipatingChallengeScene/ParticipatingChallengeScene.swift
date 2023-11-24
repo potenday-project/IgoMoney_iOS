@@ -126,6 +126,7 @@ struct DetailChallengeInformationCard: View {
         )
         .scaledToFill()
         .frame(width: 50, height: 50)
+        .clipShape(Circle())
         
         VStack(alignment: .leading, spacing: 4) {
           Text(viewStore.challenge.userDescription)
