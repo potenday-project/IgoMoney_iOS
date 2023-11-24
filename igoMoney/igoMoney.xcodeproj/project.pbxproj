@@ -96,6 +96,15 @@
 		188103A82AE53A65003EBE95 /* ImageClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A72AE53A65003EBE95 /* ImageClient + live.swift */; };
 		188103AA2AE53ABD003EBE95 /* ImageLoadAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */; };
 		1882632A2AE7BD6000100D53 /* UIImage + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188263292AE7BD6000100D53 /* UIImage + Extensions.swift */; };
+		188905E12B10D5F5006F5339 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DD2B10D48D006F5339 /* Pretendard-Thin.otf */; };
+		188905E22B10D5F5006F5339 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DF2B10D48D006F5339 /* Pretendard-Medium.otf */; };
+		188905E32B10D5F5006F5339 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905D92B10D48D006F5339 /* Pretendard-Light.otf */; };
+		188905E42B10D5F5006F5339 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905E02B10D48D006F5339 /* Pretendard-SemiBold.otf */; };
+		188905E52B10D5F5006F5339 /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DE2B10D48D006F5339 /* Pretendard-Black.otf */; };
+		188905E62B10D5F5006F5339 /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DC2B10D48D006F5339 /* Pretendard-ExtraBold.otf */; };
+		188905E72B10D5F5006F5339 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905D82B10D48D006F5339 /* Pretendard-Regular.otf */; };
+		188905E82B10D5F5006F5339 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DB2B10D48D006F5339 /* Pretendard-ExtraLight.otf */; };
+		188905E92B10D5F5006F5339 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DA2B10D48D006F5339 /* Pretendard-Bold.otf */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		189A2D8B2B025154002FE343 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 189A2D8A2B025154002FE343 /* GoogleService-Info.plist */; };
 		189A2D8E2B025204002FE343 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 189A2D8D2B025204002FE343 /* FirebaseAnalytics */; };
@@ -970,9 +979,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188905E22B10D5F5006F5339 /* Pretendard-Medium.otf in Resources */,
+				188905E72B10D5F5006F5339 /* Pretendard-Regular.otf in Resources */,
+				188905E32B10D5F5006F5339 /* Pretendard-Light.otf in Resources */,
 				189A2D8B2B025154002FE343 /* GoogleService-Info.plist in Resources */,
 				180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */,
+				188905E52B10D5F5006F5339 /* Pretendard-Black.otf in Resources */,
 				1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */,
+				188905E82B10D5F5006F5339 /* Pretendard-ExtraLight.otf in Resources */,
+				188905E62B10D5F5006F5339 /* Pretendard-ExtraBold.otf in Resources */,
+				188905E92B10D5F5006F5339 /* Pretendard-Bold.otf in Resources */,
+				188905E12B10D5F5006F5339 /* Pretendard-Thin.otf in Resources */,
+				188905E42B10D5F5006F5339 /* Pretendard-SemiBold.otf in Resources */,
 				180363B12AB82DCE00082F8A /* Preview Assets.xcassets in Resources */,
 				180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */,
 			);

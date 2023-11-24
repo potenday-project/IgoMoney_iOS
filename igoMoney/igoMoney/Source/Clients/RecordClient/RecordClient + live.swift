@@ -59,5 +59,31 @@ extension RecordClient {
     )
     
     return try await APIClient.execute(to: api)
+  } reportRecord: { record, reason in
+    guard let userID = APIClient.currentUser?.userID else {
+      throw APIError.badRequest(400)
+    }
+    
+    let boundary = "Boundary_" + UUID().uuidString
+    
+    let api = RecordAPI(
+      method: .post,
+      path: "/records/report",
+      query: [:],
+      header: [
+        "Content-Type": "multipart/form-data; boundary=\(boundary)"
+      ],
+      body: .multipart(
+        boundary: boundary,
+        values: [
+          "recordId": .text(record.ID.description),
+          "reporter_userId": .text(userID.description),
+          "offender_userId": .text(record.userID.description),
+          "reason": .text(reason.description)
+        ]
+      )
+    )
+    
+    return try await APIClient.execute(to: api)
   }
 }
