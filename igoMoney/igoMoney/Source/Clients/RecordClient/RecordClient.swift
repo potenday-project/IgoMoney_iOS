@@ -120,6 +120,7 @@ struct RecordClient {
   var updateRecord: @Sendable (RecordRequest) async throws -> Data
   var fetchRecord: @Sendable (_ recordID: Int) async throws -> ChallengeRecord
   var deleteRecord: @Sendable (_ recordID: Int) async throws -> Data
+  var reportRecord: @Sendable (_ record: ChallengeRecord, _ reason: Int) async throws -> Data
 }
 
 extension RecordClient: DependencyKey { }
