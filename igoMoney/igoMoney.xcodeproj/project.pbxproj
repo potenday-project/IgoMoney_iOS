@@ -105,6 +105,7 @@
 		188905E72B10D5F5006F5339 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905D82B10D48D006F5339 /* Pretendard-Regular.otf */; };
 		188905E82B10D5F5006F5339 /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DB2B10D48D006F5339 /* Pretendard-ExtraLight.otf */; };
 		188905E92B10D5F5006F5339 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 188905DA2B10D48D006F5339 /* Pretendard-Bold.otf */; };
+		188905EB2B10DFA5006F5339 /* DeclarationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188905EA2B10DFA5006F5339 /* DeclarationCore.swift */; };
 		189440862ABED3C200BE1205 /* IGOBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189440852ABED3C200BE1205 /* IGOBannerView.swift */; };
 		189A2D8B2B025154002FE343 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 189A2D8A2B025154002FE343 /* GoogleService-Info.plist */; };
 		189A2D8E2B025204002FE343 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 189A2D8D2B025204002FE343 /* FirebaseAnalytics */; };
@@ -256,6 +257,7 @@
 		188905DE2B10D48D006F5339 /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		188905DF2B10D48D006F5339 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		188905E02B10D48D006F5339 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		188905EA2B10DFA5006F5339 /* DeclarationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarationCore.swift; sourceTree = "<group>"; };
 		189440852ABED3C200BE1205 /* IGOBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IGOBannerView.swift; sourceTree = "<group>"; };
 		189A2D8A2B025154002FE343 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		189A2D9F2B025416002FE343 /* igoMoneyDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = igoMoneyDebug.entitlements; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				183D93532B0A3E4D00329F9E /* DeclarationScene.swift */,
+				188905EA2B10DFA5006F5339 /* DeclarationCore.swift */,
 			);
 			path = DeclarationScene;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				180FC6A42ABB4BC500DD8477 /* APIClient.swift in Sources */,
 				18606F492AB9D20A00025C37 /* ProfileSettingCore.swift in Sources */,
 				181988B02ACE75CC0021214C /* DateFormatter + Extensions.swift in Sources */,
+				188905EB2B10DFA5006F5339 /* DeclarationCore.swift in Sources */,
 				180FC6A22ABB48DC00DD8477 /* Networking.swift in Sources */,
 				1833D8AA2AEACE13002FBEDD /* ChallengeCounterCore.swift in Sources */,
 				181988B22ACE80850021214C /* ChallengeAPI.swift in Sources */,

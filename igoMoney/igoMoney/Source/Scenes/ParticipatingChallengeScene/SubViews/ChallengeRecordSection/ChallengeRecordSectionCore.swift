@@ -123,6 +123,8 @@ struct ChallengeRecordSectionCore: Reducer {
           return .none
         }
         
+        let records = records.filter { $0.isHide == false }
+        
         let decodeRecords = records.map {
           ChallengeRecordDetailCore.State(record: $0, isMine: state.selectedFetchChallenge == .mine)
         }
