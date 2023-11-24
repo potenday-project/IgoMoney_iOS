@@ -81,6 +81,13 @@ struct ParticipatingChallengeCore: Reducer {
         state.declarationTargetState = nil
         return .none
         
+      case .declarationTargetAction(.dismissView):
+        state.selectedChallengeRecordState = nil
+        
+        state.showDeclaration = false
+        state.declarationTargetState = nil
+        return .send(.challengeAuthListAction(.fetchRecords))
+        
       default:
         return .none
       }
