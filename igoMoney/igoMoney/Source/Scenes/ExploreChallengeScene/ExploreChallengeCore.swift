@@ -28,7 +28,9 @@ struct ExploreChallengeCore: Reducer {
     case showGenerate(Bool)
     case selectChallenge(Int?)
 
+    case _fetchUserInChallenge
     case _filterChallengeResponse(TaskResult<[Challenge]>)
+    case _fetchUserInChallengeResponse(TaskResult<Challenge>)
 
     case challengeInformationAction(Int, ChallengeInformationCore.Action)
     case enterChallengeAction(EnterChallengeCore.Action)
@@ -58,8 +60,7 @@ struct ExploreChallengeCore: Reducer {
         return .send(.filterChallengeAction(.selectAll(true)))
         
       case .showGenerate(true):
-        state.showGenerate = true
-        return .none
+        return .send(._fetchUserInChallenge)
         
       case .showGenerate(false):
         state.showGenerate = false
@@ -79,6 +80,17 @@ struct ExploreChallengeCore: Reducer {
         state.selectedChallengeID = nil
         return .none
         
+      case ._fetchUserInChallenge:
+        return .run { send in
+          await send(
+            ._fetchUserInChallengeResponse(
+              TaskResult {
+                try await challengeClient.getMyChallenge()
+              }
+            )
+          )
+        }
+        
       case .requestFetchChallenges:
         return .run { send in
           await send(
@@ -97,6 +109,13 @@ struct ExploreChallengeCore: Reducer {
         
       case ._filterChallengeResponse(.failure):
         state.challenges = []
+        return .none
+        
+      case ._fetchUserInChallengeResponse(.success):
+        return .send(.showGenerate(false))
+        
+      case ._fetchUserInChallengeResponse(.failure):
+        state.showGenerate = true
         return .none
         
       case .filterChallengeAction(.selectCategory), .filterChallengeAction(.selectMoney):
