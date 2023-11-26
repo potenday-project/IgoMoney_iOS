@@ -12,8 +12,8 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 @MainActor
-class AuthController: NSObject {
-  static let shared = AuthController()
+class IGOAuthController: NSObject {
+  static let shared = IGOAuthController()
   
   typealias AppleTokenResponse = (userIdentifier: String, idToken: String, authToken: String)
   typealias AppleToken = (response: AppleTokenResponse?, error: Error?)
@@ -57,17 +57,23 @@ class AuthController: NSObject {
   }
 }
 
-extension AuthController {
-  private func requestKakaoLogin(completion: @escaping (OAuthToken) -> Void) {
+extension IGOAuthController {
+  private func requestKakaoLogin(with continuation: CheckedContinuation<OAuthToken, Error>) {
     if UserApi.isKakaoTalkLoginAvailable() {
       UserApi.shared.loginWithKakaoTalk { token, error in
-        guard let token = token else { return }
-        completion(token)
+        guard let token = token else {
+          continuation.resume(throwing: APIError.badRequest(400))
+          return
+        }
+        continuation.resume(returning: token)
       }
     } else {
       UserApi.shared.loginWithKakaoAccount { token, error in
-        guard let token = token else { return }
-        completion(token)
+        guard let token = token else {
+          continuation.resume(throwing: APIError.badRequest(400))
+          return
+        }
+        continuation.resume(returning: token)
       }
     }
   }
@@ -78,9 +84,7 @@ extension AuthController {
         UserApi.shared.accessTokenInfo { tokenInformation, error in
           if let error = error {
             if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
-              self.requestKakaoLogin { token in
-                continuation.resume(returning: token)
-              }
+              self.requestKakaoLogin(with: continuation)
             } else {
               continuation.resume(throwing: APIError.badRequest(400))
             }
@@ -93,15 +97,13 @@ extension AuthController {
           }
         }
       } else {
-        self.requestKakaoLogin { token in
-          continuation.resume(returning: token)
-        }
+        self.requestKakaoLogin(with: continuation)
       }
     }
   }
 }
 
-extension AuthController: ASAuthorizationControllerDelegate {
+extension IGOAuthController: ASAuthorizationControllerDelegate {
   func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
     appleCompletion?(AppleToken(nil, error))
     appleCompletion = nil
@@ -126,13 +128,13 @@ extension AuthController: ASAuthorizationControllerDelegate {
   }
 }
 
-extension AuthController: ASAuthorizationControllerPresentationContextProviding {
+extension IGOAuthController: ASAuthorizationControllerPresentationContextProviding {
   func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
     return UIApplication.shared.topWindow() ?? ASPresentationAnchor()
   }
 }
 
-extension AuthController: ASWebAuthenticationPresentationContextProviding {
+extension IGOAuthController: ASWebAuthenticationPresentationContextProviding {
   func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
     return UIApplication.shared.topWindow() ?? ASPresentationAnchor()
   }
