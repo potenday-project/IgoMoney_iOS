@@ -9,6 +9,7 @@ import SwiftUI
 
 import ComposableArchitecture
 import KakaoSDKCommon
+import KakaoSDKAuth
 import FirebaseCore
 import FirebaseMessaging
 
@@ -80,6 +81,11 @@ struct igoMoneyApp: App {
           reducer: { AppCore()._printChanges() }
         )
       )
+      .onOpenURL { url in
+        if AuthApi.isKakaoTalkLoginUrl(url) {
+          _ = AuthController.handleOpenUrl(url: url)
+        }
+      }
     }
   }
 }
