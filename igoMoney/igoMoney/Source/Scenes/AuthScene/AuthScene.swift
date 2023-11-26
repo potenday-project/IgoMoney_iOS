@@ -43,14 +43,14 @@ struct AuthScene: View {
               IGOAuthButton(provider: provider) {
                 Task {
                   if provider == .kakao {
-                    if let token = try? await AuthController.shared.authorizationWithKakao() {
+                    if let token = try? await IGOAuthController.shared.authorizationWithKakao() {
                       viewStore.send(.didTapKakaoLogin(token: token.accessToken))
                     }
                     return
                   }
                   
                   if provider == .apple {
-                    let response = try await AuthController.shared.authorizationWithApple()
+                    let response = try await IGOAuthController.shared.authorizationWithApple()
                     viewStore.send(
                       .didTapAppleLogin(
                         user: response.userIdentifier,
