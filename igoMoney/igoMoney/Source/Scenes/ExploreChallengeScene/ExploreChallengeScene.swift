@@ -71,7 +71,14 @@ struct ExploreChallengeScene: View {
                     ExploreChallengeCellView(store: store)
                   }
                   .buttonStyle(.plain)
+                  .onAppear {
+                    viewStore.send(.onAppearList(informationViewStore.state))
+                  }
                 }
+              }
+              
+              if viewStore.isLoading {
+                ProgressView()
               }
             }
             .padding(.top)

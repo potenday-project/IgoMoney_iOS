@@ -40,7 +40,7 @@ struct ChallengeCostResponse: Decodable, Equatable {
 
 struct ChallengeClient {
   var getMyChallenge: @Sendable () async throws -> Challenge
-  var fetchNotStartedChallenge: @Sendable (_ lastID: Int?) async throws -> [Challenge]
+  var fetchNotStartedChallenge: @Sendable (_ lastID: Int?, _ filterCategory: Int?) async throws -> [Challenge]
   var enterChallenge: @Sendable (_ challengeID: String) async throws -> Bool
   var generateChallenge: @Sendable (_ challenge: ChallengeGenerateRequest) async throws -> [String: Int]
   var challengeCosts: @Sendable (_ challenge: Challenge, _ isMine: Bool) async throws -> ChallengeCostResponse
