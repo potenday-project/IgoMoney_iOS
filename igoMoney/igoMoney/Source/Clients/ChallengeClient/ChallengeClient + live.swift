@@ -21,14 +21,24 @@ extension ChallengeClient {
     
     let response: Challenge = try await APIClient.request(to: api)
     return response
-  } fetchNotStartedChallenge: {
+  } fetchNotStartedChallenge: { lastChallengeID in
+    var lastID = 10
+    
+    if let lastChallengeID = lastChallengeID {
+      lastID += lastChallengeID
+    }
+    
     let api = ChallengeAPI(
       method: .get,
       path: "/challenges/notstarted",
-      query: [:],
+      query: [
+        "lastId": lastID.description,
+        "pageSize": "\(10)"
+      ],
       header: [:]
     )
     let response: [Challenge] = try await APIClient.request(to: api)
+    
     return response
   } enterChallenge: { challengeID in
     guard let userID = APIClient.currentUser?.userID.description else {

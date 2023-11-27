@@ -90,7 +90,7 @@ struct EmptyChallengeListSectionCore: Reducer {
           await send(
             ._notStartedChallengeListResponse(
               TaskResult {
-                try await challengeClient.fetchNotStartedChallenge()
+                try await challengeClient.fetchNotStartedChallenge(nil)
               }
             )
           )

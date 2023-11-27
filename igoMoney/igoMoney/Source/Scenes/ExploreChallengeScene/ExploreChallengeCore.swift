@@ -22,15 +22,15 @@ struct ExploreChallengeCore: Reducer {
   
   enum Action: Equatable {
     case openFilter(Bool)
-    
-    case requestFetchChallenges
-    
     case showGenerate(Bool)
     case selectChallenge(Int?)
 
     case _fetchUserInChallenge
+    case _requestFetchChallenges
+    case _requestMoreChallenges(lasID: Int)
     case _filterChallengeResponse(TaskResult<[Challenge]>)
     case _fetchUserInChallengeResponse(TaskResult<Challenge>)
+    case _requestMoreChallengesResponse(TaskResult<[Challenge]>)
 
     case challengeInformationAction(Int, ChallengeInformationCore.Action)
     case enterChallengeAction(EnterChallengeCore.Action)
@@ -91,12 +91,12 @@ struct ExploreChallengeCore: Reducer {
           )
         }
         
-      case .requestFetchChallenges:
+      case ._requestFetchChallenges:
         return .run { send in
           await send(
             ._filterChallengeResponse(
               TaskResult {
-                try await challengeClient.fetchNotStartedChallenge()
+                try await challengeClient.fetchNotStartedChallenge(nil)
               }
             )
           )
@@ -118,10 +118,41 @@ struct ExploreChallengeCore: Reducer {
         state.showGenerate = true
         return .none
         
+      case ._requestMoreChallenges(let lastID):
+        return .run { send in
+          await send(
+            ._requestMoreChallengesResponse(
+              TaskResult {
+                try await challengeClient.fetchNotStartedChallenge(lastID)
+              }
+            )
+          )
+        }
+        
+      case ._requestMoreChallengesResponse(.success(let challenges)):
+        let challengeState = challenges.map { ChallengeInformationCore.State(challenge: $0) }
+        state.challenges.append(contentsOf: challengeState)
+        return .none
+        
+      case ._requestMoreChallengesResponse(.failure(let error)):
+        print(error)
+        return .none
+        
       case .filterChallengeAction(.selectCategory), .filterChallengeAction(.selectMoney):
         return .send(.openFilter(true))
         
       case .filterChallengeAction(.confirm):
+        return .none
+        
+      case .challengeInformationAction(let id, .onAppear):
+        if state.challenges.isEmpty {
+          return .none
+        }
+        
+        if state.challenges.map(\.id).max() == id {
+          return .send(._requestMoreChallenges(lasID: id + 1))
+        }
+        
         return .none
         
       default:
