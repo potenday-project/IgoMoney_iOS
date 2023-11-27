@@ -18,18 +18,20 @@ struct ExploreChallengeCore: Reducer {
     var selectedChallengeID: Int?
     var showGenerate: Bool = false
     var showFilter: Bool = false
+    var isLoading: Bool = false
   }
   
   enum Action: Equatable {
     case openFilter(Bool)
-    
-    case requestFetchChallenges
-    
     case showGenerate(Bool)
     case selectChallenge(Int?)
+    case onAppearList(ChallengeInformationCore.State)
 
     case _fetchUserInChallenge
-    case _filterChallengeResponse(TaskResult<[Challenge]>)
+    case _filterChallenges
+    case _requestFetchChallenges
+    case _requestMoreChallenges(lastID: Int)
+    case _requestChallengeResponse(TaskResult<[Challenge]>)
     case _fetchUserInChallengeResponse(TaskResult<Challenge>)
 
     case challengeInformationAction(Int, ChallengeInformationCore.Action)
@@ -91,23 +93,29 @@ struct ExploreChallengeCore: Reducer {
           )
         }
         
-      case .requestFetchChallenges:
-        return .run { send in
+      case ._requestFetchChallenges:
+        state.isLoading = true
+        return .run { [category = state.filterState.selectedCategory?.rawValue] send in
           await send(
-            ._filterChallengeResponse(
+            ._requestChallengeResponse(
               TaskResult {
-                try await challengeClient.fetchNotStartedChallenge()
+                try await challengeClient.fetchNotStartedChallenge(nil, category)
               }
             )
           )
         }
         
-      case ._filterChallengeResponse(.success(let challenges)):
+      case ._requestChallengeResponse(.success(let challenges)):
+        state.isLoading = false
+        
         let informations = challenges.map { ChallengeInformationCore.State(challenge: $0) }
-        state.challenges = IdentifiedArray(uniqueElements: informations)
+        state.challenges += IdentifiedArray(uniqueElements: informations)
+
+        state.challenges.sort(by: { $0.id < $1.id })
         return .none
         
-      case ._filterChallengeResponse(.failure):
+      case ._requestChallengeResponse(.failure):
+        state.isLoading = false
         state.challenges = []
         return .none
         
@@ -118,10 +126,46 @@ struct ExploreChallengeCore: Reducer {
         state.showGenerate = true
         return .none
         
+      case ._requestMoreChallenges(let lastID):
+        state.isLoading = true
+        return .run { [category = state.filterState.selectedCategory?.rawValue] send in
+          try await Task.sleep(nanoseconds: 1_000_000_000)
+          await send(
+            ._requestChallengeResponse(
+              TaskResult {
+                try await challengeClient.fetchNotStartedChallenge(lastID, category)
+              }
+            )
+          )
+        }
+        
+      case ._filterChallenges:
+        let challenges = state.challenges
+        let category = state.filterState.selectedCategory
+        
+        state.challenges = challenges.filter { $0.challenge.category == category }
+        return .none
+        
       case .filterChallengeAction(.selectCategory), .filterChallengeAction(.selectMoney):
         return .send(.openFilter(true))
         
       case .filterChallengeAction(.confirm):
+        state.showFilter = false
+        return .send(._filterChallenges)
+        
+      case .filterChallengeAction(.selectAll(true)):
+        return .send(._requestFetchChallenges)
+        
+      case .onAppearList(let challengeState):
+        if state.challenges.isEmpty || state.isLoading {
+          return .none
+        }
+        
+        if state.challenges.last == challengeState {
+          let id = challengeState.challenge.id
+          return .send(._requestMoreChallenges(lastID: id + 1))
+        }
+        
         return .none
         
       default:

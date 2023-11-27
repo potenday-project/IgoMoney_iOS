@@ -44,7 +44,7 @@ struct ExploreChallengeScene: View {
         
         WithViewStore(store, observe: { $0 }) { viewStore in
           ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 12) {
+            LazyVStack(spacing: 12) {
               ForEachStore(
                 store.scope(
                   state: \.challenges,
@@ -71,14 +71,21 @@ struct ExploreChallengeScene: View {
                     ExploreChallengeCellView(store: store)
                   }
                   .buttonStyle(.plain)
+                  .onAppear {
+                    viewStore.send(.onAppearList(informationViewStore.state))
+                  }
                 }
+              }
+              
+              if viewStore.isLoading {
+                ProgressView()
               }
             }
             .padding(.top)
           }
         }
         .onAppear {
-          store.send(.requestFetchChallenges)
+          store.send(._requestFetchChallenges)
         }
       }
       
