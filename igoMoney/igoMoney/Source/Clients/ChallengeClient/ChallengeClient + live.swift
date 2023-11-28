@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import Dependencies
+import Foundation
 
 extension ChallengeClient {
   static var liveValue = ChallengeClient {
@@ -91,5 +92,18 @@ extension ChallengeClient {
     )
     
     return try await APIClient.request(to: api)
+  } giveUpChallenge: {
+    guard let userID = APIClient.currentUser?.userID else {
+      throw APIError.badRequest(400)
+    }
+    
+    let api = ChallengeAPI(
+      method: .post,
+      path: "/challenges/giveup/\(userID)",
+      query: [:],
+      header: [:]
+    )
+    
+    return try await APIClient.execute(to: api)
   }
 }

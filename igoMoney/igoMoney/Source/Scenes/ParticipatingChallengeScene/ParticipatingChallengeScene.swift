@@ -10,6 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ParticipatingChallengeScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<ParticipatingChallengeCore>
   var body: some View {
     ZStack {
@@ -25,12 +26,20 @@ struct ParticipatingChallengeScene: View {
       
       VStack(spacing: 24) {
         IGONavigationBar {
-          EmptyView()
-        } leftView: {
           Text("참여중인 챌린지")
-        } rightView: {
+        } leftView: {
           Button {
-            
+            presentationMode.wrappedValue.dismiss()
+          } label: {
+            Image(systemName: "chevron.left")
+          }
+        } rightView: {
+          Menu {
+            Button {
+              store.send(.giveUpChallenge)
+            } label: {
+              Label("포기하기", systemImage: "trash")
+            }
           } label: {
             Image(systemName: "ellipsis")
           }
@@ -104,6 +113,11 @@ struct ParticipatingChallengeScene: View {
             ) { declarationStore in
               DeclarationScene(store: declarationStore)
             }
+          }
+        }
+        .onChange(of: viewStore.showParticipating) {
+          if $0 == false {
+            presentationMode.wrappedValue.dismiss()
           }
         }
       }

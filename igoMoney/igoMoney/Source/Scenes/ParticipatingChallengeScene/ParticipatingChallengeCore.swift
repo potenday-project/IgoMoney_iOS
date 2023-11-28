@@ -5,6 +5,7 @@
 //  Copyright (c) 2023 Minii All rights reserved.
 
 import ComposableArchitecture
+import Foundation
 
 struct ParticipatingChallengeCore: Reducer {
   struct State: Equatable {
@@ -15,6 +16,7 @@ struct ParticipatingChallengeCore: Reducer {
     var selectedChallengeRecordState: ChallengeRecordDetailCore.State?
     var declarationTargetState: DeclarationCore.State?
     var showDeclaration: Bool = false
+    var showParticipating: Bool = true
     var isSelected: Bool {
       return selectedChallengeRecordState != nil
     }
@@ -28,12 +30,18 @@ struct ParticipatingChallengeCore: Reducer {
   }
   
   enum Action: Equatable {
+    case giveUpChallenge
+    
+    case _giveUpChallengeResponse(TaskResult<Data>)
+    
     case challengeInformationAction(ChallengeInformationCore.Action)
     case challengeResultSectionAction(ParticipatingChallengeResultSectionCore.Action)
     case challengeAuthListAction(ChallengeRecordSectionCore.Action)
     case selectedChallengeRecordAction(ChallengeRecordDetailCore.Action)
     case declarationTargetAction(DeclarationCore.Action)
   }
+  
+  @Dependency(\.challengeClient) var challengeClient
   
   var body: some Reducer<State, Action> {
     Scope(state: \.challengeInformationState, action: /Action.challengeInformationAction) {
@@ -50,6 +58,24 @@ struct ParticipatingChallengeCore: Reducer {
     
     Reduce { state, action in
       switch action {
+      case .giveUpChallenge:
+        return .run { send in
+          await send(
+            ._giveUpChallengeResponse(
+              TaskResult {
+                try await challengeClient.giveUpChallenge()
+              }
+            )
+          )
+        }
+        
+      case ._giveUpChallengeResponse(.success):
+        state.showParticipating = false
+        return .none
+        
+      case ._giveUpChallengeResponse(.failure):
+        return .none
+        
       case .challengeResultSectionAction(._setCurrentUserID(let userID)):
         return .send(.challengeAuthListAction(.setCurrentUserID(userID: userID)))
       case .challengeResultSectionAction(._setCompetitorUserID(let userID)):
