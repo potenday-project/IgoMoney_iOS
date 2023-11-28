@@ -36,7 +36,7 @@ struct ParticipatingChallengeScene: View {
         } rightView: {
           Menu {
             Button {
-              
+              store.send(.giveUpChallenge)
             } label: {
               Label("포기하기", systemImage: "trash")
             }
@@ -113,6 +113,11 @@ struct ParticipatingChallengeScene: View {
             ) { declarationStore in
               DeclarationScene(store: declarationStore)
             }
+          }
+        }
+        .onChange(of: viewStore.showParticipating) {
+          if $0 == false {
+            presentationMode.wrappedValue.dismiss()
           }
         }
       }
