@@ -95,11 +95,15 @@ struct ExploreChallengeCore: Reducer {
         
       case ._requestFetchChallenges:
         state.isLoading = true
-        return .run { [category = state.filterState.selectedCategory?.rawValue] send in
+        return .run { [state = state.filterState] send in
           await send(
             ._requestChallengeResponse(
               TaskResult {
-                try await challengeClient.fetchNotStartedChallenge(nil, category)
+                try await challengeClient.fetchNotStartedChallenge(
+                  nil,
+                  state.selectedCategory?.rawValue,
+                  state.selectedMoney?.money
+                )
               }
             )
           )
@@ -128,12 +132,16 @@ struct ExploreChallengeCore: Reducer {
         
       case ._requestMoreChallenges(let lastID):
         state.isLoading = true
-        return .run { [category = state.filterState.selectedCategory?.rawValue] send in
+        return .run { [state = state.filterState] send in
           try await Task.sleep(nanoseconds: 1_000_000_000)
           await send(
             ._requestChallengeResponse(
               TaskResult {
-                try await challengeClient.fetchNotStartedChallenge(lastID, category)
+                try await challengeClient.fetchNotStartedChallenge(
+                  lastID,
+                  state.selectedCategory?.rawValue,
+                  state.selectedMoney?.money
+                )
               }
             )
           )
