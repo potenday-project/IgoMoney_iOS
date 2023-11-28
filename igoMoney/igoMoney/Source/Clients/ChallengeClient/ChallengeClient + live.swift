@@ -22,9 +22,10 @@ extension ChallengeClient {
     
     let response: Challenge = try await APIClient.request(to: api)
     return response
-  } fetchNotStartedChallenge: { lastChallengeID, filterCategory in
+  } fetchNotStartedChallenge: { lastChallengeID, filterCategory, filterMoney in
     var lastID = 10
     var category = -1
+    var money = -1
     
     if let lastChallengeID = lastChallengeID {
       lastID += lastChallengeID
@@ -34,13 +35,18 @@ extension ChallengeClient {
       category = filterCategory
     }
     
+    if let filterMoney = filterMoney {
+      money = filterMoney
+    }
+    
     let api = ChallengeAPI(
       method: .get,
       path: "/challenges/notstarted",
       query: [
         "lastId": lastID.description,
         "pageSize": "\(10)",
-        "categoryId": category.description
+        "categoryId": category.description,
+        "targetMoney": money.description
       ],
       header: [:]
     )
