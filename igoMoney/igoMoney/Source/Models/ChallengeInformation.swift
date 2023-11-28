@@ -164,6 +164,8 @@ struct User: Decodable, Equatable {
   let nickName: String?
   let profileImagePath: String?
   let role: String
+  let winCount: Int
+  let challengeCount: Int
   
   enum CodingKeys: String, CodingKey {
     case userID = "id"
@@ -172,6 +174,7 @@ struct User: Decodable, Equatable {
     case nickName = "nickname"
     case profileImagePath = "image"
     case role = "role"
+    case winCount, challengeCount
   }
   
   static let `default` = User(
@@ -180,7 +183,9 @@ struct User: Decodable, Equatable {
     email: "dlrudals8899@gmail.com",
     nickName: nil,
     profileImagePath: nil,
-    role: "ROLE_USER"
+    role: "ROLE_USER",
+    winCount: .zero,
+    challengeCount: 100
   )
 }
 
@@ -192,5 +197,7 @@ extension User {
     self.nickName = nil
     self.profileImagePath = nil
     self.role = "ROLE_USER"
+    self.winCount = 0
+    self.challengeCount = 0
   }
 }

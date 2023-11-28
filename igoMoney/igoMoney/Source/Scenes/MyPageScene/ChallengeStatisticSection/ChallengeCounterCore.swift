@@ -13,10 +13,25 @@ struct ChallengeCounterCore: Reducer {
   }
   
   enum Action {
-    
+    case onAppear
   }
   
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
-    return .none
+    switch action {
+    case .onAppear:
+      guard let user = APIClient.currentUser else { return .none }
+      
+      switch state.challengeType {
+      case .win:
+        state.challengeCount = user.winCount
+      case .total:
+        state.challengeCount = user.challengeCount
+      }
+      
+      return .none
+      
+    default:
+      return .none
+    }
   }
 }

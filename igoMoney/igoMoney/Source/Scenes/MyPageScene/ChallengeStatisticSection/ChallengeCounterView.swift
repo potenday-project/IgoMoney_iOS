@@ -28,5 +28,8 @@ struct ChallengeCounterView: View {
     .background(ColorConstants.primary8)
     .cornerRadius(8)
     .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+    .onAppear {
+      store.send(.onAppear)
+    }
   }
 }
