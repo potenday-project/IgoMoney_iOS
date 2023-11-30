@@ -10,7 +10,11 @@ import SwiftUI
 import ComposableArchitecture
 
 struct URLImageCore: Reducer {
-  struct State: Equatable {
+  struct State: Equatable, Identifiable {
+    var id: String {
+      return urlPath ?? UUID().uuidString
+    }
+    
     var urlPath: String?
     var image: UIImage?
     var loadingStatus: LoadingState = .initial
@@ -35,6 +39,10 @@ struct URLImageCore: Reducer {
   func reduce(into state: inout State, action: Action) -> Effect<Action> {
     switch action {
     case .fetchURLImage:
+      if state.image != nil {
+        return .none
+      }
+      
       guard let path = state.urlPath, let url = URL(string: path) else {
         return .send(._fetchURLImageResponse(.failure(APIError.badRequest(400))))
       }

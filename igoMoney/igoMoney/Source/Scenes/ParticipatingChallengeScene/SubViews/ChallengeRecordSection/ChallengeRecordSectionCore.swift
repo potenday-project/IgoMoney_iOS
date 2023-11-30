@@ -123,12 +123,20 @@ struct ChallengeRecordSectionCore: Reducer {
           return .none
         }
         
-        let records = records.filter { $0.isHide == false }
+        state.records.removeAll(where: { $0.record.date != state.selectDateState.selectedDate })
+        
+        let records = records.filter { $0.isHide == false && $0.date == state.selectDateState.selectedDate }
         
         let decodeRecords = records.map {
           ChallengeRecordDetailCore.State(record: $0, isMine: state.selectedFetchChallenge == .mine)
         }
-        state.records = IdentifiedArray(uniqueElements: decodeRecords)
+        
+        decodeRecords.forEach { record in
+          if state.records.contains(where: { $0.id == record.id }) == false {
+            state.records.updateOrAppend(record)
+          }
+        }
+        
         return .none
         
       case ._fetchRecordsResponse(.failure):

@@ -29,35 +29,34 @@ struct ChallengeDetailDialog: View {
       Divider().padding(.vertical, 8)
       
       WithViewStore(store, observe: { $0 }) { viewStore in
-        TabView(
-          selection: viewStore.binding(
-            get: \.selectedIndex,
-            send: ChallengeRecordDetailCore.Action.selectImageIndex
-          )
-        ) {
-          ForEach(0..<5) { index in
-            URLImage(
-              store: store.scope(
-                state: \.imageState,
-                action: ChallengeRecordDetailCore.Action.urlImageAction
-              )
+        TabView {
+          ForEachStore(
+            self.store.scope(
+              state: \.imageStates,
+              action: ChallengeRecordDetailCore.Action.urlImageAction
             )
-            .scaledToFill()
-            .frame(maxHeight: 280)
-            .tag(index)
+          ) { imageStore in
+            URLImage(store: imageStore)
+              .scaledToFill()
+              .frame(height: 280)
+              .cornerRadius(8)
+              .onAppear {
+                let id = imageStore.withState { $0.id }
+                self.store.send(.onChangeImage(id))
+                imageStore.send(.fetchURLImage)
+              }
           }
         }
       }
-      .frame(maxHeight: 280)
       .tabViewStyle(.page(indexDisplayMode: .never))
       .indexViewStyle(.page(backgroundDisplayMode: .never))
-      .clipShape(RoundedRectangle(cornerRadius: 8))
+      .cornerRadius(8)
       .overlay(
         HStack(spacing: .zero) {
           Text("\(store.withState(\.selectedIndex))")
             .foregroundColor(ColorConstants.gray4)
           
-          Text(" / \(5)")
+          Text(" / \(store.withState(\.imageStates).count)")
             .foregroundColor(ColorConstants.gray2)
         }.font(.pretendard(size: 11, weight: .medium))
           .padding(.horizontal, 8)
@@ -67,6 +66,7 @@ struct ChallengeDetailDialog: View {
           .padding(12),
         alignment: .bottomTrailing
       )
+      .clipped()
       
       Divider()
         .padding(.vertical, 8)
@@ -227,6 +227,5 @@ struct ChallengeDetailHeaderView: View {
         reducer: { ChallengeRecordDetailCore() }
       )
     )
-    .frame(height: UIScreen.main.bounds.height * 0.7)
   }
 }
