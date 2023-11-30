@@ -8,7 +8,7 @@ import MessageUI
 import SwiftUI
 
 struct EmailSendView: UIViewControllerRepresentable {
-  func makeUIViewController(context: Context) -> MFMailComposeViewController {
+  func makeUIViewController(context: Context) -> MFMailComposeViewController {    
     let mail = MFMailComposeViewController()
     let contents = """
     아이고머니 서비스를 이용해주셔서 감사합니다.
