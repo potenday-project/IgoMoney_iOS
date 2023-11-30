@@ -94,6 +94,7 @@ struct ParticipatingChallengeScene: View {
               .edgesIgnoringSafeArea(.all)
             
             ChallengeDetailDialog(store: store)
+              .frame(maxHeight: UIScreen.main.bounds.height * 0.7)
           }
           .fullScreenCover(
             isPresented: viewStore.binding(

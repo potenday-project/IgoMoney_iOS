@@ -117,7 +117,7 @@ struct ChallengeRecord: Decodable, Equatable {
     userID: 1,
     title: "123123123123123123",
     content: "123123123123123123123",
-    imagePath: [""],
+    imagePath: ["https://igomoney-bucket.s3.ap-northeast-2.amazonaws.com/a77e5355-9d2b-424c-b921-8b73bb44c79b", "https://igomoney-bucket.s3.ap-northeast-2.amazonaws.com/a77e5355-9d2b-424c-b921-8b73bb44c79b", "https://igomoney-bucket.s3.ap-northeast-2.amazonaws.com/a77e5355-9d2b-424c-b921-8b73bb44c79b","https://igomoney-bucket.s3.ap-northeast-2.amazonaws.com/4829b52e-171f-4a5f-823f-16a106280d71"],
     cost: 200,
     date: Date(),
     isHide: false

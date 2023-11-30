@@ -35,7 +35,8 @@ struct ChallengeRecordDetailCore: Reducer {
     var record: ChallengeRecord
     var isMine: Bool = false
     
-    var imageState: URLImageCore.State
+    var thumbnailImageState: URLImageCore.State
+    var imageStates: IdentifiedArrayOf<URLImageCore.State>
     var title: String
     var content: String
     var cost: Int
@@ -51,7 +52,11 @@ struct ChallengeRecordDetailCore: Reducer {
     init(record: ChallengeRecord, isMine: Bool) {
       self.record = record
       self.isMine = isMine
-      self.imageState = URLImageCore.State(urlPath: record.imagePath.first)
+      
+      let paths = record.imagePath.map { URLImageCore.State(urlPath: $0) }
+      self.imageStates = IdentifiedArray(uniqueElements: paths)
+      self.thumbnailImageState = URLImageCore.State(urlPath: record.imagePath.first)
+      
       self.title = record.title
       self.content = record.content
       self.cost = record.cost
@@ -60,8 +65,7 @@ struct ChallengeRecordDetailCore: Reducer {
   
   enum Action: Equatable {
     case onAppear
-    case urlImageAction(URLImageCore.Action)
-    case selectImageIndex(Int)
+    case onChangeImage(String)
     case onChangeEditable(Bool)
     case onChangeTitle(String)
     case onChangeContent(String)
@@ -78,13 +82,15 @@ struct ChallengeRecordDetailCore: Reducer {
     case updateContentResponse(TaskResult<Data>)
     case _deleteContentResponse(TaskResult<Data>)
     
+    case thumbnailImageAction(URLImageCore.Action)
+    case urlImageAction(String, URLImageCore.Action)
     case alertAction(IGOAlertCore.Action)
   }
   
   @Dependency(\.recordClient) var recordClient
   
   var body: some Reducer<State, Action> {
-    Scope(state: \.imageState, action: /Action.urlImageAction) {
+    Scope(state: \.thumbnailImageState, action: /Action.thumbnailImageAction) {
       URLImageCore()
     }
     
@@ -95,7 +101,8 @@ struct ChallengeRecordDetailCore: Reducer {
     Reduce { state, action in
       switch action {
       case .onAppear:
-        return .send(.urlImageAction(.fetchURLImage))
+        print("LIST CELL ONAPPEAR \(state.thumbnailImageState)")
+        return .send(.thumbnailImageAction(.fetchURLImage))
         
       case .urlImageAction:
         return .none
@@ -120,22 +127,27 @@ struct ChallengeRecordDetailCore: Reducer {
           .send(.onChangeEditable(false))
         )
         
-      case .selectImageIndex(let index):
-        state.selectedIndex = index
+      case .onChangeImage(let id):
+        if let imageIndex = state.imageStates.ids.enumerated()
+          .filter({ $0.element == id }).map(\.offset).first {
+            state.selectedIndex = imageIndex + 1
+          }
+          
         return .none
         
       case .onDisappear:
         return .none
         
       case .updateContent:
-        guard let imageData = state.imageState.image?.pngData() else { return .none }
+        let images = state.imageStates.elements.compactMap { $0.image?.pngData() }
+        
         let request = RecordRequest(
           challengeID: state.record.ID,
           userID: state.record.userID,
           title: state.title,
           content: state.content,
           cost: state.cost.description,
-          images: [imageData]
+          images: images
         )
         
         return .run { send in
@@ -194,7 +206,7 @@ struct ChallengeRecordDetailCore: Reducer {
         state.content = record.content
         state.content = record.content
         state.cost = record.cost
-        return .send(.urlImageAction(._setURLPath(record.imagePath.first)))
+        return .send(.urlImageAction("", ._setURLPath(record.imagePath.first)))
         
       case ._reloadItemResponse(.failure):
         return .none
@@ -207,7 +219,13 @@ struct ChallengeRecordDetailCore: Reducer {
         
       case .alertAction:
         return .none
+        
+      case .thumbnailImageAction:
+        return .none
       }
+    }
+    .forEach(\.imageStates, action: /Action.urlImageAction) {
+      URLImageCore()
     }
   }
 }
@@ -219,8 +237,8 @@ struct ChallengeRecordCell: View {
       HStack {
         URLImage(
           store: store.scope(
-            state: \.imageState,
-            action: ChallengeRecordDetailCore.Action.urlImageAction
+            state: \.thumbnailImageState,
+            action: ChallengeRecordDetailCore.Action.thumbnailImageAction
           )
         )
         .scaledToFill()
