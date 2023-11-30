@@ -78,8 +78,9 @@ struct CreateChallengeRecordCore: Reducer {
       return .none
       
     case .registerRecord:
-      guard let userID = APIClient.currentUser?.userID,
-            let image = state.authImages.first?.pngData() else { return .none }
+      let images = state.authImages.compactMap { $0.pngData() }
+      
+      guard let userID = APIClient.currentUser?.userID else { return .none }
         
       let request = RecordRequest(
         challengeID: state.challenge.id,
@@ -87,7 +88,7 @@ struct CreateChallengeRecordCore: Reducer {
         title: state.title,
         content: state.content,
         cost: state.money,
-        image: image
+        images: images
       )
       return .run { send in
         await send(

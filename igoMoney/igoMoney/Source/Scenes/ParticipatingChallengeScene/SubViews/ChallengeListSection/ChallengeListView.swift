@@ -135,7 +135,7 @@ struct ChallengeRecordDetailCore: Reducer {
           title: state.title,
           content: state.content,
           cost: state.cost.description,
-          image: imageData
+          images: [imageData]
         )
         
         return .run { send in
