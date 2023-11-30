@@ -143,7 +143,7 @@ struct DetailChallengeInformationCard: View {
         .clipShape(Circle())
         
         VStack(alignment: .leading, spacing: 4) {
-          Text(viewStore.challenge.userDescription)
+          Text(viewStore.challengeDescription)
             .font(.pretendard(size: 14, weight: .bold))
             .foregroundColor(ColorConstants.gray2)
           

@@ -129,6 +129,7 @@
 		18B6306A2AC408A300F638C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B630692AC408A300F638C0 /* AppView.swift */; };
 		18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6306B2AC408A800F638C0 /* AppCore.swift */; };
 		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
+		18B9512D2B16E30900EE35F5 /* package-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B9512C2B16E30900EE35F5 /* package-list.json */; };
 		18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C503142B025AB20006499A /* ChallengeDetailDialog.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* AgreeTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */; };
@@ -273,6 +274,7 @@
 		18B630692AC408A300F638C0 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		18B6306B2AC408A800F638C0 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
+		18B9512C2B16E30900EE35F5 /* package-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "package-list.json"; path = "../../../../../../Desktop/package-list.json"; sourceTree = "<group>"; };
 		18C503142B025AB20006499A /* ChallengeDetailDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailDialog.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsView.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		180363B72AB8316800082F8A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				18B9512C2B16E30900EE35F5 /* package-list.json */,
 				18599A5D2ABC4DDA0075DE76 /* Fonts */,
 				180363AF2AB82DCE00082F8A /* Preview Content */,
 				180363AD2AB82DCE00082F8A /* Assets.xcassets */,
@@ -988,6 +991,7 @@
 				189A2D8B2B025154002FE343 /* GoogleService-Info.plist in Resources */,
 				180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */,
 				188905E52B10D5F5006F5339 /* Pretendard-Black.otf in Resources */,
+				18B9512D2B16E30900EE35F5 /* package-list.json in Resources */,
 				1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */,
 				188905E82B10D5F5006F5339 /* Pretendard-ExtraLight.otf in Resources */,
 				188905E62B10D5F5006F5339 /* Pretendard-ExtraBold.otf in Resources */,
