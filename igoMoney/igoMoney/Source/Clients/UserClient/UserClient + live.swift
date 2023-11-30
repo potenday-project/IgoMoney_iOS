@@ -82,7 +82,7 @@ private extension UserClient {
       ],
       body: .multipart(
         boundary: boundary,
-        values: ["userId": .text(userID), "nickname": .text(nickName)]
+        values: [.init(key: "userId"): .text(userID), .init(key: "nickname"): .text(nickName)]
       )
     )
     
@@ -101,8 +101,8 @@ private extension UserClient {
       body: .multipart(
         boundary: boundary,
         values: [
-          "userId": .text(userID),
-          "image": .image(imageData)
+          .init(key: "userId"): .text(userID),
+          .init(key: "image"): .image(imageData)
         ]
       )
     )

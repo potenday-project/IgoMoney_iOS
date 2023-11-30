@@ -8,7 +8,7 @@ import Foundation
 
 enum HTTPBody {
   case json(value: [String: String])
-  case multipart(boundary: String, values: [String: MultipartForm.FormData])
+  case multipart(boundary: String, values: [MultipartForm.FormKey: MultipartForm.FormData])
   case urlEncoded(value: [String: String])
   
   var data: Data? {

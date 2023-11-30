@@ -14,27 +14,37 @@ struct RecordRequest: Codable, Sendable {
   let title: String
   let content: String
   let cost: String
-  let image: Data
+  let images: [Data]
   
-  func toDictionary() -> [String: MultipartForm.FormData] {
-    return [
-      "challengeId": .text(challengeID.description),
-      "userId": .text(userID.description),
-      "title": .text(title),
-      "content": .text(content),
-      "cost": .text(cost),
-      "image": .image(image)
+  func toDictionary() -> [MultipartForm.FormKey: MultipartForm.FormData] {
+    var postValues: [MultipartForm.FormKey: MultipartForm.FormData] = [
+      .init(key:"challengeId"): .text(challengeID.description),
+      .init(key:"userId"): .text(userID.description),
+      .init(key:"title"): .text(title),
+      .init(key:"content"): .text(content),
+      .init(key:"cost"): .text(cost)
     ]
+    
+    images.forEach {
+      postValues[.init(key: "image[]")] = .image($0)
+    }
+    
+    return postValues
   }
   
-  func toUpdateRequest() -> [String: MultipartForm.FormData] {
-    [
-      "recordId": .text(challengeID.description),
-      "title": .text(title),
-      "content": .text(content),
-      "cost": .text(cost),
-      "image": .image(image)
+  func toUpdateRequest() -> [MultipartForm.FormKey: MultipartForm.FormData] {
+    var updateValues: [MultipartForm.FormKey: MultipartForm.FormData] = [
+      .init(key:"recordId"): .text(challengeID.description),
+      .init(key:"title"): .text(title),
+      .init(key:"content"): .text(content),
+      .init(key:"cost"): .text(cost)
     ]
+    
+    images.forEach {
+      updateValues[.init(key: "image[]")] = .image($0)
+    }
+    
+    return updateValues
   }
 }
 

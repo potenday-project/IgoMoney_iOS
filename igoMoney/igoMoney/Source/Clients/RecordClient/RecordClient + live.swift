@@ -76,10 +76,10 @@ extension RecordClient {
       body: .multipart(
         boundary: boundary,
         values: [
-          "recordId": .text(record.ID.description),
-          "reporter_userId": .text(userID.description),
-          "offender_userId": .text(record.userID.description),
-          "reason": .text(reason.description)
+          .init(key: "recordId"): .text(record.ID.description),
+          .init(key: "reporter_userId"): .text(userID.description),
+          .init(key: "offender_userId"): .text(record.userID.description),
+          .init(key: "reason"): .text(reason.description)
         ]
       )
     )
