@@ -32,7 +32,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     application.registerForRemoteNotifications()
     
     Messaging.messaging().delegate = self
-    
+    application.applicationIconBadgeNumber = .zero
     return true
   }
 }
@@ -59,7 +59,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     didReceive response: UNNotificationResponse
-  ) async { debugPrint(response) }
+  ) async { return }
 }
 
 extension AppDelegate: MessagingDelegate {
