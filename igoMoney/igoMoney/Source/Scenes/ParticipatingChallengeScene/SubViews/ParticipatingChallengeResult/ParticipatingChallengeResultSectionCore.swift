@@ -16,7 +16,21 @@ struct ParticipatingChallengeResultSectionCore: Reducer {
     var currentUserID: Int = .zero
     var competitorUserID: Int = .zero
     
-    var winnerName: String = ""
+    var winnerDescription: String {
+      let myCost = myChallengeCost.cost
+      let competitorCost = competitorChallengeCost.cost
+      
+      if myCost == .zero && competitorCost == .zero {
+        return "하루 지출 내역을 인증해주세요."
+      }
+      
+      if myCost == competitorCost {
+        return "현재 비기고 있는 중이예요 🤔"
+      }
+      
+      let userName = myCost < competitorCost ? myChallengeCost.userNickName : competitorChallengeCost.userNickName
+      return "현재 \(userName)님이 더 절약하고 있어요 🤔"
+    }
     
     init(challenge: Challenge) {
       self.challenge = challenge

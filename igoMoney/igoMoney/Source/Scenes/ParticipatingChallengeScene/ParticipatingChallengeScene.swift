@@ -151,8 +151,9 @@ struct DetailChallengeInformationCard: View {
           VStack(alignment: .leading, spacing: 2) {
             Text(viewStore.challenge.title)
               .font(.pretendard(size: 16, weight: .bold))
+              .lineHeight(font: .pretendard(size: 16, weight: .bold), lineHeight: 23)
             
-            HStack {
+            HStack(spacing: 2) {
               Text(viewStore.challenge.targetAmount.description)
                 .padding(.horizontal, 4)
                 .background(ColorConstants.yellow)
@@ -168,6 +169,8 @@ struct DetailChallengeInformationCard: View {
                 .background(ColorConstants.primary8)
                 .cornerRadius(4)
             }
+            .font(.pretendard(size: 12, weight: .medium))
+            .lineHeight(font: .pretendard(size: 12, weight: .medium), lineHeight: 16)
           }
         }
       }
