@@ -143,8 +143,12 @@ struct CustomServiceSection: View {
               return
             }
             
-            if service == .inquiry && MFMailComposeViewController.canSendMail() {
-              viewStore.send(.tapService(service))
+            if service == .inquiry {
+              if MFMailComposeViewController.canSendMail() {
+                viewStore.send(.tapService(service))
+                return
+              }
+              
               return
             }
             

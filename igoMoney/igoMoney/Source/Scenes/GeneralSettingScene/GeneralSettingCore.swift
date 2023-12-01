@@ -7,6 +7,8 @@
 import Foundation
 
 import ComposableArchitecture
+import UserNotifications
+import FirebaseMessaging
 
 struct GeneralSettingCore: Reducer {
   struct State: Equatable {
@@ -16,7 +18,7 @@ struct GeneralSettingCore: Reducer {
     
     var authSettingState = AuthSettingCore.State()
     var serviceAlertState = GeneralToggleReducer.State(setting: .serviceAlert)
-    var marketingAlertState = GeneralToggleReducer.State(setting: .marketingAlert)
+//    var marketingAlertState = GeneralToggleReducer.State(setting: .marketingAlert)
   }
   
   enum Action {
@@ -41,9 +43,9 @@ struct GeneralSettingCore: Reducer {
       GeneralToggleReducer()
     }
     
-    Scope(state: \.marketingAlertState, action: /Action.marketingAlertAction) {
-      GeneralToggleReducer()
-    }
+//    Scope(state: \.marketingAlertState, action: /Action.marketingAlertAction) {
+//      GeneralToggleReducer()
+//    }
     
     Reduce { state, action in
       switch action {
@@ -60,6 +62,20 @@ struct GeneralSettingCore: Reducer {
            let build = appInformation["CFBundleVersion"] as? String {
           state.appVersion = version + "(\(build))"
         }
+        return .none
+        
+      case .serviceAlertAction(.toggle(true)):
+        UserDefaults.standard.setValue(true, forKey: "receiveAlarm")
+        Task {
+          let fcmToken = try await Messaging.messaging().token()
+        }
+        
+        return .none
+        
+      case .serviceAlertAction(.toggle(false)):
+        UserDefaults.standard.setValue(false, forKey: "receiveAlarm")
+        Task { Messaging.messaging().retrieveFCMToken(forSenderID:) }
+        
         return .none
         
       case .serviceAlertAction:

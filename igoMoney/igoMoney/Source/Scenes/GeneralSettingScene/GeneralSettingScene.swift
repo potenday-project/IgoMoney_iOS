@@ -17,7 +17,7 @@ struct GeneralSettingScene: View {
     to setting: Setting,
     with viewStore: ViewStore<GeneralSettingCore.State, GeneralSettingCore.Action>
   ) -> some View {
-    if setting == .authInformation || setting == .information {
+    if setting == .authInformation {
       GeneralSettingCell(setting: setting) {
         Image(systemName: "chevron.forward")
       }
@@ -32,14 +32,14 @@ struct GeneralSettingScene: View {
       )
     }
     
-    if setting == .marketingAlert {
-      GeneralToggleCell(
-        store: self.store.scope(
-          state: \.marketingAlertState,
-          action: GeneralSettingCore.Action.marketingAlertAction
-        )
-      )
-    }
+//    if setting == .marketingAlert {
+//      GeneralToggleCell(
+//        store: self.store.scope(
+//          state: \.marketingAlertState,
+//          action: GeneralSettingCore.Action.marketingAlertAction
+//        )
+//      )
+//    }
     
     if setting == .appVersion {
       GeneralSettingCell(setting: .appVersion) {
