@@ -78,7 +78,8 @@ struct IGORoundTabBar<Content: View>: View {
         .padding(.top, 8)
         .padding(.bottom, 32)
         .background(Color.white)
-        .cornerRadius(20)
+        .cornerRadius(20, corner: .topLeft)
+        .cornerRadius(20, corner: .topRight)
         .shadow(
           color: shadowSetting.color,
           radius: shadowSetting.radius,

@@ -46,6 +46,7 @@ struct MyPageScene: View {
       }
       .padding(.horizontal, 24)
       .padding(.top, 16)
+      .padding(.bottom, 24)
       
       ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 24) {

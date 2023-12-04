@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CreateChallengeRecordScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<CreateChallengeRecordCore>
   
   var body: some View {
@@ -19,7 +20,7 @@ struct CreateChallengeRecordScene: View {
             .font(.pretendard(size: 20, weight: .bold))
         } leftView: {
           Button {
-            
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "xmark")
           }

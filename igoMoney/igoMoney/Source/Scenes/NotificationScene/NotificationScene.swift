@@ -69,6 +69,7 @@ struct NotificationEmptyView: View {
     .background(Color.white)
     .cornerRadius(10)
     .shadow(color: ColorConstants.gray5, radius: 4, y: 2)
+    .padding(.horizontal, 24)
   }
 }
 

@@ -37,9 +37,9 @@ struct ChallengeDetailDialog: View {
             )
           ) { imageStore in
             URLImage(store: imageStore)
-              .scaledToFill()
-              .frame(height: 280)
+              .aspectRatio(1, contentMode: .fill)
               .cornerRadius(8)
+              .clipped()
               .onAppear {
                 let id = imageStore.withState { $0.id }
                 self.store.send(.onChangeImage(id))
@@ -66,7 +66,6 @@ struct ChallengeDetailDialog: View {
           .padding(12),
         alignment: .bottomTrailing
       )
-      .clipped()
       
       Divider()
         .padding(.vertical, 8)
@@ -145,6 +144,12 @@ struct ChallengeDetailDialog: View {
       .background(Color.white)
       .cornerRadius(8)
       .frame(width: 250)
+    }
+    .onAppear {
+      UIScrollView.appearance().isPagingEnabled = true
+    }
+    .onDisappear {
+      UIScrollView.appearance().isPagingEnabled = false
     }
   }
 }

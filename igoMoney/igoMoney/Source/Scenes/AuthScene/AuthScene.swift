@@ -106,12 +106,10 @@ struct HelpSection: View {
   var body: some View {
     VStack {
       Spacer()
-        .frame(height: 48)
       
       Image("icon_text_main")
       
       Spacer()
-        .frame(height: 100)
       
       Image("icon_main")
       
@@ -128,6 +126,7 @@ struct HelpSection: View {
           .font(.system(size: 14, weight: .medium))
           .foregroundColor(.white)
       }
+      .frame(maxWidth: .infinity)
       
       Spacer()
         .frame(height: 80)
