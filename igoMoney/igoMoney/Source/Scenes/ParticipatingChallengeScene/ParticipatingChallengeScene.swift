@@ -21,7 +21,7 @@ struct ParticipatingChallengeScene: View {
         Spacer()
         
         Color.white
-          .frame(maxHeight: 200)
+          .frame(maxHeight: UIScreen.main.bounds.height * 0.25)
       }
       
       VStack(spacing: 24) {

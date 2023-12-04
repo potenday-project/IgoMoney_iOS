@@ -21,13 +21,6 @@ struct ChallengeStatisticSection: View {
           )
         }
       }
-      
-      UserBadgeCounterView(
-        store: Store(
-          initialState: UserBadgeCounterCore.State(badgeCount: .zero),
-          reducer: { UserBadgeCounterCore() }
-        )
-      )
     }
   }
 }
