@@ -8,7 +8,7 @@ import Foundation
 
 struct AuthToken: Codable, Equatable {
   let userID: Int
-  let accessToken: String
+  var accessToken: String
   let refreshToken: String
   let providerToken: String?
   let expireTime: Date
