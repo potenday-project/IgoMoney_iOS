@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1800BC942ABD6C7000938336 /* EnterChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */; };
+		180158AE2B20BFD6001625E2 /* URLRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180158AD2B20BFD6001625E2 /* URLRequestInterceptor.swift */; };
 		180363AA2AB82DCD00082F8A /* igoMoneyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363A92AB82DCD00082F8A /* igoMoneyApp.swift */; };
 		180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180363AB2AB82DCD00082F8A /* MainScene.swift */; };
 		180363AE2AB82DCE00082F8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 180363AD2AB82DCE00082F8A /* Assets.xcassets */; };
@@ -162,6 +163,7 @@
 
 /* Begin PBXFileReference section */
 		1800BC932ABD6C7000938336 /* EnterChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeScene.swift; sourceTree = "<group>"; };
+		180158AD2B20BFD6001625E2 /* URLRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestInterceptor.swift; sourceTree = "<group>"; };
 		180363A62AB82DCD00082F8A /* igoMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = igoMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		180363A92AB82DCD00082F8A /* igoMoneyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = igoMoneyApp.swift; sourceTree = "<group>"; };
 		180363AB2AB82DCD00082F8A /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				180FC6982ABB35C000DD8477 /* HTTPBody.swift */,
 				180FC69A2ABB35D200DD8477 /* APIError.swift */,
 				18A1522A2AC9757C00B8B8A4 /* MultipartForm.swift */,
+				180158AD2B20BFD6001625E2 /* URLRequestInterceptor.swift */,
 			);
 			path = HelperModels;
 			sourceTree = "<group>";
@@ -1083,6 +1086,7 @@
 				18CD8F2B2AB98249006FEA6F /* AgreeTermsView.swift in Sources */,
 				18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */,
 				183169552ADBDAE40098638E /* EnterChallengeButton.swift in Sources */,
+				180158AE2B20BFD6001625E2 /* URLRequestInterceptor.swift in Sources */,
 				18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */,
 				18A152362AC9833C00B8B8A4 /* Setting.swift in Sources */,
 				18A152342AC9800900B8B8A4 /* GeneralSettingCore.swift in Sources */,

@@ -29,9 +29,6 @@ struct ChallengeCounterCore: Reducer {
       }
       
       return .none
-      
-    default:
-      return .none
     }
   }
 }

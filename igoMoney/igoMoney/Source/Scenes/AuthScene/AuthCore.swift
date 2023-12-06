@@ -30,7 +30,6 @@ struct AuthCore: Reducer {
     case presentProfileSetting(Bool)
     case didTapKakaoLogin(token: String)
     case didTapAppleLogin(user: String, identityCode: String, authCode: String)
-    case refreshToken
     
     // Inner Action
     case _setNavigationIsActive
@@ -88,17 +87,6 @@ struct AuthCore: Reducer {
           )
         }
         
-      case .refreshToken:
-        return .run { send in
-          await send(
-            ._authTokenResponse(
-              TaskResult {
-                try await authClient.refreshToken()
-              }
-            )
-          )
-        }
-        
       case .presentSignUp(true):
         state.showSignUp = true
         state.signUpState = AgreeTermsCore.State()
@@ -135,7 +123,6 @@ struct AuthCore: Reducer {
         
       case let ._authTokenResponse(.success(token)):
         state.currentUser = User(userID: token.userID)
-        print(#fileID, #function, #line, "🐯", token)
         return .run { send in
           await send(
             ._userInformationResponse(
@@ -147,15 +134,11 @@ struct AuthCore: Reducer {
         }
         
       case ._authTokenResponse(.failure(let error)):
-        if case .tokenExpired = error as? APIError {
-          return .send(.refreshToken)
-        }
-        
         return .send(._userInformationResponse(.failure(error)))
         
       case ._userInformationResponse(.success(let user)):
         state.currentUser = user
-        guard let nickName = user.nickName else {
+        guard user.nickName != nil else {
           // 닉네임이 없는 경우
           return .send(.presentSignUp(true))
         }
@@ -212,11 +195,11 @@ private extension AuthCore {
   func signInWithKakao() async throws {
     return try await withCheckedThrowingContinuation { continuation in
       UserApi.shared.accessTokenInfo { token, error in
-        print(token)
-        if let error = error {
+        if error != nil {
           continuation.resume(throwing: APIError.badRequest(400))
           return
         }
+        
         continuation.resume()
       }
     }

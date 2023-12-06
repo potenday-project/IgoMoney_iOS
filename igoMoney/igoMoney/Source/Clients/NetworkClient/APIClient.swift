@@ -9,6 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct APIClient: Networking {
+  static var interceptor: URLRequestInterceptor = AuthInterceptor()
   static var currentUser: User? = nil
 }
 
