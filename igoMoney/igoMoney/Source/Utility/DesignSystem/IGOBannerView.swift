@@ -32,6 +32,15 @@ struct IGOBannerView<T: View, M: View, B: View>: View {
         .frame(maxWidth: .infinity)
     }
     .padding(16)
-    .background(ColorConstants.primary7)
+    .background(
+      LinearGradient(
+        gradient: Gradient(
+          colors: [ColorConstants.primary6, Color(red: 253 / 255, green: 1, blue: 174 / 255)]
+        ),
+        startPoint: .top,
+        endPoint: .bottom
+      )
+      .cornerRadius(10)
+    )
   }
 }
