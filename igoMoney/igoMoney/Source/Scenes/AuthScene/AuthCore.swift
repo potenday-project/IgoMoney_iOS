@@ -66,7 +66,7 @@ struct AuthCore: Reducer {
           )
         }
         
-      case let .didTapKakaoLogin(token):        
+      case let .didTapKakaoLogin(token):
         return .run { send in
           await send(
             ._authTokenResponse(
@@ -133,8 +133,8 @@ struct AuthCore: Reducer {
           )
         }
         
-      case ._authTokenResponse(.failure(let error)):
-        return .send(._userInformationResponse(.failure(error)))
+      case ._authTokenResponse(.failure):
+        return .none
         
       case ._userInformationResponse(.success(let user)):
         state.currentUser = user

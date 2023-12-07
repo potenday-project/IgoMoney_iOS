@@ -33,6 +33,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     
     Messaging.messaging().delegate = self
     application.applicationIconBadgeNumber = .zero
+    
     return true
   }
 }

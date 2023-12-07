@@ -34,21 +34,21 @@ extension Networking {
   }
   
   private static func requestNetwork(request: URLRequest) async throws -> Data {
-    let request = try interceptor.adapt(request)
+    let adaptedRequest = try interceptor.adapt(request)
     
-    do {
-      let (data, response) = try await URLSession.shared.data(for: request)
-      try handleResponse(response: response)
-      return data
-    } catch APIError.badRequest(let statusCode) {
-      let result = try await interceptor.retry(request, statusCode: statusCode)
+    let (data, response) = try await URLSession.shared.data(for: adaptedRequest)
+    
+    if let response = response as? HTTPURLResponse, response.statusCode == 401 {
+      let retry = try await interceptor.retry()
       
-      if result == .retry {
+      if retry == .retry {
         return try await requestNetwork(request: request)
       } else {
-        throw APIError.badRequest(400)
+        throw APIError.tokenExpired
       }
     }
+    
+    return data
   }
   
   private static func handleResponse(response: URLResponse) throws {

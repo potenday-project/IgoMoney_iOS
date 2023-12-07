@@ -12,8 +12,9 @@ enum RequestRetry {
 }
 
 protocol URLRequestInterceptor {
+  var retryCount: Int { get }
   func adapt(_ request: URLRequest) throws -> URLRequest
-  func retry(_ request: URLRequest, statusCode: Int) async throws -> RequestRetry
+  func retry() async throws -> RequestRetry
 }
 
 class AuthInterceptor: URLRequestInterceptor {
@@ -39,18 +40,32 @@ class AuthInterceptor: URLRequestInterceptor {
     return request
   }
   
-  func retry(_ request: URLRequest, statusCode: Int) async throws -> RequestRetry {
+  func retry() async throws -> RequestRetry {
     if retryCount == 3 {
       return .doNotRetry
     }
     
-    if statusCode == 401 {
-      let token = try await AuthClient.liveValue.refreshToken()
-      try KeyChainClient.save(token.encodeData)
-      self.retryCount += 1
-      return .retry
+    let tokenData = try? KeyChainClient.read(.token, SystemConfigConstants.tokenService)
+    guard let token: AuthToken = tokenData?.toDecodable() else {
+      return .doNotRetry
     }
     
-    return .doNotRetry
+    let refreshRequest = try AuthAPI(
+      method: .post,
+      path: "/auth/refresh-token",
+      query: [:],
+      header: ["Content-Type": "application/json"],
+      body: .json(value: ["refreshToken": token.refreshToken])
+    ).generate()
+    
+    let (data, _) = try await URLSession.shared.data(for: refreshRequest)
+    
+    if let token: AuthToken = data.toDecodable() {
+      try KeyChainClient.save(token.encodeData)
+    }
+    
+    self.retryCount += 1
+    
+    return .retry
   }
 }
