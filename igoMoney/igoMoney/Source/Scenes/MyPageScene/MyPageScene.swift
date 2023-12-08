@@ -49,58 +49,63 @@ struct MyPageScene: View {
       .padding(.bottom, 24)
       
       ScrollView(.vertical, showsIndicators: false) {
-        VStack(spacing: 24) {
+        ZStack {
           WithViewStore(store, observe: { $0 }) { viewStore in
             NavigationLink(
-              destination: IfLetStore(
-                store.scope(
-                  state: \.profileEditState,
-                  action: MyPageCore.Action.profileEditAction
-                )
-              ) { store in
-                ProfileSettingScene(store: store)
-              } else: {
-                EmptyView()
-              },
               isActive: viewStore.binding(
-                get: \.presentProfileEdit,
-                send: MyPageCore.Action._presentProfileEdit
-              ),
-              label: {
-                UserProfileSection(
-                  store: store.scope(
-                    state: \.profileState,
-                    action: MyPageCore.Action.userProfileAction
-                  )
+                get: \.showNotice,
+                send: MyPageCore.Action._presentNotice
+              )
+            ) {
+              NoticeScene(
+                store: self.store.scope(
+                  state: \.noticeState,
+                  action: MyPageCore.Action.noticeAction
                 )
-              }
-            )
-          }
-          .buttonStyle(.plain)
-          
-          VStack(spacing: 12) {
-            Section(header: sectionHeaderView(title: "챌린지 현황")) {
-              ChallengeStatisticSection()
+              )
+            } label: {
+              EmptyView()
             }
           }
           
-          VStack(spacing: 12) {
-            Section(header: sectionHeaderView(title: "고객 지원")) {
-              WithViewStore(store, observe: { $0 }) { viewStore in
-                ZStack {
-                  NavigationLink(
-                    isActive: viewStore.binding(
-                      get: \.showNotice,
-                      send: MyPageCore.Action._presentNotice
+          VStack(spacing: 24) {
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              NavigationLink(
+                destination: IfLetStore(
+                  store.scope(
+                    state: \.profileEditState,
+                    action: MyPageCore.Action.profileEditAction
+                  )
+                ) { store in
+                  ProfileSettingScene(store: store)
+                } else: {
+                  EmptyView()
+                },
+                isActive: viewStore.binding(
+                  get: \.presentProfileEdit,
+                  send: MyPageCore.Action._presentProfileEdit
+                ),
+                label: {
+                  UserProfileSection(
+                    store: store.scope(
+                      state: \.profileState,
+                      action: MyPageCore.Action.userProfileAction
                     )
-                  ) {
-                    NoticeScene(store: Store(initialState: NoticeCore.State(), reducer: { NoticeCore() }))
-                  } label: {
-                    EmptyView()
-                  }
-                  
-                  CustomServiceSection(viewStore: viewStore)
+                  )
                 }
+              )
+            }
+            .buttonStyle(.plain)
+            
+            VStack(spacing: 12) {
+              Section(header: sectionHeaderView(title: "챌린지 현황")) {
+                ChallengeStatisticSection()
+              }
+            }
+            
+            VStack(spacing: 12) {
+              Section(header: sectionHeaderView(title: "고객 지원")) {
+                CustomServiceSection(store: store)
               }
             }
           }
@@ -129,7 +134,7 @@ struct MyPageScene: View {
 
 struct CustomServiceSection: View {
   @Environment(\.openURL) var openURL
-  let viewStore: ViewStoreOf<MyPageCore>
+  let store: StoreOf<MyPageCore>
   
   @ViewBuilder
   private func customServiceCell(to service: CustomerServiceType) -> some View {
@@ -145,36 +150,47 @@ struct CustomServiceSection: View {
   }
   
   var body: some View {
-    VStack(spacing: .zero) {
-      ForEach(viewStore.customServices, id: \.rawValue) { service in
-        VStack(spacing: .zero) {
-          Button {
-            if service == .review {
-              guard let url = URL(string: "https://apps.apple.com/us/app/igomoney/id6467229873") else {
-                return
-              }
-              openURL.callAsFunction(url)
-              return
-            }
-            
-            if service == .inquiry {
-              if MFMailComposeViewController.canSendMail() {
-                viewStore.send(.tapService(service))
-                return
-              }
-              
-              return
-            }
-            
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      VStack(spacing: .zero) {
+        ForEach(viewStore.customServices, id: \.rawValue) { service in
+          VStack(spacing: .zero) {
             if service == .notice {
-              viewStore.send(._presentNotice(true))
+              NavigationLink {
+                NoticeScene(
+                  store: store.scope(
+                    state: \.noticeState,
+                    action: MyPageCore.Action.noticeAction
+                  )
+                )
+              } label: {
+                customServiceCell(to: service)
+              }
+            } else {
+              Button {
+                if service == .review {
+                  guard let url = URL(string: "https://apps.apple.com/us/app/igomoney/id6467229873") else {
+                    return
+                  }
+                  openURL.callAsFunction(url)
+                  return
+                }
+                
+                if service == .inquiry {
+                  if MFMailComposeViewController.canSendMail() {
+                    viewStore.send(.tapService(service))
+                    return
+                  }
+                  
+                  return
+                }
+              } label: {
+                customServiceCell(to: service)
+              }
             }
-          } label: {
-            customServiceCell(to: service)
+            
+            Divider()
           }
           .buttonStyle(.plain)
-          
-          Divider()
         }
       }
     }

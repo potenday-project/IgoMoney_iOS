@@ -48,6 +48,7 @@ struct NoticeCore: Reducer {
 }
 
 struct NoticeScene: View {
+  @Environment(\.presentationMode) var presentationMode
   let store: StoreOf<NoticeCore>
   
   var body: some View {
@@ -57,7 +58,7 @@ struct NoticeScene: View {
           Text("공지사항")
         } leftView: {
           Button {
-            
+            presentationMode.wrappedValue.dismiss()
           } label: {
             Image(systemName: "chevron.backward")
           }
@@ -82,6 +83,7 @@ struct NoticeScene: View {
         Spacer()
       }
     }
+    .navigationBarHidden(true)
   }
 }
 
