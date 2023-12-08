@@ -60,7 +60,7 @@ struct MyPageScene: View {
               ) { store in
                 ProfileSettingScene(store: store)
               } else: {
-                Text("no destination")
+                EmptyView()
               },
               isActive: viewStore.binding(
                 get: \.presentProfileEdit,
@@ -87,7 +87,20 @@ struct MyPageScene: View {
           VStack(spacing: 12) {
             Section(header: sectionHeaderView(title: "고객 지원")) {
               WithViewStore(store, observe: { $0 }) { viewStore in
-                CustomServiceSection(viewStore: viewStore)
+                ZStack {
+                  NavigationLink(
+                    isActive: viewStore.binding(
+                      get: \.showNotice,
+                      send: MyPageCore.Action._presentNotice
+                    )
+                  ) {
+                    NoticeScene(store: Store(initialState: NoticeCore.State(), reducer: { NoticeCore() }))
+                  } label: {
+                    EmptyView()
+                  }
+                  
+                  CustomServiceSection(viewStore: viewStore)
+                }
               }
             }
           }
@@ -153,7 +166,9 @@ struct CustomServiceSection: View {
               return
             }
             
-            viewStore.send(.tapService(service))
+            if service == .notice {
+              viewStore.send(._presentNotice(true))
+            }
           } label: {
             customServiceCell(to: service)
           }

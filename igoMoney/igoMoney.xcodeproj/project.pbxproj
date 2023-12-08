@@ -132,6 +132,7 @@
 		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
 		18C28C402B22E39600B692B3 /* InformationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C3F2B22E39600B692B3 /* InformationScene.swift */; };
 		18C28C442B22EAB700B692B3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C28C432B22EAB700B692B3 /* Settings.bundle */; };
+		18C28C472B2352CC00B692B3 /* NoticeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C462B2352CC00B692B3 /* NoticeScene.swift */; };
 		18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C503142B025AB20006499A /* ChallengeDetailDialog.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* AgreeTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */; };
@@ -279,6 +280,7 @@
 		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
 		18C28C3F2B22E39600B692B3 /* InformationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationScene.swift; sourceTree = "<group>"; };
 		18C28C432B22EAB700B692B3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		18C28C462B2352CC00B692B3 /* NoticeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeScene.swift; sourceTree = "<group>"; };
 		18C503142B025AB20006499A /* ChallengeDetailDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailDialog.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsView.swift; sourceTree = "<group>"; };
@@ -611,6 +613,14 @@
 			path = InformationScene;
 			sourceTree = "<group>";
 		};
+		18C28C452B2352C200B692B3 /* NoticeScene */ = {
+			isa = PBXGroup;
+			children = (
+				18C28C462B2352CC00B692B3 /* NoticeScene.swift */,
+			);
+			path = NoticeScene;
+			sourceTree = "<group>";
+		};
 		18C503132B025AB20006499A /* ChallengeDetailDialog */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +824,7 @@
 		18F55C9B2ADDA9C300DE50C4 /* MyPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				18C28C452B2352C200B692B3 /* NoticeScene */,
 				1833D8A02AEAC75C002FBEDD /* ChallengeStatisticSection */,
 				188103972AE4FD42003EBE95 /* UserProfileSection */,
 				187252D02ABC0BA800DCF08C /* MyPageScene.swift */,
@@ -1114,6 +1125,7 @@
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */,
 				180FC69E2ABB488F00DD8477 /* UserClient.swift in Sources */,
+				18C28C472B2352CC00B692B3 /* NoticeScene.swift in Sources */,
 				187252CE2ABC0B7B00DCF08C /* HomeScene.swift in Sources */,
 				180FC6972ABB35A800DD8477 /* HTTPMethod.swift in Sources */,
 				18599A502ABC329C0075DE76 /* EmptyChallengeListSectionCore.swift in Sources */,
