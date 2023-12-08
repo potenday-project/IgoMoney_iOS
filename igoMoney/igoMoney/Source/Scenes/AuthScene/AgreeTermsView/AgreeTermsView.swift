@@ -69,7 +69,7 @@ struct AgreeTermsView: View {
           ) {
             viewStore.send(.didTapAgreePrivacy)
           } viewAction: {
-            self.openURL(to: TextConstants.privacyURLString)
+            self.openURL(to: SystemConfigConstants.privacyURLString)
           }
         }
         
@@ -80,7 +80,7 @@ struct AgreeTermsView: View {
           ) {
             viewStore.send(.didTapAgreeTerms)
           } viewAction: {
-            self.openURL(to: TextConstants.termURLString)
+            self.openURL(to: SystemConfigConstants.termURLString)
           }
         }
       }
@@ -229,9 +229,6 @@ private extension AgreeTermsView {
     static let privacyText = "개인 정보 처리방침"
     static let termsText = "서비스 이용약관"
     static let confirmText = "확인"
-    
-    static let privacyURLString = "https://scarlet-tsunami-ae6.notion.site/1108380d3ad64a2f987134e283220852?pvs=4"
-    static let termURLString = "https://scarlet-tsunami-ae6.notion.site/9c400f50565d45508eaaae7cc6c312f8?pvs=4"
   }
 }
 
