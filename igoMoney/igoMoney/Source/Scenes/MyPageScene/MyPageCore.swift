@@ -11,6 +11,7 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
   case share
   case review
   case inquiry
+  case notice
   
   var description: String {
     switch self {
@@ -20,6 +21,8 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
       return "앱 스토어 리뷰 남기기"
     case .inquiry:
       return "아이고머니에 문의하기"
+    case .notice:
+      return "공지사항 보기"
     }
   }
   
@@ -31,6 +34,8 @@ enum CustomerServiceType: Int, CustomStringConvertible, CaseIterable {
       return "icon_pancil"
     case .inquiry:
       return "icon_mail"
+    case .notice:
+      return "icon_volume"
     }
   }
 }
@@ -45,6 +50,7 @@ struct MyPageCore: Reducer {
     var presentProfileEdit: Bool = false
     var shareItem: [URL]?
     var showMail: Bool = false
+    var showNotice: Bool = false
   }
   
   enum Action {
@@ -54,6 +60,7 @@ struct MyPageCore: Reducer {
     case _presentShare([URL]?)
     case _presentMail(Bool)
     case _presentProfileEdit(Bool)
+    case _presentNotice(Bool)
     
     case settingAction(GeneralSettingCore.Action)
     case userProfileAction(UserProfileCore.Action)
@@ -115,6 +122,10 @@ struct MyPageCore: Reducer {
       case ._presentProfileEdit(false):
         state.profileEditState = nil
         state.presentProfileEdit = false
+        return .none
+        
+      case ._presentNotice(let isPresent):
+        state.showNotice = true
         return .none
         
       default:
