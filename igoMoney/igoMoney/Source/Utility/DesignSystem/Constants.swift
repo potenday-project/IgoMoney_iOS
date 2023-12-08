@@ -40,4 +40,7 @@ extension Color {
 enum SystemConfigConstants {
   static let tokenService = "com.igo.igomoney"
   static let userIdentifierService = "userIdentifier"
+  
+  static let privacyURLString = "https://scarlet-tsunami-ae6.notion.site/1108380d3ad64a2f987134e283220852?pvs=4"
+  static let termURLString = "https://scarlet-tsunami-ae6.notion.site/9c400f50565d45508eaaae7cc6c312f8?pvs=4"
 }

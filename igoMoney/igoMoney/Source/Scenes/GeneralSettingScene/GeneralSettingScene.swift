@@ -20,6 +20,7 @@ struct GeneralSettingScene: View {
     if setting == .authInformation {
       GeneralSettingCell(setting: setting) {
         Image(systemName: "chevron.forward")
+          .foregroundColor(ColorConstants.gray3)
       }
     }
     
@@ -40,6 +41,13 @@ struct GeneralSettingScene: View {
 //        )
 //      )
 //    }
+    
+    if setting == .information {
+      GeneralSettingCell(setting: .information) {
+        Image(systemName: "chevron.forward")
+          .foregroundColor(ColorConstants.gray3)
+      }
+    }
     
     if setting == .appVersion {
       GeneralSettingCell(setting: .appVersion) {
@@ -87,12 +95,34 @@ struct GeneralSettingScene: View {
           }
         }
         
+        WithViewStore(store, observe: { $0 }) { viewStore in
+          NavigationLink(
+            isActive: viewStore.binding(
+              get: \.showInformation,
+              send: GeneralSettingCore.Action.presentInformation
+            )
+          ) {
+            InformationScene(
+              store: self.store.scope(
+                state: \.informationState,
+                action: GeneralSettingCore.Action.informationAction
+              )
+            )
+          } label: {
+            EmptyView()
+          }
+        }
+        
         ScrollView(.vertical, showsIndicators: false) {
           WithViewStore(store, observe: { $0 }) { viewStore in
             ForEach(viewStore.settings, id: \.rawValue) { setting in
               Button {
                 if setting == .authInformation {
                   viewStore.send(.presentAuthSetting(true))
+                }
+                
+                if setting == .information {
+                  viewStore.send(.presentInformation(true))
                 }
               } label: {
                 GeneralSettingCellWithContent(to: setting, with: viewStore)

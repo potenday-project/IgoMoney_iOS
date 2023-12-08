@@ -9,6 +9,7 @@ import SwiftUI
 enum Setting: Int, CaseIterable {
   case authInformation
   case serviceAlert
+  case information
   case appVersion
   
   var title: String {
@@ -17,6 +18,8 @@ enum Setting: Int, CaseIterable {
       return "로그인 정보"
     case .serviceAlert:
       return "서비스 이용 알림"
+    case .information:
+      return "정보"
     case .appVersion:
       return "앱 버전"
     }
@@ -33,7 +36,7 @@ enum Setting: Int, CaseIterable {
   
   var buttonType: SettingButtonType {
     switch self {
-    case .authInformation:
+    case .authInformation, .information:
       return .general
     case .serviceAlert:
       return .toggle

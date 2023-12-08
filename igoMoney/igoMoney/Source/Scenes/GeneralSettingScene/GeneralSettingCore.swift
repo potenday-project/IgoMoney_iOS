@@ -15,19 +15,23 @@ struct GeneralSettingCore: Reducer {
     let settings = Setting.allCases
     var appVersion: String = ""
     var showAuthSetting: Bool = false
+    var showInformation: Bool = false
     
     var authSettingState = AuthSettingCore.State()
     var serviceAlertState = GeneralToggleReducer.State(setting: .serviceAlert)
+    var informationState = InformationCore.State()
 //    var marketingAlertState = GeneralToggleReducer.State(setting: .marketingAlert)
   }
   
   enum Action {
     case onAppear
     case presentAuthSetting(Bool)
+    case presentInformation(Bool)
     
     case _fetchAppVersion
     
     case authSettingAction(AuthSettingCore.Action)
+    case informationAction(InformationCore.Action)
     case serviceAlertAction(GeneralToggleReducer.Action)
     case marketingAlertAction(GeneralToggleReducer.Action)
   }
@@ -47,6 +51,10 @@ struct GeneralSettingCore: Reducer {
 //      GeneralToggleReducer()
 //    }
     
+    Scope(state: \.informationState, action: /Action.informationAction) {
+      InformationCore()
+    }
+    
     Reduce { state, action in
       switch action {
       case .onAppear:
@@ -54,6 +62,10 @@ struct GeneralSettingCore: Reducer {
         
       case .presentAuthSetting(let isPresent):
         state.showAuthSetting = isPresent
+        return .none
+        
+      case .presentInformation(let isPresent):
+        state.showInformation = isPresent
         return .none
         
       case ._fetchAppVersion:
@@ -89,6 +101,9 @@ struct GeneralSettingCore: Reducer {
         return .none
         
       case .authSettingAction:
+        return .none
+        
+      case .informationAction:
         return .none
       }
     }
