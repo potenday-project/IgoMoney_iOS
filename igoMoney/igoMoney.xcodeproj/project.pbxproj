@@ -131,7 +131,6 @@
 		18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6306B2AC408A800F638C0 /* AppCore.swift */; };
 		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
 		18C28C402B22E39600B692B3 /* InformationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C3F2B22E39600B692B3 /* InformationScene.swift */; };
-		18C28C422B22E3CE00B692B3 /* InformationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C412B22E3CE00B692B3 /* InformationCore.swift */; };
 		18C28C442B22EAB700B692B3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C28C432B22EAB700B692B3 /* Settings.bundle */; };
 		18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C503142B025AB20006499A /* ChallengeDetailDialog.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
@@ -279,7 +278,6 @@
 		18B6306B2AC408A800F638C0 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
 		18C28C3F2B22E39600B692B3 /* InformationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationScene.swift; sourceTree = "<group>"; };
-		18C28C412B22E3CE00B692B3 /* InformationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCore.swift; sourceTree = "<group>"; };
 		18C28C432B22EAB700B692B3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		18C503142B025AB20006499A /* ChallengeDetailDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailDialog.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
@@ -609,7 +607,6 @@
 			isa = PBXGroup;
 			children = (
 				18C28C3F2B22E39600B692B3 /* InformationScene.swift */,
-				18C28C412B22E3CE00B692B3 /* InformationCore.swift */,
 			);
 			path = InformationScene;
 			sourceTree = "<group>";
@@ -1082,7 +1079,6 @@
 				187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */,
 				181F28942B0E493500B499B2 /* NotificationClient + live.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
-				18C28C422B22E3CE00B692B3 /* InformationCore.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */,

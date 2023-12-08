@@ -19,7 +19,6 @@ struct GeneralSettingCore: Reducer {
     
     var authSettingState = AuthSettingCore.State()
     var serviceAlertState = GeneralToggleReducer.State(setting: .serviceAlert)
-    var informationState = InformationCore.State()
 //    var marketingAlertState = GeneralToggleReducer.State(setting: .marketingAlert)
   }
   
@@ -31,7 +30,6 @@ struct GeneralSettingCore: Reducer {
     case _fetchAppVersion
     
     case authSettingAction(AuthSettingCore.Action)
-    case informationAction(InformationCore.Action)
     case serviceAlertAction(GeneralToggleReducer.Action)
     case marketingAlertAction(GeneralToggleReducer.Action)
   }
@@ -50,10 +48,6 @@ struct GeneralSettingCore: Reducer {
 //    Scope(state: \.marketingAlertState, action: /Action.marketingAlertAction) {
 //      GeneralToggleReducer()
 //    }
-    
-    Scope(state: \.informationState, action: /Action.informationAction) {
-      InformationCore()
-    }
     
     Reduce { state, action in
       switch action {
@@ -101,9 +95,6 @@ struct GeneralSettingCore: Reducer {
         return .none
         
       case .authSettingAction:
-        return .none
-        
-      case .informationAction:
         return .none
       }
     }
