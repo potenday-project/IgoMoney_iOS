@@ -130,7 +130,9 @@
 		18B6306A2AC408A300F638C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B630692AC408A300F638C0 /* AppView.swift */; };
 		18B6306C2AC408A800F638C0 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6306B2AC408A800F638C0 /* AppCore.swift */; };
 		18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */; };
-		18B9512D2B16E30900EE35F5 /* package-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 18B9512C2B16E30900EE35F5 /* package-list.json */; };
+		18C28C402B22E39600B692B3 /* InformationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C3F2B22E39600B692B3 /* InformationScene.swift */; };
+		18C28C422B22E3CE00B692B3 /* InformationCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C412B22E3CE00B692B3 /* InformationCore.swift */; };
+		18C28C442B22EAB700B692B3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C28C432B22EAB700B692B3 /* Settings.bundle */; };
 		18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C503142B025AB20006499A /* ChallengeDetailDialog.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* AgreeTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */; };
@@ -276,7 +278,9 @@
 		18B630692AC408A300F638C0 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		18B6306B2AC408A800F638C0 /* AppCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCore.swift; sourceTree = "<group>"; };
 		18B8DB332ABD8B3500EC5CB2 /* EnterChallengeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterChallengeCore.swift; sourceTree = "<group>"; };
-		18B9512C2B16E30900EE35F5 /* package-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "package-list.json"; path = "../../../../../../Desktop/package-list.json"; sourceTree = "<group>"; };
+		18C28C3F2B22E39600B692B3 /* InformationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationScene.swift; sourceTree = "<group>"; };
+		18C28C412B22E3CE00B692B3 /* InformationCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCore.swift; sourceTree = "<group>"; };
+		18C28C432B22EAB700B692B3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		18C503142B025AB20006499A /* ChallengeDetailDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailDialog.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsView.swift; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 		1803639D2AB82DCD00082F8A = {
 			isa = PBXGroup;
 			children = (
+				18C28C432B22EAB700B692B3 /* Settings.bundle */,
 				180363A82AB82DCD00082F8A /* igoMoney */,
 				180363A72AB82DCD00082F8A /* Products */,
 			);
@@ -370,7 +375,6 @@
 		180363B72AB8316800082F8A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				18B9512C2B16E30900EE35F5 /* package-list.json */,
 				18599A5D2ABC4DDA0075DE76 /* Fonts */,
 				180363AF2AB82DCE00082F8A /* Preview Content */,
 				180363AD2AB82DCE00082F8A /* Assets.xcassets */,
@@ -601,6 +605,15 @@
 			path = KeyChainClient;
 			sourceTree = "<group>";
 		};
+		18C28C3E2B22E38B00B692B3 /* InformationScene */ = {
+			isa = PBXGroup;
+			children = (
+				18C28C3F2B22E39600B692B3 /* InformationScene.swift */,
+				18C28C412B22E3CE00B692B3 /* InformationCore.swift */,
+			);
+			path = InformationScene;
+			sourceTree = "<group>";
+		};
 		18C503132B025AB20006499A /* ChallengeDetailDialog */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,6 +658,7 @@
 		18EF46C72AE8FE4900EA949E /* GeneralSettingScene */ = {
 			isa = PBXGroup;
 			children = (
+				18C28C3E2B22E38B00B692B3 /* InformationScene */,
 				18EF46C82AE8FE9300EA949E /* SubViews */,
 				18A152312AC97FDF00B8B8A4 /* GeneralSettingScene.swift */,
 				18A152332AC9800900B8B8A4 /* GeneralSettingCore.swift */,
@@ -994,8 +1008,8 @@
 				189A2D8B2B025154002FE343 /* GoogleService-Info.plist in Resources */,
 				180FC68F2ABB14F900DD8477 /* KakaoService.plist in Resources */,
 				188905E52B10D5F5006F5339 /* Pretendard-Black.otf in Resources */,
-				18B9512D2B16E30900EE35F5 /* package-list.json in Resources */,
 				1827C1A62AC96AE000E658B6 /* Launch Screen.storyboard in Resources */,
+				18C28C442B22EAB700B692B3 /* Settings.bundle in Resources */,
 				188905E82B10D5F5006F5339 /* Pretendard-ExtraLight.otf in Resources */,
 				188905E62B10D5F5006F5339 /* Pretendard-ExtraBold.otf in Resources */,
 				188905E92B10D5F5006F5339 /* Pretendard-Bold.otf in Resources */,
@@ -1068,6 +1082,7 @@
 				187252CB2ABC081F00DCF08C /* IGORoundTabBar.swift in Sources */,
 				181F28942B0E493500B499B2 /* NotificationClient + live.swift in Sources */,
 				180FC6912ABB157200DD8477 /* Bundle+Extensions.swift in Sources */,
+				18C28C422B22E3CE00B692B3 /* InformationCore.swift in Sources */,
 				180FC69B2ABB35D200DD8477 /* APIError.swift in Sources */,
 				18599A5C2ABC46AF0075DE76 /* ExploreChallengeScene.swift in Sources */,
 				18F55CA12ADDAA5C00DE50C4 /* ExploreChallengeCellView.swift in Sources */,
@@ -1098,6 +1113,7 @@
 				1833D8A42AEACDD1002FBEDD /* UserBadgeCounterCore.swift in Sources */,
 				18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */,
 				182B9E112AFA5CAE00B47CBA /* RecordAPI.swift in Sources */,
+				18C28C402B22E39600B692B3 /* InformationScene.swift in Sources */,
 				183C7EB02AE569FC0054F9D3 /* ShareSheet.swift in Sources */,
 				180363AC2AB82DCD00082F8A /* MainScene.swift in Sources */,
 				18F55C942ADD94B700DE50C4 /* AuthClient + live.swift in Sources */,
