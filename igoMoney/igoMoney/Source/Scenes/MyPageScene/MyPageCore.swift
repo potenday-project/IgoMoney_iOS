@@ -45,6 +45,7 @@ struct MyPageCore: Reducer {
     let customServices: [CustomerServiceType] = CustomerServiceType.allCases
     var settingState = GeneralSettingCore.State()
     var profileState = UserProfileCore.State()
+    var noticeState = NoticeCore.State()
     var profileEditState: ProfileSettingCore.State?
     
     var presentProfileEdit: Bool = false
@@ -65,6 +66,7 @@ struct MyPageCore: Reducer {
     case settingAction(GeneralSettingCore.Action)
     case userProfileAction(UserProfileCore.Action)
     case profileEditAction(ProfileSettingCore.Action)
+    case noticeAction(NoticeCore.Action)
   }
   
   @Dependency(\.openURL) var openURL

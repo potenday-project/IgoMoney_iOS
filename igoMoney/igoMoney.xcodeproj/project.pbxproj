@@ -133,6 +133,9 @@
 		18C28C402B22E39600B692B3 /* InformationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C3F2B22E39600B692B3 /* InformationScene.swift */; };
 		18C28C442B22EAB700B692B3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C28C432B22EAB700B692B3 /* Settings.bundle */; };
 		18C28C472B2352CC00B692B3 /* NoticeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C462B2352CC00B692B3 /* NoticeScene.swift */; };
+		18C28C4A2B23549500B692B3 /* NoticeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C492B23549500B692B3 /* NoticeClient.swift */; };
+		18C28C4C2B23556B00B692B3 /* NoticeClient + live.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C4B2B23556B00B692B3 /* NoticeClient + live.swift */; };
+		18C28C4E2B2355A000B692B3 /* NoticeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C28C4D2B2355A000B692B3 /* NoticeAPI.swift */; };
 		18C503152B025AB20006499A /* ChallengeDetailDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C503142B025AB20006499A /* ChallengeDetailDialog.swift */; };
 		18CD8F272AB970C3006FEA6F /* AuthCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F262AB970C3006FEA6F /* AuthCore.swift */; };
 		18CD8F2B2AB98249006FEA6F /* AgreeTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */; };
@@ -281,6 +284,9 @@
 		18C28C3F2B22E39600B692B3 /* InformationScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationScene.swift; sourceTree = "<group>"; };
 		18C28C432B22EAB700B692B3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		18C28C462B2352CC00B692B3 /* NoticeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeScene.swift; sourceTree = "<group>"; };
+		18C28C492B23549500B692B3 /* NoticeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeClient.swift; sourceTree = "<group>"; };
+		18C28C4B2B23556B00B692B3 /* NoticeClient + live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoticeClient + live.swift"; sourceTree = "<group>"; };
+		18C28C4D2B2355A000B692B3 /* NoticeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAPI.swift; sourceTree = "<group>"; };
 		18C503142B025AB20006499A /* ChallengeDetailDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChallengeDetailDialog.swift; sourceTree = "<group>"; };
 		18CD8F262AB970C3006FEA6F /* AuthCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCore.swift; sourceTree = "<group>"; };
 		18CD8F2A2AB98249006FEA6F /* AgreeTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeTermsView.swift; sourceTree = "<group>"; };
@@ -593,6 +599,7 @@
 				188103A92AE53ABD003EBE95 /* ImageLoadAPI.swift */,
 				182B9E102AFA5CAE00B47CBA /* RecordAPI.swift */,
 				181F28952B0E499400B499B2 /* NotificationAPI.swift */,
+				18C28C4D2B2355A000B692B3 /* NoticeAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -619,6 +626,15 @@
 				18C28C462B2352CC00B692B3 /* NoticeScene.swift */,
 			);
 			path = NoticeScene;
+			sourceTree = "<group>";
+		};
+		18C28C482B23548A00B692B3 /* NoticeClient */ = {
+			isa = PBXGroup;
+			children = (
+				18C28C492B23549500B692B3 /* NoticeClient.swift */,
+				18C28C4B2B23556B00B692B3 /* NoticeClient + live.swift */,
+			);
+			path = NoticeClient;
 			sourceTree = "<group>";
 		};
 		18C503132B025AB20006499A /* ChallengeDetailDialog */ = {
@@ -731,6 +747,7 @@
 		18F55C8F2ADD92D600DE50C4 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				18C28C482B23548A00B692B3 /* NoticeClient */,
 				181F28902B0E484F00B499B2 /* NotificationClient */,
 				182B9E0B2AFA5B9200B47CBA /* RecordClient */,
 				188103A42AE539F5003EBE95 /* ImageClient */,
@@ -1037,6 +1054,7 @@
 			files = (
 				18D623692AB8A919006EAC39 /* AuthScene.swift in Sources */,
 				18F6BB702AEF3BF000AB0F1B /* ParticipatingChallengeScene.swift in Sources */,
+				18C28C4A2B23549500B692B3 /* NoticeClient.swift in Sources */,
 				180FC6942ABB338600DD8477 /* RequestGenerator.swift in Sources */,
 				18A1522B2AC9757C00B8B8A4 /* MultipartForm.swift in Sources */,
 				1881039D2AE4FEEE003EBE95 /* ChallengeStatus.swift in Sources */,
@@ -1114,6 +1132,7 @@
 				18A152342AC9800900B8B8A4 /* GeneralSettingCore.swift in Sources */,
 				182B8CFB2AEA4C7A00ED8890 /* ExploreChallengeFilterHeaderSection.swift in Sources */,
 				1803B9BD2ACA92A500D97495 /* Data + Extensions.swift in Sources */,
+				18C28C4C2B23556B00B692B3 /* NoticeClient + live.swift in Sources */,
 				181988AE2ACE73F40021214C /* ChallengeClient + live.swift in Sources */,
 				182B9E0D2AFA5B9900B47CBA /* RecordClient.swift in Sources */,
 				183DF7D62AD83EA40041FB69 /* IGOBottomSheetView.swift in Sources */,
@@ -1157,6 +1176,7 @@
 				18A152322AC97FDF00B8B8A4 /* GeneralSettingScene.swift in Sources */,
 				18CD8F352AB9BC58006FEA6F /* ProfileInitialSettingScene.swift in Sources */,
 				18599A4E2ABC32790075DE76 /* EmptyChallengeListSection.swift in Sources */,
+				18C28C4E2B2355A000B692B3 /* NoticeAPI.swift in Sources */,
 				1881039B2AE4FD59003EBE95 /* UserProfileCore.swift in Sources */,
 				187252D12ABC0BA800DCF08C /* MyPageScene.swift in Sources */,
 				18B8DB342ABD8B3500EC5CB2 /* EnterChallengeCore.swift in Sources */,
