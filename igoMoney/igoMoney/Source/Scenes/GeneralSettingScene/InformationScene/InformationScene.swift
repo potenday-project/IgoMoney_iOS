@@ -27,7 +27,7 @@ enum Information: Int, CaseIterable {
 
 struct InformationScene: View {
   @Environment(\.openURL) var openURL
-  let store: StoreOf<InformationCore>
+  @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
     VStack(spacing: .zero) {
@@ -35,7 +35,7 @@ struct InformationScene: View {
         Text("정보")
       } leftView: {
         Button {
-          
+          presentationMode.wrappedValue.dismiss()
         } label: {
           Image(systemName: "chevron.left")
         }
@@ -83,10 +83,5 @@ struct InformationScene: View {
 }
 
 #Preview {
-  InformationScene(
-    store: Store(
-      initialState: InformationCore.State(),
-      reducer: { InformationCore() }
-    )
-  )
+  InformationScene()
 }

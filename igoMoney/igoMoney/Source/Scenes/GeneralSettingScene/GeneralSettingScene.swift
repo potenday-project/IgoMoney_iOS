@@ -102,12 +102,7 @@ struct GeneralSettingScene: View {
               send: GeneralSettingCore.Action.presentInformation
             )
           ) {
-            InformationScene(
-              store: self.store.scope(
-                state: \.informationState,
-                action: GeneralSettingCore.Action.informationAction
-              )
-            )
+            InformationScene()
           } label: {
             EmptyView()
           }
