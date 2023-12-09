@@ -9,7 +9,12 @@ import SwiftUI
 import ComposableArchitecture
 import MessageUI
 
+import Inject
+
 struct MyPageScene: View {
+  #if DEBUG
+  @ObservedObject private var inject = Inject.observer
+  #endif
   let store: StoreOf<MyPageCore>
   
   @ViewBuilder
@@ -128,6 +133,7 @@ struct MyPageScene: View {
     ) {
       EmailSendView()
     }
+    .enableInjection()
   }
 }
 

@@ -69,6 +69,7 @@
 		18416EF02AF093A50011E4C3 /* ChallengeRecordSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18416EEF2AF093A50011E4C3 /* ChallengeRecordSection.swift */; };
 		18497C1E2ABDEF6B0041C350 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1D2ABDEF6B0041C350 /* NavigationBar.swift */; };
 		18497C202ABDFB320041C350 /* IGOAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18497C1F2ABDFB320041C350 /* IGOAlertView.swift */; };
+		184D24892B2444940055A664 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 184D24882B2444940055A664 /* Inject */; };
 		18599A432ABC12FF0075DE76 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A422ABC12FF0075DE76 /* RoundedCorner.swift */; };
 		18599A452ABC2A950075DE76 /* HomeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A442ABC2A950075DE76 /* HomeCore.swift */; };
 		18599A492ABC32160075DE76 /* MyChallengeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18599A482ABC32160075DE76 /* MyChallengeSection.swift */; };
@@ -324,6 +325,7 @@
 				189A2D9A2B025204002FE343 /* FirebasePerformance in Frameworks */,
 				180FC68B2ABAFAED00DD8477 /* KakaoSDKUser in Frameworks */,
 				18D623662AB8A8AA006EAC39 /* ComposableArchitecture in Frameworks */,
+				184D24892B2444940055A664 /* Inject in Frameworks */,
 				189A2D9E2B025204002FE343 /* FirebaseStorageCombine-Community in Frameworks */,
 				189A2D9C2B025204002FE343 /* FirebaseRemoteConfig in Frameworks */,
 				189A2D982B025204002FE343 /* FirebaseMessaging in Frameworks */,
@@ -979,6 +981,7 @@
 				189A2D992B025204002FE343 /* FirebasePerformance */,
 				189A2D9B2B025204002FE343 /* FirebaseRemoteConfig */,
 				189A2D9D2B025204002FE343 /* FirebaseStorageCombine-Community */,
+				184D24882B2444940055A664 /* Inject */,
 			);
 			productName = igoMoney;
 			productReference = 180363A62AB82DCD00082F8A /* igoMoney.app */;
@@ -1012,6 +1015,7 @@
 				18D623642AB8A8AA006EAC39 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				189A2D8C2B025204002FE343 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				184D24872B2444940055A664 /* XCRemoteSwiftPackageReference "Inject" */,
 			);
 			productRefGroup = 180363A72AB82DCD00082F8A /* Products */;
 			projectDirPath = "";
@@ -1328,6 +1332,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-Xlinker",
+					"-interposable",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.igo.igoMoney;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1407,6 +1415,14 @@
 				version = 2.15.0;
 			};
 		};
+		184D24872B2444940055A664 /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.4;
+			};
+		};
 		189A2D8C2B025204002FE343 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1440,6 +1456,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 180FC6852ABAFAED00DD8477 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		184D24882B2444940055A664 /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 184D24872B2444940055A664 /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
 		};
 		189A2D8D2B025204002FE343 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
