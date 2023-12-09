@@ -23,7 +23,7 @@ enum ColorConstants {
   static let gray5 = Color("gray5")
   
   static let red = Color("red")
-  static let orange = Color("Orange")
+  static let orange = Color("orange")
   static let yellow = Color("yellow")
   static let blue = Color("blue")
   static let purple = Color("purple")

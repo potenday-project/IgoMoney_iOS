@@ -7,8 +7,10 @@
 import SwiftUI
 
 import ComposableArchitecture
+import Inject
 
 struct EmptyChallengeDetail: View {
+  @ObservedObject private var inject = Inject.observer
   let store: StoreOf<ChallengeInformationCore>
   
   var body: some View {
@@ -17,12 +19,9 @@ struct EmptyChallengeDetail: View {
       WithViewStore(store, observe: { $0.challenge.title }) { viewStore in
         Text(viewStore.state)
           .multilineTextAlignment(.leading)
-          .lineLimit(2)
           .font(.pretendard(size: 16, weight: .semiBold))
           .lineHeight(font: .pretendard(size: 16, weight: .semiBold), lineHeight: 23)
       }
-      
-      Spacer()
       
       // 챌린지 생성자 닉네임
       WithViewStore(store, observe: { $0 }) { viewStore in
@@ -32,17 +31,29 @@ struct EmptyChallengeDetail: View {
       
       VStack(alignment: .leading, spacing: 2) {
         // 챌린지 머니
-        WithViewStore(store, observe: { $0.challenge.targetAmount }) { viewStore in
-          Text(viewStore.description)
-            .padding(.horizontal, 2)
-            .background(Color(viewStore.colorName))
-            .cornerRadius(4)
+        HStack(spacing: 2) {
+          WithViewStore(store, observe: { $0.challenge.targetAmount }) { viewStore in
+            Text(viewStore.description)
+              .padding(.horizontal, 2)
+              .background(ColorConstants.yellow)
+              .cornerRadius(4)
+          }
+          
+          WithViewStore(store, observe: { $0.challenge.category }) { category in
+            Text("#" + (category.state?.description ?? ""))
+              .padding(.horizontal, 2)
+              .background(ColorConstants.orange)
+              .cornerRadius(4)
+          }
         }
         
-        Text("⏰ 내일부터 시작")
-          .padding(.horizontal, 2)
-          .background(ColorConstants.primary7)
-          .cornerRadius(4)
+        WithViewStore(store, observe: { $0.challenge }) { challenge in
+          Text("⏰" + (challenge.startDate?.toString(with: "MM월 dd일 시작") ?? ""))
+            .padding(.horizontal, 2)
+            .padding(.vertical, 1)
+            .background(ColorConstants.primary7)
+            .cornerRadius(4)
+        }
       }
       .font(.system(size: 12, weight: .medium))
       
@@ -70,10 +81,11 @@ struct EmptyChallengeDetail: View {
           y: 2
         )
     )
-    .frame(height: 190)
+    .frame(maxHeight: 200)
     .onAppear {
       store.send(.onAppear)
     }
+    .enableInjection()
   }
 }
 
