@@ -39,7 +39,7 @@ struct ChallengeNoticeView: View {
   private func noticeSectionView(notices: [Notice]) -> some View {
     VStack(alignment: .leading, spacing: 8) {
       ForEach(notices, id: \.index) { notice in
-        HStack {
+        HStack(alignment: .top) {
           Image(systemName: notice.iconName)
           
           Text(notice.description)
@@ -49,7 +49,7 @@ struct ChallengeNoticeView: View {
         .frame(maxWidth: .infinity)
       }
     }
-    .font(.pretendard(size: 14, weight: .medium))
+    .font(.pretendard(size: 16, weight: .medium))
     .padding(16)
     .background(Color.white)
     .cornerRadius(10)
@@ -73,4 +73,8 @@ struct ChallengeNoticeView: View {
       }
     }
   }
+}
+
+#Preview {
+  ChallengeNoticeView()
 }
